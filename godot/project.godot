@@ -8,9 +8,32 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Position2D",
+"class": "Battler",
+"language": "GDScript",
+"path": "res://combat/battlers/Battler.gd"
+}, {
+"base": "Node",
+"class": "CharacterStats",
+"language": "GDScript",
+"path": "res://combat/battlers/stats/Stats.gd"
+}, {
+"base": "Node",
+"class": "CombatAction",
+"language": "GDScript",
+"path": "res://combat/CombatAction.gd"
+}, {
+"base": "Node",
+"class": "Job",
+"language": "GDScript",
+"path": "res://combat/battlers/Job.gd"
+} ]
 _global_script_class_icons={
-
+"Battler": "",
+"CharacterStats": "",
+"CombatAction": "",
+"Job": ""
 }
 
 [application]
