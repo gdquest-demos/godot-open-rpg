@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/sprites/battlers/shadow.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/monsters/porcupine.png" type="Texture" id=2]
+
+[node name="PorcupineAnim" type="Position2D"]
+
+[node name="shadow" type="Sprite" parent="."]
+position = Vector2( -2.18341, -7.19193 )
+scale = Vector2( 0.944015, 0.77886 )
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="body" type="Sprite" parent="."]
+position = Vector2( 11.4993, -57.4964 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
