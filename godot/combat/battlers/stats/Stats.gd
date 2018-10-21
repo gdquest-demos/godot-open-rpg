@@ -18,10 +18,10 @@ func _ready():
 func set_max_health(value):
 	max_health = max(0, value)
 
-func take_damage(amount):
-	health -= amount
+func take_damage(hit):
+	health -= hit.damage
 	health = max(0, health)
-	emit_signal("health_changed", amount)
+	emit_signal("health_changed", hit.damage)
 	if health == 0:
 		emit_signal("health_depleted")
 

@@ -9,3 +9,6 @@
 
 [node name="PorcupineAnim" parent="Skin" index="0" instance=ExtResource( 2 )]
 
+[node name="InterfaceAnchor" parent="." index="3"]
+position = Vector2( 0, 48.9708 )
+

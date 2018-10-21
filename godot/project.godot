@@ -28,18 +28,34 @@ _global_script_classes=[ {
 "class": "Job",
 "language": "GDScript",
 "path": "res://combat/battlers/Job.gd"
+}, {
+"base": "YSort",
+"class": "TurnQueue",
+"language": "GDScript",
+"path": "res://combat/turn_queue/TurnQueue.gd"
 } ]
 _global_script_class_icons={
 "Battler": "",
 "CharacterStats": "",
 "CombatAction": "",
-"Job": ""
+"Job": "",
+"TurnQueue": ""
 }
 
 [application]
 
 config/name="Turn-Based Combat"
+run/main_scene="res://combat/CombatArena.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/test_width=1280
+window/size/test_height=720
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [rendering]
 
