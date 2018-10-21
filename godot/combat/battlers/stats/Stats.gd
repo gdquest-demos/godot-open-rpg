@@ -8,6 +8,7 @@ signal health_depleted()
 var modifiers = {}
 
 var health : int = 0
+export var initiative : int = 0
 export var max_health : int = 9 setget set_max_health
 export var strength : int = 2
 export var defense : int = 0

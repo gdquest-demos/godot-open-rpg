@@ -32,7 +32,9 @@ func play_turn():
 		play_turn()
 
 func get_battlers():
-	return turn_queue.get_children()
+	var battlers = turn_queue.get_children()
+	battlers.sort_custom(self, "sort_battlers_by_initiative")
+	return battlers
 
 func get_active_battler():
 	return turn_queue.active_battler
