@@ -48,6 +48,7 @@ tracks/0/keys = {
 [node name="Battler" type="Position2D"]
 script = ExtResource( 1 )
 _sections_unfolded = [ "Visibility" ]
+TARGET_OFFSET_DISTANCE = null
 
 [node name="Skin" type="Position2D" parent="."]
 script = ExtResource( 2 )
@@ -82,4 +83,6 @@ script = ExtResource( 5 )
 
 [node name="InterfaceAnchor" parent="." instance=ExtResource( 6 )]
 position = Vector2( 0, 42 )
+
+[node name="TargetAnchor" type="Position2D" parent="."]
 

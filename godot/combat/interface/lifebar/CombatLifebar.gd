@@ -23,9 +23,9 @@ func set_health(value):
 	label.display(health, max_health)
 
 func initialize(battler : Battler):
-	var anchor = battler.anchor
-	global_position = anchor.global_position
-	anchor.remote_path = anchor.get_path_to(self)
+	var lifebar_anchor = battler.lifebar_anchor
+	global_position = lifebar_anchor.global_position
+	lifebar_anchor.remote_path = lifebar_anchor.get_path_to(self)
 	
 	var health_node = battler.stats
 	health_node.connect("health_changed", self, "_on_Battler_health_changed")

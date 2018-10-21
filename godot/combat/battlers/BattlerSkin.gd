@@ -6,7 +6,7 @@ export var TWEEN_DURATION : float = 0.3
 onready var tween = $Tween
 onready var anim = $AnimationPlayer
 var battler_anim : BattlerAnim
-onready var position_start : Vector2 = position
+onready var position_start : Vector2
 
 var blink : bool = false setget set_blink
 
@@ -34,7 +34,7 @@ func move_to(target : Battler):
 		self,
 		'global_position',
 		global_position,
-		target.global_position,
+		target.target_global_position,
 		TWEEN_DURATION,
 		Tween.TRANS_QUAD,
 		Tween.EASE_OUT)

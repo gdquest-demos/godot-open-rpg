@@ -9,7 +9,13 @@ func _ready():
 	initialize()
 
 func initialize():
-	interface.initialize(get_battlers())
+	var battlers : Array = get_battlers()
+	for battler in battlers:
+		battler.initialize()
+	interface.initialize(battlers)
+	battle_start()
+
+func battle_start():
 	active = true
 	play_turn()
 
