@@ -1,0 +1,31 @@
+[gd_scene format=2]
+
+[node name="MenuSfx" type="Node"]
+
+[node name="Confirm" type="AudioStreamPlayer" parent="."]
+stream = null
+volume_db = -1.0
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 2
+bus = "Master"
+
+[node name="Navigate" type="AudioStreamPlayer" parent="."]
+stream = null
+volume_db = -6.0
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 2
+bus = "Master"
+
+[node name="Open" type="AudioStreamPlayer" parent="."]
+stream = null
+volume_db = -3.0
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 2
+bus = "Master"
+
