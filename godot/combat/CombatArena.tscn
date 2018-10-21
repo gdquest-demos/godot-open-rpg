@@ -74,16 +74,15 @@ script = ExtResource( 1 )
 [node name="TurnQueue" parent="." instance=ExtResource( 2 )]
 
 [node name="Blue" parent="TurnQueue" instance=ExtResource( 3 )]
-position = Vector2( 1227.74, 430.643 )
+position = Vector2( 1288.94, 464.975 )
 
 [node name="Dan" parent="TurnQueue" instance=ExtResource( 4 )]
 material = SubResource( 2 )
-position = Vector2( 1126.24, 562 )
+position = Vector2( 1145.65, 742.617 )
 scale = Vector2( 1.02197, 1 )
-_sections_unfolded = [ "Material", "Visibility", "material" ]
 
 [node name="Porcupine" parent="TurnQueue" instance=ExtResource( 5 )]
-position = Vector2( 675.445, 466.467 )
+position = Vector2( 551.551, 563.493 )
 
 [node name="CombatInterface" type="CanvasLayer" parent="."]
 layer = 100

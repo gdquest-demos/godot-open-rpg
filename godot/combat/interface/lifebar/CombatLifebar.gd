@@ -27,7 +27,7 @@ func initialize(battler : Battler):
 	global_position = anchor.global_position
 	anchor.remote_path = anchor.get_path_to(self)
 	
-	var health_node = battler.health
+	var health_node = battler.stats
 	health_node.connect("health_changed", self, "_on_Battler_health_changed")
 	health_node.connect("health_depleted", self, "_on_Battler_health_depleted")
 	

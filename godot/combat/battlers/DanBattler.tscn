@@ -1,13 +1,28 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://combat/battlers/Battler.tscn" type="PackedScene" id=1]
 [ext_resource path="res://animation/DanAnim.tscn" type="PackedScene" id=2]
 
-[node name="Dan" index="0" groups=[
+[sub_resource type="Shader" id=1]
+
+code = "shader_type canvas_item;
+
+
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+
+render_priority = 0
+shader = SubResource( 1 )
+_sections_unfolded = [ "shader" ]
+
+[node name="Dan" groups=[
 "party",
 ] instance=ExtResource( 1 )]
+material = SubResource( 2 )
+_sections_unfolded = [ "Material", "Visibility", "material" ]
 
-[node name="DanSkin" parent="Skin" index="0" instance=ExtResource( 2 )]
+[node name="DanAnim" parent="Skin" index="0" instance=ExtResource( 2 )]
 
 [node name="InterfaceAnchor" parent="." index="3"]
 position = Vector2( 0, 60.5757 )
