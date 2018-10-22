@@ -21,9 +21,9 @@ func initialize():
 	stats.connect("health_depleted", self, "_on_health_depleted")
 	self.selectable = true
 
-func play_turn(target : Battler, action : CombatAction):
+func play_turn(target : Battler, action):
 	yield(skin.move_forward(), "completed")
-	attack(target)
+	action.execute(self, target)
 	yield(skin.move_to(target), "completed")
 	yield(get_tree().create_timer(1.0), "timeout")
 	yield(skin.return_to_start(), "completed")

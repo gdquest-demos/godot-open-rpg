@@ -1,5 +1,4 @@
 extends CombatAction
 
-func execute():
-	return
-	
+func execute(actor : Battler, target : Battler):
+	return actor.attack(target)
