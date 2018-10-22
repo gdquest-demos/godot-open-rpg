@@ -31,12 +31,17 @@ func play_turn():
 	if active:
 		play_turn()
 
-func get_battlers():
+func get_battlers() -> Array:
 	return turn_queue.get_children()
 
-func get_active_battler():
+func get_active_battler() -> Battler:
 	return turn_queue.active_battler
 
-func get_targets():
+func get_targets() -> Array:
 	var target_group = "monster" if get_active_battler().is_in_group("party") else "party"
-	return get_tree().get_nodes_in_group(target_group)
+	var selectable_battlers : Array = []
+	for battler in get_tree().get_nodes_in_group(target_group):
+		if not battler.selectable:
+			continue
+		selectable_battlers.append(battler)
+	return selectable_battlers

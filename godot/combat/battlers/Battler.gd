@@ -12,10 +12,14 @@ onready var actions = $Actions
 var target_global_position : Vector2
 
 var selected : bool = false setget set_selected
+var selectable : bool = false
 
 func initialize():
 	var direction : Vector2 = Vector2(-1.0, 0.0) if is_in_group('party') else Vector2(1.0, 0.0)
 	target_global_position = $TargetAnchor.global_position + direction * TARGET_OFFSET_DISTANCE
+	
+	stats.connect("health_depleted", self, "_on_health_depleted")
+	self.selectable = true
 
 func play_turn(target : Battler, action : CombatAction):
 	yield(skin.move_forward(), "completed")
@@ -34,4 +38,9 @@ func attack(target : Battler):
 
 func take_damage(hit):
 	stats.take_damage(hit)
-	skin.stagger()
+	skin.play_stagger()
+
+func _on_health_depleted():
+	selectable = false
+	yield(skin.play_death(), "completed")
+	queue_free()
