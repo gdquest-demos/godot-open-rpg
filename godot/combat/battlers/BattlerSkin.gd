@@ -60,5 +60,8 @@ func set_blink(value):
 	else:
 		anim.play("idle")
 
-func stagger():
-	battler_anim.stagger()
+func play_stagger():
+	battler_anim.play_stagger()
+
+func play_death():
+	yield(battler_anim.play_death(), "completed")
