@@ -5,6 +5,9 @@ onready var interface = $CombatInterface
 
 var active : bool = false
 
+const GROUP_PARTY = "party"
+const GROUP_MONSTERS = "monster"
+
 func _ready():
 	initialize()
 
@@ -19,11 +22,21 @@ func battle_start():
 	active = true
 	play_turn()
 
+func battle_end():
+	active = false
+	var player_lost = get_active_battler().is_in_group(GROUP_MONSTERS)
+	print('Player lost: %s' % player_lost)
+
 func play_turn():
 	var battler : Battler = get_active_battler()
 	battler.selected = true
 	
-	var target : Battler = get_targets()[0]
+	var targets : Array = get_targets()
+	if not targets:
+		battle_end()
+		return
+
+	var target : Battler = targets[0]
 	var action : CombatAction = get_active_battler().actions.get_child(0)
 	yield(turn_queue.play_turn(target, action), "completed")
 	
@@ -38,7 +51,7 @@ func get_active_battler() -> Battler:
 	return turn_queue.active_battler
 
 func get_targets() -> Array:
-	var target_group = "monster" if get_active_battler().is_in_group("party") else "party"
+	var target_group = GROUP_MONSTERS if get_active_battler().is_in_group(GROUP_PARTY) else GROUP_PARTY
 	var selectable_battlers : Array = []
 	for battler in get_tree().get_nodes_in_group(target_group):
 		if not battler.selectable:
