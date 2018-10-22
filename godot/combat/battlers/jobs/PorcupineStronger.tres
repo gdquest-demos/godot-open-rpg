@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://combat/battlers/jobs/StartingStats.gd" type="Script" id=1]
+
+[resource]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Resource", "Script", "script" ]
+job_name = "PorcupineStrong"
+max_health = 11
+strength = 4
+defense = 1
+

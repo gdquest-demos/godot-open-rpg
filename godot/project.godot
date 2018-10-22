@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://combat/battlers/Job.gd"
 }, {
+"base": "Resource",
+"class": "StartingStats",
+"language": "GDScript",
+"path": "res://combat/battlers/jobs/StartingStats.gd"
+}, {
 "base": "YSort",
 "class": "TurnQueue",
 "language": "GDScript",
@@ -51,6 +56,7 @@ _global_script_class_icons={
 "CombatAction": "",
 "Hit": "",
 "Job": "",
+"StartingStats": "",
 "TurnQueue": ""
 }
 
