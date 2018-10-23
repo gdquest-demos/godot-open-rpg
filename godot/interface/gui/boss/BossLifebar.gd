@@ -14,7 +14,6 @@ func _ready():
 func initialize(health_node):
 	bar.max_value = health_node.max_health
 	bar.value = health_node.health
-	print(bar.value)
 	health_node.connect('health_changed', self, '_on_Health_health_changed')
 
 func appear():
