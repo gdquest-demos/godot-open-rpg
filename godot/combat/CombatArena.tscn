@@ -51,9 +51,11 @@ position = Vector2( 618, 776.096 )
 
 [node name="Blue" parent="TurnQueue" instance=ExtResource( 5 )]
 position = Vector2( 1285.1, 453.096 )
+party_member = true
 
 [node name="Dan" parent="TurnQueue" instance=ExtResource( 6 )]
 position = Vector2( 1376, 672 )
+party_member = true
 
 [node name="CombatInterface" type="CanvasLayer" parent="."]
 layer = 100
@@ -65,7 +67,6 @@ script = ExtResource( 7 )
 
 [node name="SelectArrow" parent="CombatInterface" instance=ExtResource( 8 )]
 position = Vector2( -39, -51 )
-MOVE_DURATION = null
 
 [node name="OldSchoolUI" type="Control" parent="CombatInterface"]
 editor/display_folded = true
