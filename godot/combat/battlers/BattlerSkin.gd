@@ -11,6 +11,7 @@ onready var position_start : Vector2
 var blink : bool = false setget set_blink
 
 func _ready():
+	hide()
 	for child in get_children():
 		if child is BattlerAnim:
 			battler_anim = child
@@ -65,3 +66,6 @@ func play_stagger():
 
 func play_death():
 	yield(battler_anim.play_death(), "completed")
+
+func appear():
+	anim.play("appear")
