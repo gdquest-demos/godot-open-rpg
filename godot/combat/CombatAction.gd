@@ -4,6 +4,7 @@ class_name CombatAction
 
 signal execute_finished()
 
+export var icon : Texture
 export var description : String = "Base combat action"
 
 func execute(actor : Battler, target : Battler):

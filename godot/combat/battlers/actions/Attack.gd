@@ -1,4 +1,5 @@
 extends CombatAction
 
 func execute(actor : Battler, target : Battler):
-	return actor.attack(target)
+	actor.attack(target)
+	emit_signal("execute_finished")
