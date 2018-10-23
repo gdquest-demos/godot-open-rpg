@@ -5,10 +5,6 @@ onready var interface = $CombatInterface
 
 var active : bool = false
 
-func _ready():
-	initialize()
-	battle_start()
-
 func initialize():
 	var battlers : Array = get_battlers()
 	for battler in battlers:

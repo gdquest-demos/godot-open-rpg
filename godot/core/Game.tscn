@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://combat/CombatArena.tscn" type="PackedScene" id=1]
-
-[node name="Game" type="Node"]
-
-[node name="CombatArena" parent="." instance=ExtResource( 1 )]
-
