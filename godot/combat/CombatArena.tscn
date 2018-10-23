@@ -65,6 +65,7 @@ script = ExtResource( 7 )
 
 [node name="SelectArrow" parent="CombatInterface" instance=ExtResource( 8 )]
 position = Vector2( -39, -51 )
+MOVE_DURATION = null
 
 [node name="OldSchoolUI" type="Control" parent="CombatInterface"]
 editor/display_folded = true

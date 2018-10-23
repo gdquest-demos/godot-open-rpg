@@ -43,6 +43,7 @@ tracks/0/keys = {
 
 [node name="SelectArrow" type="Position2D"]
 script = ExtResource( 1 )
+MOVE_DURATION = null
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -5.39153, 0 )
@@ -58,4 +59,12 @@ playback_speed = 1.0
 anims/SETUP = SubResource( 1 )
 anims/wiggle = SubResource( 2 )
 blend_times = [  ]
+
+[node name="Tween" type="Tween" parent="."]
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
 
