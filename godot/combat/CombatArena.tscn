@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://combat/CombatArena.gd" type="Script" id=1]
 [ext_resource path="res://combat/background/StonePlatform.tscn" type="PackedScene" id=2]
@@ -7,8 +7,9 @@
 [ext_resource path="res://combat/battlers/BlueBattler.tscn" type="PackedScene" id=5]
 [ext_resource path="res://combat/battlers/DanBattler.tscn" type="PackedScene" id=6]
 [ext_resource path="res://combat/interface/CombatInterface.gd" type="Script" id=7]
-[ext_resource path="res://interface/default.theme" type="Theme" id=8]
-[ext_resource path="res://combat/interface/lifebar/LifebarsBuilder.tscn" type="PackedScene" id=9]
+[ext_resource path="res://combat/interface/SelectArrow.tscn" type="PackedScene" id=8]
+[ext_resource path="res://interface/default.theme" type="Theme" id=9]
+[ext_resource path="res://combat/interface/lifebar/LifebarsBuilder.tscn" type="PackedScene" id=10]
 
 [node name="CombatArena" type="Node2D"]
 script = ExtResource( 1 )
@@ -62,6 +63,9 @@ scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 7 )
 
+[node name="SelectArrow" parent="CombatInterface" instance=ExtResource( 8 )]
+position = Vector2( -39, -51 )
+
 [node name="OldSchoolUI" type="Control" parent="CombatInterface"]
 editor/display_folded = true
 visible = false
@@ -76,7 +80,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-theme = ExtResource( 8 )
+theme = ExtResource( 9 )
 _sections_unfolded = [ "Theme" ]
 
 [node name="Row" type="HBoxContainer" parent="CombatInterface/OldSchoolUI"]
@@ -295,5 +299,5 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="LifebarsBuilder" parent="CombatInterface" instance=ExtResource( 9 )]
+[node name="LifebarsBuilder" parent="CombatInterface" instance=ExtResource( 10 )]
 

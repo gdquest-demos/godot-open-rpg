@@ -16,6 +16,7 @@ func initialize():
 	for battler in battlers:
 		battler.initialize()
 	interface.initialize(battlers)
+	turn_queue.initialize()
 	battle_start()
 
 func battle_start():
@@ -35,8 +36,13 @@ func play_turn():
 	if not targets:
 		battle_end()
 		return
+	var target : Battler
+	if battler.is_in_group(GROUP_PARTY):
+		 target = yield(interface.select_target(targets), "completed")
+	else:
+		# Temp random selection for the monsters
+		target = targets[randi() % targets.size()]
 
-	var target : Battler = targets[0]
 	var action : CombatAction = get_active_battler().actions.get_child(0)
 	yield(turn_queue.play_turn(target, action), "completed")
 	
