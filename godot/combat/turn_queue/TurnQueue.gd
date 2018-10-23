@@ -36,6 +36,5 @@ func _get_targets(in_party : bool = false) -> Array:
 	var targets : Array = []
 	for child in get_children():
 		if child.party_member == in_party:
-			print("%s is party member: %s" % [child.name, child.party_member])
 			targets.append(child)
 	return targets
