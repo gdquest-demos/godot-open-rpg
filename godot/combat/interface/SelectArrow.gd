@@ -17,7 +17,7 @@ func select_target(battlers : Array) -> Battler:
 	visible = true
 	targets = battlers
 	target_active = targets[0]
-	scale.x = -1.0 if target_active.is_in_group('monster') else 1.0
+	scale.x = 1.0 if target_active.party_member else -1.0
 	global_position = target_active.target_global_position
 	anim_player.play("wiggle")
 	var selected_target : Battler = yield(self, "target_selected")

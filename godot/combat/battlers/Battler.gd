@@ -17,7 +17,7 @@ var selectable : bool = false
 export var party_member = false
 
 func initialize():
-	var direction : Vector2 = Vector2(-1.0, 0.0) if is_in_group('party') else Vector2(1.0, 0.0)
+	var direction : Vector2 = Vector2(-1.0, 0.0) if party_member else Vector2(1.0, 0.0)
 	target_global_position = $TargetAnchor.global_position + direction * TARGET_OFFSET_DISTANCE
 	
 	stats.connect("health_depleted", self, "_on_health_depleted")
