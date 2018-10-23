@@ -10,4 +10,5 @@ job_name = "Fighter"
 max_health = 15
 strength = 4
 defense = 1
+speed = 5
 

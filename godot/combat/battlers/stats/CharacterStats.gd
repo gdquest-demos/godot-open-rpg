@@ -11,11 +11,13 @@ var health : int
 var max_health : int setget set_max_health
 var strength : int
 var defense : int
+var speed : int
 
 func initialize(stats : StartingStats):
 	max_health = stats.max_health
 	strength = stats.strength
 	defense = stats.defense
+	speed = stats.speed
 	health = max_health
 
 func set_max_health(value):

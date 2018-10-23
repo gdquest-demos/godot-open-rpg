@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "CharacterStats",
 "language": "GDScript",
-"path": "res://combat/battlers/stats/Stats.gd"
+"path": "res://combat/battlers/stats/CharacterStats.gd"
 }, {
 "base": "Node",
 "class": "CombatAction",
