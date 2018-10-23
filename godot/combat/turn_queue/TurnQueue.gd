@@ -4,9 +4,6 @@ class_name TurnQueue
 
 onready var active_battler : Battler
 
-func _ready():
-	initialize()
-
 func initialize():
 	var battlers = get_children()
 	battlers.sort_custom(self, 'sort_battlers')
