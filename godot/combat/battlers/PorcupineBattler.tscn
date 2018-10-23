@@ -5,19 +5,16 @@
 [ext_resource path="res://combat/battlers/Job.tscn" type="PackedScene" id=3]
 [ext_resource path="res://combat/battlers/jobs/Porcupine.tres" type="Resource" id=4]
 
-[node name="Porcupine" groups=[
+[node name="Porcupine" index="0" groups=[
 "monster",
 ] instance=ExtResource( 1 )]
-
-[node name="Skin" parent="." index="0"]
-TURN_START_MOVE_DISTANCE = null
-TWEEN_DURATION = null
 
 [node name="PorcupineAnim" parent="Skin" index="0" instance=ExtResource( 2 )]
 
 [node name="Porcupine" parent="." index="1" instance=ExtResource( 3 )]
+_sections_unfolded = [ "skills", "starting_stats" ]
 starting_stats = ExtResource( 4 )
 
-[node name="InterfaceAnchor" parent="." index="3"]
+[node name="InterfaceAnchor" parent="." index="4"]
 position = Vector2( 0, 48.9708 )
 

@@ -7,6 +7,7 @@ var active : bool = false
 
 func _ready():
 	initialize()
+	battle_start()
 
 func initialize():
 	var battlers : Array = get_battlers()
@@ -14,11 +15,22 @@ func initialize():
 		battler.initialize()
 	interface.initialize(battlers)
 	turn_queue.initialize()
-	battle_start()
 
 func battle_start():
 	active = true
+	yield(play_intro(), "completed")
 	play_turn()
+
+func play_intro():
+	"""Play the appear animation on all battlers in cascade"""
+	for battler in turn_queue.get_party():
+		battler.appear()
+		yield(get_tree().create_timer(0.15), "timeout")
+	yield(get_tree().create_timer(0.8), "timeout")
+	for battler in turn_queue.get_monsters():
+		battler.appear()
+		yield(get_tree().create_timer(0.15), "timeout")
+	yield(get_tree().create_timer(0.8), "timeout")
 
 func battle_end():
 	active = false

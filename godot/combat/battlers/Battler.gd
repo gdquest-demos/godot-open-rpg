@@ -14,6 +14,8 @@ var target_global_position : Vector2
 var selected : bool = false setget set_selected
 var selectable : bool = false
 
+export var party_member = false
+
 func initialize():
 	var direction : Vector2 = Vector2(-1.0, 0.0) if is_in_group('party') else Vector2(1.0, 0.0)
 	target_global_position = $TargetAnchor.global_position + direction * TARGET_OFFSET_DISTANCE
@@ -44,3 +46,8 @@ func _on_health_depleted():
 	selectable = false
 	yield(skin.play_death(), "completed")
 	queue_free()
+
+func appear():
+	var offset_direction = 1.0 if party_member else -1.0
+	skin.position.x += TARGET_OFFSET_DISTANCE * offset_direction
+	skin.appear()
