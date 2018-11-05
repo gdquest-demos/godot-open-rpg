@@ -2,7 +2,7 @@
 
 [ext_resource path="res://combat/battlers/Battler.tscn" type="PackedScene" id=1]
 [ext_resource path="res://animation/DanAnim.tscn" type="PackedScene" id=2]
-[ext_resource path="res://combat/battlers/Job.tscn" type="PackedScene" id=3]
+[ext_resource path="res://combat/battlers/jobs/Fighter.tres" type="Resource" id=3]
 
 [sub_resource type="Shader" id=1]
 
@@ -15,16 +15,15 @@ code = "shader_type canvas_item;
 
 render_priority = 0
 shader = SubResource( 1 )
-_sections_unfolded = [ "shader" ]
 
 [node name="Dan" index="0" instance=ExtResource( 1 )]
 material = SubResource( 2 )
-_sections_unfolded = [ "Material", "Visibility", "material" ]
 
 [node name="DanAnim" parent="Skin" index="0" instance=ExtResource( 2 )]
 
-[node name="Fighter" parent="." index="1" instance=ExtResource( 3 )]
+[node name="Job" parent="." index="1"]
+starting_stats = ExtResource( 3 )
 
-[node name="InterfaceAnchor" parent="." index="4"]
+[node name="InterfaceAnchor" parent="." index="3"]
 position = Vector2( 0, 60.5757 )
 

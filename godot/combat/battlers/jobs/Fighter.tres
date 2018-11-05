@@ -5,7 +5,6 @@
 [resource]
 
 script = ExtResource( 1 )
-_sections_unfolded = [ "Resource", "Script", "script" ]
 job_name = "Fighter"
 max_health = 15
 strength = 4
