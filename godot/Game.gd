@@ -15,4 +15,3 @@ func enter_battle():
 	yield(get_tree().create_timer(0.8), "timeout")
 	yield(transition.fade_from_color(), "completed")
 	combat_arena.battle_start()
-	

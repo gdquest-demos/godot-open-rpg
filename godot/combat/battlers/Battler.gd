@@ -16,7 +16,7 @@ var selectable : bool = false
 
 export var party_member = false
 
-func initialize():
+func _ready() -> void:
 	var direction : Vector2 = Vector2(-1.0, 0.0) if party_member else Vector2(1.0, 0.0)
 	target_global_position = $TargetAnchor.global_position + direction * TARGET_OFFSET_DISTANCE
 	

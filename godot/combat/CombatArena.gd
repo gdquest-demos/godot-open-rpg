@@ -6,9 +6,7 @@ onready var interface = $CombatInterface
 var active : bool = false
 
 func initialize():
-	var battlers : Array = get_battlers()
-	for battler in battlers:
-		battler.initialize()
+	var battlers = turn_queue.get_battlers()
 	interface.initialize(battlers)
 	turn_queue.initialize()
 
@@ -18,7 +16,7 @@ func battle_start():
 	play_turn()
 
 func play_intro():
-	"""Play the appear animation on all battlers in cascade"""
+	# Play the appear animation on all battlers in cascade
 	for battler in turn_queue.get_party():
 		battler.appear()
 		yield(get_tree().create_timer(0.15), "timeout")
@@ -45,7 +43,7 @@ func play_turn():
 	if battler.party_member:
 		 target = yield(interface.select_target(targets), "completed")
 	else:
-		# Temp random selection for the monsters
+		# Temp random target selection for the monsters
 		target = targets[randi() % targets.size()]
 
 	var action : CombatAction = get_active_battler().actions.get_child(0)
@@ -54,9 +52,6 @@ func play_turn():
 	battler.selected = false
 	if active:
 		play_turn()
-
-func get_battlers() -> Array:
-	return turn_queue.get_children()
 
 func get_active_battler() -> Battler:
 	return turn_queue.active_battler

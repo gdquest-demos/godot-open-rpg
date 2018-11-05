@@ -5,7 +5,7 @@ class_name TurnQueue
 onready var active_battler : Battler
 
 func initialize():
-	var battlers = get_children()
+	var battlers = get_battlers()
 	battlers.sort_custom(self, 'sort_battlers')
 	for battler in battlers:
 		battler.raise()
@@ -38,3 +38,6 @@ func _get_targets(in_party : bool = false) -> Array:
 		if child.party_member == in_party:
 			targets.append(child)
 	return targets
+
+func get_battlers():
+	return get_children()
