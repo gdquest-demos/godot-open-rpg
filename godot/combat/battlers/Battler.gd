@@ -4,6 +4,7 @@ class_name Battler
 
 export var TARGET_OFFSET_DISTANCE : float = 120.0
 
+const DEFAULT_CHANCE = 0.75
 onready var stats : CharacterStats = $Job/Stats
 onready var lifebar_anchor = $InterfaceAnchor
 onready var skin = $Skin
@@ -51,3 +52,19 @@ func appear():
 	var offset_direction = 1.0 if party_member else -1.0
 	skin.position.x += TARGET_OFFSET_DISTANCE * offset_direction
 	skin.appear()
+
+func choose_target(targets : Array):
+	''' This function will return a target with the following policy:
+		There is a chance of DEFAULT_CHANCE to target the foe with min health
+		else it will randomly choose an opponent'''
+	var this_chance = randi() % 100
+	var target_min_health = targets[randi() % len(targets)]
+	
+	if this_chance > DEFAULT_CHANCE:
+		return target_min_health
+	
+	var min_health = target_min_health.stats.health 
+	for target in targets:
+		if target.stats.health < min_health:
+			target_min_health = target
+	return target_min_health
