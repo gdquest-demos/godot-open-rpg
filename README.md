@@ -16,5 +16,6 @@ All contributors are welcome 🙂. However, to make the experience as smooth as 
 
 - Let's get in touch and communicate! Use the issues tab to let everyone know what you are working on, to report bugs, and to suggest improvements. Join the [GDquest Discord server](https://discord.gg/87NNb3Z) to talk about the project live
 - If you're contributing code, we follow the [GDScript styleguide](http://docs.godotengine.org/en/latest/getting_started/scripting/gdscript/gdscript_styleguide.html). Try to make your code clean and self-documenting as it helps us to build upon each other's work, and users to learn from the demo. We're using static typing to get more robust code and get full autocompletion in Godot 3.1 Also, we're here to review and to help you improve your code.
+- At times, the maintainers may refactor or tweak your code to make it fit the project's style, and for educational purposes. But we'll give you the opportunity to refine the style by yourself
 
 Check our full [Contributors Guide](http://gdquest.com/open-source/contributing-guidelines/) for more information 😄
