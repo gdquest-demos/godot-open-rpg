@@ -44,7 +44,7 @@ func play_turn():
 		 target = yield(interface.select_target(targets), "completed")
 	else:
 		# Temp random target selection for the monsters
-		target = targets[randi() % targets.size()]
+		target = battler.choose_target(targets)
 
 	var action : CombatAction = get_active_battler().actions.get_child(0)
 	yield(turn_queue.play_turn(target, action), "completed")
