@@ -8,18 +8,16 @@ Final Fantasy series.
 The goal of this project is to provide the gamedev community with a demo that
 shows how game systems interlock together in a sizeable game, in Godot.
 
-It is a 2D JRPG inspired by the old installments in Final Fantasy series.
+This demo is both a framework to create turn-based RPGs, it is also an
+educational and a community-driven, international project.
 
-This demo is both an educational and a community-driven, international project. If it
-stems from a classic turn-based game like Final Fantasy IV or V, the design process involves contributors from all around the world to steer the project's design moving forward.
+The initial demo intentionally draws inspiration from RPG Maker and old
+instalments in the Final Fantasy and Dragon Quest series. The idea is to make
+the engine's foundations both classic, so we all have a reference to work from,
+and flexible so we can all contribute to the project creatively.
 
-The initial demo intentionally draws inspiration from RPG Maker. The idea is to
-make the engine's foundations both classic, so we all have a reference to work
-from, and flexible so we can all contribute to the project creatively.
-
-<!-- ## Aesthetics ## -->
-
-<!-- ### The world ### -->
+For more details on the project's scope and open tasks, check the [Github
+milestones](https://github.com/GDquest/godot-turn-based-rpg/milestones).
 
 ## Story
 
@@ -43,11 +41,62 @@ The idea is to produce a standard yet a flexible foundation, primarily inspired 
 
 ### Combat system
 
+The combat system aims to serve as a base to build turn-based role playing game. It draws inspiration from old instalments of the Final Fantasy and Dragon Quest series, as well as RPG Maker.
+
 Battle encounters are turn-based. The battlers act one after the other in an order decided depending on their speed.
 
 Each character has a distinct set of available combat actions depending on their job.
 
+<!-- #### Style -->
+
+<!-- Style points allow characters to unleash powerful attacks.  -->
+
+
+## Characters
+
+### Robi the robot
+
+Robi is a delicate and a timorous robot. He's afraid of dirt, of the dark, of the unknown... he's ashamed of bad words and is especially shy. He wants to look strong so he tries to hide his real feelings.
+
+#### In combat
+
+Robi's weapon of choice is a bilboquet. He fires it at enemies and uses it to either hit one or multiple opponents, swinging his weapon like a wrecking ball.
+
+Robi has focused, powerful attacks that target one enemy but temporarily leave it out of power, and shallow ones that can affect multiple opponents for moderate damage. He also protects its allies.
+
+##### Energy
+
+Robi relies on energy to fight. Energy slowly refills on every turn. When out of batteries, Robi falls in falls in Eco mode until his batteries fully recharged. In Eco mode, Robi becomes weaker.
+
+Robi can enter recharge mode to refill his energy a lot faster, in which case he's unusable for a few turns.
+
+##### Special abilities
+
+Meteor strike: Robi jumps out of the battlefield and propels himself up into the stratosphere. He fires a bullet that falls on his foes like a meteorite.
+
+### Godette
+
+Godette is an adventurous, if not a reckless young girl. She's curious about anything and everything.
+
+### Kitty
+
+Kitty's a mischievous cat. He's a selfish liar and a thief.
+
+#### In combat
+
+Kitty does not like orders. He does not always listen to the player: the player's goal is to figure out which order is most likely to succeed. When in danger, he will hide behind his teammates to protect himself.
+
 ## Aesthetics
+
+Cute, colorful, round, stylized.
+
+## The world
+
+The world of Godot is a sandbox game. It mixes unspoiled nature and technology, especially elements related to game creation.
+
+### The characters' opponents
+
+Bugs?
 
 ## Technology ##
 
