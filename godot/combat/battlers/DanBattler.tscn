@@ -17,7 +17,7 @@ code = "shader_type canvas_item;
 render_priority = 0
 shader = SubResource( 1 )
 
-[node name="Dan" index="0" instance=ExtResource( 1 )]
+[node name="Dan" instance=ExtResource( 1 )]
 material = SubResource( 2 )
 
 [node name="DanAnim" parent="Skin" index="0" instance=ExtResource( 2 )]

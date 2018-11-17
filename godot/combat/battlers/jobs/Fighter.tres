@@ -9,28 +9,28 @@ max_value = 210.0
 bake_resolution = 10
 _data = [ Vector2( 0, 0 ), 0.0, 210.0, 0, 1, Vector2( 1, 210 ), 210.0, 0.0, 1, 0 ]
 
-[sub_resource type="Curve" id=3]
+[sub_resource type="Curve" id=2]
 
 min_value = 0.0
 max_value = 999.0
 bake_resolution = 10
 _data = [ Vector2( 0, 68.7313 ), 0.0, 0.0, 0, 0, Vector2( 0.168959, 376.423 ), 1283.12, 1283.12, 0, 0, Vector2( 1, 999 ), 2386.91, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=3]
 
 min_value = 0.0
 max_value = 80.0
 bake_resolution = 10
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.603628, 45.632 ), 6.7181, 291.117, 0, 0, Vector2( 1, 80 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=5]
+[sub_resource type="Curve" id=4]
 
 min_value = 0.99
 max_value = 145.0
 bake_resolution = 10
 _data = [ Vector2( 0, 3 ), 0.0, 0.0, 0, 0, Vector2( 0.992522, 145 ), 198.8, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=5]
 
 min_value = 0.99
 max_value = 233.0
@@ -41,9 +41,9 @@ _data = [ Vector2( 0, 8 ), 0.0, 803.058, 0, 0, Vector2( 0.251992, 114.45 ), -17.
 
 script = ExtResource( 1 )
 experience_curve = [ 0, 5, 15, 50, 120, 200, 325, 500, 800, 1250 ]
-max_health_curve = SubResource( 3 )
-max_mana_curve = SubResource( 4 )
-strength_curve = SubResource( 6 )
+max_health_curve = SubResource( 2 )
+max_mana_curve = SubResource( 3 )
+strength_curve = SubResource( 5 )
 defense_curve = SubResource( 1 )
-speed_curve = SubResource( 5 )
+speed_curve = SubResource( 4 )
 
