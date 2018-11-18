@@ -1,1 +1,4 @@
 .import
+
+# Jetbrains stuff
+.idea
