@@ -2,10 +2,6 @@
 
 [ext_resource path="res://combat/battlers/stats/CharacterStats.gd" type="Script" id=1]
 
-
 [node name="Stats" type="Node"]
 script = ExtResource( 1 )
-max_health = 9
-strength = null
-defense = null
 

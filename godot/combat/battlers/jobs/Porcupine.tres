@@ -7,8 +7,9 @@
 script = ExtResource( 1 )
 job_name = "Porcupine"
 max_health = 6
-max_mana = null
+max_mana = 0
 strength = 3
 defense = 0
 speed = 2
+experience = 5
 

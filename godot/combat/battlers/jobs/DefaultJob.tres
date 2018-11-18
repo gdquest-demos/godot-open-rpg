@@ -7,8 +7,9 @@
 script = ExtResource( 1 )
 job_name = "Job"
 max_health = 6
-max_mana = null
+max_mana = 0
 strength = 2
 defense = 0
-speed = null
+speed = 0
+experience = 0
 

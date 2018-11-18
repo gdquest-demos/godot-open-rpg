@@ -57,6 +57,8 @@ party_member = false
 [node name="Skin" type="Position2D" parent="."]
 modulate = Color( 1, 1, 1, 0 )
 script = ExtResource( 2 )
+TURN_START_MOVE_DISTANCE = null
+TWEEN_DURATION = null
 
 [node name="Tween" type="Tween" parent="Skin"]
 repeat = false
