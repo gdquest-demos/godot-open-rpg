@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://combat/battlers/skills/Skill.gd" type="Script" id=1]
+
+[resource]
+
+script = ExtResource( 1 )
+skill_name = "Slash"
+skill_description = "Devastating blow with your sword!"
+mana_cost = 4
+base_damage = 2
+success_chance = 1.0
+
