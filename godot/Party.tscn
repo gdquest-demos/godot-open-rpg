@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Party.gd" type="Script" id=1]
+[ext_resource path="res://combat/battlers/DanBattler.tscn" type="PackedScene" id=2]
+[ext_resource path="res://combat/battlers/Battler.gd" type="Script" id=3]
+[ext_resource path="res://combat/battlers/BlueBattler.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Shader" id=1]
+
+code = "shader_type canvas_item;
+
+
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+
+shader = SubResource( 1 )
+
+[node name="Party" type="Node2D"]
+editor/display_folded = true
+visible = false
+script = ExtResource( 1 )
+
+[node name="Dan" type="Position2D" parent="." instance=ExtResource( 2 )]
+material = SubResource( 2 )
+script = ExtResource( 3 )
+party_member = true
+
+[node name="Blue" type="Position2D" parent="." instance=ExtResource( 4 )]
+script = ExtResource( 3 )
+party_member = true
+
