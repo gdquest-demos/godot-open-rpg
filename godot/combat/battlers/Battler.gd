@@ -64,7 +64,7 @@ func appear():
 	skin.appear()
 
 func choose_target(targets : Array):
-  """
+	"""
 	This function will return a target with the following policy:
 	else it will randomly choose an opponent
 	"""
