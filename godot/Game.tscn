@@ -12,3 +12,4 @@ script = ExtResource( 1 )
 [node name="Overlays" type="CanvasLayer" parent="."]
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 3 )]
+

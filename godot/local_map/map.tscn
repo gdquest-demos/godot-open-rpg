@@ -42,7 +42,7 @@ position = Vector2( 416, 288 )
 position = Vector2( 480, 480 )
 z_index = 1
 script = ExtResource( 6 )
-formation_name = "res://combat/battlers/formations/PorcupineFormation001.tscn"
+formation_name = ""
 
 [node name="Sprite" type="Sprite" parent="Grid/Actor2"]
 texture = ExtResource( 7 )
