@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-onready var lifebar_builder = $LifebarsBuilder
+onready var lifebar_builder = $BattlersBarsBuilder
 onready var select_arrow = $SelectArrow
 onready var action_list = $ActionSelector/ItemList
 

@@ -9,7 +9,7 @@
 [ext_resource path="res://combat/interface/CombatInterface.gd" type="Script" id=7]
 [ext_resource path="res://combat/interface/SelectArrow.tscn" type="PackedScene" id=8]
 [ext_resource path="res://interface/default.theme" type="Theme" id=9]
-[ext_resource path="res://combat/interface/lifebar/LifebarsBuilder.tscn" type="PackedScene" id=10]
+[ext_resource path="res://combat/interface/bars/BattlersBarsBuilder.tscn" type="PackedScene" id=10]
 [ext_resource path="res://combat/Rewards.gd" type="Script" id=11]
 
 [node name="CombatArena" type="Node2D"]
@@ -59,7 +59,6 @@ position = Vector2( 1376, 672 )
 party_member = true
 
 [node name="CombatInterface" type="CanvasLayer" parent="."]
-editor/display_folded = true
 layer = 100
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -333,7 +332,7 @@ allow_reselect = false
 icon_mode = 1
 fixed_icon_size = Vector2( 0, 0 )
 
-[node name="LifebarsBuilder" parent="CombatInterface" instance=ExtResource( 10 )]
+[node name="BattlersBarsBuilder" parent="CombatInterface" instance=ExtResource( 10 )]
 
 [node name="Rewards" type="CanvasLayer" parent="."]
 layer = 1

@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fill.png-c68ec5a855d3ff8b6c8be84000544f72.stex"
+path="res://.import/background.png-c00d4185e9960500d646d123f3877258.stex"
 
 [deps]
 
-source_file="res://combat/interface/lifebar/fill.png"
-dest_files=[ "res://.import/fill.png-c68ec5a855d3ff8b6c8be84000544f72.stex" ]
+source_file="res://combat/interface/bars/background.png"
+dest_files=[ "res://.import/background.png-c00d4185e9960500d646d123f3877258.stex" ]
 
 [params]
 

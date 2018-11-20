@@ -10,6 +10,7 @@ onready var lifebar_anchor = $InterfaceAnchor
 onready var skin = $Skin
 onready var actions = $Actions
 onready var skills = $Job/Skills
+onready var bars = $Bars
 
 var target_global_position : Vector2
 

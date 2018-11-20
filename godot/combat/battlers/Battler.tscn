@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://combat/battlers/Battler.gd" type="Script" id=1]
 [ext_resource path="res://combat/battlers/BattlerSkin.gd" type="Script" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://combat/battlers/actions/SkillAction.tscn" type="PackedScene" id=7]
 [ext_resource path="res://combat/battlers/actions/Attack.tscn" type="PackedScene" id=8]
 [ext_resource path="res://combat/battlers/actions/Attack.gd" type="Script" id=9]
-[ext_resource path="res://combat/interface/lifebar/InterfaceAnchor.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Animation" id=1]
 
@@ -90,8 +89,23 @@ skill_action_scene = ExtResource( 7 )
 [node name="Attack" parent="Actions" instance=ExtResource( 8 )]
 script = ExtResource( 9 )
 
-[node name="InterfaceAnchor" parent="." instance=ExtResource( 10 )]
-position = Vector2( 0, 42 )
-
 [node name="TargetAnchor" type="Position2D" parent="."]
+
+[node name="Bars" type="VBoxContainer" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -100.0
+margin_top = 70.0
+margin_right = 100.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 200, 20 )
+rect_pivot_offset = Vector2( 100, 10 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
 
