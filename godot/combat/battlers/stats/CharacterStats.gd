@@ -4,13 +4,15 @@ class_name CharacterStats
 
 signal health_changed(new_health)
 signal health_depleted()
+signal mana_changed(new_mana)
+signal mana_depleted()
 
 var modifiers = {}
 
 var stats : StartingStats
 
 var health : int
-var mana : int
+var mana : int setget set_mana
 var max_health : int setget set_max_health
 var max_mana : int setget set_max_mana
 var strength : int
@@ -62,6 +64,12 @@ func take_damage(hit):
 	emit_signal("health_changed", health)
 	if health == 0:
 		emit_signal("health_depleted")
+
+func set_mana(value):
+	mana = max(0, value)
+	emit_signal("mana_changed", mana)
+	if mana == 0:
+		emit_signal("mana_depleted")
 
 func heal(amount):
 	health += amount

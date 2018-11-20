@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://combat/interface/bars/HookableValueBar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://combat/interface/bars/manabar/ManaBar.gd" type="Script" id=2]
+[ext_resource path="res://combat/interface/bars/manabar/fill.png" type="Texture" id=3]
+
+[node name="HookableManaBar" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+LABEL_ABOVE = null
+HIDE_ON_DEPLETED = true
+
+[node name="TextureProgress" parent="Column" index="0"]
+texture_progress = ExtResource( 3 )
+
