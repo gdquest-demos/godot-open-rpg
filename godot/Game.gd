@@ -3,11 +3,12 @@ extends Node
 var combat_arena = preload("res://combat/CombatArena.tscn").instance()
 
 onready var transition = $Overlays/TransitionColor
-onready var local_map = get_node("local_map")
+onready var local_map = get_node("LocalMap")
 
 var transitioning = false
 func _ready():
 	#enter_battle()
+	local_map.connect("encounter", self, "enter_battle")
 	local_map.visible = true
 
 
