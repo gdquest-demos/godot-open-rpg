@@ -5,10 +5,11 @@ class_name Battler
 export var TARGET_OFFSET_DISTANCE : float = 120.0
 
 const DEFAULT_CHANCE = 0.75
-onready var stats : CharacterStats = $Job/Stats
+onready var stats : CharacterStats = $Job.stats
 onready var lifebar_anchor = $InterfaceAnchor
 onready var skin = $Skin
 onready var actions = $Actions
+onready var skills = $Job/Skills
 
 var target_global_position : Vector2
 
@@ -20,6 +21,8 @@ export var party_member = false
 func _ready() -> void:
 	var direction : Vector2 = Vector2(-1.0, 0.0) if party_member else Vector2(1.0, 0.0)
 	target_global_position = $TargetAnchor.global_position + direction * TARGET_OFFSET_DISTANCE
+	
+	actions.initialize(skills.get_children())
 	
 	stats.connect("health_depleted", self, "_on_health_depleted")
 	self.selectable = true
@@ -39,6 +42,13 @@ func attack(target : Battler):
 	var hit = Hit.new(stats.strength)
 	target.take_damage(hit)
 
+func use_skill(target : Battler, skill : CharacterSkill) -> void:
+	if stats.mana < skill.mana_cost:
+		return
+	stats.mana -= skill.mana_cost
+	var hit = Hit.new(stats.strength, skill.base_damage) 
+	target.take_damage(hit)
+
 func take_damage(hit):
 	stats.take_damage(hit)
 	skin.play_stagger()
@@ -54,9 +64,8 @@ func appear():
 	skin.appear()
 
 func choose_target(targets : Array):
-	"""
+  """
 	This function will return a target with the following policy:
-	There is a chance of DEFAULT_CHANCE to target the foe with min health
 	else it will randomly choose an opponent
 	"""
 	var this_chance = randi() % 100

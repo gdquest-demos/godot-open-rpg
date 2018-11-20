@@ -2,13 +2,18 @@ extends Node2D
 
 onready var turn_queue : TurnQueue = $TurnQueue
 onready var interface = $CombatInterface
+onready var rewards = $Rewards
 
 var active : bool = false
+
+signal victory
+signal gameover
 
 func initialize():
 	var battlers = turn_queue.get_battlers()
 	interface.initialize(battlers)
 	turn_queue.initialize()
+	rewards.initialize(battlers)
 
 func battle_start():
 	active = true
@@ -29,7 +34,10 @@ func play_intro():
 func battle_end():
 	active = false
 	var player_lost = get_active_battler().party_member
-	print('Player lost: %s' % player_lost)
+	if player_lost:
+		emit_signal("victory")
+	else:
+		emit_signal("gameover")
 
 func play_turn():
 	var battler : Battler = get_active_battler()
@@ -40,13 +48,17 @@ func play_turn():
 		battle_end()
 		return
 	var target : Battler
+	var action : CombatAction
 	if battler.party_member:
-		 target = yield(interface.select_target(targets), "completed")
+		interface.update_actions(battler)
+		target = yield(interface.select_target(targets), "completed")
+#		action = get_active_battler().actions.get_child(0)
+		action = interface.selected_action
 	else:
 		# Temp random target selection for the monsters
 		target = battler.choose_target(targets)
+		action = get_active_battler().actions.get_child(0)
 
-	var action : CombatAction = get_active_battler().actions.get_child(0)
 	yield(turn_queue.play_turn(target, action), "completed")
 	
 	battler.selected = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://combat/CombatArena.gd" type="Script" id=1]
 [ext_resource path="res://combat/background/StonePlatform.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://combat/interface/SelectArrow.tscn" type="PackedScene" id=8]
 [ext_resource path="res://interface/default.theme" type="Theme" id=9]
 [ext_resource path="res://combat/interface/lifebar/LifebarsBuilder.tscn" type="PackedScene" id=10]
+[ext_resource path="res://combat/Rewards.gd" type="Script" id=11]
 
 [node name="CombatArena" type="Node2D"]
 script = ExtResource( 1 )
@@ -37,8 +38,8 @@ position = Vector2( 1285.1, 453.096 )
 position = Vector2( 1376, 672 )
 
 [node name="TurnQueue" parent="." instance=ExtResource( 3 )]
+editor/display_folded = true
 z_index = 10
-_sections_unfolded = [ "Z Index" ]
 
 [node name="Porcupine" parent="TurnQueue" instance=ExtResource( 4 )]
 position = Vector2( 746, 357.096 )
@@ -58,6 +59,7 @@ position = Vector2( 1376, 672 )
 party_member = true
 
 [node name="CombatInterface" type="CanvasLayer" parent="."]
+editor/display_folded = true
 layer = 100
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -83,7 +85,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 theme = ExtResource( 9 )
-_sections_unfolded = [ "Theme" ]
 
 [node name="Row" type="HBoxContainer" parent="CombatInterface/OldSchoolUI"]
 anchor_left = 0.0
@@ -129,7 +130,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
-_sections_unfolded = [ "Grow Direction", "Margin" ]
 
 [node name="MonsterWidget" type="HBoxContainer" parent="CombatInterface/OldSchoolUI/Row/MonstersPanel/Column"]
 anchor_left = 0.0
@@ -253,7 +253,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 2.0
-_sections_unfolded = [ "Size Flags" ]
 
 [node name="Column" type="VBoxContainer" parent="CombatInterface/OldSchoolUI/Row/PartyPanel"]
 anchor_left = 0.0
@@ -269,7 +268,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
-_sections_unfolded = [ "Size Flags" ]
 
 [node name="Control" type="Control" parent="CombatInterface/OldSchoolUI/Row/PartyPanel/Column"]
 anchor_left = 0.0
@@ -283,7 +281,6 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-_sections_unfolded = [ "Size Flags" ]
 
 [node name="HSeparator" type="HSeparator" parent="CombatInterface/OldSchoolUI/Row/PartyPanel/Column"]
 anchor_left = 0.0
@@ -299,7 +296,87 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-_sections_unfolded = [ "Size Flags" ]
+
+[node name="ActionSelector" type="Control" parent="CombatInterface"]
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -171.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="ItemList" type="ItemList" parent="CombatInterface/ActionSelector"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -65.0
+margin_top = -70.0
+margin_right = 65.0
+margin_bottom = 70.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+items = [ "Slash", null, false, "Crush", null, true, "Anihilate", null, false ]
+select_mode = 0
+allow_reselect = false
+icon_mode = 1
+fixed_icon_size = Vector2( 0, 0 )
 
 [node name="LifebarsBuilder" parent="CombatInterface" instance=ExtResource( 10 )]
 
+[node name="Rewards" type="CanvasLayer" parent="."]
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+script = ExtResource( 11 )
+
+[node name="Panel" type="Panel" parent="Rewards"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -766.0
+margin_top = 22.0
+margin_right = 767.0
+margin_bottom = 136.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Label" type="Label" parent="Rewards/Panel"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "EXP Earned"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[connection signal="victory" from="." to="Rewards" method="_on_victory"]
+[connection signal="item_selected" from="CombatInterface/ActionSelector/ItemList" to="CombatInterface" method="_on_ItemList_item_selected"]

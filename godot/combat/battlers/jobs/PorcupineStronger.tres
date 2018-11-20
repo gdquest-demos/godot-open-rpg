@@ -5,9 +5,11 @@
 [resource]
 
 script = ExtResource( 1 )
-_sections_unfolded = [ "Resource", "Script", "script" ]
 job_name = "PorcupineStrong"
 max_health = 11
+max_mana = 0
 strength = 4
 defense = 1
+speed = 0
+experience = 8
 
