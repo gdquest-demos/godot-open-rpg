@@ -106,7 +106,7 @@ formation = ExtResource( 7 )
 texture = ExtResource( 9 )
 
 [node name="Dialogue" parent="Grid/Object" instance=ExtResource( 10 )]
-dialogue_file = "res://dialogue/dialogue_data/object.json"
+file_path = "res://dialogue/dialogue_data/object.json"
 
 [node name="MapInterface" type="CanvasLayer" parent="."]
 pause_mode = 2

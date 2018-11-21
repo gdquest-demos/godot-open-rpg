@@ -7,11 +7,11 @@ var dialogue_name : String = ""
 var index : int = 0
 var dialogue_text : String = ""
 
-signal dialogue_started
-signal dialogue_finished
+signal started
+signal finished
 
 func start_dialogue(dialogue):
-	emit_signal("dialogue_started")
+	emit_signal("started")
 	index = 0
 	index_dialogue(dialogue)
 	
@@ -19,13 +19,13 @@ func start_dialogue(dialogue):
 	dialogue_name = dialogue_keys[index].name
 	
 	if is_finished():
-		emit_signal("dialogue_finished")
+		emit_signal("finished")
 
 func next_dialogue():
 	index += 1
 	
 	if is_finished():
-		emit_signal("dialogue_finished")
+		emit_signal("finished")
 		return
 	
 	dialogue_text = dialogue_keys[index].text
