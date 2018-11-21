@@ -65,9 +65,8 @@ func appear():
 	skin.appear()
 
 func choose_target(targets : Array):
-	""" 
+	"""
 	This function will return a target with the following policy:
-	There is a chance of DEFAULT_CHANCE to target the foe with min health
 	else it will randomly choose an opponent
 	"""
 	var this_chance = randi() % 100
