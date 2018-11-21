@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://party/Party.gd" type="Script" id=1]
+[ext_resource path="res://combat/battlers/characters/PartyMember.tscn" type="PackedScene" id=2]
+[ext_resource path="res://combat/battlers/characters/Blue.tres" type="Resource" id=3]
+[ext_resource path="res://combat/battlers/characters/Dan.tres" type="Resource" id=4]
+
+[node name="Party" type="Node2D"]
+visible = false
+script = ExtResource( 1 )
+
+[node name="Blue" parent="." instance=ExtResource( 2 )]
+combat_template = ExtResource( 3 )
+
+[node name="Dan" parent="." instance=ExtResource( 2 )]
+combat_template = ExtResource( 4 )
+

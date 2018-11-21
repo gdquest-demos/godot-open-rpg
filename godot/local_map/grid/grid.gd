@@ -28,7 +28,7 @@ func request_move(pawn, direction):
 			return update_pawn_position(pawn, cell_start, cell_target)
 		CELL_TYPES.ACTOR:
 			var enemy = get_cell_pawn(cell_target)
-			get_parent().emit_signal("encounter" , enemy.formation_name)
+			get_parent().emit_signal("encounter" , enemy.formation.instance())
 
 
 func update_pawn_position(pawn, cell_start, cell_target):

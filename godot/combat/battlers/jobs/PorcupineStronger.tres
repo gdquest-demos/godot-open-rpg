@@ -1,15 +1,14 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://combat/battlers/jobs/StartingStats.gd" type="Script" id=1]
+[ext_resource path="res://combat/battlers/stats/CharacterStats.gd" type="Script" id=1]
 
 [resource]
 
 script = ExtResource( 1 )
-job_name = "PorcupineStrong"
 max_health = 11
 max_mana = 0
 strength = 4
 defense = 1
 speed = 0
-experience = 8
+experience = 3
 

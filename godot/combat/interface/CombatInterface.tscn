@@ -23,7 +23,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 theme = ExtResource( 1 )
-_sections_unfolded = [ "Theme" ]
 
 [node name="Row" type="HBoxContainer" parent="OldSchoolUI"]
 anchor_left = 0.0
@@ -69,7 +68,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
-_sections_unfolded = [ "Grow Direction", "Margin" ]
 
 [node name="MonsterWidget" type="HBoxContainer" parent="OldSchoolUI/Row/MonstersPanel/Column"]
 anchor_left = 0.0
@@ -193,7 +191,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 2.0
-_sections_unfolded = [ "Size Flags" ]
 
 [node name="Column" type="VBoxContainer" parent="OldSchoolUI/Row/PartyPanel"]
 anchor_left = 0.0
@@ -209,7 +206,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
-_sections_unfolded = [ "Size Flags" ]
 
 [node name="Control" type="Control" parent="OldSchoolUI/Row/PartyPanel/Column"]
 anchor_left = 0.0
@@ -223,7 +219,6 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-_sections_unfolded = [ "Size Flags" ]
 
 [node name="HSeparator" type="HSeparator" parent="OldSchoolUI/Row/PartyPanel/Column"]
 anchor_left = 0.0
@@ -239,5 +234,4 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-_sections_unfolded = [ "Size Flags" ]
 

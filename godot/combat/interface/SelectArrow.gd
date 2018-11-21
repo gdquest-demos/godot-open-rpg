@@ -35,14 +35,20 @@ func move_to(battler : Battler):
 		Tween.EASE_OUT)
 	tween.start()
 
-func _input(event):
+func _unhandled_input(event):
+	if not visible:
+		return
+		
 	if event.is_action_pressed("ui_accept"):
 		emit_signal("target_selected", target_active)
+		get_tree().set_input_as_handled()
 	
 	var index = targets.find(target_active)
 	if event.is_action_pressed("ui_down"):
 		target_active = targets[(index + 1) % targets.size()]
 		move_to(target_active)
+		get_tree().set_input_as_handled()
 	if event.is_action_pressed("ui_up"):
 		target_active = targets[(index - 1 + targets.size()) % targets.size()]
 		move_to(target_active)
+		get_tree().set_input_as_handled()
