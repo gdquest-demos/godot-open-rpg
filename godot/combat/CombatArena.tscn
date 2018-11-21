@@ -26,7 +26,9 @@ position = Vector2( 1376, 672 )
 [node name="TurnQueue" parent="." instance=ExtResource( 2 )]
 z_index = 10
 
-[node name="CombatInterface" type="CanvasLayer" parent="."]
+[node name="CombatInterface" type="CanvasLayer" parent="." groups=[
+"interface",
+]]
 layer = 100
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -35,10 +37,8 @@ transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 3 )
 
 [node name="SelectArrow" parent="CombatInterface" instance=ExtResource( 4 )]
-position = Vector2( -39, -51 )
 
 [node name="OldSchoolUI" type="Control" parent="CombatInterface"]
-visible = false
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -95,6 +95,44 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
+
+[node name="ActionSelector" type="Control" parent="CombatInterface/OldSchoolUI/Row/MonstersPanel"]
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -251.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="ItemList" type="ItemList" parent="CombatInterface/OldSchoolUI/Row/MonstersPanel/ActionSelector"]
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath(".")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+items = [ "Slash", null, false, "Crush", null, true, "Anihilate", null, false ]
+select_mode = 0
+allow_reselect = false
+icon_mode = 1
+fixed_icon_size = Vector2( 0, 0 )
 
 [node name="PartyPanel" type="Panel" parent="CombatInterface/OldSchoolUI/Row"]
 anchor_left = 0.0
@@ -155,42 +193,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="ActionSelector" type="Control" parent="CombatInterface"]
-anchor_left = 1.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -171.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-
-[node name="ItemList" type="ItemList" parent="CombatInterface/ActionSelector"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -65.0
-margin_top = -70.0
-margin_right = 65.0
-margin_bottom = 70.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-items = [ "Slash", null, false, "Crush", null, true, "Anihilate", null, false ]
-select_mode = 0
-allow_reselect = false
-icon_mode = 1
-fixed_icon_size = Vector2( 0, 0 )
-
 [node name="BattlersBarsBuilder" parent="CombatInterface" instance=ExtResource( 6 )]
 
 [node name="Rewards" type="CanvasLayer" parent="."]
@@ -236,5 +238,4 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[connection signal="victory" from="." to="Rewards" method="_on_victory"]
-[connection signal="item_selected" from="CombatInterface/ActionSelector/ItemList" to="CombatInterface" method="_on_ItemList_item_selected"]
+[connection signal="item_activated" from="CombatInterface/OldSchoolUI/Row/MonstersPanel/ActionSelector/ItemList" to="CombatInterface" method="_on_ItemList_item_activated"]

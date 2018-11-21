@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://combat/CombatAction.gd"
 }, {
 "base": "Node",
+"class": "DialoguePlayer",
+"language": "GDScript",
+"path": "res://dialogue/dialogue_player/DialoguePlayer.gd"
+}, {
+"base": "Node",
 "class": "Formation",
 "language": "GDScript",
 "path": "res://combat/battlers/Formation.gd"
@@ -49,12 +54,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://combat/Hit.gd"
 }, {
-"base": "Control",
+"base": "",
 "class": "LifeBar",
 "language": "GDScript",
 "path": "res://combat/interface/bars/lifebar/LifeBar.gd"
 }, {
-"base": "Control",
+"base": "",
 "class": "ManaBar",
 "language": "GDScript",
 "path": "res://combat/interface/bars/manabar/ManaBar.gd"
@@ -85,6 +90,7 @@ _global_script_class_icons={
 "BattlerTemplate": "",
 "CharacterStats": "",
 "CombatAction": "",
+"DialoguePlayer": "",
 "Formation": "",
 "GrowthStats": "",
 "Hit": "",

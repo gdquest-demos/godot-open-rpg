@@ -20,7 +20,7 @@ func initialize():
 			break
 
 func move_forward():
-	var direction = Vector2(-1.0, 0.0) if owner.is_in_group("party") else Vector2(1.0, 0.0)
+	var direction = Vector2(-1.0, 0.0) if owner.party_member else Vector2(1.0, 0.0)
 	tween.interpolate_property(
 		self,
 		'position',

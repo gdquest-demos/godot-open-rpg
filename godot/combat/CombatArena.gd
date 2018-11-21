@@ -25,8 +25,8 @@ func initialize(formation : Formation, party : Array):
 	turn_queue.initialize()
 	
 func battle_start():
-	active = true
 	yield(play_intro(), "completed")
+	active = true
 	play_turn()
 
 func play_intro():
@@ -93,27 +93,28 @@ func battle_end():
 
 func play_turn():
 	var battler : Battler = get_active_battler()
-	battler.selected = true
-	
-	var targets : Array = get_targets()
-	if not targets:
-		battle_end()
-		return
-	var target : Battler
-	var action : CombatAction
-	if battler.party_member:
-		interface.update_actions(battler)
-		target = yield(interface.select_target(targets), "completed")
-#		action = get_active_battler().actions.get_child(0)
-		action = interface.selected_action
+	if battler.stats.health > 0:
+		battler.selected = true
+		
+		var targets : Array = get_targets()
+		if not targets:
+			battle_end()
+			return
+		var target : Battler
+		var action : CombatAction
+		if battler.party_member:
+			interface.update_actions(battler)
+			action = yield(interface, "action_selected")
+		else:
+			# Temp random target selection for the monsters
+			action = get_active_battler().actions.get_child(0)
+			action.target = battler.choose_target(targets)
+		
+		yield(turn_queue.play_turn(action), "completed")
+		battler.selected = false
 	else:
-		# Temp random target selection for the monsters
-		target = battler.choose_target(targets)
-		action = get_active_battler().actions.get_child(0)
-
-	yield(turn_queue.play_turn(target, action), "completed")
+		turn_queue.skip_turn()
 	
-	battler.selected = false
 	if active:
 		play_turn()
 

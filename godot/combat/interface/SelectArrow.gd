@@ -1,4 +1,4 @@
-extends Position2D
+extends Control
 
 signal target_selected(battler)
 
@@ -17,9 +17,10 @@ func select_target(battlers : Array) -> Battler:
 	visible = true
 	targets = battlers
 	target_active = targets[0]
-	scale.x = 1.0 if target_active.party_member else -1.0
-	global_position = target_active.target_global_position
+	rect_scale.x = 1.0 if target_active.party_member else -1.0
+	rect_global_position = target_active.target_global_position
 	anim_player.play("wiggle")
+	grab_focus()
 	var selected_target : Battler = yield(self, "target_selected")
 	hide()
 	return selected_target
@@ -27,18 +28,18 @@ func select_target(battlers : Array) -> Battler:
 func move_to(battler : Battler):
 	tween.interpolate_property(
 		self,
-		'global_position', 
-		global_position,
+		'rect_global_position', 
+		rect_global_position,
 		battler.target_global_position,
 		MOVE_DURATION,
 		Tween.TRANS_CUBIC,
 		Tween.EASE_OUT)
 	tween.start()
 
-func _unhandled_input(event):
-	if not visible:
+func _gui_input(event):
+	if !visible:
 		return
-		
+	
 	if event.is_action_pressed("ui_accept"):
 		emit_signal("target_selected", target_active)
 		get_tree().set_input_as_handled()
