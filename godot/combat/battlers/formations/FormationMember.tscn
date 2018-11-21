@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+export var combat_template : Resource
+var display_name setget ,_get_display_name
+
+func _get_display_name():
+	\"\"\"
+	Use the resource name as the display name to use for enemies, since there
+	may be multiple of one enemy type in a formation
+	\"\"\"
+	return combat_template.resource_name
+"
+
+[node name="FormationMember" type="Position2D"]
+script = SubResource( 1 )
+combat_template = null
+

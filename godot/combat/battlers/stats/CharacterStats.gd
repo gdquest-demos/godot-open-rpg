@@ -1,4 +1,4 @@
-extends Node
+extends Resource
 
 class_name CharacterStats
 
@@ -9,49 +9,33 @@ signal mana_depleted()
 
 var modifiers = {}
 
-var stats : StartingStats
-
 var health : int
 var mana : int setget set_mana
-var max_health : int setget set_max_health
-var max_mana : int setget set_max_mana
-var strength : int
-var defense : int
-var speed : int
+export var max_health : int setget set_max_health, _get_max_health
+export var max_mana : int setget set_max_mana, _get_max_mana
+export var strength : int setget ,_get_strength
+export var defense : int setget ,_get_defense
+export var speed : int setget ,_get_speed
 var is_alive : bool setget ,_is_alive
-var experience : int setget set_experience
+export var experience : int setget _set_experience
 var level : int
-
-func _init(stats : StartingStats):
-	self.stats = stats
 	
-	max_health = stats.max_health
-	max_mana = stats.max_mana
-	strength = stats.strength
-	defense = stats.defense
-	speed = stats.speed
-	health = max_health
-	mana = max_mana
-	experience = stats.experience
-	level = stats.level
+func reset():
+	health = self.max_health
+	mana = self.max_mana
 	
-func set_experience(value):
+func copy():
 	"""
-	Calculate level, which updates all stats
+	Perform a more accurate duplication, as normally Resource duplication
+	does not retain any changes, instead duplicating from what's registered
+	in the ResourceLoader
 	"""
-	stats.experience = value
-	max_health = stats.max_health
-	max_mana = stats.max_mana
-	strength = stats.strength
-	defense = stats.defense
-	speed = stats.speed
+	var cp = self.duplicate()
+	cp.experience = self.experience
+	cp.health = self.health
+	cp.mana = self.mana
+	return cp
 	
-	# recover hp and mana on level up
-	if level != stats.level:
-		level = stats.level
-		health = max_health
-		mana = max_mana
-
 func set_max_health(value):
 	max_health = max(0, value)
 
@@ -84,3 +68,29 @@ func remove_modifier(id):
 	
 func _is_alive():
 	return health >= 0
+
+func _get_max_health() -> int:
+	return max_health
+
+func _get_max_mana() -> int:
+	return max_mana
+
+func _get_strength() -> int:
+	return strength
+	
+func _get_defense() -> int:
+	return defense
+	
+func _get_speed() -> int:
+	return speed
+
+func _get_experience() -> int:
+	return experience
+
+func _set_experience(value):
+	if value == null or value < 0:
+		value = 0
+	experience = value
+
+func _get_level() -> int:
+	return level

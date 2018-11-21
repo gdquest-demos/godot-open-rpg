@@ -3,29 +3,36 @@ extends Position2D
 class_name Battler
 
 export var TARGET_OFFSET_DISTANCE : float = 120.0
+export var template : Resource
 
 const DEFAULT_CHANCE = 0.75
-onready var stats : CharacterStats = $Job.stats
+var stats : CharacterStats
 onready var lifebar_anchor = $InterfaceAnchor
 onready var skin = $Skin
 onready var actions = $Actions
-onready var skills = $Job/Skills
 onready var bars = $Bars
 
 var target_global_position : Vector2
 
 var selected : bool = false setget set_selected
 var selectable : bool = false
+var display_name : String
 
 export var party_member = false
 
 func _ready() -> void:
 	var direction : Vector2 = Vector2(-1.0, 0.0) if party_member else Vector2(1.0, 0.0)
 	target_global_position = $TargetAnchor.global_position + direction * TARGET_OFFSET_DISTANCE
-	
-	actions.initialize(skills.get_children())
-	
+
+	var _t = template as BattlerTemplate
+	actions.initialize(_t.skills)
+	skin.add_child(_t.anim.instance())
+	if stats == null:
+		var starting_stats = _t.stats as CharacterStats
+		stats = starting_stats.duplicate()
+		stats.reset()
 	stats.connect("health_depleted", self, "_on_health_depleted")
+	skin.initialize()
 	self.selectable = true
 
 func play_turn(target : Battler, action):
@@ -43,7 +50,7 @@ func attack(target : Battler):
 	var hit = Hit.new(stats.strength)
 	target.take_damage(hit)
 
-func use_skill(target : Battler, skill : CharacterSkill) -> void:
+func use_skill(target : Battler, skill : Skill) -> void:
 	if stats.mana < skill.mana_cost:
 		return
 	stats.mana -= skill.mana_cost

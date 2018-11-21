@@ -12,6 +12,8 @@ var blink : bool = false setget set_blink
 
 func _ready():
 	hide()
+
+func initialize():
 	for child in get_children():
 		if child is BattlerAnim:
 			battler_anim = child

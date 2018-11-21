@@ -1,6 +1,6 @@
 extends Node
 
-export(PackedScene) var skill_action_scene
+const skill_action_scene = preload("res://combat/battlers/actions/SkillAction.tscn")
 
 func initialize(skills : Array) -> void:
 	for skill in skills:
