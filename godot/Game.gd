@@ -21,7 +21,7 @@ func enter_battle(formation: Formation):
 		
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
-	local_map.visible = false
+	remove_child(local_map)
 	var combat_arena = combat_arena_scene.instance()
 	add_child(combat_arena)
 	combat_arena.initialize(formation, party.active_members())
@@ -34,6 +34,6 @@ func enter_battle(formation: Formation):
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
 	combat_arena.queue_free()
-	local_map.visible = true
+	add_child(local_map)
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
