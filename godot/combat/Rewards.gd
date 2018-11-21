@@ -43,7 +43,7 @@ func _reward_to_battlers() -> Array:
 			leveled_up.append(member)
 	return leveled_up
 
-func _on_victory():
+func on_battle_completed():
 	"""
 	On victory be sure to grant the battlers their earned exp
 	and show the interface
@@ -59,11 +59,10 @@ func _on_victory():
 		$Panel/Label.text = "Found %s" % drop.name
 		yield(get_tree().create_timer(2.0), "timeout")
 	$Panel.visible = false
-	# TODO transition back to map
 	
-func _on_flee():
+func on_flee():
 	"""
 	End combat condition when the party flees
 	"""
 	experience_earned /= 2
-	_reward_to_battlers()
+	on_battle_completed()

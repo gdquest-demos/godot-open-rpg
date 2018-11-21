@@ -1,24 +1,23 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
-[ext_resource path="res://local_map/LocalMap.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/shaders/TransitionColor.tscn" type="PackedScene" id=3]
-
+[ext_resource path="res://party/Party.tscn" type="PackedScene" id=2]
+[ext_resource path="res://local_map/LocalMap.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/shaders/TransitionColor.tscn" type="PackedScene" id=4]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
 
-[node name="LocalMap" parent="." instance=ExtResource( 2 )]
+[node name="Party" parent="." instance=ExtResource( 2 )]
 
-[node name="Dan" parent="Party" instance=ExtResource( 3 )]
-party_member = true
-
-[node name="Blue" parent="Party" instance=ExtResource( 4 )]
-party_member = true
-
-[node name="CombatArena" parent="." instance=ExtResource( 5 )]
+[node name="LocalMap" parent="." instance=ExtResource( 3 )]
 
 [node name="Overlays" type="CanvasLayer" parent="."]
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="TransitionColor" parent="Overlays" instance=ExtResource( 6 )]
+[node name="TransitionColor" parent="Overlays" instance=ExtResource( 4 )]
 

@@ -1,14 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://combat/battlers/Battler.gd" type="Script" id=1]
 [ext_resource path="res://combat/battlers/BattlerSkin.gd" type="Script" id=2]
 [ext_resource path="res://animation/appear.anim" type="Animation" id=3]
-[ext_resource path="res://combat/battlers/Job.tscn" type="PackedScene" id=4]
-[ext_resource path="res://combat/battlers/jobs/DefaultJob.tres" type="Resource" id=5]
-[ext_resource path="res://combat/battlers/actions/BattlerActions.gd" type="Script" id=6]
-[ext_resource path="res://combat/battlers/actions/SkillAction.tscn" type="PackedScene" id=7]
-[ext_resource path="res://combat/battlers/actions/Attack.tscn" type="PackedScene" id=8]
-[ext_resource path="res://combat/battlers/actions/Attack.gd" type="Script" id=9]
+[ext_resource path="res://combat/battlers/actions/BattlerActions.gd" type="Script" id=4]
+[ext_resource path="res://combat/battlers/actions/Attack.tscn" type="PackedScene" id=5]
+[ext_resource path="res://combat/battlers/actions/Attack.gd" type="Script" id=6]
 
 [sub_resource type="Animation" id=1]
 
@@ -51,6 +48,7 @@ tracks/0/keys = {
 [node name="Battler" type="Position2D"]
 script = ExtResource( 1 )
 TARGET_OFFSET_DISTANCE = null
+template = null
 party_member = false
 
 [node name="Skin" type="Position2D" parent="."]
@@ -78,16 +76,11 @@ anims/blink = SubResource( 1 )
 anims/idle = SubResource( 2 )
 blend_times = [  ]
 
-[node name="Job" parent="." instance=ExtResource( 4 )]
-starting_stats = ExtResource( 5 )
-starting_skills = null
-
 [node name="Actions" type="Node" parent="."]
-script = ExtResource( 6 )
-skill_action_scene = ExtResource( 7 )
+script = ExtResource( 4 )
 
-[node name="Attack" parent="Actions" instance=ExtResource( 8 )]
-script = ExtResource( 9 )
+[node name="Attack" parent="Actions" instance=ExtResource( 5 )]
+script = ExtResource( 6 )
 
 [node name="TargetAnchor" type="Position2D" parent="."]
 

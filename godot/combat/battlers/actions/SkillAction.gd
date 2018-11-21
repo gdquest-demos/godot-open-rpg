@@ -1,9 +1,9 @@
 extends CombatAction
 
-var skill_to_use : CharacterSkill
+var skill_to_use : Skill
 
 func _ready() -> void:
-	name = skill_to_use.name
+	name = skill_to_use.skill_name
 	randomize()
 
 func execute(actor : Battler, target : Battler) -> void:

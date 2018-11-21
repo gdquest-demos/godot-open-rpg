@@ -14,10 +14,10 @@ func _ready() -> void:
 	if LABEL_ABOVE:
 		label.raise()
 
-func set_max_value(value) -> void:
-	max_value = value
-	bar.max_value = value
-	label.display(value, max_value)
+func set_max_value(new_value) -> void:
+	max_value = new_value
+	bar.max_value = new_value
+	label.display(value, new_value)
 
 func set_value(new_value) -> void:
 	value = new_value

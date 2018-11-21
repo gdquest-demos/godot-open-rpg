@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=7 format=2]
 
-[ext_resource path="res://combat/battlers/jobs/GrowthStats.gd" type="Script" id=1]
+[ext_resource path="res://combat/battlers/stats/GrowthStats.gd" type="Script" id=1]
 
 [sub_resource type="Curve" id=1]
 
@@ -40,7 +40,7 @@ _data = [ Vector2( 0, 8 ), 0.0, 803.058, 0, 0, Vector2( 0.251992, 114.45 ), -17.
 [resource]
 
 script = ExtResource( 1 )
-experience_curve = [ 0, 5, 15, 50, 120, 200, 325, 500, 800, 1250 ]
+experience_curve = [ 0, 15, 30, 50, 120, 200, 325, 500, 800, 1250 ]
 max_health_curve = SubResource( 2 )
 max_mana_curve = SubResource( 3 )
 strength_curve = SubResource( 5 )
