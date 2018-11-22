@@ -1,43 +1,58 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+
+All notable changes to this project will be documented in this file
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
-## [Unreleased]
-### Added
- - Added a link to the contributor's guide on GDquest.
- - Added note about static typing in Godot 3.1 in the README.
- - Added a note about maintainers refactoring PRs for stylization or educational purposes in the README .
- - Added game_concept.md.
- - Added the initial game concept, goal, story, mechanics (combat system), characters, aesthic choice, world information, technologies used, and prototypes to game_concept.md.
- - Added choose_target function in Battler.gd. Enemies will have a small chance of choosing the target with the lowest health; otherwise, it will randomly choose a target.
- - Skills system added.
-   - Initial stats now have mana.
-   - A "combat action" for skills has been added.
-   - A simple menu to select an action has been added.
-   - Resource system for skills added.
-   - Skills can be executed on a given probablity.
- - Added Character growth. Experience points are awarded at the end of battle to gain levels. Levels determine stat growth with defined curves for each character.
- - Mana bars added.
- - Added a "Local Map" and grid based navigation.
- - Added a signal in LocalMap that connects to its Parent Node.
- - Added Battle Formations.
- - local_map is removed when a battle begins and added when a battle ends to prevent input from changing its state.
- - Added Godette sprite
- - Added a dialogue system to LocalMap
+## [Unreleased] v0.2.0: Better Encounters ⚔🌟
+
+Expand the combat system and create a bite-sized, playable demo revolving around it.
+
+### New
+
+#### Battle system
+
+- Basic skill system. Allows to create special attacks, magic, etc.
+  - CombatAction for skills
+  - Simple menu to select CombatActions: Attack, Skill, etc.
+  - Skills can be executed on a given probablity
+- Character growth
+  - Experience points are awarded at the end of battle to gain levels
+  - The value of the characters' stats is based on Godot's curves
+- Battle Formations for monsters and the player's party, based on .tscn files
+
+#### Map
+
+- Grid-based character movement
+- Dialogue system
+
+#### User Interface
+
+- Mana bars
+
+#### Art
+
+- Godette sprite
 
 ### Changed
- - Fixed job node duplicating itself with the tool mode.
- - Refactored the initialize loop and getting battlers.
- - Fixed incorrect indentation in Battler.gd.
- - Improved Data persistence in and out of combat.
 
-### Removed
+- Characters and Monsters now have mana
+- Enemies now have a small chance of choosing the target with the lowest health; otherwise, they randomly choose targets
+- Fixed job node duplicating itself with the tool mode
+- Refactored the initialize loop and getting battlers
+- Fixed incorrect indentation in Battler.gd
+- Improved Data persistence in and out of combat
 
-## [0.1.0] - 2018-11-04
+<!-- ### Removed -->
 
- - Initial Tag
+## v0.1.0: Combat prototype ⚔ - 2018-11-04
 
+Base combat prototype: the characters can only attack in a turn-based fashion. Health, damage, target selection, and winning and losing the fight are all present in a basic form.
 
+### New
 
+- Link to the contributor's guide on GDquest
+- Note about static typing in Godot 3.1 in the README
+- Note about maintainers refactoring PRs for stylization or educational purposes in the README
+- Initial game concept, goal, story, mechanics (combat system), characters, aesthic choice, world information, technologies used, and prototypes to game_concept.md
