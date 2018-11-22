@@ -24,6 +24,11 @@ func request_move(pawn, direction):
 			return update_pawn_position(pawn, cell_start, cell_target)
 		CELL_TYPES.OBJECT:
 			var object_pawn = get_cell_pawn(cell_target)
+		
+			if object_pawn.has_node("Dialogue"):
+				var dialogue = object_pawn.get_node("Dialogue").load()
+				get_parent().emit_signal("dialogue", dialogue)
+				
 			object_pawn.queue_free()
 			return update_pawn_position(pawn, cell_start, cell_target)
 		CELL_TYPES.ACTOR:
