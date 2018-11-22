@@ -13,7 +13,7 @@ func initialize(dialogue):
 	next_button.grab_focus()
 	next_button.text = "Next"
 	
-	dialogue_player.start_dialogue(dialogue)
+	dialogue_player.start(dialogue)
 	
 	update_content()
 	show()
@@ -26,7 +26,7 @@ func _on_dialogue_player_finished():
 	hide()
 
 func _on_next_button_down():
-	dialogue_player.next_dialogue()
+	dialogue_player.next()
 	update_content()
 	
 func update_content() -> void:
