@@ -11,8 +11,18 @@ func initialize():
 		battler.raise()
 	active_battler = get_child(0)
 
-func play_turn(target : Battler, action : CombatAction):
-	yield(active_battler.play_turn(target, action), "completed")
+func play_turn(action : CombatAction):
+	yield(active_battler.skin.move_forward(), "completed")
+	if active_battler.party_member:
+		action.initialize(get_monsters(), get_party(), active_battler)
+	else:
+		action.initialize(get_party(), get_monsters(), active_battler)
+	yield(action.execute(), "completed")
+	
+	var new_index : int = (active_battler.get_index() + 1) % get_child_count()
+	active_battler = get_child(new_index)
+
+func skip_turn():
 	var new_index : int = (active_battler.get_index() + 1) % get_child_count()
 	active_battler = get_child(new_index)
 
@@ -35,7 +45,7 @@ func get_monsters():
 func _get_targets(in_party : bool = false) -> Array:
 	var targets : Array = []
 	for child in get_children():
-		if child.party_member == in_party:
+		if child.party_member == in_party && child.stats.health > 0:
 			targets.append(child)
 	return targets
 

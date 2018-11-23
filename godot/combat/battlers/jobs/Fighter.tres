@@ -21,7 +21,7 @@ _data = [ Vector2( 0, 68.7313 ), 0.0, 0.0, 0, 0, Vector2( 0.168959, 376.423 ), 1
 min_value = 0.0
 max_value = 80.0
 bake_resolution = 10
-_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.603628, 45.632 ), 6.7181, 291.117, 0, 0, Vector2( 1, 80 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 7.616 ), 0.0, 0.0, 0, 0, Vector2( 0.603628, 45.632 ), 6.7181, 291.117, 0, 0, Vector2( 1, 80 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="Curve" id=4]
 

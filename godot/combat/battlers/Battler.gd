@@ -35,13 +35,6 @@ func _ready() -> void:
 	skin.initialize()
 	self.selectable = true
 
-func play_turn(target : Battler, action):
-	yield(skin.move_forward(), "completed")
-	action.execute(self, target)
-	yield(skin.move_to(target), "completed")
-	yield(get_tree().create_timer(1.0), "timeout")
-	yield(skin.return_to_start(), "completed")
-
 func set_selected(value):
 	selected = value
 	skin.blink = value
@@ -49,6 +42,9 @@ func set_selected(value):
 func attack(target : Battler):
 	var hit = Hit.new(stats.strength)
 	target.take_damage(hit)
+
+func can_use_skill(skill : Skill) -> bool:
+	return stats.mana >= skill.mana_cost
 
 func use_skill(target : Battler, skill : Skill) -> void:
 	if stats.mana < skill.mana_cost:

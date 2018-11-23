@@ -1,16 +1,14 @@
 extends CombatAction
 
-var skill_to_use : Skill
-
 func _ready() -> void:
 	name = skill_to_use.skill_name
 	randomize()
 
-func execute(actor : Battler, target : Battler) -> void:
-	if skill_to_use.success_chance == 1.0:
-		actor.use_skill(target, skill_to_use)
-	else:
-		randomize()
-		if rand_range(0, 1.0) < skill_to_use.success_chance:
-			actor.use_skill(target, skill_to_use)
-	emit_signal("execute_finished")
+func execute():
+	assert(initialized)
+	if actor.party_member:
+		print("TODO: SKILL -> if skill can target all enemies this command should be changed to SelectAllCommand")
+		yield(select_target_routine(), "completed")
+	yield(move_to_target_routine(), "completed")
+	yield(use_skill_routine(), "completed")
+	yield(return_to_start_position_routine(), "completed")
