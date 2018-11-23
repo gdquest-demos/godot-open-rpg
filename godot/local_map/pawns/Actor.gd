@@ -3,7 +3,6 @@ extends "Pawn.gd"
 onready var Grid = get_parent()
 
 signal moved(last_position, current_position)
-signal look_direction_changed(new_direction)
 
 func _ready():
 	update_look_direction(Vector2(1, 0))
@@ -11,7 +10,6 @@ func _ready():
 
 func update_look_direction(direction):
 	$Pivot/Sprite.rotation = direction.angle()
-	emit_signal("look_direction_changed", direction)
 
 func move_to(target_position):
 	var current_position = position
