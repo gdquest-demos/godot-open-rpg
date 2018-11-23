@@ -12,8 +12,7 @@ func update_look_direction(direction):
 	$Pivot/Sprite.rotation = direction.angle()
 
 func move_to(target_position):
-	var current_position = position
-	emit_signal("moved", current_position, position)
+	emit_signal("moved", position, target_position)
 	set_process(false)
 	$AnimationPlayer.play("walk")
 
