@@ -1,17 +1,18 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://local_map/LocalMap.gd" type="Script" id=1]
 [ext_resource path="res://local_map/tilesets/grid_lines/grid_lines_tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://local_map/tilesets/grid/grid_tileset.tres" type="TileSet" id=3]
-[ext_resource path="res://local_map/grid/grid.gd" type="Script" id=4]
+[ext_resource path="res://local_map/grid/Grid.gd" type="Script" id=4]
 [ext_resource path="res://local_map/pawns/Actor.tscn" type="PackedScene" id=5]
-[ext_resource path="res://local_map/pawns/pawn.gd" type="Script" id=6]
+[ext_resource path="res://local_map/pawns/Pawn.gd" type="Script" id=6]
 [ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=7]
 [ext_resource path="res://local_map/pawns/sprites/character_grey.png" type="Texture" id=8]
 [ext_resource path="res://local_map/pawns/sprites/star.png" type="Texture" id=9]
 [ext_resource path="res://dialogue/Dialogue.tscn" type="PackedScene" id=10]
-[ext_resource path="res://local_map/DialogueBox.gd" type="Script" id=11]
-[ext_resource path="res://dialogue/dialogue_player/DialoguePlayer.tscn" type="PackedScene" id=12]
+[ext_resource path="res://local_map/pawns/Follower.tscn" type="PackedScene" id=11]
+[ext_resource path="res://local_map/DialogueBox.gd" type="Script" id=12]
+[ext_resource path="res://dialogue/dialogue_player/DialoguePlayer.tscn" type="PackedScene" id=13]
 
 [node name="LocalMap" type="Node2D"]
 script = ExtResource( 1 )
@@ -66,23 +67,6 @@ __meta__ = {
 
 [node name="Actor" parent="Grid" instance=ExtResource( 5 )]
 position = Vector2( 416, 288 )
-formation = null
-
-[node name="AnimationPlayer" parent="Grid/Actor" index="0"]
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
-blend_times = [  ]
-
-[node name="Tween" parent="Grid/Actor" index="1"]
-repeat = false
-playback_process_mode = 1
-playback_speed = 1.0
-playback/active = false
-playback/repeat = false
-playback/speed = 1.0
 
 [node name="Actor2" type="Node2D" parent="Grid" groups=[
 "enemy",
@@ -108,6 +92,12 @@ texture = ExtResource( 9 )
 [node name="Dialogue" parent="Grid/Object" instance=ExtResource( 10 )]
 file_path = "res://dialogue/dialogue_data/object.json"
 
+[node name="Follower" parent="Grid" instance=ExtResource( 11 )]
+position = Vector2( 356, 290 )
+
+[node name="Follower2" parent="Grid" instance=ExtResource( 11 )]
+position = Vector2( 293, 290 )
+
 [node name="MapInterface" type="CanvasLayer" parent="."]
 pause_mode = 2
 layer = 1
@@ -128,7 +118,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-script = ExtResource( 11 )
+script = ExtResource( 12 )
 
 [node name="Panel" type="Panel" parent="MapInterface/Dialogue"]
 anchor_left = 0.0
@@ -223,7 +213,9 @@ text = "Next"
 flat = false
 align = 1
 
-[node name="DialoguePlayer" parent="MapInterface/Dialogue" instance=ExtResource( 12 )]
+[node name="DialoguePlayer" parent="MapInterface/Dialogue" instance=ExtResource( 13 )]
 
+[connection signal="moved" from="Grid/Actor" to="Grid/Follower" method="_on_Actor_moved"]
+[connection signal="moved" from="Grid/Follower" to="Grid/Follower2" method="_on_Actor_moved"]
 
 [editable path="Grid/Actor"]
