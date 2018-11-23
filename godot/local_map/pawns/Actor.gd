@@ -1,36 +1,21 @@
-extends "pawn.gd"
+extends "Pawn.gd"
 
 onready var Grid = get_parent()
 
+signal moved(last_position, current_position)
+signal look_direction_changed(new_direction)
+
 func _ready():
 	update_look_direction(Vector2(1, 0))
-
-
-func _process(delta):
-	var input_direction = get_input_direction()
-	if not input_direction:
-		return
-	update_look_direction(input_direction)
-
-	var target_position = Grid.request_move(self, input_direction)
-	if target_position:
-		move_to(target_position)
-	else:
-		bump()
-
-
-func get_input_direction():
-	return Vector2(
-		int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")),
-		int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
-	)
-
+	position = (Grid.request_move(self, Vector2(0, 0)))
 
 func update_look_direction(direction):
 	$Pivot/Sprite.rotation = direction.angle()
-
+	emit_signal("look_direction_changed", direction)
 
 func move_to(target_position):
+	var current_position = position
+	emit_signal("moved", current_position, position)
 	set_process(false)
 	$AnimationPlayer.play("walk")
 
@@ -46,8 +31,7 @@ func move_to(target_position):
 	yield($AnimationPlayer, "animation_finished")
 	
 	set_process(true)
-
-
+	
 func bump():
 	set_process(false)
 	$AnimationPlayer.play("bump")
