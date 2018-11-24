@@ -1,21 +1,46 @@
-# Godot turn-based RPG
+<h1 align="center">
+  Godot OpenRPG</br>
+  <small>Learn to create turn-based games</small>
+</h1>
 
-Learn to create turn-based combat with this Open Source RPG demo ⚔
+<p align='center'>
+  <img src="https://i.imgur.com/lhi0U9v.png" alt="Godot Open RPG banner" />
+</p>
 
-Made with Godot 3.1 alpha. The project is just getting started. You can play with our [Open Source A-RPG demo](https://github.com/GDquest/make-pro-2d-games-with-godot/) in the meantime.
+OpenRPG is a tool and a demo to create Role Playing Games with turn-based combat. It's made with Godot 3.1 (alpha 2).
 
-## The vision
+*Looking for a Zelda-like game? Check out our [Open Source A-RPG demo](https://github.com/GDquest/make-pro-2d-games-with-godot/).*
 
-I built the combat system to create an upcoming free tutorial series about turn-based combat on GDQuest. But it does not end here. This project is fully open source so that we can work on it together! The idea is to turn it into a nice little JRPG demo that shows some of the best practices in the Godot game engine.
+![Combat system screenshot](https://i.imgur.com/hmtCd6J.png)
 
-Do you want to contribute and improve your programming skills with Godot? Check out the open issues, suggest improvements and report bugs by opening new ones, and be sure to check the contributing guidelines below!
+*The combat system, in progress, in v0.2, with placeholder art.*
+
+## Our mission
+
+Together, we're creating a codebase and tools to show you some of the best practices to create:
+
+- Turn-based games
+- A combat system
+- An inventory system
+- Character progression
+- User interface with multiple menus
+
+And more! Do you want to contribute and improve your programming skills with Godot? Check out the open issues, suggest improvements and report bugs by opening new ones, and be sure to check the contributing guidelines below.
+
+### The current project's scope
+
+Our initial goal is to create a mini-demo with the full combat loop, character experience, skills, some pretty art, and basic map navigaton and conversation with NPCs.
+
+We are building a demo that the community can learn from and reuse as a template to build complete games.
+
 
 ## Contributing Guidelines
 
-All contributors are welcome 🙂. However, to make the experience as smooth as possible for everyone working together, I need you to follow a few guidelines. Here's a summary of most important two:
+All contributors are welcome 🙂. To ensure a smooth and a productive experience for everyone working together, we came up with some guidelines we all follow here. In summary:
 
-- Let's get in touch and communicate! Use the issues tab to let everyone know what you are working on, to report bugs, and to suggest improvements. Join the [GDquest Discord server](https://discord.gg/87NNb3Z) to talk about the project live
-- If you're contributing code, we follow the [GDScript styleguide](http://docs.godotengine.org/en/latest/getting_started/scripting/gdscript/gdscript_styleguide.html). Try to make your code clean and self-documenting as it helps us to build upon each other's work, and users to learn from the demo. We're using static typing to get more robust code and get full autocompletion in Godot 3.1 Also, we're here to review and to help you improve your code.
-- At times, the maintainers may refactor or tweak your code to make it fit the project's style, and for educational purposes. But we'll give you the opportunity to refine the style by yourself
+- Get in touch and communicate! Let us know what you are working on or report bugs using the issues tab. Join the [GDquest Discord server](https://discord.gg/87NNb3Z) to discuss the project live or to get in touch with the community
+- Be respectful to everyone around. We pledge to the [Covenant Code of Conduct](https://www.contributor-covenant.org/).
+- For code, we follow the [GDScript styleguide](http://docs.godotengine.org/en/latest/getting_started/scripting/gdscript/gdscript_styleguide.html). We try to write clean and self-documenting GDScript as it helps us build upon each other's work. We use static typing to write more robust code and get full autocompletion in Godot 3.1. Also, we're here to review and to help you improve your code.
+- The maintainers may refactor or tweak your code to make it fit the project's style, and for educational purposes. But we'll give you the opportunity to refine the style by yourself
 
 Check our full [Contributors Guide](http://gdquest.com/open-source/contributing-guidelines/) for more information 😄
