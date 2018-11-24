@@ -92,11 +92,17 @@ Cute, colorful, round, stylized.
 
 ## The world
 
-The world of Godot is a sandbox game. It mixes unspoiled nature and technology, especially elements related to game creation.
+The world of Godot is an allegory of the game creator’s journey. It mixes unspoiled nature and technology, especially elements related to game creation.
 
-### The characters' opponents
+### Monsters: the Bugs
 
-Bugs?
+The monsters in the game spawn from software bugs.
+
+The protagonists encounter bugs on their way to their goal. Bugs arise from anywhere, from any game component, including e.g. the UI, and sometimes from the characters themselves.
+
+Bugs take various shapes inspired by insects and animals.
+
+*This gives us designers room to share some of our experiences into the game demos.*
 
 ## Technology ##
 
