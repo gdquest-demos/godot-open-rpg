@@ -18,9 +18,10 @@ func play_turn(action : CombatAction):
 	else:
 		action.initialize(get_party(), get_monsters(), active_battler)
 	yield(action.execute(), "completed")
-	
-	var new_index : int = (active_battler.get_index() + 1) % get_child_count()
-	active_battler = get_child(new_index)
+	var target = action.target
+	if target != null:
+		var new_index : int = (active_battler.get_index() + 1) % get_child_count()
+		active_battler = get_child(new_index)
 
 func skip_turn():
 	var new_index : int = (active_battler.get_index() + 1) % get_child_count()

@@ -9,6 +9,7 @@ func execute():
 	if actor.party_member:
 		print("TODO: SKILL -> if skill can target all enemies this command should be changed to SelectAllCommand")
 		yield(select_target_routine(), "completed")
-	yield(move_to_target_routine(), "completed")
-	yield(use_skill_routine(), "completed")
+	if target != null:
+		yield(move_to_target_routine(), "completed")
+		yield(use_skill_routine(), "completed")
 	yield(return_to_start_position_routine(), "completed")

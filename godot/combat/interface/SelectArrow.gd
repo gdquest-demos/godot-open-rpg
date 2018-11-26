@@ -53,3 +53,6 @@ func _gui_input(event):
 		target_active = targets[(index - 1 + targets.size()) % targets.size()]
 		move_to(target_active)
 		get_tree().set_input_as_handled()
+	if event.is_action_pressed("ui_cancel"):
+		emit_signal("target_selected", null)
+		get_tree().set_input_as_handled()

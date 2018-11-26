@@ -13,11 +13,7 @@ script = ExtResource( 1 )
 [node name="LocalMap" parent="." instance=ExtResource( 3 )]
 
 [node name="Overlays" type="CanvasLayer" parent="."]
-layer = 1
-offset = Vector2( 0, 0 )
-rotation = 0.0
 scale = Vector2( 1, 1 )
-transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 4 )]
 
