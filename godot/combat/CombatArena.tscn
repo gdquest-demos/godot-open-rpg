@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://combat/CombatArena.gd" type="Script" id=1]
 [ext_resource path="res://combat/turn_queue/TurnQueue.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://interface/default.theme" type="Theme" id=5]
 [ext_resource path="res://combat/interface/bars/BattlersBarsBuilder.tscn" type="PackedScene" id=6]
 [ext_resource path="res://combat/Rewards.gd" type="Script" id=7]
+[ext_resource path="res://combat/background/Grasslands.tscn" type="PackedScene" id=8]
 
 [node name="CombatArena" type="Node2D"]
 script = ExtResource( 1 )
@@ -39,6 +40,7 @@ script = ExtResource( 3 )
 [node name="SelectArrow" parent="CombatInterface" instance=ExtResource( 4 )]
 
 [node name="OldSchoolUI" type="Control" parent="CombatInterface"]
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -196,6 +198,7 @@ size_flags_vertical = 1
 [node name="BattlersBarsBuilder" parent="CombatInterface" instance=ExtResource( 6 )]
 
 [node name="Rewards" type="CanvasLayer" parent="."]
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -237,5 +240,7 @@ valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="Grasslands" parent="." instance=ExtResource( 8 )]
 
 [connection signal="item_activated" from="CombatInterface/OldSchoolUI/Row/MonstersPanel/ActionSelector/ItemList" to="CombatInterface" method="_on_ItemList_item_activated"]
