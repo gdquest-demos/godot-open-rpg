@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="ArenaTheme" type="Node2D"]
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 960, 540 )
+z_index = -1
+
+[node name="ForegroundElements" type="Node2D" parent="."]
+z_index = 1
+

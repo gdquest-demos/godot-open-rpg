@@ -5,6 +5,7 @@
 [node name="StonePlatform" type="Position2D"]
 
 [node name="sprite" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0, 43 )
 texture = ExtResource( 1 )
 

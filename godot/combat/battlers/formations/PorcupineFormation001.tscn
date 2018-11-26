@@ -12,14 +12,14 @@ platform_template = ExtResource( 2 )
 background_image = null
 
 [node name="Porcupine" parent="." instance=ExtResource( 3 )]
-position = Vector2( 615.574, 266.879 )
+position = Vector2( 369.233, 566.37 )
 combat_template = ExtResource( 4 )
 
 [node name="Porcupine3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 204.542, 488.953 )
+position = Vector2( 204.542, 698.953 )
 combat_template = ExtResource( 5 )
 
 [node name="Porcupine2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 498.693, 693.495 )
+position = Vector2( 455.643, 817.395 )
 combat_template = ExtResource( 4 )
 
