@@ -6,6 +6,8 @@ class_name Party
 # in the party, just not active
 const PARTY_SIZE = 3
 
+var inventory = Inventory.new()
+
 func active_members():
 	"""
 	Fetch the first children who fill the party size

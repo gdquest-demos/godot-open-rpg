@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://items/ConsumableItem.gd" type="Script" id=1]
+
+[resource]
+
+script = ExtResource( 1 )
+name = "Potion"
+description = "Recovers health"
+is_key = null
+msrp = 10
+
