@@ -3,8 +3,9 @@
 [ext_resource path="res://combat/battlers/Formation.gd" type="Script" id=1]
 [ext_resource path="res://combat/background/StonePlatform.tscn" type="PackedScene" id=2]
 [ext_resource path="res://combat/battlers/formations/FormationMember.tscn" type="PackedScene" id=3]
-[ext_resource path="res://combat/battlers/enemies/Porcupine.tres" type="Resource" id=4]
-[ext_resource path="res://combat/battlers/enemies/StrongerPorcupine.tres" type="Resource" id=5]
+[ext_resource path="res://combat/battlers/enemies/porcupine/Porcupine.tres" type="Resource" id=4]
+[ext_resource path="res://combat/battlers/enemies/porcupine/StrongerPorcupine.tres" type="Resource" id=5]
+
 
 [node name="Formation" type="Node"]
 script = ExtResource( 1 )
