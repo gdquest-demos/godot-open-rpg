@@ -6,7 +6,6 @@ signal moved(last_position, current_position)
 
 func _ready():
 	update_look_direction(Vector2(1, 0))
-	position = (Grid.request_move(self, Vector2(0, 0)))
 
 func update_look_direction(direction):
 	$Pivot/Sprite.rotation = direction.angle()
