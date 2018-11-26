@@ -23,9 +23,10 @@ func initialize(p_targets : Array, p_allys : Array, p_actor : Battler) -> void:
 	actor = p_actor
 	initialized = true
 
-func execute() -> void:
+func execute():
 	assert(initialized)
 	print("%s missing overwrite of the execute method" % name)
+	return false
 
 func attack_routine():
 	actor.attack(target)
@@ -41,6 +42,7 @@ func select_target_routine():
 	var interface = actor.get_tree().get_nodes_in_group("interface")[0]
 	target = yield(interface.select_target(targets), "completed")
 	interface.action_list.hide()
+	return target
 
 func use_skill_routine():
 	if skill_to_use.success_chance == 1.0:
@@ -51,4 +53,3 @@ func use_skill_routine():
 			actor.use_skill(target, skill_to_use)
 	yield(actor.get_tree().create_timer(1.0), "timeout")
 	
-

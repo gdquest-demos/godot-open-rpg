@@ -109,7 +109,6 @@ func play_turn():
 			# Temp random target selection for the monsters
 			action = get_active_battler().actions.get_child(0)
 			action.target = battler.choose_target(targets)
-		
 		yield(turn_queue.play_turn(action), "completed")
 		battler.selected = false
 	else:
