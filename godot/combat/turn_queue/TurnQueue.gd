@@ -3,6 +3,7 @@ extends YSort
 class_name TurnQueue
 
 onready var active_battler : Battler
+var last_action_canceled : bool = false
 
 func initialize():
 	var battlers = get_battlers()
@@ -12,13 +13,17 @@ func initialize():
 	active_battler = get_child(0)
 
 func play_turn(action : CombatAction):
-	yield(active_battler.skin.move_forward(), "completed")
+	if not last_action_canceled:
+		yield(active_battler.skin.move_forward(), "completed")
 	if active_battler.party_member:
 		action.initialize(get_monsters(), get_party(), active_battler)
 	else:
 		action.initialize(get_party(), get_monsters(), active_battler)
-	yield(action.execute(), "completed")
-	
+	var hit_target = yield(action.execute(), "completed")
+	if not hit_target:
+		last_action_canceled = true
+		return
+	last_action_canceled = false
 	var new_index : int = (active_battler.get_index() + 1) % get_child_count()
 	active_battler = get_child(new_index)
 

@@ -43,6 +43,9 @@ func _gui_input(event):
 	if event.is_action_pressed("ui_accept"):
 		emit_signal("target_selected", target_active)
 		get_tree().set_input_as_handled()
+	elif event.is_action_pressed("ui_cancel"):
+		emit_signal("target_selected", null)
+		get_tree().set_input_as_handled()
 	
 	var index = targets.find(target_active)
 	if event.is_action_pressed("ui_down"):
