@@ -10,19 +10,21 @@ signal item_count_changed(item, amount)
 signal coins_count_changed(amount)
 
 func add(item: Item, amount: int = 1) -> void:
-	if not content.has(item):
-		content[item] = 1 if item.is_unique else amount
-	else:
+	if item in content:
 		content[item] += amount
+	else:
+		content[item] = 1 if item.is_unique else amount
 
 func remove(item: Item, amount: int = 1):
+	assert item in content
 	assert amount <= content[item]
+
 	content[item] -= amount
 	if content[item] == 0:
 		content.erase(item)
-		emit_signal("item_count", item, 0)
+		emit_signal("item_count_changed", item, 0)
 	else:
-		emit_signal("item_count", item, content[item])
+		emit_signal("item_count_changed", item, content[item])
 	
 func add_coins(amount: int) -> void:
 	coins = min(coins + amount, MAX_COINS)
