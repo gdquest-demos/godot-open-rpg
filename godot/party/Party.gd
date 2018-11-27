@@ -1,27 +1,23 @@
 extends Node2D
 class_name Party
 
-# amount of characters that should be in combat
-# you should be able to define more than this that are
-# in the party, just not active
 const PARTY_SIZE = 3
 
 var inventory = Inventory.new()
 
-func active_members():
+func get_active_members():
 	"""
-	Fetch the first children who fill the party size
+	Returns the first unlocked children until the party is filled
 	"""
 	var active = []
-	var available = unlocked()
+	var available = get_unlocked_characters()
 	for i in range(min(len(available), PARTY_SIZE)):
 		active.append(available[i])
 	return active
 	
-func unlocked() -> Array:
+func get_unlocked_characters() -> Array:
 	"""
-	Get all characters in the game that can be in your party
-	that you have unlocked
+	Returns all the characters that can be active in the party
 	"""
 	var has_unlocked = []
 	for member in get_children():
@@ -31,7 +27,7 @@ func unlocked() -> Array:
 
 func update_members(battlers : Array):
 	"""
-	Update's characters stats from their battlers
+	Updates character stats from their battlers
 	after combat is complete
 	"""
 	for battler in battlers:

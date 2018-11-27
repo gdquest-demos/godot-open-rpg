@@ -24,7 +24,7 @@ func enter_battle(formation: Formation):
 	remove_child(local_map)
 	var combat_arena = combat_arena_scene.instance()
 	add_child(combat_arena)
-	combat_arena.initialize(formation, party.active_members())
+	combat_arena.initialize(formation, party.get_active_members())
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
 	combat_arena.battle_start()
