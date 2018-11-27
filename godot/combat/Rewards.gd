@@ -21,16 +21,18 @@ func initialize(battlers : Array):
 			party.append(battler)
 	
 func _add_reward(battler : Battler):
+	"""
+	Appends dictionaries with the form { 'item': Item.tres, 'amount': amount } of dropped items to the drops array.
+	"""
 	experience_earned += battler.stats.experience
-	if battler.drops != null:
-		for drop in battler.drops:
-			if drop.chance < 1.0 and rand_range(0.0, 1.0) > drop.chance:
-				continue
-			var quantity : int = 1 if drop.max_quantity == 1 else rand_range(drop.min_quantity, drop.max_quantity) as int
-			drops.append({
-				'item': drop.item,
-				'quantity': quantity
-			})
+	for drop in battler.drops:
+		if drop.chance - randf() > drop.chance:
+			continue
+		var amount : int = 1 if drop.max_amount == 1 else round(rand_range(drop.min_amount, drop.max_amount))
+		drops.append({
+			'item': drop.item,
+			'amount': amount
+		})
 
 func _reward_to_battlers() -> Array:
 	"""
@@ -65,7 +67,7 @@ func on_battle_completed():
 		$Panel/Label.text = "%s Leveled Up to %d" % [battler.name, battler.stats.level + 1]
 		yield(get_tree().create_timer(2.0), "timeout")
 	for drop in drops:
-		$Panel/Label.text = "Found %s %s(s)" % [drop.quantity, drop.item.name]
+		$Panel/Label.text = "Found %s %s(s)" % [drop.amount, drop.item.name]
 		yield(get_tree().create_timer(2.0), "timeout")
 	$Panel.visible = false
 	

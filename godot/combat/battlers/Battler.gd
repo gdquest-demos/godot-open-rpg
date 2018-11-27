@@ -7,7 +7,7 @@ export var template : Resource
 
 const DEFAULT_CHANCE = 0.75
 var stats : CharacterStats
-var drops
+var drops : Array
 onready var lifebar_anchor = $InterfaceAnchor
 onready var skin = $Skin
 onready var actions = $Actions
@@ -28,7 +28,7 @@ func _ready() -> void:
 	var _t = template as BattlerTemplate
 	actions.initialize(_t.skills)
 	
-	drops = _t.drops.items if _t.drops != null else null
+	drops = _t.drops
 	
 	skin.add_child(_t.anim.instance())
 	if stats == null:
