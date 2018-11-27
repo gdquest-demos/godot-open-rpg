@@ -1,4 +1,6 @@
-extends "Actor.gd"
+extends PawnActor
+
+class_name PawnLeader
 
 func _process(delta):
 	var input_direction = get_input_direction()
@@ -6,7 +8,7 @@ func _process(delta):
 		return
 	update_look_direction(input_direction)
 
-	var target_position = Grid.request_move(self, input_direction)
+	var target_position = grid.request_move(self, input_direction)
 	if target_position:
 		move_to(target_position)
 	else:

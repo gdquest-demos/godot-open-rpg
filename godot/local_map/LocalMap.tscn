@@ -15,7 +15,6 @@
 [ext_resource path="res://local_map/DialogueBox.gd" type="Script" id=13]
 [ext_resource path="res://dialogue/dialogue_player/DialoguePlayer.tscn" type="PackedScene" id=14]
 
-
 [node name="LocalMap" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -72,7 +71,6 @@ sort_enabled = true
 script = ExtResource( 5 )
 
 [node name="Actor" parent="Grid/Pawns" instance=ExtResource( 6 )]
-editor/display_folded = true
 position = Vector2( 416, 288 )
 
 [node name="Actor2" type="Node2D" parent="Grid/Pawns" groups=[

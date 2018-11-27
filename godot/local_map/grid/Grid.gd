@@ -6,6 +6,8 @@ onready var pawns = get_node("Pawns")
 
 func _ready():
 	for child in pawns.get_children():
+		if child is PawnFollower:
+			continue
 		child.position = request_move(child, Vector2(0, 0))
 		set_cellv(world_to_map(child.position), child.type)
 
@@ -32,8 +34,11 @@ func request_move(pawn, direction):
 			object_pawn.queue_free()
 			return update_pawn_position(pawn, cell_start, cell_target)
 		CELL_TYPES.ACTOR:
-			var enemy = get_cell_pawn(cell_target)
-			get_parent().emit_signal("encounter" , enemy.formation.instance())
+			var target_pawn = get_cell_pawn(cell_target)
+			if target_pawn is PawnFollower:
+				return update_pawn_position(pawn, cell_start, cell_target)
+			else:
+				get_parent().emit_signal("encounter", target_pawn.formation.instance())
 
 func update_pawn_position(pawn, cell_start, cell_target):
 	set_cellv(cell_target, pawn.type)
