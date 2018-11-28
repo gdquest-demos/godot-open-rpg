@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://party/Party.tscn" type="PackedScene" id=2]
 [ext_resource path="res://local_map/LocalMap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/shaders/TransitionColor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/audio/bgm/battle_theme.ogg" type="AudioStream" id=5]
+[ext_resource path="res://core/MusicPlayer.gd" type="Script" id=6]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -20,4 +22,20 @@ scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 4 )]
+margin_left = -3.0
+margin_right = -3.0
 
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 0
+bus = "Music"
+script = ExtResource( 6 )
+
+[connection signal="combat_finished" from="." to="MusicPlayer" method="_on_Game_combat_finished"]
+[connection signal="combat_finished" from="." to="LocalMap" method="_on_Game_combat_finished"]
+[connection signal="combat_started" from="." to="MusicPlayer" method="_on_Game_combat_started"]
+[connection signal="enemies_encountered" from="LocalMap" to="." method="enter_battle"]

@@ -9,11 +9,10 @@ onready var rewards = $Rewards
 var active : bool = false
 var party : Array = []
 
-signal victory
-signal gameover
 # send when battle is completed, contains status updates for the party
 # so that we may persist the data
-signal completed(party) 
+signal battle_ended(party) 
+signal gameover
 
 func initialize(formation : Formation, party : Array):
 	ready_field(formation, party)
@@ -86,9 +85,9 @@ func battle_end():
 	var player_lost = get_active_battler().party_member
 	if player_lost:
 		yield(rewards.on_battle_completed(), "completed")
-		emit_signal("completed", self.party)
+		emit_signal("battle_ended", self.party)
 	else:
-		emit_signal("completed", self.party)
+		emit_signal("battle_ended", self.party)
 		emit_signal("gameover")
 
 func play_turn():

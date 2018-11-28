@@ -70,7 +70,7 @@ __meta__ = {
 sort_enabled = true
 script = ExtResource( 5 )
 
-[node name="Actor" parent="Grid/Pawns" instance=ExtResource( 6 )]
+[node name="Leader" parent="Grid/Pawns" instance=ExtResource( 6 )]
 position = Vector2( 480, 420 )
 
 [node name="Actor2" type="Node2D" parent="Grid/Pawns" groups=[
@@ -223,5 +223,5 @@ align = 1
 
 [node name="DialoguePlayer" parent="MapInterface/Dialogue" instance=ExtResource( 14 )]
 
-[connection signal="moved" from="Grid/Pawns/Actor" to="Grid/Pawns/Follower" method="_on_Actor_moved"]
+[connection signal="enemies_encountered" from="Grid" to="." method="_on_Grid_enemies_encountered"]
 [connection signal="moved" from="Grid/Pawns/Follower" to="Grid/Pawns/Follower2" method="_on_Actor_moved"]

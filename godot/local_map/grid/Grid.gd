@@ -1,5 +1,7 @@
 extends TileMap
 
+signal enemies_encountered(formation)
+
 enum CELL_TYPES {EMPTY = -1, ACTOR, OBSTACLE, OBJECT}
 
 onready var pawns = get_node("Pawns")
@@ -38,7 +40,7 @@ func request_move(pawn, direction):
 			if target_pawn is PawnFollower:
 				return update_pawn_position(pawn, cell_start, cell_target)
 			else:
-				get_parent().emit_signal("encounter", target_pawn.formation.instance())
+				emit_signal("enemies_encountered", target_pawn.formation.instance())
 
 func update_pawn_position(pawn, cell_start, cell_target):
 	set_cellv(cell_target, pawn.type)

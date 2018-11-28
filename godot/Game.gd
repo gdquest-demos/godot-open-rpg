@@ -1,5 +1,8 @@
 extends Node
 
+signal combat_started()
+signal combat_finished()
+
 const combat_arena_scene = preload("res://combat/CombatArena.tscn")
 onready var transition = $Overlays/TransitionColor
 onready var local_map = $LocalMap
@@ -8,8 +11,6 @@ onready var party = $Party as Party
 var transitioning = false
 
 func _ready():
-	#enter_battle()
-	local_map.connect("encounter", self, "enter_battle")
 	local_map.visible = true
 
 func enter_battle(formation: Formation):
@@ -28,9 +29,15 @@ func enter_battle(formation: Formation):
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
 	combat_arena.battle_start()
-	# persist character status updates after combat is complete
-	var updates = yield(combat_arena, "completed")
+	emit_signal("combat_started")
+	
+	# Get data from the battlers after the battle ended,
+	# Then copy into the Party node to save earned experience,
+	# items, and currentstats
+	var updates = yield(combat_arena, "battle_ended")
 	party.update_members(updates)
+
+	emit_signal("combat_finished")
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
 	combat_arena.queue_free()
