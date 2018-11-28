@@ -7,12 +7,12 @@
 [node name="RobiAnim" instance=ExtResource( 1 )]
 
 [node name="shadow" type="Sprite" parent="." index="0"]
-position = Vector2( 0.274139, -1 )
-scale = Vector2( 0.451718, 1 )
+position = Vector2( 0.136375, -0.935276 )
+scale = Vector2( 0.727239, 0.870552 )
 texture = ExtResource( 2 )
 
 [node name="body" type="Sprite" parent="." index="1"]
-position = Vector2( 0, -78 )
-scale = Vector2( 0.5, 0.5 )
+position = Vector2( 5.30737, -108.186 )
+scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
 

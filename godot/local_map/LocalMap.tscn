@@ -71,7 +71,7 @@ sort_enabled = true
 script = ExtResource( 5 )
 
 [node name="Actor" parent="Grid/Pawns" instance=ExtResource( 6 )]
-position = Vector2( 416, 288 )
+position = Vector2( 480, 420 )
 
 [node name="Actor2" type="Node2D" parent="Grid/Pawns" groups=[
 "enemy",
