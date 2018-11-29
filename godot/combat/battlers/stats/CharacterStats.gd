@@ -2,7 +2,7 @@ extends Resource
 
 class_name CharacterStats
 
-signal health_changed(new_health)
+signal health_changed(new_health, old_health)
 signal health_depleted()
 signal mana_changed(new_mana)
 signal mana_depleted()
@@ -43,9 +43,10 @@ func set_max_mana(value):
 	max_mana = max(0, value)
 
 func take_damage(hit):
+	var old_health = health
 	health -= hit.damage
 	health = max(0, health)
-	emit_signal("health_changed", health)
+	emit_signal("health_changed", health, old_health)
 	if health == 0:
 		emit_signal("health_depleted")
 
@@ -56,9 +57,10 @@ func set_mana(value):
 		emit_signal("mana_depleted")
 
 func heal(amount):
+	var old_health = health
 	health += amount
 	health = max(health, max_health)
-	emit_signal("health_changed", amount)
+	emit_signal("health_changed", health, old_health)
 
 func add_modifier(id, modifier):
 	modifiers[id] = modifier
