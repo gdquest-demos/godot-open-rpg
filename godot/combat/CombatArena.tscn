@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://combat/CombatArena.gd" type="Script" id=1]
 [ext_resource path="res://combat/turn_queue/TurnQueue.tscn" type="PackedScene" id=2]
 [ext_resource path="res://combat/interface/CombatInterface.gd" type="Script" id=3]
-[ext_resource path="res://combat/interface/SelectArrow.tscn" type="PackedScene" id=4]
-[ext_resource path="res://combat/interface/bars/BattlersBarsBuilder.tscn" type="PackedScene" id=5]
-[ext_resource path="res://combat/Rewards.gd" type="Script" id=6]
-[ext_resource path="res://combat/background/Grasslands.tscn" type="PackedScene" id=7]
+[ext_resource path="res://combat/interface/PopUpHandler.tscn" type="PackedScene" id=4]
+[ext_resource path="res://combat/interface/SelectArrow.tscn" type="PackedScene" id=5]
+[ext_resource path="res://combat/interface/bars/BattlersBarsBuilder.tscn" type="PackedScene" id=6]
+[ext_resource path="res://combat/Rewards.gd" type="Script" id=7]
+[ext_resource path="res://combat/background/Grasslands.tscn" type="PackedScene" id=8]
 
 [node name="CombatArena" type="Node2D"]
 script = ExtResource( 1 )
@@ -36,9 +37,11 @@ scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 3 )
 
-[node name="SelectArrow" parent="CombatInterface" instance=ExtResource( 4 )]
+[node name="PopUpHandler" parent="CombatInterface" instance=ExtResource( 4 )]
 
-[node name="BattlersBarsBuilder" parent="CombatInterface" instance=ExtResource( 5 )]
+[node name="SelectArrow" parent="CombatInterface" instance=ExtResource( 5 )]
+
+[node name="BattlersBarsBuilder" parent="CombatInterface" instance=ExtResource( 6 )]
 
 [node name="Rewards" type="CanvasLayer" parent="."]
 editor/display_folded = true
@@ -47,7 +50,7 @@ offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
 [node name="Panel" type="Panel" parent="Rewards"]
 visible = false
@@ -84,5 +87,5 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Grasslands" parent="." instance=ExtResource( 7 )]
+[node name="Grasslands" parent="." instance=ExtResource( 8 )]
 

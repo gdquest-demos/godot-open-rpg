@@ -7,9 +7,11 @@ const CircularMenu = preload("res://combat/interface/circular_menu/CircularMenu.
 
 onready var lifebar_builder = $BattlersBarsBuilder
 onready var select_arrow = $SelectArrow
+onready var popup = $PopUpHandler
 
 func initialize(battlers : Array):
 	lifebar_builder.initialize(battlers)
+	popup.initialize(battlers)
 
 func open_actions_menu(battler : Battler) -> void:
 	var actions = battler.actions.get_actions()

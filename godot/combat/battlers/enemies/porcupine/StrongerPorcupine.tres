@@ -10,4 +10,5 @@ script = ExtResource( 2 )
 anim = ExtResource( 1 )
 stats = ExtResource( 3 )
 skills = [  ]
+drops = null
 

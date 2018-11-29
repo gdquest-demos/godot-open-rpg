@@ -30,8 +30,9 @@ func initialize(battler : Battler) -> void:
 func _connect_value_signals(battler : Battler) -> void:
 	print("Signals not connected in: " + name)
 
-func _on_value_changed(new_value) -> void:
+func _on_value_changed(new_value, old_value) -> void:
 	self.value = new_value
+	
 
 func _on_value_depleted() -> void:
 	if HIDE_ON_DEPLETED:
