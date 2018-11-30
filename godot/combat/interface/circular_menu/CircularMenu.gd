@@ -1,5 +1,7 @@
 extends Control
 
+signal action_selected(action)
+
 const ContextualAction = preload("CircularButton.tscn")
 
 export(float, 0.0, 300.0) var radius : float = 190 setget set_radius
@@ -8,9 +10,6 @@ export(float, -1.0, 1.0) var offset : float = -0.1 setget set_offset
 
 enum Layout { CENTERED = 0, CLOCKWISE = 1, COUNTER_CLOCKWISE = -1}
 export(Layout) var layout : int = CENTERED
-
-func _ready() -> void:
-	initialize([{'name': 'Attack'}, {'name': 'Run'}, {'name': 'Reload'}, {'name': 'Attack'}, {'name': 'Run'}])
 
 func initialize(actions : Array) -> void:
 	"""
@@ -21,6 +20,17 @@ func initialize(actions : Array) -> void:
 		add_child(button)
 		var target_position = _calculate_position(button, actions.size())
 		button.initialize(action, target_position)
+		button.connect("pressed", self, "_on_CircularButton_pressed", [action])
+
+func open():
+	show()
+
+func close():
+	queue_free()
+
+func _on_CircularButton_pressed(action):
+	emit_signal("action_selected", action)
+	close()
 
 func _update() -> void:
 	for button in get_children():

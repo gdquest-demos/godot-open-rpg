@@ -50,12 +50,13 @@ func attack(target : Battler):
 func can_use_skill(skill : Skill) -> bool:
 	return stats.mana >= skill.mana_cost
 
-func use_skill(target : Battler, skill : Skill) -> void:
+func use_skill(targets : Array, skill : Skill) -> void:
 	if stats.mana < skill.mana_cost:
 		return
 	stats.mana -= skill.mana_cost
 	var hit = Hit.new(stats.strength, skill.base_damage) 
-	target.take_damage(hit)
+	for target in targets:
+		target.take_damage(hit)
 
 func take_damage(hit):
 	stats.take_damage(hit)
@@ -71,19 +72,21 @@ func appear():
 	skin.position.x += TARGET_OFFSET_DISTANCE * offset_direction
 	skin.appear()
 
-func choose_target(targets : Array):
+# TODO: Move to AI-specific file
+func choose_target(targets : Array) -> Array:
 	"""
 	This function will return a target with the following policy:
 	else it will randomly choose an opponent
+	Returns the target wrapped in an Array
 	"""
 	var this_chance = randi() % 100
 	var target_min_health = targets[randi() % len(targets)]
 	
 	if this_chance > DEFAULT_CHANCE:
-		return target_min_health
+		return [target_min_health]
 	
 	var min_health = target_min_health.stats.health 
 	for target in targets:
 		if target.stats.health < min_health:
 			target_min_health = target
-	return target_min_health
+	return [target_min_health]

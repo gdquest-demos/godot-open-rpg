@@ -1,14 +1,13 @@
 extends CombatAction
 
-func execute():
+func execute(targets):
 	assert(initialized)
-	print("TODO: ATTACK -> at some point we should define the attack commands based on the equiped items\n" +
-		  "ie: if you have a bow you should not move to the target!")
-	if actor.party_member:
-		var target = yield(select_target_routine(), "completed")
-		if target == null:
-			return false
-	yield(move_to_target_routine(), "completed")
-	yield(attack_routine(), "completed")
-	yield(return_to_start_position_routine(), "completed")
+	if actor.party_member and not targets:
+		return false
+
+	for target in targets:
+		yield(actor.skin.move_to(target), "completed")
+		actor.attack(target)
+		yield(actor.get_tree().create_timer(1.0), "timeout")
+		yield(return_to_start_position(), "completed")
 	return true

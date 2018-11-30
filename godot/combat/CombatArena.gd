@@ -32,12 +32,12 @@ func play_intro():
 	# Play the appear animation on all battlers in cascade
 	for battler in turn_queue.get_party():
 		battler.appear()
-		yield(get_tree().create_timer(0.15), "timeout")
-	yield(get_tree().create_timer(0.8), "timeout")
+#		yield(get_tree().create_timer(0.15), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 	for battler in turn_queue.get_monsters():
 		battler.appear()
-		yield(get_tree().create_timer(0.15), "timeout")
-	yield(get_tree().create_timer(0.8), "timeout")
+#		yield(get_tree().create_timer(0.15), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 
 func ready_field(formation : Formation, party_members : Array):
 	"""
@@ -95,20 +95,22 @@ func play_turn():
 	if battler.stats.health > 0:
 		battler.selected = true
 		
-		var targets : Array = get_targets()
-		if not targets:
+		var opponents : Array = get_targets()
+		if not opponents:
 			battle_end()
 			return
-		var target : Battler
+		var targets : Array
 		var action : CombatAction
 		if battler.party_member:
-			interface.update_actions(battler)
+			interface.open_actions_menu(battler)
 			action = yield(interface, "action_selected")
+			interface.select_targets(opponents)
+			targets = yield(interface, "targets_selected")
 		else:
 			# Temp random target selection for the monsters
 			action = get_active_battler().actions.get_child(0)
-			action.target = battler.choose_target(targets)
-		yield(turn_queue.play_turn(action), "completed")
+			targets = battler.choose_target(opponents)
+		yield(turn_queue.play_turn(action, targets), "completed")
 		battler.selected = false
 	else:
 		turn_queue.skip_turn()

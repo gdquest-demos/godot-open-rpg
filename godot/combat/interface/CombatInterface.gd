@@ -1,33 +1,26 @@
 extends CanvasLayer
 
+signal action_selected(action)
+signal targets_selected(targets)
+
+const CircularMenu = preload("res://combat/interface/circular_menu/CircularMenu.tscn")
+
 onready var lifebar_builder = $BattlersBarsBuilder
 onready var select_arrow = $SelectArrow
-onready var action_list = $OldSchoolUI/Row/MonstersPanel/ActionSelector/ItemList
-
-var last_selected_action : CombatAction
-
-signal action_selected(action)
 
 func initialize(battlers : Array):
 	lifebar_builder.initialize(battlers)
-	action_list.hide()
 
-func select_target(selectable_battlers : Array) -> Battler:
-	var selected_target : Battler = yield(select_arrow.select_target(selectable_battlers), "completed")
-	return selected_target
+func open_actions_menu(battler : Battler) -> void:
+	var actions = battler.actions.get_actions()
+	var menu = CircularMenu.instance()
+	add_child(menu)
+	# TODO: Figure out a way to place the menu above the battler
+	menu.rect_position = battler.global_position - Vector2(70.0, 220.0)
+	menu.initialize(actions)
+	var selected_action : CombatAction = yield(menu, "action_selected")
+	emit_signal("action_selected", selected_action)
 
-func update_actions(battler : Battler) -> void:
-	action_list.show()
-	action_list.clear()
-	for index in range(battler.actions.get_child_count()):
-		var action = battler.actions.get_children()[index]
-		action_list.add_item(action.name)
-		if action.skill_to_use != null:
-			action_list.set_item_disabled(index, not battler.can_use_skill(action.skill_to_use))
-		action_list.set_item_metadata(index, action)
-	action_list.select(0)
-	action_list.grab_focus()
-
-func _on_ItemList_item_activated(index):
-	last_selected_action = action_list.get_item_metadata(index) as CombatAction
-	emit_signal("action_selected", last_selected_action)
+func select_targets(selectable_battlers : Array) -> void:
+	var targets : Array = yield(select_arrow.select_targets(selectable_battlers), "completed")
+	emit_signal("targets_selected", targets)

@@ -13,7 +13,11 @@ var target_active : Battler
 func _ready():
 	hide()
 
-func select_target(battlers : Array) -> Battler:
+func select_targets(battlers : Array) -> Array:
+	"""
+	Currently the arrow only allows you to select one target
+	Returns an array containing the target
+	"""
 	visible = true
 	targets = battlers
 	target_active = targets[0]
@@ -23,7 +27,7 @@ func select_target(battlers : Array) -> Battler:
 	grab_focus()
 	var selected_target : Battler = yield(self, "target_selected")
 	hide()
-	return selected_target
+	return [selected_target]
 
 func move_to(battler : Battler):
 	tween.interpolate_property(

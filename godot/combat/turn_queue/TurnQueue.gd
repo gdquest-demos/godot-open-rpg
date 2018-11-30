@@ -12,34 +12,24 @@ func initialize():
 		battler.raise()
 	active_battler = get_child(0)
 
-func play_turn(action : CombatAction):
+func play_turn(action : CombatAction, targets : Array):
 	if not last_action_canceled:
 		yield(active_battler.skin.move_forward(), "completed")
-	if active_battler.party_member:
-		action.initialize(get_monsters(), get_party(), active_battler)
-	else:
-		action.initialize(get_party(), get_monsters(), active_battler)
-	var hit_target = yield(action.execute(), "completed")
+	action.initialize(active_battler)
+	var hit_target = yield(action.execute(targets), "completed")
 	if not hit_target:
 		last_action_canceled = true
 		return
 	last_action_canceled = false
-	var new_index : int = (active_battler.get_index() + 1) % get_child_count()
-	active_battler = get_child(new_index)
+	var next_battler_index : int = (active_battler.get_index() + 1) % get_child_count()
+	active_battler = get_child(next_battler_index)
 
 func skip_turn():
-	var new_index : int = (active_battler.get_index() + 1) % get_child_count()
-	active_battler = get_child(new_index)
+	var next_battler_index : int = (active_battler.get_index() + 1) % get_child_count()
+	active_battler = get_child(next_battler_index)
 
 static func sort_battlers(a : Battler, b : Battler) -> bool:
 	return a.stats.speed > b.stats.speed
-
-func print_queue():
-	"""Prints the Battlers' and their speed in the turn order"""
-	var string : String
-	for battler in get_children():
-		string += battler.name + "(%s)" % battler.stats.speed + " "
-	print(string)
 
 func get_party():
 	return _get_targets(true)
@@ -56,3 +46,10 @@ func _get_targets(in_party : bool = false) -> Array:
 
 func get_battlers():
 	return get_children()
+
+func print_queue():
+	"""Prints the Battlers' and their speed in the turn order"""
+	var string : String
+	for battler in get_children():
+		string += battler.name + "(%s)" % battler.stats.speed + " "
+	print(string)
