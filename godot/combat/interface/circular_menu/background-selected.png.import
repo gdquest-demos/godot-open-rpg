@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/circle.png-36cd59b10172d5d54b65e394f6f17fd0.stex"
+path="res://.import/background-selected.png-0b3cf4fffda4d8832c258150431d13f1.stex"
 
 [deps]
 
-source_file="res://combat/interface/contextual_menu/circle.png"
-dest_files=[ "res://.import/circle.png-36cd59b10172d5d54b65e394f6f17fd0.stex" ]
+source_file="res://combat/interface/circular_menu/background-selected.png"
+dest_files=[ "res://.import/background-selected.png-0b3cf4fffda4d8832c258150431d13f1.stex" ]
 
 [params]
 

@@ -1,13 +1,13 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://combat/interface/contextual_menu/ContextualAction.gd" type="Script" id=1]
-[ext_resource path="res://combat/interface/contextual_menu/Tooltip.gd" type="Script" id=2]
-[ext_resource path="res://combat/interface/contextual_menu/tooltip.png" type="Texture" id=3]
+[ext_resource path="res://combat/interface/circular_menu/CircularButton.gd" type="Script" id=1]
+[ext_resource path="res://combat/interface/circular_menu/Tooltip.gd" type="Script" id=2]
+[ext_resource path="res://combat/interface/circular_menu/tooltip.png" type="Texture" id=3]
 [ext_resource path="res://interface/theme/fonts/montserrat_eb_32.tres" type="DynamicFont" id=4]
-[ext_resource path="res://combat/interface/contextual_menu/background-inactive.png" type="Texture" id=5]
-[ext_resource path="res://combat/interface/contextual_menu/circle.png" type="Texture" id=6]
+[ext_resource path="res://combat/interface/circular_menu/background-inactive.png" type="Texture" id=5]
+[ext_resource path="res://combat/interface/circular_menu/circle.png" type="Texture" id=6]
 [ext_resource path="res://interface/theme/icons/sword.png" type="Texture" id=7]
-[ext_resource path="res://combat/interface/contextual_menu/background-selected.png" type="Texture" id=8]
+[ext_resource path="res://combat/interface/circular_menu/background-selected.png" type="Texture" id=8]
 
 [sub_resource type="Animation" id=1]
 
@@ -89,7 +89,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 8 ), ExtResource( 5 ) ]
 }
 
-[node name="ContextualAction" type="Control"]
+[node name="CircularButton" type="Control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

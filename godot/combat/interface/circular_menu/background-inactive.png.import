@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tooltip.png-4b1f297583c6626836379bdb63324ad0.stex"
+path="res://.import/background-inactive.png-81280d9916d9fb2151076b31584e22b1.stex"
 
 [deps]
 
-source_file="res://combat/interface/contextual_menu/tooltip.png"
-dest_files=[ "res://.import/tooltip.png-4b1f297583c6626836379bdb63324ad0.stex" ]
+source_file="res://combat/interface/circular_menu/background-inactive.png"
+dest_files=[ "res://.import/background-inactive.png-81280d9916d9fb2151076b31584e22b1.stex" ]
 
 [params]
 

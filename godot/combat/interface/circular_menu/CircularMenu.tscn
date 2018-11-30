@@ -1,8 +1,10 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://combat/interface/contextual_menu/ContextualMenu.gd" type="Script" id=1]
+[ext_resource path="res://combat/interface/circular_menu/CircularMenu.gd" type="Script" id=1]
 
-[node name="ContextualMenu" type="Control"]
+
+
+[node name="CircularMenu" type="Control"]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

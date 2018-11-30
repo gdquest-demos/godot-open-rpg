@@ -1,6 +1,6 @@
 extends Control
 
-const ContextualAction = preload("ContextualAction.tscn")
+const ContextualAction = preload("CircularButton.tscn")
 
 export(float, 0.0, 300.0) var radius : float = 190 setget set_radius
 export(float, 0, 1.0) var spacing : float = 0.2 setget set_spacing
