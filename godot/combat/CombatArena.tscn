@@ -3,7 +3,7 @@
 [ext_resource path="res://combat/CombatArena.gd" type="Script" id=1]
 [ext_resource path="res://combat/turn_queue/TurnQueue.tscn" type="PackedScene" id=2]
 [ext_resource path="res://combat/interface/CombatInterface.gd" type="Script" id=3]
-[ext_resource path="res://combat/interface/PopUp.tscn" type="PackedScene" id=4]
+[ext_resource path="res://combat/interface/PopUpHandler.tscn" type="PackedScene" id=4]
 [ext_resource path="res://combat/interface/SelectArrow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://combat/interface/bars/BattlersBarsBuilder.tscn" type="PackedScene" id=6]
 [ext_resource path="res://combat/Rewards.gd" type="Script" id=7]
@@ -37,7 +37,7 @@ scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 3 )
 
-[node name="PopUp" parent="CombatInterface" instance=ExtResource( 4 )]
+[node name="PopUpHandler" parent="CombatInterface" instance=ExtResource( 4 )]
 
 [node name="SelectArrow" parent="CombatInterface" instance=ExtResource( 5 )]
 
