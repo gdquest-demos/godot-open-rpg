@@ -1,29 +1,29 @@
 extends Control
 
+onready var label = get_node("Background/Label")
+onready var background = get_node("Background")
 export var tooltip_margin : int = 25
 
-func initialize(text : String, action_rotation : float, action_rect_size : Vector2) -> void:
-	$Background/Label.text = text
-	_find_position(rad2deg(action_rotation), action_rect_size)
-	$Background/Label.connect('draw', self, '_fix_background')
+func initialize(button : Control, action) -> void:
+	label.text = action.name
+	label.connect('draw', self, '_resize_background')
+	update_position(button)
 
-func _fix_background() -> void:
+func _resize_background() -> void:
 	"""
-	Increases the size of the horizontal size of the background image according to the text size
+	Updates the horizontal size of the background image according to the label's size
+	Called after Godot re-drew the label
 	"""
-	if $Background.rect_size.x < $Background/Label.rect_size.x + tooltip_margin:
-		$Background.rect_size.x = $Background/Label.rect_size.x + tooltip_margin
-	$Background/Label.disconnect('draw', self, '_fix_background')
+	if background.rect_size.x < label.rect_size.x + tooltip_margin:
+		background.rect_size.x = label.rect_size.x + tooltip_margin
+	label.disconnect('draw', self, '_resize_background')
 
-func _find_position(rot : float, action_rect_size : Vector2) -> void:
-	"""
-	Finds the position in which the tooltip should appear based on it's rotation from the menu's center
-	"""
-	var abs_rot = abs(rot)
+func update_position(button : Control) -> void:
+	var button_center = button.rect_position + button.rect_size / 2.0
+	var polar_angle = -cartesian2polar(button_center.x, button_center.y).y
 	var new_pos : = rect_position
-	if abs_rot >= 90 and abs_rot < 270:
-		new_pos.y = abs(rect_position.y) + action_rect_size.y
-	if abs_rot > 0 and abs_rot <= 180:
-		new_pos.x = action_rect_size.x
-	
+	if polar_angle < 0.0:
+		new_pos.y = abs(rect_position.y) + button.rect_size.y
+	if -PI / 2.0 < polar_angle and polar_angle < PI / 2.0:
+		new_pos.x = button.rect_size.x
 	rect_position = new_pos

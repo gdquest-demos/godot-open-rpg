@@ -6,10 +6,9 @@ onready var tooltip : = $Tooltip as Control
 var mouse_over : bool
 var active : bool
 
-func initialize(action, action_rotation : float) -> void:
-	tooltip.initialize(action.name, action_rotation, rect_size)
-
-func _ready() -> void:
+func initialize(action, target_position) -> void:
+	rect_position = target_position
+	tooltip.initialize(self, action)
 	connect('mouse_exited', self, '_on_mouse_exited')
 	connect('mouse_entered', self, '_on_mouse_entered')
 

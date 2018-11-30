@@ -12,41 +12,46 @@ export(Layout) var layout : int = CENTERED
 func _ready() -> void:
 	initialize([{'name': 'Attack'}, {'name': 'Run'}, {'name': 'Reload'}, {'name': 'Attack'}, {'name': 'Run'}])
 
-func set_radius(new_value : float) -> void:
-	radius = new_value
-	_update_buttons_position()
-
-func set_spacing(new_value : float) -> void:
-	spacing = new_value
-	_update_buttons_position()
-
-func set_offset(new_value : float) -> void:
-	offset = new_value
-	_update_buttons_position()
-
 func initialize(actions : Array) -> void:
 	"""
 	Takes an array of actions to create the contextual menu entries
 	"""
-	for index in range(actions.size()):
+	for action in actions:
 		var button = ContextualAction.instance()
 		add_child(button)
-		var action_rotation = spacing * index * layout
-		button.initialize(actions[index], action_rotation)
-	_update_buttons_position()
+		var target_position = _calculate_position(button, actions.size())
+		button.initialize(action, target_position)
 
-func _update_buttons_position() -> void:
-	var button_count = get_child_count()
+func _update() -> void:
+	for button in get_children():
+		button.rect_position = _calculate_position(button, get_child_count())
+
+func _calculate_position(button, buttons_count : int) -> Vector2:
+	"""
+	Returns the button's position relative to the menu
+	"""
 	# The calculation is different if the menu is centered over the character,
 	# built clockwise, or counter-clockwise
 	var spacing_angle = spacing * PI
 	var start_offset_angle = offset * PI
+	var button_position : Vector2
 	if layout == CENTERED:
-		var centering_offset = spacing_angle / 2.0 * (button_count - 1)
-		for button in get_children():
-			var polar_angle = spacing_angle * button.get_index() - centering_offset
-			button.rect_position = Vector2(0, -radius).rotated(polar_angle + start_offset_angle)
+		var centering_offset = spacing_angle / 2.0 * (buttons_count - 1)
+		var angle = spacing_angle * button.get_index() - centering_offset + start_offset_angle
+		button_position = Vector2(0, -radius).rotated(angle)
 	else:
-		for button in get_children():
-			var polar_angle = spacing_angle * button.get_index() * layout
-			button.rect_position = Vector2(0, -radius).rotated(polar_angle + start_offset_angle)
+		var angle = spacing_angle * button.get_index() * layout + start_offset_angle
+		button_position = Vector2(0, -radius).rotated(angle)
+	return button_position
+
+func set_radius(new_value : float) -> void:
+	radius = new_value
+	_update()
+
+func set_spacing(new_value : float) -> void:
+	spacing = new_value
+	_update()
+
+func set_offset(new_value : float) -> void:
+	offset = new_value
+	_update()

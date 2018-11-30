@@ -2,8 +2,6 @@
 
 [ext_resource path="res://combat/interface/circular_menu/CircularMenu.gd" type="Script" id=1]
 
-
-
 [node name="CircularMenu" type="Control"]
 anchor_left = 0.0
 anchor_top = 0.0
