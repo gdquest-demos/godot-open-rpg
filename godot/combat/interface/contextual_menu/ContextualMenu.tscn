@@ -21,7 +21,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-radius = 156
-action_spacing = 0.75
-circle_to_right = true
+radius = 190
+spacing = 0.2
+offset = -0.1
+layout = 0
 
