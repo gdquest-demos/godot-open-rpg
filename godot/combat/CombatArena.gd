@@ -92,29 +92,30 @@ func battle_end():
 
 func play_turn():
 	var battler : Battler = get_active_battler()
-	if battler.stats.health > 0:
-		battler.selected = true
-		
-		var opponents : Array = get_targets()
-		if not opponents:
-			battle_end()
-			return
-		var targets : Array
-		var action : CombatAction
-		if battler.party_member:
-			interface.open_actions_menu(battler)
-			action = yield(interface, "action_selected")
-			interface.select_targets(opponents)
-			targets = yield(interface, "targets_selected")
-		else:
-			# Temp random target selection for the monsters
-			action = get_active_battler().actions.get_child(0)
-			targets = battler.choose_target(opponents)
-		yield(turn_queue.play_turn(action, targets), "completed")
-		battler.selected = false
-	else:
+	var targets : Array
+	var action : CombatAction
+	if battler.stats.health == 0:
 		turn_queue.skip_turn()
 	
+	battler.selected = true
+	var opponents : Array = get_targets()
+	if not opponents:
+		battle_end()
+		return
+
+	if battler.party_member:
+		interface.open_actions_menu(battler)
+		action = yield(interface, "action_selected")
+		interface.select_targets(opponents)
+		targets = yield(interface, "targets_selected")
+	else:
+		# Temp random target selection for the monsters
+		action = get_active_battler().actions.get_child(0)
+		targets = battler.choose_target(opponents)
+	battler.selected = false
+	
+	if targets != []:
+		yield(turn_queue.play_turn(action, targets), "completed")
 	if active:
 		play_turn()
 

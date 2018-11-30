@@ -27,6 +27,8 @@ func select_targets(battlers : Array) -> Array:
 	grab_focus()
 	var selected_target : Battler = yield(self, "target_selected")
 	hide()
+	if not selected_target:
+		return []
 	return [selected_target]
 
 func move_to(battler : Battler):
