@@ -1,31 +1,17 @@
 extends CanvasLayer
 
-<<<<<<< HEAD
 signal action_selected(action)
 signal targets_selected(targets)
-=======
-onready var lifebar_builder = $BattlersBarsBuilder
-onready var select_arrow = $SelectArrow
-onready var action_list = $OldSchoolUI/Row/MonstersPanel/ActionSelector/ItemList
-onready var popup = $PopUp
->>>>>>> [WIP] Added Popup information with font.
 
 const CircularMenu = preload("res://combat/interface/circular_menu/CircularMenu.tscn")
 
 onready var lifebar_builder = $BattlersBarsBuilder
 onready var select_arrow = $SelectArrow
+onready var popup = $PopUp
 
 func initialize(battlers : Array):
 	lifebar_builder.initialize(battlers)
-<<<<<<< HEAD
-=======
 	popup.initialize(battlers)
-	action_list.hide()
-
-func select_target(selectable_battlers : Array) -> Battler:
-	var selected_target : Battler = yield(select_arrow.select_target(selectable_battlers), "completed")
-	return selected_target
->>>>>>> [WIP] Added Popup information with font.
 
 func open_actions_menu(battler : Battler) -> void:
 	var actions = battler.actions.get_actions()

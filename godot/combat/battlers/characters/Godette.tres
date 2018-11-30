@@ -11,9 +11,5 @@ script = ExtResource( 2 )
 anim = ExtResource( 1 )
 stats = ExtResource( 4 )
 skills = [ ExtResource( 3 ) ]
-<<<<<<< HEAD
 drops = [  ]
-=======
-drops = null
->>>>>>> [WIP] Added Popup information with font.
 

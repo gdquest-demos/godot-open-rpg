@@ -4,7 +4,7 @@ class_name CharacterStats
 
 signal health_changed(new_health, old_health)
 signal health_depleted()
-signal mana_changed(new_mana)
+signal mana_changed(new_mana, old_mana)
 signal mana_depleted()
 
 var modifiers = {}
@@ -51,8 +51,9 @@ func take_damage(hit):
 		emit_signal("health_depleted")
 
 func set_mana(value):
+	var old_mana = mana
 	mana = max(0, value)
-	emit_signal("mana_changed", mana)
+	emit_signal("mana_changed", mana, old_mana)
 	if mana == 0:
 		emit_signal("mana_depleted")
 
