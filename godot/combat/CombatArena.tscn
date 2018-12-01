@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://combat/CombatArena.gd" type="Script" id=1]
 [ext_resource path="res://combat/turn_queue/TurnQueue.tscn" type="PackedScene" id=2]
@@ -7,7 +7,8 @@
 [ext_resource path="res://combat/interface/SelectArrow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://combat/interface/bars/BattlersBarsBuilder.tscn" type="PackedScene" id=6]
 [ext_resource path="res://combat/Rewards.gd" type="Script" id=7]
-[ext_resource path="res://combat/background/Grasslands.tscn" type="PackedScene" id=8]
+[ext_resource path="res://interface/default.theme" type="Theme" id=8]
+[ext_resource path="res://combat/background/Grasslands.tscn" type="PackedScene" id=9]
 
 [node name="CombatArena" type="Node2D"]
 script = ExtResource( 1 )
@@ -45,7 +46,6 @@ buttons_offset = null
 [node name="BattlersBarsBuilder" parent="CombatInterface" instance=ExtResource( 6 )]
 
 [node name="Rewards" type="CanvasLayer" parent="."]
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -54,21 +54,19 @@ transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 7 )
 
 [node name="Panel" type="Panel" parent="Rewards"]
-visible = false
-anchor_left = 0.5
+anchor_left = 0.0
 anchor_top = 0.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.0
-margin_left = -766.0
-margin_top = 22.0
-margin_right = 767.0
-margin_bottom = 136.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 0, 160 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+theme = ExtResource( 8 )
 
 [node name="Label" type="Label" parent="Rewards/Panel"]
 anchor_left = 0.0
@@ -88,5 +86,5 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Grasslands" parent="." instance=ExtResource( 8 )]
+[node name="Grasslands" parent="." instance=ExtResource( 9 )]
 
