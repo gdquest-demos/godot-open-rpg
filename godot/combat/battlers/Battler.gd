@@ -51,7 +51,7 @@ func can_use_skill(skill : Skill) -> bool:
 	return stats.mana >= skill.mana_cost
 
 func use_skill(targets : Array, skill : Skill) -> void:
-	if stats.mana < skill.mana_cost:
+	if not can_use_skill(skill):
 		return
 	stats.mana -= skill.mana_cost
 	var hit = Hit.new(stats.strength, skill.base_damage) 

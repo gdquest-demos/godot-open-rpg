@@ -4,8 +4,6 @@ class_name CombatAction
 
 var initialized = false
 
-var skill_to_use : Skill = null
-
 # Since Actions can be instanced by code (ie skills) these
 # actions doesn't have an owner, that's why we get the owner
 # from it's parent (BattlerActions.gd)

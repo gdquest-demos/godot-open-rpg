@@ -1,7 +1,11 @@
 extends CombatAction
 
+class_name SkillAction
+
+var skill : Skill = null
+
 func _ready() -> void:
-	name = skill_to_use.skill_name
+	name = skill.skill_name
 	randomize()
 
 func execute(targets):
@@ -10,12 +14,12 @@ func execute(targets):
 		return false
 	
 	# Use skill on all targets
-	if skill_to_use.success_chance == 1.0:
-		actor.use_skill(targets, skill_to_use)
+	if skill.success_chance == 1.0:
+		actor.use_skill(targets, skill)
 	else:
 		randomize()
-		if rand_range(0, 1.0) < skill_to_use.success_chance:
-			actor.use_skill(targets, skill_to_use)
+		if rand_range(0, 1.0) < skill.success_chance:
+			actor.use_skill(targets, skill)
 	yield(actor.get_tree().create_timer(1.0), "timeout")
 
 	yield(return_to_start_position(), "completed")

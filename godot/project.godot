@@ -114,6 +114,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://combat/battlers/skills/Skill.gd"
 }, {
+"base": "Node",
+"class": "SkillAction",
+"language": "GDScript",
+"path": "res://combat/battlers/actions/SkillAction.gd"
+}, {
 "base": "Control",
 "class": "StatBar",
 "language": "GDScript",
@@ -146,6 +151,7 @@ _global_script_class_icons={
 "PawnFollower": "",
 "PawnLeader": "",
 "Skill": "",
+"SkillAction": "",
 "StatBar": "",
 "TurnQueue": ""
 }
