@@ -7,6 +7,7 @@ const combat_arena_scene = preload("res://combat/CombatArena.tscn")
 onready var transition = $Overlays/TransitionColor
 onready var local_map = $LocalMap
 onready var party = $Party as Party
+onready var music_player = $MusicPlayer
 
 var transitioning = false
 
@@ -20,16 +21,18 @@ func enter_battle(formation: Formation):
 	if transitioning:
 		return
 		
+	emit_signal("combat_started")
+	music_player.play_battle_theme()
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
 	remove_child(local_map)
 	var combat_arena = combat_arena_scene.instance()
 	add_child(combat_arena)
+	combat_arena.connect("victory", self, "_on_CombatArena_player_victory")
 	combat_arena.initialize(formation, party.get_active_members())
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
 	combat_arena.battle_start()
-	emit_signal("combat_started")
 	
 	# Get data from the battlers after the battle ended,
 	# Then copy into the Party node to save earned experience,
@@ -44,3 +47,7 @@ func enter_battle(formation: Formation):
 	add_child(local_map)
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
+	music_player.stop()
+
+func _on_CombatArena_player_victory():
+	music_player.play_victory_fanfare()

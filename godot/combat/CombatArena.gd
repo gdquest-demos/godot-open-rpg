@@ -11,7 +11,8 @@ var party : Array = []
 
 # send when battle is completed, contains status updates for the party
 # so that we may persist the data
-signal battle_ended(party) 
+signal battle_ended(party)
+signal victory
 signal gameover
 
 func initialize(formation : Formation, party : Array):
@@ -82,8 +83,9 @@ func ready_field(formation : Formation, party_members : Array):
 
 func battle_end():
 	active = false
-	var player_lost = get_active_battler().party_member
-	if player_lost:
+	var player_won = get_active_battler().party_member
+	if player_won:
+		emit_signal("victory")
 		yield(rewards.on_battle_completed(), "completed")
 		emit_signal("battle_ended", self.party)
 	else:
