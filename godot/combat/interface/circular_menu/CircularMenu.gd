@@ -11,15 +11,20 @@ export(float, -1.0, 1.0) var offset : float = -0.1 setget set_offset
 enum Layout { CENTERED = 0, CLOCKWISE = 1, COUNTER_CLOCKWISE = -1}
 export(Layout) var layout : int = CENTERED
 
-func initialize(actions : Array) -> void:
+func initialize(actor : Battler) -> void:
 	"""
-	Takes an array of actions to create the contextual menu entries
+	Creates a circular menu from a battler's actions
 	"""
+	var actions = actor.actions.get_actions()
 	for action in actions:
+		var active : bool = true
+		if action is SkillAction:
+			active = actor.can_use_skill(action.skill)
+
 		var button = ContextualAction.instance()
 		add_child(button)
 		var target_position = _calculate_position(button, actions.size())
-		button.initialize(action, target_position)
+		button.initialize(action, target_position, active)
 		button.connect("pressed", self, "_on_CircularButton_pressed", [action])
 
 func open():

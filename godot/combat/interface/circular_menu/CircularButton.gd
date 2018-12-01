@@ -1,6 +1,4 @@
-extends Control
-
-signal pressed()
+extends Button
 
 onready var animation_player : = $AnimationPlayer as AnimationPlayer
 onready var tooltip : = $Tooltip as Control
@@ -8,8 +6,11 @@ onready var tooltip : = $Tooltip as Control
 var mouse_over : bool
 var active : bool
 
-func initialize(action : CombatAction, target_position : Vector2) -> void:
+func initialize(action : CombatAction, target_position : Vector2, active : bool) -> void:
 	rect_position = target_position
+	disabled = not active
+	if disabled:
+		modulate = Color("#555555")
 	tooltip.initialize(self, action)
 	connect('mouse_exited', self, '_on_mouse_exited')
 	connect('mouse_entered', self, '_on_mouse_entered')
@@ -24,9 +25,3 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	tooltip.hide()
 	animation_player.play('deactivate')
-
-func _gui_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
-		emit_signal("pressed")
-		accept_event()
-		

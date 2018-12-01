@@ -14,12 +14,11 @@ func initialize(battlers : Array):
 	popup.initialize(battlers)
 
 func open_actions_menu(battler : Battler) -> void:
-	var actions = battler.actions.get_actions()
 	var menu = CircularMenu.instance()
 	add_child(menu)
-	# TODO: Figure out a way to place the menu above the battler
+	# TODO: Get height from the battler
 	menu.rect_position = battler.global_position - Vector2(70.0, 220.0)
-	menu.initialize(actions)
+	menu.initialize(battler)
 	var selected_action : CombatAction = yield(menu, "action_selected")
 	emit_signal("action_selected", selected_action)
 
