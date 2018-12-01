@@ -3,13 +3,15 @@ extends Control
 onready var anim_player = get_node("AnimationPlayer")
 var _animation_name : String
 
+export var offset : Vector2 = Vector2(0.0, -40.0)
+
 func initialize(battler : Battler, type : String, difference : int):
 	"""
 	@type: either health or mana. Determines the animation the label will use
 	"""
 	assert type in ["health", "mana"]
-	# TODO: get height from the battler
-	rect_global_position = Vector2(battler.position.x, battler.position.y - 250)
+	var battler_extents : RectExtents = battler.skin.get_extents()
+	rect_global_position = battler.global_position - Vector2(0.0, battler_extents.size.y) + offset
 	get_node("Label").text = str(difference)
 	_animation_name = type + "_loss" if difference <= 0 else type + "_gain"
 

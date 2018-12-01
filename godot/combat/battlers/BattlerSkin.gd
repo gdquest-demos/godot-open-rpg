@@ -71,3 +71,6 @@ func play_death():
 
 func appear():
 	anim.play("appear")
+
+func get_extents() -> RectExtents:
+	return battler_anim.extents

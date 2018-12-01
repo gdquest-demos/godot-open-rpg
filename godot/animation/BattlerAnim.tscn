@@ -6,7 +6,6 @@
 [ext_resource path="res://animation/take_damage.anim" type="Animation" id=4]
 [ext_resource path="res://core/utils/RectExtents.tscn" type="PackedScene" id=5]
 
-
 [node name="BattlerAnim" type="Position2D"]
 script = ExtResource( 1 )
 
