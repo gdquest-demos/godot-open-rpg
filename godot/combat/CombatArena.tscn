@@ -3,11 +3,12 @@
 [ext_resource path="res://combat/CombatArena.gd" type="Script" id=1]
 [ext_resource path="res://combat/turn_queue/TurnQueue.tscn" type="PackedScene" id=2]
 [ext_resource path="res://combat/interface/CombatInterface.gd" type="Script" id=3]
-[ext_resource path="res://combat/interface/PopUpHandler.tscn" type="PackedScene" id=4]
+[ext_resource path="res://combat/interface/PopupLabelBuilder.tscn" type="PackedScene" id=4]
 [ext_resource path="res://combat/interface/SelectArrow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://combat/interface/bars/BattlersBarsBuilder.tscn" type="PackedScene" id=6]
 [ext_resource path="res://combat/Rewards.gd" type="Script" id=7]
 [ext_resource path="res://combat/background/Grasslands.tscn" type="PackedScene" id=8]
+
 
 [node name="CombatArena" type="Node2D"]
 script = ExtResource( 1 )
