@@ -36,6 +36,7 @@ rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 3 )
+buttons_offset = null
 
 [node name="PopUpHandler" parent="CombatInterface" instance=ExtResource( 4 )]
 
