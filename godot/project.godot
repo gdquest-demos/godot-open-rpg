@@ -167,6 +167,7 @@ _global_script_class_icons={
 config/name="Turn-Based Combat"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
+config/version="0.2.0"
 
 [display]
 

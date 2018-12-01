@@ -5,9 +5,9 @@ All notable changes to this project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
-## [Unreleased] v0.2.0: Better Encounters ⚔🌟
+## v0.2.0: Better Encounters ⚔🌟 - 2018-12-01
 
-Expand the combat system and create a bite-sized, playable demo revolving around it.
+This version brings a lot of new features and improvements to the project's codebase thanks to the help of @godofgrunts, @nhydock, @salvob41, @MarianoGnu, @henriiquecampos, and @guilhermehto! We did at least twice as much as we planned thanks to everyone's help 😄
 
 ### New
 
@@ -21,19 +21,29 @@ Expand the combat system and create a bite-sized, playable demo revolving around
   - Experience points are awarded at the end of battle to gain levels
   - The value of the characters' stats is based on Godot's curves
 - Battle Formations for monsters and the player's party, based on .tscn files
+- Added support for multiple targets. The interface to do it from the game is not available yet but you can now pass pass multiple targets to any combat action/command and it will affect all of them
+- Animated pop-up labels. They show how much damage a character to took or how much mana someone lost. There's also animations ready for healing effects.
 
 #### Map
 
 - Grid-based character movement
+  - Follower pawns follow the leader or playable one with a one-step delay
 - Dialogue system
 
 #### User Interface
 
 - Mana bars
+- Circular menu: a radial menu you can use for battle, for the character to pick one of multiple CombatActions to use on its opponent. E.g. attack, a specific skill...
 
 #### Art
 
-- Godette sprite
+Added sprites for Godette, Robi, the porcupine, and the grasslands battle background sprites. There's also the first combat icon for Robi's base attack, the bilboshot.
+
+None of the art is animated yet.
+
+#### Audio
+
+There is now a battle theme and a placeholder victory fanfare
 
 ### Changed
 
@@ -43,8 +53,6 @@ Expand the combat system and create a bite-sized, playable demo revolving around
 - Refactored the initialize loop and getting battlers
 - Fixed incorrect indentation in Battler.gd
 - Improved Data persistence in and out of combat
-
-<!-- ### Removed -->
 
 ## v0.1.0: Combat prototype ⚔ - 2018-11-04
 
