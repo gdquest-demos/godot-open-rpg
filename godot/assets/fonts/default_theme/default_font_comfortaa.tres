@@ -1,10 +1,10 @@
 [gd_resource type="DynamicFont" load_steps=2 format=2]
 
-[ext_resource path="res://interface/theme/fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/fonts/default_theme/Comfortaa-Bold.ttf" type="DynamicFontData" id=1]
 
 [resource]
 
-size = 32
+size = 30
 outline_size = 0
 outline_color = Color( 1, 1, 1, 1 )
 use_mipmaps = false

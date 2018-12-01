@@ -3,27 +3,27 @@
 [ext_resource path="res://combat/interface/circular_menu/CircularButton.gd" type="Script" id=1]
 [ext_resource path="res://combat/interface/circular_menu/Tooltip.gd" type="Script" id=2]
 [ext_resource path="res://combat/interface/circular_menu/tooltip.png" type="Texture" id=3]
-[ext_resource path="res://interface/theme/fonts/montserrat_eb_32.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_32.tres" type="DynamicFont" id=4]
 [ext_resource path="res://combat/interface/circular_menu/background-inactive.png" type="Texture" id=5]
 [ext_resource path="res://combat/interface/circular_menu/circle.png" type="Texture" id=6]
 [ext_resource path="res://interface/theme/icons/sword.png" type="Texture" id=7]
 [ext_resource path="res://combat/interface/circular_menu/background-selected.png" type="Texture" id=8]
 
-[sub_resource type="StyleBoxEmpty" id=9]
+[sub_resource type="StyleBoxEmpty" id=1]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
 
-[sub_resource type="StyleBoxEmpty" id=10]
+[sub_resource type="StyleBoxEmpty" id=2]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
 
-[sub_resource type="StyleBoxEmpty" id=11]
+[sub_resource type="StyleBoxEmpty" id=3]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -139,9 +139,9 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 10 )
-custom_styles/focus = SubResource( 11 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 toggle_mode = false

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://interface/default.theme" type="Theme" id=1]
 [ext_resource path="res://combat/interface/PopupLabel.gd" type="Script" id=2]
-[ext_resource path="res://interface/theme/fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/fonts/default_theme/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 
