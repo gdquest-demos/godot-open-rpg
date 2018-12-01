@@ -6,12 +6,12 @@
 [ext_resource path="res://local_map/grid/Grid.gd" type="Script" id=4]
 [ext_resource path="res://local_map/grid/PawnContainer.gd" type="Script" id=5]
 [ext_resource path="res://local_map/pawns/Actor.tscn" type="PackedScene" id=6]
-[ext_resource path="res://local_map/pawns/Pawn.gd" type="Script" id=7]
-[ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=8]
-[ext_resource path="res://local_map/pawns/sprites/character_grey.png" type="Texture" id=9]
-[ext_resource path="res://local_map/pawns/sprites/star.png" type="Texture" id=10]
-[ext_resource path="res://dialogue/Dialogue.tscn" type="PackedScene" id=11]
-[ext_resource path="res://local_map/pawns/Follower.tscn" type="PackedScene" id=12]
+[ext_resource path="res://local_map/pawns/Follower.tscn" type="PackedScene" id=7]
+[ext_resource path="res://local_map/pawns/Pawn.gd" type="Script" id=8]
+[ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=9]
+[ext_resource path="res://local_map/pawns/sprites/character_grey.png" type="Texture" id=10]
+[ext_resource path="res://local_map/pawns/sprites/star.png" type="Texture" id=11]
+[ext_resource path="res://dialogue/Dialogue.tscn" type="PackedScene" id=12]
 [ext_resource path="res://local_map/DialogueBox.gd" type="Script" id=13]
 [ext_resource path="res://dialogue/dialogue_player/DialoguePlayer.tscn" type="PackedScene" id=14]
 
@@ -73,37 +73,37 @@ script = ExtResource( 5 )
 [node name="Leader" parent="Grid/Pawns" instance=ExtResource( 6 )]
 position = Vector2( 480, 420 )
 
+[node name="Follower" parent="Grid/Pawns" instance=ExtResource( 7 )]
+position = Vector2( 356, 290 )
+
+[node name="Follower2" parent="Grid/Pawns" instance=ExtResource( 7 )]
+position = Vector2( 293, 290 )
+
 [node name="Actor2" type="Node2D" parent="Grid/Pawns" groups=[
 "enemy",
 ]]
 editor/display_folded = true
 position = Vector2( 480, 480 )
 z_index = 1
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 type = 0
-formation = ExtResource( 8 )
+formation = ExtResource( 9 )
 
 [node name="Sprite" type="Sprite" parent="Grid/Pawns/Actor2"]
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 
 [node name="Object" type="Node2D" parent="Grid/Pawns"]
 editor/display_folded = true
 position = Vector2( 544, 288 )
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 type = 2
-formation = ExtResource( 8 )
+formation = ExtResource( 9 )
 
 [node name="Sprite" type="Sprite" parent="Grid/Pawns/Object"]
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 
-[node name="Dialogue" parent="Grid/Pawns/Object" instance=ExtResource( 11 )]
+[node name="Dialogue" parent="Grid/Pawns/Object" instance=ExtResource( 12 )]
 file_path = "res://dialogue/dialogue_data/object.json"
-
-[node name="Follower" parent="Grid/Pawns" instance=ExtResource( 12 )]
-position = Vector2( 356, 290 )
-
-[node name="Follower2" parent="Grid/Pawns" instance=ExtResource( 12 )]
-position = Vector2( 293, 290 )
 
 [node name="MapInterface" type="CanvasLayer" parent="."]
 pause_mode = 2
@@ -224,4 +224,5 @@ align = 1
 [node name="DialoguePlayer" parent="MapInterface/Dialogue" instance=ExtResource( 14 )]
 
 [connection signal="enemies_encountered" from="Grid" to="." method="_on_Grid_enemies_encountered"]
-[connection signal="moved" from="Grid/Pawns/Follower" to="Grid/Pawns/Follower2" method="_on_Actor_moved"]
+[connection signal="moved" from="Grid/Pawns/Leader" to="Grid/Pawns/Follower" method="_on_target_Pawn_moved"]
+[connection signal="moved" from="Grid/Pawns/Follower" to="Grid/Pawns/Follower2" method="_on_target_Pawn_moved"]
