@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/sprites/battlers/shadow.png" type="Texture" id=2]
 [ext_resource path="res://assets/sprites/battlers/robi.png" type="Texture" id=3]
 
-[node name="RobiAnim" instance=ExtResource( 1 )]
+[node name="RobiAnim" index="0" instance=ExtResource( 1 )]
 
 [node name="shadow" type="Sprite" parent="." index="0"]
 position = Vector2( 0.136375, -0.935276 )
@@ -15,4 +15,8 @@ texture = ExtResource( 2 )
 position = Vector2( 5.30737, -108.186 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
+
+[node name="RectExtents" parent="." index="3"]
+size = Vector2( 180, 240 )
+offset = Vector2( 4, 0 )
 

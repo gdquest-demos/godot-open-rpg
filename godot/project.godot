@@ -109,6 +109,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://local_map/pawns/Leader.gd"
 }, {
+"base": "Node2D",
+"class": "RectExtents",
+"language": "GDScript",
+"path": "res://core/utils/RectExtents.gd"
+}, {
 "base": "Resource",
 "class": "Skill",
 "language": "GDScript",
@@ -150,6 +155,7 @@ _global_script_class_icons={
 "PawnActor": "",
 "PawnFollower": "",
 "PawnLeader": "",
+"RectExtents": "",
 "Skill": "",
 "SkillAction": "",
 "StatBar": "",
