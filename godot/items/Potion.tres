@@ -7,6 +7,6 @@
 script = ExtResource( 1 )
 name = "Potion"
 description = "Recovers health"
-is_key = null
-msrp = 10
+unique = null
+sell_value = null
 
