@@ -2,6 +2,7 @@ extends Button
 
 onready var animation_player : = $AnimationPlayer as AnimationPlayer
 onready var tooltip : = $Tooltip as Control
+onready var button_icon : = $Background/Icon as TextureRect
 
 var mouse_over : bool
 var active : bool
@@ -12,6 +13,7 @@ func initialize(action : CombatAction, target_position : Vector2, active : bool)
 	if disabled:
 		modulate = Color("#555555")
 	tooltip.initialize(self, action)
+	button_icon.texture = action.icon
 	connect('mouse_exited', self, '_on_mouse_exited')
 	connect('mouse_entered', self, '_on_mouse_entered')
 
