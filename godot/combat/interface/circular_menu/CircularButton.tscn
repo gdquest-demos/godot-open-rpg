@@ -9,6 +9,27 @@
 [ext_resource path="res://interface/theme/icons/sword.png" type="Texture" id=7]
 [ext_resource path="res://combat/interface/circular_menu/background-selected.png" type="Texture" id=8]
 
+[sub_resource type="StyleBoxEmpty" id=9]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+
 [sub_resource type="StyleBoxEmpty" id=4]
 
 content_margin_left = -1.0
@@ -23,30 +44,8 @@ content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
 
-[sub_resource type="StyleBoxEmpty" id=6]
+[sub_resource type="Animation" id=6]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-
-[sub_resource type="StyleBoxEmpty" id=7]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-
-[sub_resource type="StyleBoxEmpty" id=8]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-
-[sub_resource type="Animation" id=1]
-
-resource_name = "activate"
 length = 0.2
 loop = false
 step = 0.1
@@ -75,7 +74,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 5 ), ExtResource( 8 ) ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=7]
 
 length = 1.0
 loop = true
@@ -93,9 +92,8 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=8]
 
-resource_name = "deactivate"
 length = 0.2
 loop = false
 step = 0.1
@@ -141,11 +139,11 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = SubResource( 4 )
-custom_styles/pressed = SubResource( 5 )
-custom_styles/focus = SubResource( 6 )
-custom_styles/disabled = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -281,8 +279,10 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/activate = SubResource( 1 )
-anims/active = SubResource( 2 )
-anims/deactivate = SubResource( 3 )
+anims/activate = SubResource( 6 )
+anims/active = SubResource( 7 )
+anims/deactivate = SubResource( 8 )
 blend_times = [  ]
 
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]

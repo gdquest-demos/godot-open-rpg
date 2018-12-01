@@ -29,6 +29,18 @@ func initialize(actor : Battler) -> void:
 
 func open():
 	show()
+	var first_button = get_child(0)
+	first_button.grab_focus()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_right") or event.is_action_pressed("ui_focus_next"):
+		var next_button_index = (get_focus_owner().get_index() + 1) % get_child_count()
+		get_child(next_button_index).grab_focus()
+		accept_event()
+	if event.is_action_pressed("ui_left") or event.is_action_pressed("ui_focus_prev"):
+		var next_button_index = (get_focus_owner().get_index() - 1 + get_child_count()) % get_child_count()
+		get_child(next_button_index).grab_focus()
+		accept_event()
 
 func close():
 	queue_free()

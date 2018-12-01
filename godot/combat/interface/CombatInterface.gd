@@ -21,6 +21,7 @@ func open_actions_menu(battler : Battler) -> void:
 	var extents : RectExtents = battler.skin.get_extents()
 	menu.rect_position = battler.global_position - Vector2(0.0, extents.size.y) + buttons_offset
 	menu.initialize(battler)
+	menu.open()
 	var selected_action : CombatAction = yield(menu, "action_selected")
 	emit_signal("action_selected", selected_action)
 

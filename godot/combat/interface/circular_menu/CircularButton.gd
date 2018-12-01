@@ -15,13 +15,25 @@ func initialize(action : CombatAction, target_position : Vector2, active : bool)
 	connect('mouse_exited', self, '_on_mouse_exited')
 	connect('mouse_entered', self, '_on_mouse_entered')
 
-func _on_mouse_entered() -> void:
+func enter_focus():
 	raise()
 	tooltip.show()
 	animation_player.play('activate')
 	yield(animation_player, "animation_finished")
 	animation_player.play('active')
 
-func _on_mouse_exited() -> void:
+func exit_focus():
 	tooltip.hide()
 	animation_player.play('deactivate')
+
+func _on_mouse_entered() -> void:
+	enter_focus()
+
+func _on_mouse_exited() -> void:
+	exit_focus()
+
+func _on_focus_entered() -> void:
+	enter_focus()
+
+func _on_focus_exited() -> void:
+	exit_focus()
