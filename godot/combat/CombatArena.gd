@@ -83,7 +83,9 @@ func ready_field(formation : Formation, party_members : Array):
 
 func battle_end():
 	active = false
-	var player_won = get_active_battler().party_member
+	var active_battler = get_active_battler()
+	active_battler.selected = false
+	var player_won = active_battler.party_member
 	if player_won:
 		emit_signal("victory")
 		yield(rewards.on_battle_completed(), "completed")
