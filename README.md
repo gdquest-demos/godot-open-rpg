@@ -11,9 +11,8 @@ OpenRPG is a tool and a demo to create Role Playing Games with turn-based combat
 
 *Looking for a Zelda-like game? Check out our [Open Source A-RPG demo](https://github.com/GDquest/make-pro-2d-games-with-godot/).*
 
-![Combat system screenshot](https://i.imgur.com/hmtCd6J.png)
+![Combat system screenshot](https://i.imgur.com/RvrBrvR.jpg)
 
-*The combat system, in progress, in v0.2, with placeholder art.*
 
 ## Our mission
 
