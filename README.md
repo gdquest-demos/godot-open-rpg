@@ -32,6 +32,14 @@ Our initial goal is to create a mini-demo with the full combat loop, character e
 
 We are building a demo that the community can learn from and reuse as a template to build complete games.
 
+## Support GDquest
+
+At GDquest, our mission is to bring game creators together to become better developers. We released [hundreds of free tutorials](http://youtube.com/c/gdquest) and build [open source game demos](https://github.com/GDquest/) like this project. But we need your support to keep going!
+
+To support our Free projects, you can:
+
+- [Get our Godot course](https://gumroad.com/gdquest)
+- [Become our patron](https://www.patreon.com/gdquest) on Patreon
 
 ## Contributing Guidelines
 
