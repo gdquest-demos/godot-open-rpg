@@ -9,7 +9,7 @@ var initialized = false
 # from it's parent (BattlerActions.gd)
 onready var actor : Battler = get_parent().get_owner()
 
-export(Texture) var icon = load("res://assets/sprites/icons/bilboshot.png")
+export(Texture) var icon = load("res://assets/sprites/icons/slash.png")
 export(String) var description : String = "Base combat action"
 
 func initialize(battler : Battler) -> void:

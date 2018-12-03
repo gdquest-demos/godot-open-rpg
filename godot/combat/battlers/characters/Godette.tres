@@ -2,8 +2,8 @@
 
 [ext_resource path="res://animation/GodetteAnim.tscn" type="PackedScene" id=1]
 [ext_resource path="res://combat/battlers/BattlerTemplate.gd" type="Script" id=2]
-[ext_resource path="res://combat/battlers/skills/Slash.tres" type="Resource" id=3]
-[ext_resource path="res://combat/battlers/jobs/Fighter.tres" type="Resource" id=4]
+[ext_resource path="res://combat/battlers/skills/Lollislash.tres" type="Resource" id=3]
+[ext_resource path="res://combat/battlers/jobs/GodetteJob.tres" type="Resource" id=4]
 
 [resource]
 

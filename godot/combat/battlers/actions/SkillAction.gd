@@ -5,7 +5,8 @@ class_name SkillAction
 var skill : Skill = null
 
 func _ready() -> void:
-	name = skill.skill_name
+	name = skill.name
+	icon = skill.icon
 	randomize()
 
 func execute(targets):

@@ -1,13 +1,15 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://combat/battlers/skills/Skill.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/icons/bilboshot.png" type="Texture" id=1]
+[ext_resource path="res://combat/battlers/skills/Skill.gd" type="Script" id=2]
 
 [resource]
 
-script = ExtResource( 1 )
-skill_name = "Slash"
-skill_description = "Devastating blow with your sword!"
+script = ExtResource( 2 )
+name = "Bilboshot"
+description = "It does not always hit but when it does, it hits hard!"
+icon = ExtResource( 1 )
 mana_cost = 4
-base_damage = 2
-success_chance = 1.0
+base_damage = 8
+success_chance = 0.75
 
