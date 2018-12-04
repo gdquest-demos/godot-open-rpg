@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://assets/sprites/battlers/godette.png" type="Texture" id=1]
+[ext_resource path="res://dialogue/characters/DialogueCharacter.gd" type="Script" id=2]
+
+[resource]
+
+script = ExtResource( 2 )
+display_name = "Godette"
+character_background = "Not much is known about her"
+expression_textures = {
+"normal": ExtResource( 1 )
+}
+

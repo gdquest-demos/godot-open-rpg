@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://items/ConsumableItem.gd"
 }, {
+"base": "Resource",
+"class": "DialogueCharacter",
+"language": "GDScript",
+"path": "res://dialogue/characters/DialogueCharacter.gd"
+}, {
 "base": "Node",
 "class": "DialoguePlayer",
 "language": "GDScript",
@@ -141,6 +146,7 @@ _global_script_class_icons={
 "CharacterStats": "",
 "CombatAction": "",
 "ConsumableItem": "",
+"DialogueCharacter": "",
 "DialoguePlayer": "",
 "Equipment": "",
 "Formation": "",
@@ -168,6 +174,10 @@ config/name="Godot Open RPG"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 config/version="0.2.0"
+
+[autoload]
+
+DialogueDatabase="*res://dialogue/DialogueDatabase.gd"
 
 [display]
 
