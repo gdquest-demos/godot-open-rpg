@@ -58,6 +58,9 @@ func use_skill(targets : Array, skill : Skill) -> void:
 	for target in targets:
 		target.take_damage(hit)
 
+func miss_skill(skill: Skill) -> void:
+	stats.mana -= skill.mana_cost
+
 func take_damage(hit):
 	stats.take_damage(hit)
 	skin.play_stagger()

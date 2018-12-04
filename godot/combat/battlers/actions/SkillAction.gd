@@ -21,6 +21,8 @@ func execute(targets):
 		randomize()
 		if rand_range(0, 1.0) < skill.success_chance:
 			actor.use_skill(targets, skill)
+		else:
+			actor.miss_skill(skill)
 	yield(actor.get_tree().create_timer(1.0), "timeout")
 
 	yield(return_to_start_position(), "completed")
