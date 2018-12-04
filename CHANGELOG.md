@@ -23,6 +23,12 @@ This version brings a lot of new features and improvements to the project's code
 - Battle Formations for monsters and the player's party, based on .tscn files
 - Added support for multiple targets. The interface to do it from the game is not available yet but you can now pass pass multiple targets to any combat action/command and it will affect all of them
 - Animated pop-up labels. They show how much damage a character to took or how much mana someone lost. There's also animations ready for healing effects.
+- The battlers now have a bounding rectangle based on the RectExtents node: we use it to place the interface or to determine the size of a character
+
+#### Core
+
+- Inventory and items: also manages the party's currency
+- Persistent data between the combat and the map: after an encounter, the experience and items the characters earned gets transfered to the Party. This will allow us to add savegame support
 
 #### Map
 
@@ -34,6 +40,7 @@ This version brings a lot of new features and improvements to the project's code
 
 - Mana bars
 - Circular menu: a radial menu you can use for battle, for the character to pick one of multiple CombatActions to use on its opponent. E.g. attack, a specific skill...
+- Rewards screen: old-school, time-based rewards screen
 
 #### Art
 
@@ -53,6 +60,7 @@ There is now a battle theme and a placeholder victory fanfare
 - Refactored the initialize loop and getting battlers
 - Fixed incorrect indentation in Battler.gd
 - Improved Data persistence in and out of combat
+- Added some asserts in the code to help with debugging
 
 ## v0.1.0: Combat prototype ⚔ - 2018-11-04
 
