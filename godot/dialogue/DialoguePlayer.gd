@@ -7,6 +7,7 @@ signal finished
 
 var title : String = ""
 var text : String = ""
+var expression : String
 
 var _conversation : Array
 var _index_current : int = 0
@@ -29,5 +30,6 @@ func next():
 func _update():
 	text = _conversation[_index_current].text
 	title = _conversation[_index_current].name
+	expression = _conversation[_index_current].expression
 	if _index_current == _conversation.size() - 1:
 		emit_signal("finished")

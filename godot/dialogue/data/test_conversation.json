@@ -1,4 +1,4 @@
 {
-    "001" : {"name":"", "text":"You found something." },
-    "002" : {"name":"", "text":"I don't know what that is, but at least it's something!" }
+    "001" : {"name":"Godette", "expression": "normal", "text":"You found something." },
+    "002" : {"name":"Robi", "expression": "happy", "text":"I don't know what that is, but at least it's something!" }
 }

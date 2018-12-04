@@ -2,11 +2,13 @@ extends Control
 
 onready var dialogue_player : DialoguePlayer = get_node("DialoguePlayer")
 
-onready var name_label : Label = get_node("Panel/Colums/Name")
-onready var text_label : Label = get_node("Panel/Colums/Text")
+onready var name_label : = get_node("Panel/Colums/Name") as Label
+onready var text_label : = get_node("Panel/Colums/Text") as Label
 
-onready var button_next : Button = get_node("Panel/Colums/ButtonNext")
-onready var button_finished : Button = get_node("Panel/Colums/ButtonFinished")
+onready var button_next : = get_node("Panel/Colums/ButtonNext") as Button
+onready var button_finished : = get_node("Panel/Colums/ButtonFinished") as Button
+
+onready var portrait : = $Portrait as TextureRect
 
 func initialize(dialogue):
 	button_next.grab_focus()
@@ -28,5 +30,7 @@ func _on_ButtonFinished_pressed() -> void:
 	hide()
 
 func update_content() -> void:
-	name_label.text = dialogue_player.title
+	var dialogue_player_name = dialogue_player.title
+	name_label.text = dialogue_player_name
 	text_label.text = dialogue_player.text
+	portrait.texture = DialogueDatabase.get_texture(dialogue_player_name, dialogue_player.expression)
