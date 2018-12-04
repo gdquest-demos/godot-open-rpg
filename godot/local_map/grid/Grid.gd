@@ -2,7 +2,7 @@ extends TileMap
 
 signal enemies_encountered(formation)
 
-enum CELL_TYPES {EMPTY = -1, ACTOR, OBSTACLE, OBJECT}
+enum CELL_TYPES { EMPTY = -1, ACTOR, OBSTACLE, OBJECT }
 
 onready var pawns = get_node("Pawns")
 
