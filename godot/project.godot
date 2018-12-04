@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "DialoguePlayer",
 "language": "GDScript",
-"path": "res://dialogue/dialogue_player/DialoguePlayer.gd"
+"path": "res://dialogue/DialoguePlayer.gd"
 }, {
 "base": "Resource",
 "class": "Equipment",

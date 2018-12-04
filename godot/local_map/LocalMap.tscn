@@ -13,7 +13,8 @@
 [ext_resource path="res://local_map/pawns/sprites/star.png" type="Texture" id=11]
 [ext_resource path="res://dialogue/Dialogue.tscn" type="PackedScene" id=12]
 [ext_resource path="res://local_map/DialogueBox.gd" type="Script" id=13]
-[ext_resource path="res://dialogue/dialogue_player/DialoguePlayer.tscn" type="PackedScene" id=14]
+[ext_resource path="res://dialogue/DialoguePlayer.tscn" type="PackedScene" id=14]
+
 
 [node name="LocalMap" type="Node2D"]
 script = ExtResource( 1 )
