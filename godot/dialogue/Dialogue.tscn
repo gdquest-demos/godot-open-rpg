@@ -2,9 +2,7 @@
 
 [ext_resource path="res://dialogue/Dialogue.gd" type="Script" id=1]
 
-
-
 [node name="Dialogue" type="Node"]
 script = ExtResource( 1 )
-dialogue_file = ""
+file_path = null
 

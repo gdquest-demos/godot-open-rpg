@@ -4,15 +4,12 @@ export (String, FILE, "*.json") var file_path : String
 
 func load() -> Dictionary:
 	"""
-	Parse a JSON file and returns it or an empty dictionary if the
-	file doesn't exist.
+	Parses a JSON file and returns it as a dictionary
 	"""
-	
 	var file = File.new()
-	
-	if file.file_exists(file_path):
-		file.open(file_path, file.READ)
-		var dialogue = parse_json(file.get_as_text())
-		return dialogue
-	
-	return {}
+	assert file.file_exists(file_path)
+
+	file.open(file_path, file.READ)
+	var dialogue = parse_json(file.get_as_text())
+	assert dialogue.size() > 0
+	return dialogue

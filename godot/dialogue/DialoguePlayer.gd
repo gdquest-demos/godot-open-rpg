@@ -2,40 +2,32 @@ extends Node
 
 class_name DialoguePlayer
 
-var dialogue_keys : Array = []
-var dialogue_name : String = ""
-var index : int = 0
-var dialogue_text : String = ""
-
 signal started
 signal finished
 
-func start(dialogue):
+var title : String = ""
+var text : String = ""
+
+var _conversation : Array
+var _index_current : int = 0
+
+func start(dialogue_dict):
+	"""
+	Takes a dictionary of conversation data returned by Dialogue.load()
+	and stores it in an array
+	"""
 	emit_signal("started")
-	index = 0
-	to_index(dialogue)
-	
-	dialogue_text = dialogue_keys[index].text
-	dialogue_name = dialogue_keys[index].name
-	
-	if is_finished():
-		emit_signal("finished")
+	_conversation = dialogue_dict.values()
+	_index_current = 0
+	_update()
 
 func next():
-	index += 1
-	
-	if is_finished():
+	_index_current += 1
+	assert _index_current <= _conversation.size()
+	_update()
+
+func _update():
+	text = _conversation[_index_current].text
+	title = _conversation[_index_current].name
+	if _index_current == _conversation.size() - 1:
 		emit_signal("finished")
-		return
-	
-	dialogue_text = dialogue_keys[index].text
-	dialogue_name = dialogue_keys[index].name
-
-func to_index(dialogue):
-	dialogue_keys.clear()
-	
-	for key in dialogue:
-		dialogue_keys.append(dialogue[key])
-
-func is_finished() -> bool:
-	return index >= dialogue_keys.size() -1
