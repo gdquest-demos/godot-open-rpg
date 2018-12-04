@@ -46,7 +46,7 @@ To support our Free projects, you can:
 All contributors are welcome 🙂. To ensure a smooth and a productive experience for everyone working together, we came up with some guidelines we all follow here. In summary:
 
 - Get in touch and communicate! Let us know what you are working on or report bugs using the issues tab. Join the [GDquest Discord server](https://discord.gg/87NNb3Z) to discuss the project live or to get in touch with the community
-- Be respectful to everyone around. Please review the [GDQuest Code of Conduct](code-of-conduct.md).
+- Be respectful to everyone around. Please review the [GDQuest Code of Conduct](CODE_OF_CONDUCT.md).
 - For code, we follow the [GDScript styleguide](http://docs.godotengine.org/en/latest/getting_started/scripting/gdscript/gdscript_styleguide.html). We try to write clean and self-documenting GDScript as it helps us build upon each other's work. We use static typing to write more robust code and get full autocompletion in Godot 3.1. Also, we're here to review and to help you improve your code.
 - The maintainers may refactor or tweak your code to make it fit the project's style, and for educational purposes. But we'll give you the opportunity to refine the style by yourself
 
