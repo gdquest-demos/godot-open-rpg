@@ -1,14 +1,27 @@
 extends Node
 
-const DIALOGUE_CHARACTERS = {
-	"Godette": "res://dialogue/characters/GodetteDialogue.tres",
-	"Robi": "res://dialogue/characters/RobiDialogue.tres",
-}
+const SOURCE_DIRECTORY = "res://dialogue/characters/"
+var characters : Dictionary
 
-func get_texture(character_name : String, expression : String) -> Texture:
+func _ready() -> void:
+	var dir = Directory.new()
+	assert dir.dir_exists(SOURCE_DIRECTORY)
+	if not dir.open(SOURCE_DIRECTORY) == OK:
+		print("Could not read directory %s" % SOURCE_DIRECTORY)
+	dir.list_dir_begin()
+	var file_name : String
+	while true:
+		file_name = dir.get_next()
+		if file_name == "":
+			break
+		if not file_name.ends_with(".tres"):
+			continue
+		characters[file_name.get_basename()] = load(SOURCE_DIRECTORY.plus_file(file_name))
+
+func get_texture(character_name : String, expression : String = "neutral") -> Texture:
 	"""
-	Gets the texture with the desired expression from a given character
-	@return Texture with desired expression
+	Returns the Texture corresponding to a character's name and expression name
 	"""
-	var resource = load(DIALOGUE_CHARACTERS[character_name])
-	return resource.expression_textures[expression]
+	assert character_name in characters
+	assert expression in characters[character_name].expressions
+	return characters[character_name].expressions[expression]
