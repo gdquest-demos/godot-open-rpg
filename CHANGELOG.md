@@ -18,10 +18,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Character database: you can now reference a character and an expression by name when writing dialogues
 - Portrait: the dialogue box displays full-body portraits of the characters
 
+#### Core
+
+- Skills can now be unlocked as characters gain levels. Change the `level` property of the `Skill` to set the unlock level
+
+### Changed
+
+- Nicholas simplified and restructured the Battlers and Party members' code to make it more robust and easier to understand. Now the `Battler` delegates more calculations and logic to `CombatAction`
+- Party Members now have a battler attached to them
+
 ### Fixes
 
 - A skill that misses will now still reduce the battler's mana
 - The link to the Code of Conduct in the readme is now correct
+- Fixed a bug with life bars where if your max hp is higher than 100, the bar wouldn't be properly filled all the way
 
 ## v0.2.0: Better Encounters ⚔🌟 - 2018-12-01
 
