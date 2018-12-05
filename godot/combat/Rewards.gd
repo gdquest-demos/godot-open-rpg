@@ -45,7 +45,7 @@ func _reward_to_battlers() -> Array:
 		if member.stats.is_alive:
 			survived.append(member)
 		
-	var exp_per_survivor = experience_earned / len(survived)
+	var exp_per_survivor = int(ceil(float(experience_earned) / float(len(survived))))
 	var leveled_up = []
 	for member in survived:
 		var level = member.stats.level

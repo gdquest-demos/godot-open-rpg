@@ -17,14 +17,10 @@ func initialize(actor : Battler) -> void:
 	"""
 	var actions = actor.actions.get_actions()
 	for action in actions:
-		var active : bool = true
-		if action is SkillAction:
-			active = actor.can_use_skill(action.skill)
-
 		var button = ContextualAction.instance()
 		add_child(button)
 		var target_position = _calculate_position(button, actions.size())
-		button.initialize(action, target_position, active)
+		button.initialize(action, target_position)
 		button.connect("pressed", self, "_on_CircularButton_pressed", [action])
 
 func open():

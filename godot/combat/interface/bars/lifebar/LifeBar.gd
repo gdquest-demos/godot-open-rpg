@@ -8,5 +8,5 @@ func _connect_value_signals(battler : Battler) -> void:
 	battler_stats.connect("health_changed", self, "_on_value_changed")
 	battler_stats.connect("health_depleted", self, "_on_value_depleted")
 	
-	self.value = battler_stats.health
 	self.max_value = battler_stats.max_health
+	self.value = battler_stats.health

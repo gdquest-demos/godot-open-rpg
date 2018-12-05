@@ -1,26 +1,20 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://combat/battlers/Formation.gd" type="Script" id=1]
 [ext_resource path="res://combat/background/StonePlatform.tscn" type="PackedScene" id=2]
-[ext_resource path="res://combat/battlers/formations/FormationMember.tscn" type="PackedScene" id=3]
-[ext_resource path="res://combat/battlers/enemies/porcupine/Porcupine.tres" type="Resource" id=4]
-[ext_resource path="res://combat/battlers/enemies/porcupine/StrongerPorcupine.tres" type="Resource" id=5]
-
+[ext_resource path="res://combat/battlers/enemies/porcupine/PorcupineBattler.tscn" type="PackedScene" id=3]
 
 [node name="Formation" type="Node"]
 script = ExtResource( 1 )
 platform_template = ExtResource( 2 )
 background_image = null
 
-[node name="Porcupine" parent="." instance=ExtResource( 3 )]
-position = Vector2( 512, 566 )
-combat_template = ExtResource( 4 )
-
 [node name="Porcupine3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 256, 704 )
-combat_template = ExtResource( 5 )
+position = Vector2( 607.782, 444.148 )
 
 [node name="Porcupine2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 456, 896 )
-combat_template = ExtResource( 4 )
+position = Vector2( 220.126, 596.094 )
+
+[node name="Porcupine" parent="." instance=ExtResource( 3 )]
+position = Vector2( 487.005, 767.519 )
 

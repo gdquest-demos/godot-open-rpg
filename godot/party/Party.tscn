@@ -1,17 +1,46 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://party/Party.gd" type="Script" id=1]
-[ext_resource path="res://combat/battlers/characters/PartyMember.tscn" type="PackedScene" id=2]
-[ext_resource path="res://combat/battlers/characters/Godette.tres" type="Resource" id=3]
-[ext_resource path="res://combat/battlers/characters/Robi.tres" type="Resource" id=4]
+[ext_resource path="res://party/PartyMember.tscn" type="PackedScene" id=2]
+[ext_resource path="res://combat/battlers/jobs/GodetteJob.tres" type="Resource" id=3]
+[ext_resource path="res://animation/GodetteAnim.tscn" type="PackedScene" id=4]
+[ext_resource path="res://combat/battlers/skills/LearnedSkill.tscn" type="PackedScene" id=5]
+[ext_resource path="res://combat/battlers/skills/Lollislash.tres" type="Resource" id=6]
+[ext_resource path="res://combat/battlers/jobs/RobiJob.tres" type="Resource" id=7]
+[ext_resource path="res://animation/RobiAnim.tscn" type="PackedScene" id=8]
+[ext_resource path="res://combat/battlers/skills/Slash.tres" type="Resource" id=9]
 
 [node name="Party" type="Node2D"]
-visible = false
 script = ExtResource( 1 )
 
 [node name="Godette" parent="." instance=ExtResource( 2 )]
-combat_template = ExtResource( 3 )
+
+[node name="Battler" parent="Godette" index="0"]
+stats = ExtResource( 3 )
+party_member = true
+
+[node name="GodetteAnim" parent="Godette/Battler/Skin" index="2" instance=ExtResource( 4 )]
+
+[node name="LolliSlash" parent="Godette/Battler/Skills" index="0" instance=ExtResource( 5 )]
+skill = ExtResource( 6 )
 
 [node name="Robi" parent="." instance=ExtResource( 2 )]
-combat_template = ExtResource( 4 )
 
+[node name="Battler" parent="Robi" index="0"]
+stats = ExtResource( 7 )
+party_member = true
+
+[node name="RobiAnim" parent="Robi/Battler/Skin" index="2" instance=ExtResource( 8 )]
+
+[node name="Slash" parent="Robi/Battler/Skills" index="0" instance=ExtResource( 5 )]
+skill = ExtResource( 9 )
+level = 0
+
+
+[editable path="Godette"]
+
+[editable path="Godette/Battler"]
+
+[editable path="Robi"]
+
+[editable path="Robi/Battler"]

@@ -11,6 +11,7 @@
 script = ExtResource( 1 )
 
 [node name="Party" parent="." instance=ExtResource( 2 )]
+visible = false
 
 [node name="LocalMap" parent="." instance=ExtResource( 3 )]
 
@@ -35,5 +36,4 @@ mix_target = 0
 bus = "Music"
 script = ExtResource( 6 )
 
-[connection signal="combat_finished" from="." to="LocalMap" method="_on_Game_combat_finished"]
 [connection signal="enemies_encountered" from="LocalMap" to="." method="enter_battle"]

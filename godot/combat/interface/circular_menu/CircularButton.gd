@@ -7,9 +7,9 @@ onready var button_icon : = $Background/Icon as TextureRect
 var mouse_over : bool
 var active : bool
 
-func initialize(action : CombatAction, target_position : Vector2, active : bool) -> void:
+func initialize(action : CombatAction, target_position : Vector2) -> void:
 	rect_position = target_position
-	disabled = not active
+	disabled = not action.can_use()
 	if disabled:
 		modulate = Color("#555555")
 	tooltip.initialize(self, action)
