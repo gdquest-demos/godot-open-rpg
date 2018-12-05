@@ -15,15 +15,20 @@ func execute(targets):
 		return false
 	
 	# Use skill on all targets
-	if skill.success_chance == 1.0:
-		actor.use_skill(targets, skill)
+	actor.stats.mana -= skill.mana_cost
+	randomize()
+	if randf() < skill.success_chance:
+		var hit = Hit.new(actor.stats.strength, skill.base_damage) 
+		for target in targets:
+			target.take_damage(hit)
 	else:
-		randomize()
-		if rand_range(0, 1.0) < skill.success_chance:
-			actor.use_skill(targets, skill)
-		else:
-			actor.miss_skill(skill)
+		# miss
+		pass
+		
 	yield(actor.get_tree().create_timer(1.0), "timeout")
 
 	yield(return_to_start_position(), "completed")
 	return true
+
+func can_use() -> bool:
+	return actor.stats.mana >= skill.mana_cost

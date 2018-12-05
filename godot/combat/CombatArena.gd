@@ -20,6 +20,9 @@ func initialize(formation : Formation, party : Array):
 		
 	# reparent the enemy battlers into the turn queue
 	var battlers = turn_queue.get_battlers()
+	for battler in battlers:
+		battler.initialize()
+		
 	interface.initialize(battlers)
 	rewards.initialize(battlers)
 	turn_queue.initialize()
@@ -52,34 +55,25 @@ func ready_field(formation : Formation, party_members : Array):
 		var platform = formation.platform_template.instance()
 		platform.position = enemy.position
 		spawn_positions.add_child(platform)
-		var combatant = BattlerNode.instance()
-		combatant.template = enemy.combat_template
-		combatant.position = enemy.position
-		combatant.display_name = enemy.display_name
+		var combatant = enemy.duplicate()
 		turn_queue.add_child(combatant)
+		combatant.stats.reset() # enemies need to start with full health
 		
 	var party_spawn_positions = $SpawnPositions/Party
 	for i in len(party_members):
 		# TODO move this into a battler factory and pass already copied info into the scene
 		var party_member = party_members[i]
-		var template = party_member.combat_template
 		var platform = formation.platform_template.instance()
 		var spawn_point = party_spawn_positions.get_child(i)
 		platform.position = spawn_point.position
-		var combatant = BattlerNode.instance() as Battler
-		combatant.party_member = true
+		var combatant = party_member.ready_for_combat() as Battler
 		combatant.position = spawn_point.position
-		combatant.template = template
 		combatant.name = party_member.name
 		# stats are copied from the external party member so we may restart combat cleanly,
 		# such as allowing players to retry a fight if they get game over
-		var stats = party_member.persistent_status.copy()
-		combatant.stats = stats
 		spawn_point.replace_by(platform)
 		turn_queue.add_child(combatant)
 		self.party.append(combatant)
-		
-	formation.queue_free()
 
 func battle_end():
 	active = false

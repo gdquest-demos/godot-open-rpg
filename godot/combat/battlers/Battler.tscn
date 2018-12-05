@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://combat/battlers/Battler.gd" type="Script" id=1]
 [ext_resource path="res://combat/battlers/BattlerSkin.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://combat/battlers/actions/BattlerActions.gd" type="Script" id=4]
 [ext_resource path="res://combat/battlers/actions/Attack.tscn" type="PackedScene" id=5]
 [ext_resource path="res://combat/battlers/actions/Attack.gd" type="Script" id=6]
+[ext_resource path="res://combat/battlers/skills/Skills.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Animation" id=1]
 
@@ -48,7 +49,7 @@ tracks/0/keys = {
 [node name="Battler" type="Position2D"]
 script = ExtResource( 1 )
 TARGET_OFFSET_DISTANCE = null
-template = null
+stats = null
 party_member = false
 
 [node name="Skin" type="Position2D" parent="."]
@@ -101,4 +102,9 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
+
+[node name="Skills" parent="." instance=ExtResource( 7 )]
+
+[node name="Drops" type="YSort" parent="."]
+sort_enabled = true
 

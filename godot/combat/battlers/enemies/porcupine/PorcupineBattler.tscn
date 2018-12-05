@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://combat/battlers/Battler.tscn" type="PackedScene" id=1]
+[ext_resource path="res://combat/battlers/enemies/porcupine/Porcupine.tres" type="Resource" id=2]
+[ext_resource path="res://animation/PorcupineAnim.tscn" type="PackedScene" id=3]
+
+[node name="Porcupine" index="0" instance=ExtResource( 1 )]
+stats = ExtResource( 2 )
+
+[node name="PorcupineAnim" parent="Skin" index="2" instance=ExtResource( 3 )]
+

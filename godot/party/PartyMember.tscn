@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://combat/battlers/Battler.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+onready var battler = $Battler
+
+func _ready():
+	battler.stats.reset()
+	
+func update_stats(stats : CharacterStats):
+	\"\"\"
+	Update this character's stats to match select changes
+	that occurred during combat or through menu actions
+	\"\"\"
+	battler.stats = stats
+
+func ready_for_combat():
+	var copy = battler.duplicate()
+	return copy
+"
+
+[node name="PartyMember" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Battler" parent="." instance=ExtResource( 1 )]
+
+
+[editable path="Battler"]
