@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [UNRELEASED] v0.3.0: Motion and Dialogues 😮💬
+
+### New
+
+#### Map
+
+- Leader and followers now reflect the player's party
+
+#### Dialogues
+
+- Character database: you can now reference a character and an expression by name when writing dialogues
+- Portrait: the dialogue box displays full-body portraits of the characters
+
+### Fixes
+
+- A skill that misses will now still reduce the battler's mana
+- The link to the Code of Conduct in the readme is now correct
+
 ## v0.2.0: Better Encounters ⚔🌟 - 2018-12-01
 
 This version brings a lot of new features and improvements to the project's codebase thanks to the help of @godofgrunts, @nhydock, @salvob41, @MarianoGnu, @henriiquecampos, and @guilhermehto! We did at least twice as much as we planned thanks to everyone's help 😄
