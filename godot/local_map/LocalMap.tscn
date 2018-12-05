@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://local_map/LocalMap.gd" type="Script" id=1]
 [ext_resource path="res://local_map/tilesets/grid_lines/grid_lines_tileset.tres" type="TileSet" id=2]
@@ -6,12 +6,9 @@
 [ext_resource path="res://local_map/grid/Grid.gd" type="Script" id=4]
 [ext_resource path="res://local_map/grid/PawnContainer.gd" type="Script" id=5]
 [ext_resource path="res://party/Party.tscn" type="PackedScene" id=6]
-[ext_resource path="res://local_map/pawns/Pawn.gd" type="Script" id=7]
-[ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=8]
-[ext_resource path="res://local_map/pawns/sprites/character_grey.png" type="Texture" id=9]
-[ext_resource path="res://local_map/pawns/sprites/star.png" type="Texture" id=10]
-[ext_resource path="res://dialogue/Dialogue.tscn" type="PackedScene" id=11]
-[ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=12]
+[ext_resource path="res://local_map/pawns/interactables/DialoguePawn.tscn" type="PackedScene" id=7]
+[ext_resource path="res://local_map/pawns/interactables/EnemyPawn.tscn" type="PackedScene" id=8]
+[ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=9]
 
 [node name="LocalMap" type="Node2D"]
 script = ExtResource( 1 )
@@ -69,31 +66,36 @@ sort_enabled = true
 script = ExtResource( 5 )
 party_scene = ExtResource( 6 )
 
-[node name="Actor2" type="Node2D" parent="Grid/Pawns" groups=[
-"enemy",
-]]
-editor/display_folded = true
-position = Vector2( 480, 480 )
-z_index = 1
-script = ExtResource( 7 )
-type = 0
-formation = ExtResource( 8 )
+[node name="DialoguePawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
+position = Vector2( 350, 290 )
+vanish_on_interaction = false
+sight_distance = 100
+facing = {
+"down": false,
+"left": true,
+"right": false,
+"up": false
+}
 
-[node name="Sprite" type="Sprite" parent="Grid/Pawns/Actor2"]
-texture = ExtResource( 9 )
+[node name="EnemyPawn" parent="Grid/Pawns" instance=ExtResource( 8 )]
+position = Vector2( 290, 420 )
+sight_distance = 100
+facing = {
+"down": false,
+"left": false,
+"right": true,
+"up": false
+}
 
-[node name="Object" type="Node2D" parent="Grid/Pawns"]
-editor/display_folded = true
-position = Vector2( 544, 288 )
-script = ExtResource( 7 )
-type = 2
-formation = ExtResource( 8 )
-
-[node name="Sprite" type="Sprite" parent="Grid/Pawns/Object"]
-texture = ExtResource( 10 )
-
-[node name="Dialogue" parent="Grid/Pawns/Object" instance=ExtResource( 11 )]
-file_path = "res://dialogue/data/test_conversation.json"
+[node name="DialoguePawn2" parent="Grid/Pawns" instance=ExtResource( 7 )]
+position = Vector2( 550, 290 )
+sight_distance = 100
+facing = {
+"down": false,
+"left": false,
+"right": false,
+"up": false
+}
 
 [node name="MapInterface" type="CanvasLayer" parent="."]
 pause_mode = 2
@@ -103,8 +105,8 @@ rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="DialogueBox" parent="MapInterface" instance=ExtResource( 12 )]
+[node name="DialogueBox" parent="MapInterface" instance=ExtResource( 9 )]
 visible = false
 
 [connection signal="dialogue" from="." to="MapInterface/DialogueBox" method="initialize"]
-[connection signal="enemies_encountered" from="Grid" to="." method="_on_Grid_enemies_encountered"]
+[connection signal="interaction_happened" from="Grid" to="." method="_on_Grid_interaction_happened"]

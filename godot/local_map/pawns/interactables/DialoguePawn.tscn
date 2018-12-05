@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://local_map/pawns/interactables/InteractablePawn.tscn" type="PackedScene" id=1]
+[ext_resource path="res://dialogue/Dialogue.tscn" type="PackedScene" id=2]
+
+[node name="DialoguePawn" instance=ExtResource( 1 )]
+vanish_on_interaction = true
+sight_distance = 0
+facing = {
+"down": true,
+"left": true,
+"right": true,
+"up": true
+}
+
+[node name="Dialogue" parent="." index="3" instance=ExtResource( 2 )]
+file_path = "res://dialogue/data/test_conversation.json"
+
