@@ -13,6 +13,7 @@ var transitioning = false
 
 func _ready():
 	local_map.visible = true
+	local_map.spawn_party(party)
 
 func enter_battle(formation: Formation):
 	"""
