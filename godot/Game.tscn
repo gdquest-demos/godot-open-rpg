@@ -36,4 +36,5 @@ mix_target = 0
 bus = "Music"
 script = ExtResource( 6 )
 
+[connection signal="combat_finished" from="." to="LocalMap" method="_on_Game_combat_finished"]
 [connection signal="enemies_encountered" from="LocalMap" to="." method="enter_battle"]

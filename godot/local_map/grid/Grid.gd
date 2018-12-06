@@ -1,10 +1,8 @@
 extends TileMap
 
-signal enemies_encountered(formation)
-
 enum CELL_TYPES { EMPTY = -1, ACTOR, OBSTACLE, OBJECT }
 
-onready var pawns = get_node("Pawns")
+onready var pawns = $Pawns
 
 func _ready():
 	for child in pawns.get_children():
@@ -23,21 +21,8 @@ func request_move(pawn, direction):
 	var cell_target = cell_start + direction
 	
 	var cell_target_type = get_cellv(cell_target)
-	match cell_target_type:
-		CELL_TYPES.EMPTY:
-			return update_pawn_position(pawn, cell_start, cell_target)
-		CELL_TYPES.OBJECT:
-			var object_pawn = get_cell_pawn(cell_target)
-		
-			if object_pawn.has_node("Dialogue"):
-				var dialogue = object_pawn.get_node("Dialogue").load()
-				get_parent().emit_signal("dialogue", dialogue)
-				
-			object_pawn.queue_free()
-			return update_pawn_position(pawn, cell_start, cell_target)
-		CELL_TYPES.ACTOR:
-			var target_pawn = get_cell_pawn(cell_target)
-			emit_signal("enemies_encountered", target_pawn.formation.instance())
+	if cell_target_type == EMPTY or cell_target_type == OBJECT:
+		return update_pawn_position(pawn, cell_start, cell_target)
 
 func update_pawn_position(pawn, cell_start, cell_target):
 	set_cellv(cell_target, pawn.type)

@@ -6,10 +6,10 @@
 [ext_resource path="res://local_map/grid/Grid.gd" type="Script" id=4]
 [ext_resource path="res://local_map/grid/PawnContainer.gd" type="Script" id=5]
 [ext_resource path="res://party/Party.tscn" type="PackedScene" id=6]
-[ext_resource path="res://local_map/pawns/Pawn.gd" type="Script" id=7]
-[ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=8]
-[ext_resource path="res://local_map/pawns/sprites/character_grey.png" type="Texture" id=9]
-[ext_resource path="res://local_map/pawns/sprites/star.png" type="Texture" id=10]
+[ext_resource path="res://local_map/pawns/interactives/InteractivePawn.tscn" type="PackedScene" id=7]
+[ext_resource path="res://local_map/pawns/interactives/actions/StartCombatAction.tscn" type="PackedScene" id=8]
+[ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=9]
+[ext_resource path="res://local_map/pawns/interactives/actions/DialogueAction.tscn" type="PackedScene" id=10]
 [ext_resource path="res://dialogue/Dialogue.tscn" type="PackedScene" id=11]
 [ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=12]
 
@@ -69,31 +69,56 @@ sort_enabled = true
 script = ExtResource( 5 )
 party_scene = ExtResource( 6 )
 
-[node name="Actor2" type="Node2D" parent="Grid/Pawns" groups=[
-"enemy",
-]]
+[node name="EncounterPawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
 editor/display_folded = true
-position = Vector2( 480, 480 )
-z_index = 1
-script = ExtResource( 7 )
-type = 0
-formation = ExtResource( 8 )
+position = Vector2( 420, 479 )
+facing = {
+"down": false,
+"left": false,
+"right": true,
+"up": false
+}
 
-[node name="Sprite" type="Sprite" parent="Grid/Pawns/Actor2"]
-texture = ExtResource( 9 )
+[node name="StartCombatAction" parent="Grid/Pawns/EncounterPawn/Interactions" index="0" instance=ExtResource( 8 )]
+map_path = NodePath("../../../../..")
+formation = ExtResource( 9 )
 
-[node name="Object" type="Node2D" parent="Grid/Pawns"]
-editor/display_folded = true
-position = Vector2( 544, 288 )
-script = ExtResource( 7 )
+[node name="DialoguePawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
+position = Vector2( 800, 220 )
 type = 2
-formation = ExtResource( 8 )
+vanish_on_interaction = true
+facing = {
+"down": false,
+"left": false,
+"right": false,
+"up": false
+}
 
-[node name="Sprite" type="Sprite" parent="Grid/Pawns/Object"]
-texture = ExtResource( 10 )
+[node name="DialogueAction" parent="Grid/Pawns/DialoguePawn/Interactions" index="0" instance=ExtResource( 10 )]
+dialogue_box_path = NodePath("../../../../../MapInterface/DialogueBox")
 
-[node name="Dialogue" parent="Grid/Pawns/Object" instance=ExtResource( 11 )]
+[node name="Dialogue" parent="Grid/Pawns/DialoguePawn/Interactions/DialogueAction" instance=ExtResource( 11 )]
 file_path = "res://dialogue/data/test_conversation.json"
+
+[node name="DialogueCombatPawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
+position = Vector2( 1440, 479 )
+facing = {
+"down": true,
+"left": true,
+"right": true,
+"up": true
+}
+
+[node name="DialogueAction" parent="Grid/Pawns/DialogueCombatPawn/Interactions" index="0" instance=ExtResource( 10 )]
+editor/display_folded = true
+dialogue_box_path = NodePath("../../../../../MapInterface/DialogueBox")
+
+[node name="Dialogue" parent="Grid/Pawns/DialogueCombatPawn/Interactions/DialogueAction" instance=ExtResource( 11 )]
+file_path = "res://dialogue/data/test_conversation.json"
+
+[node name="StartCombatAction" parent="Grid/Pawns/DialogueCombatPawn/Interactions" index="1" instance=ExtResource( 8 )]
+map_path = NodePath("../../../../..")
+formation = ExtResource( 9 )
 
 [node name="MapInterface" type="CanvasLayer" parent="."]
 pause_mode = 2
@@ -106,5 +131,9 @@ transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 [node name="DialogueBox" parent="MapInterface" instance=ExtResource( 12 )]
 visible = false
 
-[connection signal="dialogue" from="." to="MapInterface/DialogueBox" method="initialize"]
-[connection signal="enemies_encountered" from="Grid" to="." method="_on_Grid_enemies_encountered"]
+
+[editable path="Grid/Pawns/EncounterPawn"]
+
+[editable path="Grid/Pawns/DialoguePawn"]
+
+[editable path="Grid/Pawns/DialogueCombatPawn"]

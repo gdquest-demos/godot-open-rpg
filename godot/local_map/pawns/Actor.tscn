@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://local_map/pawns/Leader.gd" type="Script" id=1]
 [ext_resource path="res://local_map/pawns/sprites/character.png" type="Texture" id=2]
@@ -50,7 +50,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.15, 0.25 ),
 "transitions": PoolRealArray( 1, 0.303143, 2.61003, 1 ),
 "update": 0,
-"values": [ Vector2( 1.43051e-06, -1.90735e-06 ), Vector2( 1.43051e-06, -1.90735e-06 ), Vector2( 0, -20 ), Vector2( 1.43051e-06, -1.90735e-06 ) ]
+"values": [ Vector2( 1.43051e-006, -1.90735e-006 ), Vector2( 1.43051e-006, -1.90735e-006 ), Vector2( 0, -20 ), Vector2( 1.43051e-006, -1.90735e-006 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Pivot/Sprite:scale")
@@ -65,15 +65,20 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.20007, 0.917384 ), Vector2( 0.916712, 1.13495 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Actor" type="Node2D"]
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 30, 30 )
+
+[node name="Actor" type="KinematicBody2D"]
 position = Vector2( 32, 32 )
 z_index = 1
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+motion/sync_to_physics = false
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
-type = 0
-formation = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("..")
@@ -96,8 +101,11 @@ playback/speed = 1.0
 [node name="Pivot" type="Position2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Pivot"]
-position = Vector2( 1.43051e-06, -1.90735e-06 )
+position = Vector2( 1.43051e-006, -1.90735e-006 )
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( -32, -32 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
 
