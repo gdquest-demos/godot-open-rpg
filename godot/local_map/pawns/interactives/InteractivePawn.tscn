@@ -21,8 +21,6 @@ __meta__ = {
 "_edit_group_": true
 }
 type = 0
-formation = null
-interaction_type = 0
 vanish_on_interaction = false
 sight_distance = 50
 facing = {

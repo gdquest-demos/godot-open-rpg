@@ -84,7 +84,6 @@ map_path = NodePath("../../../../..")
 formation = ExtResource( 9 )
 
 [node name="DialoguePawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
-editor/display_folded = true
 position = Vector2( 800, 220 )
 type = 2
 vanish_on_interaction = true
@@ -94,6 +93,12 @@ facing = {
 "right": false,
 "up": false
 }
+
+[node name="DialogueAction" parent="Grid/Pawns/DialoguePawn/Interactions" index="0" instance=ExtResource( 10 )]
+dialogue_box_path = NodePath("../../../../../MapInterface/DialogueBox")
+
+[node name="Dialogue" parent="Grid/Pawns/DialoguePawn/Interactions/DialogueAction" instance=ExtResource( 11 )]
+file_path = "res://dialogue/data/test_conversation.json"
 
 [node name="DialogueCombatPawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
 position = Vector2( 1440, 479 )
@@ -128,5 +133,7 @@ visible = false
 
 
 [editable path="Grid/Pawns/EncounterPawn"]
+
+[editable path="Grid/Pawns/DialoguePawn"]
 
 [editable path="Grid/Pawns/DialogueCombatPawn"]

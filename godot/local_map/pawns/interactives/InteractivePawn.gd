@@ -5,9 +5,6 @@ signal interacted(type, arg)
 
 onready var raycasts : = $Raycasts as Node2D
 
-enum Interaction { DIALOGUE, COMBAT }
-
-export(Interaction) var interaction_type = Interaction.DIALOGUE
 export var vanish_on_interaction : = false
 export var sight_distance = 50
 export var facing = {
@@ -18,11 +15,8 @@ export var facing = {
 }
 
 var is_interacting : bool = false
-var interaction_arg
 
 func _ready() -> void:
-	interaction_arg = $Dialogue if interaction_type == DIALOGUE else formation
-	
 	connect('body_entered', self, '_on_body_entered')
 	connect('body_exited', self, '_on_body_exited')
 	
@@ -43,7 +37,6 @@ func _physics_process(delta : float) -> void:
 	is_interacting = interacting > 0
 
 func _on_body_entered(body : PhysicsBody2D) -> void:
-	print('entered')
 	is_interacting = true
 	start_interaction()
 
@@ -55,8 +48,3 @@ func start_interaction() -> void:
 		yield(interaction.interact(), "completed")
 	if vanish_on_interaction:
 		queue_free()
-
-#func start_interaction() -> void:
-#	emit_signal("interacted", interaction_type, interaction_arg)
-#	if vanish_on_interaction:
-#		queue_free()
