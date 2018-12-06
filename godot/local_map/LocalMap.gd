@@ -1,14 +1,14 @@
 extends Node
+class_name LocalMap
 
 signal enemies_encountered(formation)
-signal dialogue(dialogue)
+signal combat_finished()
 
 func spawn_party(party) -> void:
 	$Grid/Pawns.spawn_party(party, $Grid.map_to_world(Vector2(2,2)))
 
-func _on_Grid_interaction_happened(type, arg):
-	match type:
-		InteractablePawn.InteractionType.DIALOGUE:
-			$MapInterface/DialogueBox.initialize(arg.load())
-		InteractablePawn.InteractionType.COMBAT:
-			emit_signal("enemies_encountered", arg.instance())
+func start_encounter(formation) -> void:
+	emit_signal("enemies_encountered", formation.instance())
+
+func _on_Game_combat_finished():
+	emit_signal("combat_finished")

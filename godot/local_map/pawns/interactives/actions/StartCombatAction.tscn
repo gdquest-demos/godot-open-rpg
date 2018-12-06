@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://local_map/pawns/interactives/actions/StartCombatAction.gd" type="Script" id=1]
+
+[node name="StartCombatAction" type="Node"]
+script = ExtResource( 1 )
+map_path = null
+formation = null
+

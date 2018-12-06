@@ -1,13 +1,13 @@
 extends "res://local_map/pawns/Pawn.gd"
-class_name InteractablePawn
+class_name InteractivePawn
 
 signal interacted(type, arg)
 
 onready var raycasts : = $Raycasts as Node2D
 
-enum InteractionType { DIALOGUE, COMBAT }
+enum Interaction { DIALOGUE, COMBAT }
 
-export(InteractionType) var interaction_type = InteractionType.DIALOGUE
+export(Interaction) var interaction_type = Interaction.DIALOGUE
 export var vanish_on_interaction : = false
 export var sight_distance = 50
 export var facing = {
@@ -51,6 +51,12 @@ func _on_body_exited(body : PhysicsBody2D) -> void:
 	is_interacting = false
 
 func start_interaction() -> void:
-	emit_signal("interacted", interaction_type, interaction_arg)
+	for interaction in $Interactions.get_children():
+		yield(interaction.interact(), "completed")
 	if vanish_on_interaction:
 		queue_free()
+
+#func start_interaction() -> void:
+#	emit_signal("interacted", interaction_type, interaction_arg)
+#	if vanish_on_interaction:
+#		queue_free()

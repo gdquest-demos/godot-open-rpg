@@ -1,4 +1,7 @@
 extends Control
+class_name DialogueBox
+
+signal dialogue_ended()
 
 onready var dialogue_player : DialoguePlayer = get_node("DialoguePlayer")
 
@@ -27,6 +30,7 @@ func _on_DialoguePlayer_finished() -> void:
 	button_finished.show()
 
 func _on_ButtonFinished_pressed() -> void:
+	emit_signal("dialogue_ended")
 	hide()
 
 func update_content() -> void:
