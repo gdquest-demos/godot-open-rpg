@@ -37,10 +37,7 @@ func request_move(pawn, direction):
 			return update_pawn_position(pawn, cell_start, cell_target)
 		CELL_TYPES.ACTOR:
 			var target_pawn = get_cell_pawn(cell_target)
-			if target_pawn is PawnFollower:
-				return update_pawn_position(pawn, cell_start, cell_target)
-			else:
-				emit_signal("enemies_encountered", target_pawn.formation.instance())
+			emit_signal("enemies_encountered", target_pawn.formation.instance())
 
 func update_pawn_position(pawn, cell_start, cell_target):
 	set_cellv(cell_target, pawn.type)
