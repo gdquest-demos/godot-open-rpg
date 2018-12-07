@@ -23,8 +23,8 @@ scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 4 )]
-margin_left = -3.0
-margin_right = -3.0
+margin_left = -2.0
+margin_right = -2.0
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )

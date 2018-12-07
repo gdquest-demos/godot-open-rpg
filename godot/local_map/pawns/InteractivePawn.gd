@@ -44,7 +44,7 @@ func _on_body_exited(body : PhysicsBody2D) -> void:
 	is_interacting = false
 
 func start_interaction() -> void:
-	for interaction in $Interactions.get_children():
-		yield(interaction.interact(), "completed")
+	for action in $Actions.get_children():
+		yield(action.interact(), "completed")
 	if vanish_on_interaction:
 		queue_free()

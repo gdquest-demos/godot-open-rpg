@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "DialogueAction",
 "language": "GDScript",
-"path": "res://local_map/pawns/interactives/actions/DialogueAction.gd"
+"path": "res://local_map/pawns/actions/DialogueAction.gd"
 }, {
 "base": "Control",
 "class": "DialogueBox",
@@ -74,10 +74,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://combat/Hit.gd"
 }, {
-"base": "Node2D",
+"base": "",
 "class": "InteractivePawn",
 "language": "GDScript",
-"path": "res://local_map/pawns/interactives/InteractivePawn.gd"
+"path": "res://local_map/pawns/InteractivePawn.gd"
 }, {
 "base": "Reference",
 "class": "Inventory",
@@ -112,7 +112,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "MapAction",
 "language": "GDScript",
-"path": "res://local_map/pawns/interactives/actions/MapAction.gd"
+"path": "res://local_map/pawns/actions/MapAction.gd"
 }, {
 "base": "Node2D",
 "class": "Party",
@@ -157,7 +157,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "StartCombatAction",
 "language": "GDScript",
-"path": "res://local_map/pawns/interactives/actions/StartCombatAction.gd"
+"path": "res://local_map/pawns/actions/StartCombatAction.gd"
 }, {
 "base": "Control",
 "class": "StatBar",

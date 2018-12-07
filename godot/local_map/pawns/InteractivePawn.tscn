@@ -1,7 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://local_map/pawns/interactives/InteractivePawn.gd" type="Script" id=1]
+[ext_resource path="res://local_map/pawns/InteractivePawn.gd" type="Script" id=1]
 [ext_resource path="res://local_map/pawns/sprites/star.png" type="Texture" id=2]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -71,5 +72,5 @@ collision_mask = 1
 collide_with_areas = false
 collide_with_bodies = true
 
-[node name="Interactions" type="Node" parent="."]
+[node name="Actions" type="Node" parent="."]
 
