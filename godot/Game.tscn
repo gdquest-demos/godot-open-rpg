@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://party/Party.tscn" type="PackedScene" id=2]
@@ -6,6 +6,12 @@
 [ext_resource path="res://assets/shaders/TransitionColor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/audio/bgm/battle_theme.ogg" type="AudioStream" id=5]
 [ext_resource path="res://core/MusicPlayer.gd" type="Script" id=6]
+[ext_resource path="res://core/utils/RectExtents.gd" type="Script" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 74, 145.5 )
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -23,8 +29,8 @@ scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 4 )]
-margin_left = -2.0
-margin_right = -2.0
+margin_left = -3.0
+margin_right = -3.0
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
@@ -35,6 +41,26 @@ stream_paused = false
 mix_target = 0
 bus = "Music"
 script = ExtResource( 6 )
+
+[node name="Area2D" type="Area2D" parent="."]
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -109, 63.5 )
+shape = SubResource( 1 )
+
+[node name="RectExtents" type="Node2D" parent="."]
+position = Vector2( 123.333, -82.6666 )
+script = ExtResource( 7 )
+size = Vector2( 120, 160 )
+offset = Vector2( 0, 0 )
+color = Color( 1, 0.054902, 0.654902, 1 )
 
 [connection signal="combat_finished" from="." to="LocalMap" method="_on_Game_combat_finished"]
 [connection signal="enemies_encountered" from="LocalMap" to="." method="enter_battle"]
