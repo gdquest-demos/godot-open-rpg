@@ -7,7 +7,6 @@ export var TARGET_OFFSET_DISTANCE : float = 120.0
 const DEFAULT_CHANCE = 0.75
 export var stats : Resource
 var drops : Array
-onready var lifebar_anchor = $InterfaceAnchor
 onready var skin = $Skin
 onready var actions = $Actions
 onready var bars = $Bars
