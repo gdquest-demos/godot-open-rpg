@@ -50,6 +50,9 @@ func appear():
 	skin.position.x += TARGET_OFFSET_DISTANCE * offset_direction
 	skin.appear()
 
+func has_point(point : Vector2):
+	return skin.battler_anim.extents.has_point(point)
+
 # TODO: Move to AI-specific file
 func choose_target(targets : Array) -> Array:
 	"""

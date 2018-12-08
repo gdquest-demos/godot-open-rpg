@@ -15,9 +15,6 @@ const DIRECTION_DOWN = Vector2(0.0, 1.0)
 var targets : Array
 var target_active : Battler
 
-func _ready():
-	hide()
-
 func select_targets(battlers : Array) -> Array:
 	"""
 	Currently the arrow only allows you to select one target
@@ -47,16 +44,33 @@ func move_to(battler : Battler):
 		Tween.EASE_OUT)
 	tween.start()
 
+# Mouse and touch controls
+func _input(event: InputEvent) -> void:
+	if not event is InputEventMouseButton:
+		return
+	if not event.is_action_pressed("ui_accept"):
+		return
+	for battler in targets:
+		if not battler.has_point(event.position):
+			continue
+		if battler == target_active:
+			emit_signal("target_selected", target_active)
+		else:
+			target_active = battler
+			move_to(target_active)
+	accept_event()
+	return
+
 func _gui_input(event):
 	if !visible:
 		return
 	
 	if event.is_action_pressed("ui_accept"):
 		emit_signal("target_selected", target_active)
-		get_tree().set_input_as_handled()
+		accept_event()
 	elif event.is_action_pressed("ui_cancel"):
 		emit_signal("target_selected", null)
-		get_tree().set_input_as_handled()
+		accept_event()
 	
 	var new_target : Battler = null
 	if event.is_action_pressed("ui_left"):
@@ -84,8 +98,6 @@ func find_closest_target(direction : Vector2) -> Battler:
 	var selected_target : Battler = null
 	var distance_to_selected : float = 100000.0
 
-	print('')
-	print('Distance to selected: %s' % distance_to_selected)
 	# Filter battlers to prioritize those in the given direction
 	var priority_battlers : Array
 	var other_battlers : Array

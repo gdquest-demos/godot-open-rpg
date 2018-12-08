@@ -14,6 +14,7 @@ export var buttons_offset : Vector2 = Vector2(-75.0, 0.0)
 func initialize(battlers : Array):
 	lifebar_builder.initialize(battlers)
 	popup.initialize(battlers)
+	remove_child(select_arrow)
 
 func open_actions_menu(battler : Battler) -> void:
 	var menu = CircularMenu.instance()
@@ -26,5 +27,7 @@ func open_actions_menu(battler : Battler) -> void:
 	emit_signal("action_selected", selected_action)
 
 func select_targets(selectable_battlers : Array) -> void:
+	add_child(select_arrow)
 	var targets : Array = yield(select_arrow.select_targets(selectable_battlers), "completed")
 	emit_signal("targets_selected", targets)
+	remove_child(select_arrow)

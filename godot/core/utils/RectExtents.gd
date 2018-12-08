@@ -34,3 +34,7 @@ func _draw() -> void:
 
 func _calculate_base_offset():
 	_base_offset = -1.0 * Vector2(size.x / 2.0, size.y)
+
+func has_point(point : Vector2) -> bool:
+	var as_rect = Rect2(global_position + _base_offset + offset, size)
+	return as_rect.has_point(point)
