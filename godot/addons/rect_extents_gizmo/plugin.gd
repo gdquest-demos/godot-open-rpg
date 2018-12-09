@@ -92,43 +92,41 @@ func drag_to(event_position: Vector2) -> void:
 func forward_canvas_gui_input(event: InputEvent) -> bool:
 	if not rect_extents or not rect_extents.visible:
 		return false
-	
-	# Cancelling
-	if dragged_anchor and event.is_action_pressed("ui_cancel"):
-		dragged_anchor = {}
-		var undo := get_undo_redo()
-		undo.commit_action()
-		undo.undo()
-		return true
 
+	# Clicking and releasing the click
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+		if not dragged_anchor and event.is_pressed():
+			for anchor in anchors:
+				if not anchor['rect'].has_point(event.position):
+					continue
+				var undo := get_undo_redo()
+				undo.create_action("Move anchor")
+				undo.add_undo_property(rect_extents, "size", rect_extents.size)
+				undo.add_undo_property(rect_extents, "offset", rect_extents.offset)
+				dragged_anchor = anchor
+				print("Drag start: %s" % dragged_anchor)
+				return true
+		elif dragged_anchor and not event.is_pressed():
+			print("Lifting the cursor: %s" % event.position)
+			drag_to(event.position)
+			dragged_anchor = {}
+			var undo := get_undo_redo()
+			undo.add_do_property(rect_extents, "size", rect_extents.size)
+			undo.add_do_property(rect_extents, "offset", rect_extents.offset)
+			undo.commit_action()
+			return true
+	if not dragged_anchor:
+		return false
 	# Dragging
 	if event is InputEventMouseMotion:
 		drag_to(event.position)
 		update_overlays()
 		return true
-
-	# Clicking and releasing the click
-	if not event is InputEventMouseButton or not event.button_index == BUTTON_LEFT:
-		return false
-	if not dragged_anchor and event.is_pressed():
-		for anchor in anchors:
-			if not anchor['rect'].has_point(event.position):
-				continue
-			var undo := get_undo_redo()
-			undo.create_action("Move anchor")
-			undo.add_undo_property(rect_extents, "size", rect_extents.size)
-			undo.add_undo_property(rect_extents, "offset", rect_extents.offset)
-			dragged_anchor = anchor
-			print("Drag start: %s" % dragged_anchor)
-			return true
-	if not event.is_pressed():
-		print("Lifting the cursor: %s" % event.position)
-		drag_to(event.position)
+	# Cancelling with ui_cancel
+	if event.is_action_pressed("ui_cancel"):
 		dragged_anchor = {}
-		
 		var undo := get_undo_redo()
-		undo.add_do_property(rect_extents, "size", rect_extents.size)
-		undo.add_do_property(rect_extents, "offset", rect_extents.offset)
 		undo.commit_action()
+		undo.undo()
 		return true
 	return false
