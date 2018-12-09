@@ -29,6 +29,7 @@ func select_targets(battlers : Array) -> Array:
 	grab_focus()
 	var selected_target : Battler = yield(self, "target_selected")
 	hide()
+	targets = []
 	if not selected_target:
 		return []
 	return [selected_target]
@@ -95,12 +96,14 @@ func find_closest_target(direction : Vector2) -> Battler:
 	Returns the closest target in the given direction
 	Use DIRECTION_* constants
 	"""
+	if targets.size() == 1:
+		return targets[0]
 	var selected_target : Battler = null
 	var distance_to_selected : float = 100000.0
 
 	# Filter battlers to prioritize those in the given direction
-	var priority_battlers : Array
-	var other_battlers : Array
+	var priority_battlers : Array = []
+	var other_battlers : Array = []
 	for battler in targets:
 		var to_battler : Vector2 = battler.global_position - target_active.global_position
 		if to_battler.length() < 1.0:
@@ -128,4 +131,7 @@ func find_closest_target(direction : Vector2) -> Battler:
 	for battler in other_battlers:
 		var to_battler : Vector2 = battler.global_position - target_active.global_position
 		var distance : float = abs(to_battler.x) if axis == 'x' else abs(to_battler.y)
+		if distance < distance_to_selected:
+			selected_target = battler
+			distance_to_selected = distance
 	return selected_target
