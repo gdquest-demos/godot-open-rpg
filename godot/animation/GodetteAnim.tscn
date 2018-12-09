@@ -17,5 +17,6 @@ scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 3 )
 
 [node name="RectExtents" parent="." index="3"]
-size = Vector2( 150, 230 )
+position = Vector2( 3.11111, -108.444 )
+size = Vector2( 165.333, 223.556 )
 
