@@ -1,4 +1,4 @@
-extends "res://local_map/pawns/Pawn.gd"
+extends PawnActor
 class_name InteractivePawn
 
 signal interacted(type, arg)

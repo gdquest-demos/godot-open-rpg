@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://combat/battlers/Formation.gd"
 }, {
+"base": "TileMap",
+"class": "GameBoard",
+"language": "GDScript",
+"path": "res://local_map/grid/GameBoard.gd"
+}, {
 "base": "Resource",
 "class": "GrowthStats",
 "language": "GDScript",
@@ -74,7 +79,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://combat/Hit.gd"
 }, {
-"base": "",
+"base": "Node2D",
 "class": "InteractivePawn",
 "language": "GDScript",
 "path": "res://local_map/pawns/InteractivePawn.gd"
@@ -118,6 +123,11 @@ _global_script_classes=[ {
 "class": "Party",
 "language": "GDScript",
 "path": "res://party/Party.gd"
+}, {
+"base": "Reference",
+"class": "Pathfinder",
+"language": "GDScript",
+"path": "res://local_map/grid/Pathfinder.gd"
 }, {
 "base": "Node2D",
 "class": "Pawn",
@@ -181,6 +191,7 @@ _global_script_class_icons={
 "DialoguePlayer": "",
 "Equipment": "",
 "Formation": "",
+"GameBoard": "",
 "GrowthStats": "",
 "Hit": "",
 "InteractivePawn": "",
@@ -192,6 +203,7 @@ _global_script_class_icons={
 "ManaBar": "",
 "MapAction": "",
 "Party": "",
+"Pathfinder": "",
 "Pawn": "",
 "PawnActor": "",
 "PawnFollower": "",

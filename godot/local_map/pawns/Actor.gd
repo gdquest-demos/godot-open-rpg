@@ -9,7 +9,7 @@ func _ready():
 	update_look_direction(Vector2(1, 0))
 
 func update_look_direction(direction):
-	$Pivot/Sprite.rotation = direction.angle()
+	return
 
 func move_to(target_position):
 	emit_signal("moved", position, target_position)
