@@ -2,11 +2,14 @@ extends Pawn
 
 class_name PawnActor
 
-onready var grid = get_parent()
+var game_board
 signal moved(last_position, current_position)
 
 func _ready():
 	update_look_direction(Vector2(1, 0))
+
+func initialize(board):
+	game_board = board
 
 func update_look_direction(direction):
 	return

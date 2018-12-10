@@ -63,10 +63,10 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true
 }
-map_size = Vector2( 20, 20 )
+map_size = null
 
 [node name="SpawningPoint" parent="Grid" instance=ExtResource( 5 )]
-position = Vector2( 224, 160 )
+position = Vector2( 544, 544 )
 
 [node name="Pawns" type="YSort" parent="Grid"]
 sort_enabled = true

@@ -14,12 +14,12 @@ onready var spawning_point = $SpawningPoint
 
 export var map_size : Vector2
 
-
 func _ready():
-	var occupied_cells : Array
-	for child in pawns.get_children():
-		child.position = request_move(child, Vector2(0, 0))
-		set_cellv(world_to_map(child.position), child.type)
+	for pawn in pawns.get_children():
+		pawn.position = request_move(pawn, Vector2(0, 0))
+		pawn.initialize(self)
+		set_cellv(world_to_map(pawn.position), pawn.type)
+	pathfinder.initialize(self, [0, 1, 2])
 
 func get_cell_pawn(coordinates : Vector2) -> Pawn:
 	for pawn in pawns.get_children():
@@ -42,6 +42,14 @@ func request_move(pawn : PawnActor, direction : Vector2) -> Vector2:
 	if cell_target_type == EMPTY or cell_target_type == OBJECT:
 		return update_pawn_position(pawn, cell_start, cell_target)
 	return Vector2()
+
+func find_path(start_world_position, end_world_position : Vector2) -> PoolVector3Array:
+	"""
+	Returns an array of grid points that connect the start and end world position
+	"""
+	var start = world_to_map(start_world_position)
+	var end = world_to_map(end_world_position)
+	return pathfinder.find_path(start, end)
 
 func update_pawn_position(pawn : PawnActor, cell_start : Vector2, cell_target : Vector2) -> Vector2:
 	set_cellv(cell_target, pawn.type)

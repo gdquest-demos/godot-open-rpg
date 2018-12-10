@@ -3,32 +3,34 @@ Finds the path between two points using AStar, in grid coordinates
 """
 class_name Pathfinder
 
-onready var astar : AStar = AStar.new()
+var astar : AStar = AStar.new()
 
 var _obstacles : Array
 var _map_size : Vector2
 
-func initialize(grid : TileMap, obstacle_tile_id : int) -> void:
+func initialize(grid : TileMap, obstacle_tile_ids : Array) -> void:
 	"""
 	Initializes the AStar node: finds all walkable cells 
 	and connects all walkable paths
 	"""
-	_obstacles = (grid as TileMap).get_used_cells_by_id(obstacle_tile_id)
+	# Initialize map size and obstacles array
 	_map_size = grid.map_size
+	for id in obstacle_tile_ids:
+		var occupied_cells = (grid as TileMap).get_used_cells_by_id(id)
+		for cell in occupied_cells:
+			_obstacles.append(cell)
 
 	# Find all walkable cells and store them in an array
-	var points_array = []
 	for y in range(_map_size.y):
 		for x in range(_map_size.x):
 			var point = Vector2(x, y)
 			if point in _obstacles:
 				continue
-			points_array.append(point)
 			var point_index = calculate_point_index(point)
-			astar.add_point(point_index, Vector3(point.x, point.y, 0.0))
+			astar.add_point(point_index, Vector3(point.x, point.y, 0))
 	# Loop through all walkable cells and their neighbors
 	# to connect the points
-	for point in points_array:
+	for point in astar.get_points():
 		var point_index = calculate_point_index(point)
 		for local_y in range(3):
 			for local_x in range(3):

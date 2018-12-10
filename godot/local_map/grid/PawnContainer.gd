@@ -8,16 +8,17 @@ const Follower = preload("res://local_map/pawns/PawnFollower.tscn")
 var party_members : = []
 var party
 
-func spawn_party(party : Object, world_position : Vector2) -> void:
+func spawn_party(game_board, party : Object) -> void:
 	self.party = party
 	var pawn_previous = null
 	var party_size = min(get_child_count(), party.PARTY_SIZE) - 1
 	for index in range(party_size):
 		pawn_previous = spawn_pawn(
-			world_position, 
+			game_board.spawning_point.position, 
 			pawn_previous, 
 			party.get_child(index).name, 
 			index == 0)
+		pawn_previous.initialize(game_board)
 		party_members.append(pawn_previous)
 
 func spawn_pawn(pos : Vector2, pawn_previous : Object, pawn_name : String, is_leader : bool = false) -> Object:

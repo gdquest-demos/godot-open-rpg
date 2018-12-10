@@ -14,7 +14,7 @@ func _ready() -> void:
 		(action as MapAction).initialize(self)
 
 func spawn_party(party) -> void:
-	grid.pawns.spawn_party(party, grid.spawning_point.position)
+	grid.pawns.spawn_party(grid, party)
 
 func start_encounter(formation) -> void:
 	emit_signal("enemies_encountered", formation.instance())
