@@ -2,6 +2,8 @@ extends PawnActor
 
 class_name PawnLeader
 
+onready var destination_point : = $DestinationPoint as Sprite
+
 enum INPUT_MODES {TOUCH, KEYBOARD}
 var _input_mode : int = KEYBOARD setget set_input_mode
 # Array of contiguous points to move to in game_board coordinates, provided by the game_board's pathfinder

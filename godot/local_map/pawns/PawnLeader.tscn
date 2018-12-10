@@ -71,7 +71,7 @@ tracks/2/keys = {
 custom_solver_bias = 0.0
 extents = Vector2( 30, 30 )
 
-[node name="Actor" type="KinematicBody2D"]
+[node name="PawnLeader" type="KinematicBody2D"]
 position = Vector2( 32, 32 )
 z_index = 1
 input_pickable = false
@@ -111,4 +111,5 @@ offset = Vector2( -32, -32 )
 shape = SubResource( 3 )
 
 [node name="DestinationPoint" parent="." instance=ExtResource( 3 )]
+visible = false
 

@@ -5,8 +5,6 @@ class_name PawnActor
 var game_board
 signal moved(last_position, current_position)
 
-onready var destination_point : = $DestinationPoint as Sprite
-
 func _ready():
 	update_look_direction(Vector2(1, 0))
 
