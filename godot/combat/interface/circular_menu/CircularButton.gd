@@ -6,9 +6,13 @@ onready var button_icon : = $Background/Icon as TextureRect
 
 var mouse_over : bool
 var active : bool
+var target_position : Vector2
+var unfocused_scale : Vector2
 
 func initialize(action : CombatAction, target_position : Vector2) -> void:
-	rect_position = target_position
+	unfocused_scale = rect_scale
+	rect_scale = Vector2()
+	self.target_position = target_position
 	disabled = not action.can_use()
 	if disabled:
 		modulate = Color("#555555")
