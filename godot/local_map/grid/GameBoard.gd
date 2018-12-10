@@ -12,7 +12,7 @@ var pathfinder : Pathfinder = preload("res://local_map/grid/Pathfinder.gd").new(
 onready var pawns : YSort = $Pawns
 onready var spawning_point = $SpawningPoint
 
-export var map_size : Vector2
+export var map_size : = Vector2(16, 16)
 
 func _ready():
 	for pawn in pawns.get_children():
