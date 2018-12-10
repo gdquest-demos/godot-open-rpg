@@ -14,7 +14,7 @@ func initialize(grid : TileMap, obstacle_tile_ids : Array) -> void:
 	and connects all walkable paths
 	"""
 	# Initialize map size and obstacles array
-	_map_size = grid.map_size
+	_map_size = grid.get_used_rect().size
 	for id in obstacle_tile_ids:
 		var occupied_cells = (grid as TileMap).get_used_cells_by_id(id)
 		for cell in occupied_cells:
