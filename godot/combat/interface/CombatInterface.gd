@@ -6,14 +6,16 @@ signal targets_selected(targets)
 const CircularMenu = preload("res://combat/interface/circular_menu/CircularMenu.tscn")
 
 onready var lifebar_builder = $BattlersBarsBuilder
-onready var select_arrow = $SelectArrow
 onready var popup = $PopUpHandler
+onready var select_arrow = $SelectArrow
+onready var turn_order = $TurnOrder
 
 export var buttons_offset : Vector2 = Vector2(-75.0, 0.0)
 
 func initialize(battlers : Array):
 	lifebar_builder.initialize(battlers)
 	popup.initialize(battlers)
+	turn_order.initialize(battlers)
 	remove_child(select_arrow)
 
 func open_actions_menu(battler : Battler) -> void:
