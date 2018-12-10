@@ -134,12 +134,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://local_map/pawns/Pawn.gd"
 }, {
-"base": "Pawn",
+"base": "Node2D",
 "class": "PawnActor",
 "language": "GDScript",
 "path": "res://local_map/pawns/PawnActor.gd"
 }, {
-"base": "PawnActor",
+"base": "Node2D",
 "class": "PawnFollower",
 "language": "GDScript",
 "path": "res://local_map/pawns/PawnFollower.gd"

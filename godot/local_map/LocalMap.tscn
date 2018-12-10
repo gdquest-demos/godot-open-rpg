@@ -1,16 +1,17 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://local_map/LocalMap.gd" type="Script" id=1]
 [ext_resource path="res://local_map/tilesets/grid_lines/grid_lines_tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://local_map/tilesets/grid/grid_tileset.tres" type="TileSet" id=3]
 [ext_resource path="res://local_map/grid/GameBoard.gd" type="Script" id=4]
-[ext_resource path="res://local_map/grid/PawnContainer.gd" type="Script" id=5]
-[ext_resource path="res://party/Party.tscn" type="PackedScene" id=6]
-[ext_resource path="res://local_map/pawns/InteractivePawn.tscn" type="PackedScene" id=7]
-[ext_resource path="res://local_map/pawns/actions/StartCombatAction.tscn" type="PackedScene" id=8]
-[ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=9]
-[ext_resource path="res://local_map/pawns/actions/DialogueAction.tscn" type="PackedScene" id=10]
-[ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=11]
+[ext_resource path="res://local_map/grid/SpawningPoint.tscn" type="PackedScene" id=5]
+[ext_resource path="res://local_map/grid/PawnContainer.gd" type="Script" id=6]
+[ext_resource path="res://party/Party.tscn" type="PackedScene" id=7]
+[ext_resource path="res://local_map/pawns/InteractivePawn.tscn" type="PackedScene" id=8]
+[ext_resource path="res://local_map/pawns/actions/StartCombatAction.tscn" type="PackedScene" id=9]
+[ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=10]
+[ext_resource path="res://local_map/pawns/actions/DialogueAction.tscn" type="PackedScene" id=11]
+[ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=12]
 
 [node name="LocalMap" type="Node2D"]
 script = ExtResource( 1 )
@@ -64,13 +65,16 @@ __meta__ = {
 }
 map_size = Vector2( 20, 20 )
 
+[node name="SpawningPoint" parent="Grid" instance=ExtResource( 5 )]
+position = Vector2( 224, 160 )
+
 [node name="Pawns" type="YSort" parent="Grid"]
 sort_enabled = true
-script = ExtResource( 5 )
-party_scene = ExtResource( 6 )
+script = ExtResource( 6 )
+party_scene = ExtResource( 7 )
 
-[node name="EncounterPawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
-position = Vector2( 420, 479 )
+[node name="EncounterPawn" parent="Grid/Pawns" instance=ExtResource( 8 )]
+position = Vector2( 416, 480 )
 facing = {
 "down": true,
 "left": true,
@@ -78,11 +82,11 @@ facing = {
 "up": true
 }
 
-[node name="StartCombat" parent="Grid/Pawns/EncounterPawn/Actions" index="0" instance=ExtResource( 8 )]
-formation = ExtResource( 9 )
+[node name="StartCombat" parent="Grid/Pawns/EncounterPawn/Actions" index="0" instance=ExtResource( 9 )]
+formation = ExtResource( 10 )
 
-[node name="DialoguePawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
-position = Vector2( 350, 290 )
+[node name="DialoguePawn" parent="Grid/Pawns" instance=ExtResource( 8 )]
+position = Vector2( 352, 288 )
 facing = {
 "down": true,
 "left": true,
@@ -90,11 +94,11 @@ facing = {
 "up": true
 }
 
-[node name="Dialogue" parent="Grid/Pawns/DialoguePawn/Actions" index="0" instance=ExtResource( 10 )]
+[node name="Dialogue" parent="Grid/Pawns/DialoguePawn/Actions" index="0" instance=ExtResource( 11 )]
 dialogue_file_path = "res://dialogue/data/test_conversation.json"
 
-[node name="DialogueCombatPawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
-position = Vector2( 1440, 479 )
+[node name="DialogueCombatPawn" parent="Grid/Pawns" instance=ExtResource( 8 )]
+position = Vector2( 1440, 480 )
 facing = {
 "down": true,
 "left": true,
@@ -102,11 +106,11 @@ facing = {
 "up": true
 }
 
-[node name="Dialogue" parent="Grid/Pawns/DialogueCombatPawn/Actions" index="0" instance=ExtResource( 10 )]
+[node name="Dialogue" parent="Grid/Pawns/DialogueCombatPawn/Actions" index="0" instance=ExtResource( 11 )]
 dialogue_file_path = "res://dialogue/data/test_conversation.json"
 
-[node name="StartCombat" parent="Grid/Pawns/DialogueCombatPawn/Actions" index="1" instance=ExtResource( 8 )]
-formation = ExtResource( 9 )
+[node name="StartCombat" parent="Grid/Pawns/DialogueCombatPawn/Actions" index="1" instance=ExtResource( 9 )]
+formation = ExtResource( 10 )
 
 [node name="MapInterface" type="CanvasLayer" parent="."]
 layer = 100
@@ -115,7 +119,7 @@ rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="DialogueBox" parent="MapInterface" instance=ExtResource( 11 )]
+[node name="DialogueBox" parent="MapInterface" instance=ExtResource( 12 )]
 visible = false
 
 

@@ -6,6 +6,7 @@ signal combat_finished()
 signal dialogue_finished()
 
 onready var dialogue_box = $MapInterface/DialogueBox
+onready var grid = $Grid
 
 func _ready() -> void:
 	assert dialogue_box
@@ -13,7 +14,7 @@ func _ready() -> void:
 		(action as MapAction).initialize(self)
 
 func spawn_party(party) -> void:
-	$Grid/Pawns.spawn_party(party, $Grid.calculate_world_pos(Vector2(2,2)))
+	grid.pawns.spawn_party(party, grid.spawning_point.position)
 
 func start_encounter(formation) -> void:
 	emit_signal("enemies_encountered", formation.instance())

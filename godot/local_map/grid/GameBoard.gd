@@ -10,7 +10,10 @@ enum CELL_TYPES { EMPTY = -1, ACTOR, OBSTACLE, OBJECT }
 
 var pathfinder : Pathfinder = preload("res://local_map/grid/Pathfinder.gd").new()
 onready var pawns : YSort = $Pawns
+onready var spawning_point = $SpawningPoint
+
 export var map_size : Vector2
+
 
 func _ready():
 	var occupied_cells : Array
