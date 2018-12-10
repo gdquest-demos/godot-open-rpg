@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://local_map/pawns/Leader.gd" type="Script" id=1]
+[ext_resource path="res://local_map/pawns/PawnLeader.gd" type="Script" id=1]
 [ext_resource path="res://local_map/pawns/sprites/character.png" type="Texture" id=2]
 
 [sub_resource type="Animation" id=1]

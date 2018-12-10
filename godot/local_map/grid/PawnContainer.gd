@@ -2,8 +2,8 @@ extends Node2D
 
 export var party_scene : PackedScene
 
-const Leader = preload("res://local_map/pawns/Actor.tscn")
-const Follower = preload("res://local_map/pawns/Follower.tscn")
+const Leader = preload("res://local_map/pawns/PawnLeader.tscn")
+const Follower = preload("res://local_map/pawns/PawnFollower.tscn")
 
 var party_members : = []
 var party

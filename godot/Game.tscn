@@ -12,6 +12,7 @@ script = ExtResource( 1 )
 
 [node name="Party" parent="." instance=ExtResource( 2 )]
 visible = false
+PARTY_SIZE = null
 
 [node name="LocalMap" parent="." instance=ExtResource( 3 )]
 

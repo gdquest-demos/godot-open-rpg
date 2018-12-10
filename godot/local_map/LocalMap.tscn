@@ -82,7 +82,7 @@ facing = {
 formation = ExtResource( 9 )
 
 [node name="DialoguePawn" parent="Grid/Pawns" instance=ExtResource( 7 )]
-position = Vector2( 800, 220 )
+position = Vector2( 350, 290 )
 facing = {
 "down": true,
 "left": true,
