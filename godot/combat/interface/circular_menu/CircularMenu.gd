@@ -32,8 +32,9 @@ func open() -> void:
 	show()
 	for button_index in buttons.get_child_count():
 		var button = buttons.get_child(button_index)
-		tween.interpolate_property(button, "rect_scale", Vector2(), button.unfocused_scale, animation_duration, Tween.TRANS_EXPO, Tween.EASE_IN_OUT, animation_offset * button_index)
-		tween.interpolate_property(button, "rect_position", Vector2(), button.target_position, animation_duration, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT, animation_offset * button_index)
+		tween.interpolate_property(button, "rect_scale", Vector2(), button.unfocused_scale, animation_duration, Tween.TRANS_QUART, Tween.EASE_IN, animation_offset * button_index)
+		tween.interpolate_property(button, "rect_position", Vector2(), button.target_position, animation_duration, Tween.TRANS_QUART, Tween.EASE_IN, animation_offset * button_index)
+		tween.interpolate_property(button, "modulate", Color('#00ffffff'), Color('#ffffffff'), animation_duration, Tween.TRANS_QUART, Tween.EASE_OUT, animation_offset * button_index)
 	tween.start()
 	yield(tween, "tween_completed")
 	var first_button = buttons.get_child(0)
@@ -57,8 +58,9 @@ func close() -> void:
 	for button_index in buttons.get_child_count():
 		var button = buttons.get_child(button_index)
 		button.animation_player.stop()
-		tween.interpolate_property(button, "rect_scale", button.rect_scale, Vector2(), animation_duration, Tween.TRANS_EXPO, Tween.EASE_IN_OUT, animation_offset * button_index)
-		tween.interpolate_property(button, "rect_position", button.rect_position, Vector2(), animation_duration, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT, animation_offset * button_index)
+		tween.interpolate_property(button, "rect_scale", button.rect_scale, Vector2(), animation_duration, Tween.TRANS_QUART, Tween.EASE_OUT, animation_offset * button_index)
+		tween.interpolate_property(button, "rect_position", button.rect_position, Vector2(), animation_duration, Tween.TRANS_QUART, Tween.EASE_OUT, animation_offset * button_index)
+		tween.interpolate_property(button, "modulate", Color('#ffffffff'), Color('#00ffffff'), animation_duration, Tween.TRANS_QUART, Tween.EASE_OUT, animation_offset * button_index)
 	tween.start()
 	yield(tween, "tween_completed")
 	queue_free()

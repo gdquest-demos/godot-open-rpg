@@ -20,8 +20,8 @@ __meta__ = {
 radius = 190
 spacing = 0.2
 offset = -0.1
-animation_offset = 0.08
-animation_duration = 0.2
+animation_offset = 0.1
+animation_duration = 0.3
 layout = 0
 
 [node name="Tween" type="Tween" parent="."]
