@@ -44,3 +44,6 @@ func update_pawn_position(pawn : PawnActor, cell_start : Vector2, cell_target : 
 	set_cellv(cell_target, pawn.type)
 	set_cellv(cell_start, CELL_TYPES.EMPTY)
 	return map_to_world(cell_target) + cell_size / 2
+
+func calculate_world_pos(grid_pos : Vector2) -> Vector2:
+	return map_to_world(grid_pos) - cell_size / 2

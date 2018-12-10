@@ -13,7 +13,7 @@ func _ready() -> void:
 		(action as MapAction).initialize(self)
 
 func spawn_party(party) -> void:
-	$Grid/Pawns.spawn_party(party, $Grid.map_to_world(Vector2(2,2)))
+	$Grid/Pawns.spawn_party(party, $Grid.calculate_world_pos(Vector2(2,2)))
 
 func start_encounter(formation) -> void:
 	emit_signal("enemies_encountered", formation.instance())
