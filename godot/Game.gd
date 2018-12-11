@@ -10,6 +10,7 @@ onready var party = $Party as Party
 onready var music_player = $MusicPlayer
 
 var transitioning = false
+var ongoing_combat
 
 func _ready():
 	local_map.visible = true
@@ -27,24 +28,25 @@ func enter_battle(formation: Formation):
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
 	remove_child(local_map)
-	var combat_arena = combat_arena_scene.instance()
-	add_child(combat_arena)
-	combat_arena.connect("victory", self, "_on_CombatArena_player_victory")
-	combat_arena.initialize(formation, party.get_active_members())
+	ongoing_combat = combat_arena_scene.instance()
+	add_child(ongoing_combat)
+	ongoing_combat.connect("victory", self, "_on_CombatArena_player_victory")
+	ongoing_combat.connect("combat_restarted", self, "_on_combat_restarted")
+	ongoing_combat.initialize(formation, party.get_active_members())
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
-	combat_arena.battle_start()
+	ongoing_combat.battle_start()
 	
 	# Get data from the battlers after the battle ended,
 	# Then copy into the Party node to save earned experience,
 	# items, and currentstats
-	var updates = yield(combat_arena, "battle_ended")
+	var updates = yield(ongoing_combat, "battle_ended")
 	party.update_members(updates)
 
 	emit_signal("combat_finished")
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
-	combat_arena.queue_free()
+	ongoing_combat.queue_free()
 	add_child(local_map)
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
@@ -52,3 +54,7 @@ func enter_battle(formation: Formation):
 
 func _on_CombatArena_player_victory():
 	music_player.play_victory_fanfare()
+
+func _on_combat_restarted(formation : Formation) -> void:
+	ongoing_combat.queue_free()
+	enter_battle(formation)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://combat/CombatArena.gd" type="Script" id=1]
 [ext_resource path="res://combat/turn_queue/TurnQueue.tscn" type="PackedScene" id=2]
@@ -8,7 +8,10 @@
 [ext_resource path="res://combat/interface/bars/BattlersBarsBuilder.tscn" type="PackedScene" id=6]
 [ext_resource path="res://combat/Rewards.gd" type="Script" id=7]
 [ext_resource path="res://interface/default.theme" type="Theme" id=8]
-[ext_resource path="res://combat/background/Grasslands.tscn" type="PackedScene" id=9]
+[ext_resource path="res://combat/interface/game_over/GameOverInterface.gd" type="Script" id=9]
+[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_64.tres" type="DynamicFont" id=10]
+[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_32.tres" type="DynamicFont" id=11]
+[ext_resource path="res://combat/background/Grasslands.tscn" type="PackedScene" id=12]
 
 [node name="CombatArena" type="Node2D"]
 script = ExtResource( 1 )
@@ -31,7 +34,8 @@ z_index = 10
 [node name="CombatInterface" type="CanvasLayer" parent="." groups=[
 "interface",
 ]]
-layer = 100
+editor/display_folded = true
+layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
@@ -86,5 +90,156 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Grasslands" parent="." instance=ExtResource( 9 )]
+[node name="GameOverInterface" type="CanvasLayer" parent="."]
+layer = 2
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+script = ExtResource( 9 )
 
+[node name="Panel" type="Panel" parent="GameOverInterface"]
+visible = false
+self_modulate = Color( 0.203922, 0.0470588, 0.0470588, 0.870588 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverInterface/Panel"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 25.0
+margin_top = 25.0
+margin_right = -25.0
+margin_bottom = -25.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="GameOver" type="Label" parent="GameOverInterface/Panel/VBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 130.0
+margin_right = 1870.0
+margin_bottom = 209.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 10 )
+text = "GAME OVER"
+align = 1
+valign = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Message" type="Label" parent="GameOverInterface/Panel/VBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 344.0
+margin_right = 1870.0
+margin_bottom = 384.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 11 )
+text = "Your party was defeated"
+align = 1
+valign = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Options" type="HBoxContainer" parent="GameOverInterface/Panel/VBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 688.0
+margin_right = 1870.0
+margin_bottom = 1030.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 3
+alignment = 0
+
+[node name="TryAgain" type="Button" parent="GameOverInterface/Panel/VBoxContainer/Options"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 367.0
+margin_right = 566.0
+margin_bottom = 46.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 6
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 11 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "TRY AGAIN"
+flat = false
+align = 1
+
+[node name="Exit" type="Button" parent="GameOverInterface/Panel/VBoxContainer/Options"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1359.0
+margin_right = 1448.0
+margin_bottom = 46.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 6
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 11 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "EXIT"
+flat = false
+align = 1
+
+[node name="Grasslands" parent="." instance=ExtResource( 12 )]
+
+[connection signal="pressed" from="GameOverInterface/Panel/VBoxContainer/Options/TryAgain" to="." method="_on_TryAgain_pressed"]
+[connection signal="pressed" from="GameOverInterface/Panel/VBoxContainer/Options/Exit" to="GameOverInterface" method="_on_Exit_pressed"]
