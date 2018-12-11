@@ -1,38 +1,39 @@
 extends Control
 
-onready var active_battler_index : int = -1 setget _set_active_battler_index
+onready var last_active_battler : Battler
 
 onready var portraits = $CombatPortraits
 var CombatPortrait = preload("res://combat/interface/turn_order/CombatPortrait.tscn")
 
-func initialize(battlers : Array) -> void:
+func rebuild(battlers : Array, active_battler : Battler) -> void:
 	"""Creates the turn order interface.
 	
 	For each battler, both PC and NPC, create its interactive portrait and add 
 	it to the portraits list.
 	"""
+	for portrait in portraits.get_children():
+		portrait.queue_free()
+
 	for battler in battlers:
 		var new_portrait : CombatPortrait = CombatPortrait.instance()
 		portraits.add_child(new_portrait)
-		new_portrait.initialize()
+		new_portrait.initialize(battler)
+		if battler != active_battler:
+			new_portrait.reduce()
 
-func next() -> void:
+func next(playing_battler : Battler, deactivate_previous : bool = false) -> void:
 	"""Switch to the next battler.
 	
-	Deactivate the previous portrait and activate the next one.
+	Deactivate the previous portrait and highlight the next one.
 	"""
-	if active_battler_index != -1:
-		portraits.get_children()[active_battler_index].wait()
+	for portrait in portraits.get_children():
+		if portrait.battler == playing_battler:
+			portrait.highlight()
+		elif portrait.battler == last_active_battler and deactivate_previous:
+			portrait.wait()
+	last_active_battler = playing_battler
 
-	# use 'self' to trigger the setter method to prevent index error
-	self.active_battler_index += 1
-	portraits.get_children()[active_battler_index].activate()
-
-func disable_portrait(index) -> void:
-	"""Used when a battler dies."""
-	portraits.get_children()[index].disable()
-
-func _set_active_battler_index(value):
-	if value >= portraits.get_child_count():
-		value = 0
-	active_battler_index = value
+func _on_queue_changed(battlers : Array, active_battler) -> void:
+	"""When the turn queue changes, rebuild the turn order interface and highlight the next battler."""
+	rebuild(battlers, active_battler)
+	next(active_battler)

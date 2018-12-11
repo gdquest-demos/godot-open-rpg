@@ -12,10 +12,10 @@ onready var turn_order = $TurnOrder
 
 export var buttons_offset : Vector2 = Vector2(-75.0, 0.0)
 
-func initialize(battlers : Array):
+func initialize(battlers : Array, turn_queue : TurnQueue):
+	turn_queue.connect('queue_changed', turn_order, '_on_queue_changed')
 	lifebar_builder.initialize(battlers)
 	popup.initialize(battlers)
-	turn_order.initialize(battlers)
 	remove_child(select_arrow)
 
 func open_actions_menu(battler : Battler) -> void:

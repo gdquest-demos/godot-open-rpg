@@ -2,36 +2,20 @@ extends Control
 
 class_name CombatPortrait
 
+onready var battler : Battler
 onready var animation_player : AnimationPlayer = $AnimationPlayer
 
-onready var state = null
-enum states {INITIALIZE, ACTIVE, WAITING, DISABLED} 
+func initialize(battler : Battler) -> void:
+	self.battler = battler
 
-func initialize():
+func reduce() -> void:
+	animation_player.play('reduce')
 
-	#
-	# TODO add the real battler portrait
-	#
+func highlight() -> void:
+	animation_player.play('highlight')
 
-	_switch_state(INITIALIZE)
+func wait() -> void:
+	animation_player.play('wait')
 
-func activate():
-	_switch_state(ACTIVE)
-
-func wait():
-	_switch_state(WAITING)
-
-func disable():
-	_switch_state(DISABLED)
-
-func _switch_state(new_state):
-	state = new_state
-	match new_state:
-		INITIALIZE:
-			animation_player.play('initialize')
-		ACTIVE:
-			animation_player.play('activate')
-		WAITING:
-			animation_player.play('deactivate')
-		DISABLED:
-			animation_player.play('disable')
+func disable() -> void:
+	animation_player.play('disable')

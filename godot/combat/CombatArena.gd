@@ -4,7 +4,6 @@ const BattlerNode = preload("res://combat/battlers/Battler.tscn")
 
 onready var turn_queue : TurnQueue = $TurnQueue
 onready var interface = $CombatInterface
-onready var turn_order = $CombatInterface/TurnOrder
 onready var rewards = $Rewards
 
 var active : bool = false
@@ -24,7 +23,7 @@ func initialize(formation : Formation, party : Array):
 	for battler in battlers:
 		battler.initialize()
 		
-	interface.initialize(battlers)
+	interface.initialize(battlers, turn_queue)
 	rewards.initialize(battlers)
 	turn_queue.initialize()
 	
@@ -99,9 +98,6 @@ func play_turn():
 	while battler.stats.health == 0:
 		turn_queue.skip_turn()
 		battler = get_active_battler()
-
-	# update the TurnOrder interface by highlighting the next battler portrait
-	turn_order.next()
 
 	battler.selected = true
 	var opponents : Array = get_targets()
