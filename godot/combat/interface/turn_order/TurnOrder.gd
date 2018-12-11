@@ -16,10 +16,9 @@ func rebuild(battlers : Array, active_battler : Battler) -> void:
 
 	for battler in battlers:
 		var new_portrait : CombatPortrait = CombatPortrait.instance()
+		var play_animation = false if battler == active_battler else true
 		portraits.add_child(new_portrait)
-		new_portrait.initialize(battler)
-		if battler != active_battler:
-			new_portrait.reduce()
+		new_portrait.initialize(battler, play_animation)
 
 func next(playing_battler : Battler, deactivate_previous : bool = false) -> void:
 	"""Switch to the next battler.

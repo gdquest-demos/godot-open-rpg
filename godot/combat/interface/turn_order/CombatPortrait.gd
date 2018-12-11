@@ -5,8 +5,11 @@ class_name CombatPortrait
 onready var battler : Battler
 onready var animation_player : AnimationPlayer = $AnimationPlayer
 
-func initialize(battler : Battler) -> void:
+func initialize(battler : Battler, play_animation : bool = true) -> void:
 	self.battler = battler
+
+	if play_animation:
+		reduce()
 
 func reduce() -> void:
 	animation_player.play('reduce')

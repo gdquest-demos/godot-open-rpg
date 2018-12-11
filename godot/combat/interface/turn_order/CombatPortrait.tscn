@@ -1,14 +1,14 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://combat/interface/turn_order/CombatPortrait.gd" type="Script" id=1]
-[ext_resource path="res://combat/interface/circular_menu/background-inactive.png" type="Texture" id=2]
+[ext_resource path="res://combat/interface/circular_menu/background-selected.png" type="Texture" id=2]
 [ext_resource path="res://combat/interface/turn_order/circle.png" type="Texture" id=3]
-[ext_resource path="res://combat/interface/circular_menu/background-selected.png" type="Texture" id=4]
+[ext_resource path="res://combat/interface/circular_menu/background-inactive.png" type="Texture" id=4]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 
 resource_name = "disable"
-length = 0.2
+length = 0.4
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -18,15 +18,14 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.501961 ) ]
 }
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=2]
 
-resource_name = "highlight"
 length = 0.4
 loop = false
 step = 0.1
@@ -40,7 +39,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 0.999999 ),
 "update": 1,
-"values": [ ExtResource( 2 ), ExtResource( 4 ) ]
+"values": [ ExtResource( 4 ), ExtResource( 2 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rect_scale")
@@ -67,7 +66,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 
 resource_name = "reduce"
 length = 0.4
@@ -83,7 +82,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 4 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rect_scale")
@@ -110,10 +109,9 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 
-resource_name = "wait"
-length = 0.2
+length = 0.4
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -123,10 +121,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ), ExtResource( 2 ) ]
+"values": [ ExtResource( 2 ), ExtResource( 4 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rect_scale")
@@ -135,13 +133,14 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 0.66, 0.66 ) ]
 }
 
 [node name="CombatPortrait" type="Control"]
+modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -151,7 +150,6 @@ margin_bottom = 144.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 144, 144 )
-rect_scale = Vector2( 0.83, 0.83 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -221,9 +219,9 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/disable = SubResource( 3 )
-anims/highlight = SubResource( 1 )
-anims/reduce = SubResource( 4 )
-anims/wait = SubResource( 2 )
+anims/disable = SubResource( 1 )
+anims/highlight = SubResource( 2 )
+anims/reduce = SubResource( 3 )
+anims/wait = SubResource( 4 )
 blend_times = [  ]
 
