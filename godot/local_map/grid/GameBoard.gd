@@ -8,7 +8,7 @@ class_name GameBoard
 
 enum CELL_TYPES { EMPTY = -1, ACTOR, OBSTACLE, OBJECT }
 
-var pathfinder : Pathfinder = preload("res://local_map/grid/Pathfinder.gd").new()
+var pathfinder : Pathfinder = Pathfinder.new()
 onready var pawns : YSort = $Pawns
 onready var spawning_point = $SpawningPoint
 
