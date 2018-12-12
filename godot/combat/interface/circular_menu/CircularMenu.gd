@@ -14,7 +14,7 @@ export(float, 0.01, 0.1) var animation_offset : float = 0.08
 export(float, 0.1, 0.5) var animation_duration : float = 0.2
 
 enum Layout { CENTERED = 0, CLOCKWISE = 1, COUNTER_CLOCKWISE = -1}
-export(Layout) var layout : int = CENTERED
+export(Layout) var layout : int = Layout.CENTERED
 
 func initialize(actor : Battler) -> void:
 	"""
@@ -93,7 +93,7 @@ func _calculate_position(button, buttons_count : int) -> Vector2:
 	var spacing_angle = spacing * PI
 	var start_offset_angle = offset * PI
 	var button_position : Vector2
-	if layout == CENTERED:
+	if layout == Layout.CENTERED:
 		var centering_offset = spacing_angle / 2.0 * (buttons_count - 1)
 		var angle = spacing_angle * button.get_index() - centering_offset + start_offset_angle
 		button_position = Vector2(0, -radius).rotated(angle)

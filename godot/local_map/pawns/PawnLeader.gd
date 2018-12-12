@@ -5,7 +5,7 @@ class_name PawnLeader
 onready var destination_point : = $DestinationPoint as Sprite
 
 enum INPUT_MODES {TOUCH, KEYBOARD}
-var _input_mode : int = KEYBOARD setget set_input_mode
+var _input_mode : int = INPUT_MODES.KEYBOARD setget set_input_mode
 # Array of contiguous points to move to in game_board coordinates, provided by the game_board's pathfinder
 var _path_current : = PoolVector3Array() 
 
@@ -18,12 +18,12 @@ func _process(delta):
 
 	# Switch to keyboard mode if the player presses a key
 	var key_input_direction = get_key_input_direction()
-	if key_input_direction and _input_mode == TOUCH:
-		self._input_mode = KEYBOARD
-	if _input_mode == KEYBOARD:
+	if key_input_direction and _input_mode == INPUT_MODES.TOUCH:
+		self._input_mode = INPUT_MODES.KEYBOARD
+	if _input_mode == INPUT_MODES.KEYBOARD:
 		direction = key_input_direction
 	# Otherwise calculate the direction to the next cell on the path
-	elif _input_mode == TOUCH and len(_path_current) > 0:
+	elif _input_mode == INPUT_MODES.TOUCH and len(_path_current) > 0:
 		var next_point : = Vector2(_path_current[0].x, _path_current[0].y)
 		direction = next_point - game_board.world_to_map(global_position)
 		_path_current.remove(0)
@@ -49,7 +49,7 @@ func get_key_input_direction():
 func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventScreenTouch:
 		return
-	self._input_mode = TOUCH
+	self._input_mode = INPUT_MODES.TOUCH
 	_path_current = game_board.find_path(global_position, event.position)
 	if _path_current.size() > 0:
 		var pos = _path_current[_path_current.size()-1]
@@ -57,5 +57,5 @@ func _unhandled_input(event: InputEvent) -> void:
 		destination_point.show()
 
 func set_input_mode(value):
-	assert value in [KEYBOARD, TOUCH]
+	assert value in [INPUT_MODES.KEYBOARD, INPUT_MODES.TOUCH]
 	_input_mode = value
