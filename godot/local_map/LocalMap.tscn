@@ -63,7 +63,6 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true
 }
-map_size = Vector2( 16, 16 )
 
 [node name="SpawningPoint" parent="Grid" instance=ExtResource( 5 )]
 position = Vector2( 544, 544 )
