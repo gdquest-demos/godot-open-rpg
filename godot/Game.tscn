@@ -12,28 +12,18 @@ script = ExtResource( 1 )
 
 [node name="Party" parent="." instance=ExtResource( 2 )]
 visible = false
-PARTY_SIZE = null
 
 [node name="LocalMap" parent="." instance=ExtResource( 3 )]
 
 [node name="Overlays" type="CanvasLayer" parent="."]
-layer = 1
-offset = Vector2( 0, 0 )
-rotation = 0.0
-scale = Vector2( 1, 1 )
-transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 4 )]
 margin_left = -3.0
 margin_right = -3.0
+mouse_filter = 2
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
-volume_db = 0.0
-pitch_scale = 1.0
-autoplay = false
-stream_paused = false
-mix_target = 0
 bus = "Music"
 script = ExtResource( 6 )
 
