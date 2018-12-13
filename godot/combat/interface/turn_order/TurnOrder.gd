@@ -5,6 +5,10 @@ onready var last_active_battler : Battler
 onready var portraits = $CombatPortraits
 var CombatPortrait = preload("res://combat/interface/turn_order/CombatPortrait.tscn")
 
+func initialize(combat_arena : CombatArena, turn_queue : TurnQueue):
+	combat_arena.connect('battle_ends', self, '_on_battle_ends')
+	turn_queue.connect('queue_changed', self, '_on_queue_changed')
+
 func rebuild(battlers : Array, active_battler : Battler) -> void:
 	"""Creates the turn order interface.
 	
@@ -36,3 +40,7 @@ func _on_queue_changed(battlers : Array, active_battler) -> void:
 	"""When the turn queue changes, rebuild the turn order interface and highlight the next battler."""
 	rebuild(battlers, active_battler)
 	next(active_battler)
+
+func _on_battle_ends():
+	"""When the battle is starting to end, free the turn order interface."""
+	queue_free()
