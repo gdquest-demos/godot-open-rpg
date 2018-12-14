@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://local_map/LocalMap.gd" type="Script" id=1]
 [ext_resource path="res://local_map/tilesets/grid_lines/grid_lines_tileset.tres" type="TileSet" id=2]
@@ -12,6 +12,16 @@
 [ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=10]
 [ext_resource path="res://local_map/pawns/actions/DialogueAction.tscn" type="PackedScene" id=11]
 [ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=12]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 50, 50 )
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 0, 0 )
 
 [node name="LocalMap" type="Node2D"]
 script = ExtResource( 1 )
@@ -74,12 +84,16 @@ party_scene = ExtResource( 7 )
 
 [node name="EncounterPawn" parent="Grid/Pawns" instance=ExtResource( 8 )]
 position = Vector2( 416, 480 )
+auto_start_interaction = true
 facing = {
 "down": true,
 "left": true,
 "right": true,
 "up": true
 }
+
+[node name="CollisionShape2D" parent="Grid/Pawns/EncounterPawn" index="2"]
+shape = SubResource( 2 )
 
 [node name="StartCombat" parent="Grid/Pawns/EncounterPawn/Actions" index="0" instance=ExtResource( 9 )]
 formation = ExtResource( 10 )
@@ -92,6 +106,9 @@ facing = {
 "right": true,
 "up": true
 }
+
+[node name="CollisionShape2D" parent="Grid/Pawns/DialoguePawn" index="2"]
+shape = SubResource( 1 )
 
 [node name="Dialogue" parent="Grid/Pawns/DialoguePawn/Actions" index="0" instance=ExtResource( 11 )]
 dialogue_file_path = "res://dialogue/data/test_conversation.json"
