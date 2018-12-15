@@ -46,7 +46,6 @@ func take_damage(hit):
 func _on_health_depleted():
 	selectable = false
 	yield(skin.play_death(), "completed")
-	queue_free()
 
 func appear():
 	var offset_direction = 1.0 if party_member else -1.0

@@ -94,9 +94,11 @@ func play_turn():
 	var battler : Battler = get_active_battler()
 	var targets : Array
 	var action : CombatAction
-	if battler.stats.health == 0:
+
+	while battler.stats.health == 0:
 		turn_queue.skip_turn()
-	
+		battler = get_active_battler()
+
 	battler.selected = true
 	var opponents : Array = get_targets()
 	if not opponents:
