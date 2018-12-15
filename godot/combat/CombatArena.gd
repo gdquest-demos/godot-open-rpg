@@ -74,6 +74,8 @@ func ready_field(formation : Formation, party_members : Array):
 		spawn_point.replace_by(platform)
 		turn_queue.add_child(combatant)
 		self.party.append(combatant)
+		# safely attach the interface to the AI in case player input is needed
+		combatant.ai.set("interface", interface)
 
 func battle_end():
 	active = false
@@ -101,15 +103,8 @@ func play_turn():
 		battle_end()
 		return
 
-	if battler.party_member:
-		interface.open_actions_menu(battler)
-		action = yield(interface, "action_selected")
-		interface.select_targets(opponents)
-		targets = yield(interface, "targets_selected")
-	else:
-		# Temp random target selection for the monsters
-		action = get_active_battler().actions.get_child(0)
-		targets = battler.choose_target(opponents)
+	action = yield(battler.ai.choose_action(battler, opponents), "completed")
+	targets = yield(battler.ai.choose_target(battler, action, opponents), "completed")
 	battler.selected = false
 	
 	if targets != []:
