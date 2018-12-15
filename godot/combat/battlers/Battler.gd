@@ -38,7 +38,10 @@ func set_selected(value):
 
 func take_damage(hit):
 	stats.take_damage(hit)
-	skin.play_stagger()
+
+	# prevent playing both stagger and death animation if health <= 0
+	if stats.health > 0:
+		skin.play_stagger()
 
 func _on_health_depleted():
 	selectable = false
