@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New
 
+#### Battle system
+
+- Added support for extensible AI on battlers, allowing the ability to craft custom AI on a per enemy type/character basis.
+
 #### Map
 
 - Leader and followers now reflect the player's party
