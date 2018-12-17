@@ -35,7 +35,7 @@ func next(playing_battler : Battler) -> void:
 
 		elif portrait.battler == last_active_battler:
 			portrait.wait()
-		
+
 	last_active_battler = playing_battler
 
 func _on_queue_changed(battlers : Array, active_battler : Battler) -> void:

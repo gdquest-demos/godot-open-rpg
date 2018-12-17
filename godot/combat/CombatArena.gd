@@ -100,7 +100,7 @@ func play_turn():
 	var targets : Array
 	var action : CombatAction
 
-	while battler.stats.health == 0:
+	while not battler.is_able_to_play():
 		turn_queue.skip_turn()
 		battler = get_active_battler()
 

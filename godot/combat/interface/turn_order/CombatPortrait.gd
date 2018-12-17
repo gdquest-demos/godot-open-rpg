@@ -8,17 +8,18 @@ onready var icon : TextureRect = $Background/Icon
 
 func initialize(battler : Battler, play_animation : bool = true) -> void:
 	battler.stats.connect('health_depleted', self, '_on_health_depleted')
+
 	self.battler = battler
 	icon.texture = battler.turn_order_icon
 
 	# When a portrait is initialized, we must not play the reduce animaiton
 	# if it corresponds to first playing battler. The highlight animation
-	# will be played instead.
+	# will be automatically played instead.
 	if play_animation:
 		reduce()
 
 func reduce() -> void:
-	"""Used as an initialization animation."""
+	"""Used as the initialization animation."""
 	animation_player.play('reduce')
 
 func highlight() -> void:
