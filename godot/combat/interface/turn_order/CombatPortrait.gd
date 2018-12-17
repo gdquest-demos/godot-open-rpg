@@ -4,12 +4,12 @@ class_name CombatPortrait
 
 onready var battler : Battler
 onready var animation_player : AnimationPlayer = $AnimationPlayer
+onready var icon : TextureRect = $Background/Icon
 
 func initialize(battler : Battler, play_animation : bool = true) -> void:
-	#battler.stats.connect('health_depleted', self, '_on_health_depleted')
+	battler.stats.connect('health_depleted', self, '_on_health_depleted')
 	self.battler = battler
-
-	# TODO replace the current icon texture by the real portrait of the battler
+	icon.texture = battler.turn_order_icon
 
 	# When a portrait is initialized, we must not play the reduce animaiton
 	# if it corresponds to first playing battler. The highlight animation

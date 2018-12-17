@@ -24,13 +24,15 @@ func play_turn(action : CombatAction, targets : Array):
 		last_action_canceled = true
 		return
 	last_action_canceled = false
+	_next_battler()
+
+func skip_turn():
+	_next_battler()
+
+func _next_battler():
 	var next_battler_index : int = (active_battler.get_index() + 1) % get_child_count()
 	active_battler = get_child(next_battler_index)
 	emit_signal('queue_changed', get_battlers(), active_battler)
-
-func skip_turn():
-	var next_battler_index : int = (active_battler.get_index() + 1) % get_child_count()
-	active_battler = get_child(next_battler_index)
 
 static func sort_battlers(a : Battler, b : Battler) -> bool:
 	return a.stats.speed > b.stats.speed

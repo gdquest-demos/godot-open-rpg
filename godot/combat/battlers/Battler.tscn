@@ -52,6 +52,7 @@ script = ExtResource( 1 )
 TARGET_OFFSET_DISTANCE = null
 stats = null
 party_member = false
+turn_order_icon = null
 
 [node name="Skin" type="Position2D" parent="."]
 modulate = Color( 1, 1, 1, 0 )
