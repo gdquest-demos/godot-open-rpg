@@ -6,6 +6,7 @@ onready var battler : Battler
 onready var animation_player : AnimationPlayer = $AnimationPlayer
 
 func initialize(battler : Battler, play_animation : bool = true) -> void:
+	#battler.stats.connect('health_depleted', self, '_on_health_depleted')
 	self.battler = battler
 
 	# TODO replace the current icon texture by the real portrait of the battler
@@ -39,3 +40,6 @@ func disable() -> void:
 	Used when the battler won't be playing anymore (dead, petrified, etc.).
 	"""
 	animation_player.play('disable')
+
+func _on_health_depleted():
+	disable()

@@ -3,7 +3,7 @@
 [ext_resource path="res://combat/interface/turn_order/CombatPortrait.gd" type="Script" id=1]
 [ext_resource path="res://combat/interface/circular_menu/background-inactive.png" type="Texture" id=2]
 [ext_resource path="res://combat/interface/turn_order/circle.png" type="Texture" id=3]
-[ext_resource path="res://assets/sprites/battlers/godette_combatportrait.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/battlers/porcupine_portrait_256.png" type="Texture" id=4]
 [ext_resource path="res://combat/interface/circular_menu/background-selected.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=1]
@@ -122,7 +122,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ ExtResource( 5 ), ExtResource( 2 ) ]

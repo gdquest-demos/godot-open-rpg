@@ -24,7 +24,7 @@ func rebuild(battlers : Array, active_battler : Battler) -> void:
 		portraits.add_child(new_portrait)
 		new_portrait.initialize(battler, play_animation)
 
-func next(playing_battler : Battler, deactivate_previous : bool = false) -> void:
+func next(playing_battler : Battler, deactivate_previous : bool = true) -> void:
 	"""Switch to the next battler.
 	
 	Deactivate the previous portrait and highlight the next one.
@@ -38,7 +38,8 @@ func next(playing_battler : Battler, deactivate_previous : bool = false) -> void
 
 func _on_queue_changed(battlers : Array, active_battler) -> void:
 	"""When the turn queue changes, rebuild the turn order interface and highlight the next battler."""
-	rebuild(battlers, active_battler)
+	if battlers.size() != portraits.get_child_count():
+		rebuild(battlers, active_battler)
 	next(active_battler)
 
 func _on_battle_ends():
