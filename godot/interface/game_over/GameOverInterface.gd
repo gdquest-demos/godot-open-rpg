@@ -51,7 +51,6 @@ func display(reason) -> void:
 	match reason:
 		Reason.PARTY_DEFEATED:
 			message_label.text = MESSAGES['party_defeated']
-	selection_arrow.grab_focus()
 	panel.show()
 
 func hide() -> void:
