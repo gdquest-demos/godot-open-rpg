@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://combat/CombatAction.gd"
 }, {
+"base": "Node2D",
+"class": "CombatArena",
+"language": "GDScript",
+"path": "res://combat/CombatArena.gd"
+}, {
 "base": "Resource",
 "class": "ConsumableItem",
 "language": "GDScript",
@@ -72,7 +77,7 @@ _global_script_classes=[ {
 "base": "CanvasLayer",
 "class": "GameOverInterface",
 "language": "GDScript",
-"path": "res://combat/interface/game_over/GameOverInterface.gd"
+"path": "res://interface/game_over/GameOverInterface.gd"
 }, {
 "base": "Resource",
 "class": "GrowthStats",
@@ -190,6 +195,7 @@ _global_script_class_icons={
 "BattlerTemplate": "",
 "CharacterStats": "",
 "CombatAction": "",
+"CombatArena": "",
 "ConsumableItem": "",
 "DialogueAction": "",
 "DialogueBox": "",

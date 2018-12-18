@@ -1,11 +1,10 @@
 extends Node2D
-
+class_name CombatArena
 const BattlerNode = preload("res://combat/battlers/Battler.tscn")
 
 onready var turn_queue : TurnQueue = $TurnQueue
 onready var interface = $CombatInterface
 onready var rewards = $Rewards
-onready var game_over_interface = $GameOverInterface as GameOverInterface
 
 var active : bool = false
 var party : Array = []
@@ -14,10 +13,8 @@ var initial_formation : Formation
 # send when battle is completed, contains status updates for the party
 # so that we may persist the data
 signal battle_ended(party)
-signal combat_restarted(formation)
 signal victory
 signal gameover
-
 
 func initialize(formation : Formation, party : Array):
 	initial_formation = formation
@@ -85,21 +82,12 @@ func battle_end():
 	var active_battler = get_active_battler()
 	active_battler.selected = false
 	var player_won = active_battler.party_member
-	print("Valid: " + str(is_instance_valid(active_battler.party_member)))
 	if player_won:
 		emit_signal("victory")
 		yield(rewards.on_battle_completed(), "completed")
 		emit_signal("battle_ended", self.party)
 	else:
-		var remaining_members = []
-		for member in self.party:
-			if is_instance_valid(member):
-				remaining_members.append(member)
-		if remaining_members.size() == 0:
-			game_over_interface.display()
-		else:
-			emit_signal("battle_ended", remaining_members)
-			emit_signal("gameover")
+		emit_signal("gameover")
 
 func play_turn():
 	var battler : Battler = get_active_battler()
@@ -138,6 +126,3 @@ func get_targets() -> Array:
 		return turn_queue.get_monsters()
 	else:
 		return turn_queue.get_party()
-
-func _on_TryAgain_pressed():
-	emit_signal("combat_restarted", initial_formation)
