@@ -19,6 +19,7 @@ var selectable : bool = false
 var display_name : String
 
 export var party_member = false
+export var turn_order_icon : Texture
 
 func _ready() -> void:
 	var direction : Vector2 = Vector2(-1.0, 0.0) if party_member else Vector2(1.0, 0.0)
@@ -31,6 +32,14 @@ func initialize():
 	skin.initialize()
 	actions.initialize(skills.get_children())
 	stats.connect("health_depleted", self, "_on_health_depleted")
+
+func is_able_to_play():
+	"""Return true if the battler is able to play, false instead.
+
+	Currently only the battler's health is checked, but in the future we may
+	want to also check the battler status (frozen, petrified, etc.).
+	"""
+	return true if stats.health > 0 else false
 
 func set_selected(value):
 	selected = value

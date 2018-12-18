@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name CombatArena
+
 const BattlerNode = preload("res://combat/battlers/Battler.tscn")
 
 onready var turn_queue : TurnQueue = $TurnQueue
@@ -9,7 +11,9 @@ onready var rewards = $Rewards
 var active : bool = false
 var party : Array = []
 
-# send when battle is completed, contains status updates for the party
+# sent when the battler is starting to end (before battle_ended)
+signal battle_ends
+# sent when battle is completed, contains status updates for the party
 # so that we may persist the data
 signal battle_ended(party)
 signal victory
@@ -23,7 +27,7 @@ func initialize(formation : Formation, party : Array):
 	for battler in battlers:
 		battler.initialize()
 		
-	interface.initialize(battlers)
+	interface.initialize(self, turn_queue, battlers)
 	rewards.initialize(battlers)
 	turn_queue.initialize()
 	
@@ -78,6 +82,7 @@ func ready_field(formation : Formation, party_members : Array):
 		combatant.ai.set("interface", interface)
 
 func battle_end():
+	emit_signal("battle_ends")
 	active = false
 	var active_battler = get_active_battler()
 	active_battler.selected = false
@@ -95,7 +100,7 @@ func play_turn():
 	var targets : Array
 	var action : CombatAction
 
-	while battler.stats.health == 0:
+	while not battler.is_able_to_play():
 		turn_queue.skip_turn()
 		battler = get_active_battler()
 
