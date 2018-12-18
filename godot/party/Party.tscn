@@ -1,40 +1,52 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://party/Party.gd" type="Script" id=1]
 [ext_resource path="res://party/PartyMember.tscn" type="PackedScene" id=2]
 [ext_resource path="res://combat/battlers/jobs/GodetteJob.tres" type="Resource" id=3]
-[ext_resource path="res://animation/GodetteAnim.tscn" type="PackedScene" id=4]
-[ext_resource path="res://combat/battlers/skills/LearnedSkill.tscn" type="PackedScene" id=5]
-[ext_resource path="res://combat/battlers/skills/Lollislash.tres" type="Resource" id=6]
-[ext_resource path="res://combat/battlers/jobs/RobiJob.tres" type="Resource" id=7]
-[ext_resource path="res://animation/RobiAnim.tscn" type="PackedScene" id=8]
-[ext_resource path="res://combat/battlers/skills/Slash.tres" type="Resource" id=9]
+[ext_resource path="res://assets/sprites/battlers/godette_portrait_256.png" type="Texture" id=4]
+[ext_resource path="res://animation/GodetteAnim.tscn" type="PackedScene" id=5]
+[ext_resource path="res://combat/battlers/skills/LearnedSkill.tscn" type="PackedScene" id=6]
+[ext_resource path="res://combat/battlers/skills/Lollislash.tres" type="Resource" id=7]
+[ext_resource path="res://combat/battlers/ai/PlayerInput.gd" type="Script" id=8]
+[ext_resource path="res://combat/battlers/jobs/RobiJob.tres" type="Resource" id=9]
+[ext_resource path="res://assets/sprites/battlers/robi_portrait_256.png" type="Texture" id=10]
+[ext_resource path="res://animation/RobiAnim.tscn" type="PackedScene" id=11]
+[ext_resource path="res://combat/battlers/skills/Slash.tres" type="Resource" id=12]
 
 [node name="Party" type="Node2D"]
 script = ExtResource( 1 )
+PARTY_SIZE = null
 
 [node name="Godette" parent="." instance=ExtResource( 2 )]
 
 [node name="Battler" parent="Godette" index="0"]
 stats = ExtResource( 3 )
 party_member = true
+turn_order_icon = ExtResource( 4 )
 
-[node name="GodetteAnim" parent="Godette/Battler/Skin" index="2" instance=ExtResource( 4 )]
+[node name="GodetteAnim" parent="Godette/Battler/Skin" index="2" instance=ExtResource( 5 )]
 
-[node name="LolliSlash" parent="Godette/Battler/Skills" index="0" instance=ExtResource( 5 )]
-skill = ExtResource( 6 )
+[node name="LolliSlash" parent="Godette/Battler/Skills" index="0" instance=ExtResource( 6 )]
+skill = ExtResource( 7 )
+
+[node name="AI" parent="Godette/Battler" index="6"]
+script = ExtResource( 8 )
 
 [node name="Robi" parent="." instance=ExtResource( 2 )]
 
 [node name="Battler" parent="Robi" index="0"]
-stats = ExtResource( 7 )
+stats = ExtResource( 9 )
 party_member = true
+turn_order_icon = ExtResource( 10 )
 
-[node name="RobiAnim" parent="Robi/Battler/Skin" index="2" instance=ExtResource( 8 )]
+[node name="RobiAnim" parent="Robi/Battler/Skin" index="2" instance=ExtResource( 11 )]
 
-[node name="Slash" parent="Robi/Battler/Skills" index="0" instance=ExtResource( 5 )]
-skill = ExtResource( 9 )
+[node name="Slash" parent="Robi/Battler/Skills" index="0" instance=ExtResource( 6 )]
+skill = ExtResource( 12 )
 level = 0
+
+[node name="AI" parent="Robi/Battler" index="6"]
+script = ExtResource( 8 )
 
 
 [editable path="Godette"]

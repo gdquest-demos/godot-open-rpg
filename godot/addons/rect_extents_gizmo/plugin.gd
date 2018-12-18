@@ -1,7 +1,7 @@
 tool
 extends EditorPlugin
 
-enum ANCHORS {
+enum Anchors {
 	TOP_LEFT,
 	TOP_RIGHT,
 	BOTTOM_LEFT,
@@ -50,10 +50,10 @@ func forward_canvas_draw_over_viewport(overlay: Control) -> void:
 	var offset = rect_extents.offset
 	var half_size : Vector2 = rect_extents.size / 2.0
 	var edit_anchors : = {
-		TOP_LEFT: pos - half_size + offset,
-		TOP_RIGHT: pos + Vector2(half_size.x, -1.0 * half_size.y) + offset,
-		BOTTOM_LEFT: pos + Vector2(-1.0 * half_size.x, half_size.y) + offset,
-		BOTTOM_RIGHT: pos + half_size + offset,
+		Anchors.TOP_LEFT: pos - half_size + offset,
+		Anchors.TOP_RIGHT: pos + Vector2(half_size.x, -1.0 * half_size.y) + offset,
+		Anchors.BOTTOM_LEFT: pos + Vector2(-1.0 * half_size.x, half_size.y) + offset,
+		Anchors.BOTTOM_RIGHT: pos + half_size + offset,
 	}
 
 	var transform_viewport : = rect_extents.get_viewport_transform()
@@ -82,11 +82,8 @@ func drag_to(event_position: Vector2) -> void:
 	var viewport_position: Vector2 = viewport_transform_inv.xform(event_position)
 	var transform_inv := rect_extents.get_global_transform().affine_inverse()
 	var target_position : Vector2 = transform_inv.xform(viewport_position.round())
-	
+	# Update the rectangle's size. Only resizes uniformly around the center for now
 	var target_size = (target_position - rect_extents.offset).abs() * 2.0
-#	print('Position: %s' % target_position)
-#	print('Size: %s' % target_size)
-	# TODO: update rect extents
 	rect_extents.size = target_size
 
 func forward_canvas_gui_input(event: InputEvent) -> bool:

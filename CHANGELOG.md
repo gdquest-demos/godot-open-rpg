@@ -9,29 +9,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New
 
+#### Battle system
+
+- Added support for extensible AI on battlers, allowing the ability to craft custom AI on a per enemy type/character basis.
+- Mouse and touch controls
+
 #### Map
 
 - Leader and followers now reflect the player's party
+- Touch controls with pathfinding
+- NPCs now have two interaction modes and look directions: they can be triggered by walking in an area around them or by pressing space in front of them
 
 #### Dialogues
 
 - Character database: you can now reference a character and an expression by name when writing dialogues
 - Portrait: the dialogue box displays full-body portraits of the characters
+- The player's spawning point now displays as a rectangle
+
+#### Interface
+
+- CircularMenu: open and close animations
 
 #### Core
 
 - Skills can now be unlocked as characters gain levels. Change the `level` property of the `Skill` to set the unlock level
+- Pathfinder class to find the path between two points with AStar
+
+#### Tools
+
+- RectExtents: a node to represent an animated character's bounding box/touch area
+- Manipulator to edit RectExtents (BattlerAnim bounding boxes) directly on the 2d canvas
 
 ### Changed
 
+- Updated to Godot 3.1 alpha 3
 - Nicholas simplified and restructured the Battlers and Party members' code to make it more robust and easier to understand. Now the `Battler` delegates more calculations and logic to `CombatAction`
 - Party Members now have a battler attached to them
+- Improved the Grid's code
 
 ### Fixes
 
 - A skill that misses will now still reduce the battler's mana
 - The link to the Code of Conduct in the readme is now correct
 - Fixed a bug with life bars where if your max hp is higher than 100, the bar wouldn't be properly filled all the way
+- Fixed death animation not playing when a battler dies
+- Fixed touch input sometimes passing through buttons
 
 ## v0.2.0: Better Encounters ⚔🌟 - 2018-12-01
 

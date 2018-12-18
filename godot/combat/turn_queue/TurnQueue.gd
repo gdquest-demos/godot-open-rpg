@@ -2,6 +2,8 @@ extends YSort
 
 class_name TurnQueue
 
+signal queue_changed
+
 onready var active_battler : Battler
 var last_action_canceled : bool = false
 
@@ -11,6 +13,7 @@ func initialize():
 	for battler in battlers:
 		battler.raise()
 	active_battler = get_child(0)
+	emit_signal('queue_changed', get_battlers(), active_battler)
 
 func play_turn(action : CombatAction, targets : Array):
 	if not last_action_canceled:
@@ -21,12 +24,15 @@ func play_turn(action : CombatAction, targets : Array):
 		last_action_canceled = true
 		return
 	last_action_canceled = false
-	var next_battler_index : int = (active_battler.get_index() + 1) % get_child_count()
-	active_battler = get_child(next_battler_index)
+	_next_battler()
 
 func skip_turn():
+	_next_battler()
+
+func _next_battler():
 	var next_battler_index : int = (active_battler.get_index() + 1) % get_child_count()
 	active_battler = get_child(next_battler_index)
+	emit_signal('queue_changed', get_battlers(), active_battler)
 
 static func sort_battlers(a : Battler, b : Battler) -> bool:
 	return a.stats.speed > b.stats.speed

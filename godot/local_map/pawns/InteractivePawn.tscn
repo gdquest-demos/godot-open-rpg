@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://local_map/pawns/InteractivePawn.gd" type="Script" id=1]
 [ext_resource path="res://local_map/pawns/sprites/star.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/dialogue_balloon.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -21,6 +22,7 @@ __meta__ = {
 "_edit_group_": true
 }
 vanish_on_interaction = false
+auto_start_interaction = false
 sight_distance = 50
 facing = {
 "down": true,
@@ -32,11 +34,15 @@ facing = {
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
+[node name="DialogueBalloon" type="Sprite" parent="."]
+visible = false
+position = Vector2( 30, -30 )
+texture = ExtResource( 3 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="Raycasts" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="Up" type="RayCast2D" parent="Raycasts"]
 enabled = false

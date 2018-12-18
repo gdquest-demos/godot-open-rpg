@@ -23,6 +23,8 @@ func set_value(new_value) -> void:
 	value = new_value
 	bar.value = new_value
 	label.display(new_value, max_value)
+	if HIDE_ON_DEPLETED and value == 0:
+		hide()
 
 func initialize(battler : Battler) -> void:
 	_connect_value_signals(battler)
