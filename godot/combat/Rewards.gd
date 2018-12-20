@@ -64,7 +64,7 @@ func on_battle_completed():
 	$Panel/Label.text = "EXP Earned %d" % experience_earned
 	yield(get_tree().create_timer(2.0), "timeout")
 	for battler in leveled_up:
-		$Panel/Label.text = "%s Leveled Up to %d" % [battler.name, battler.stats.level + 1]
+		$Panel/Label.text = "%s Leveled Up to %d" % [battler.name, battler.stats.level]
 		yield(get_tree().create_timer(2.0), "timeout")
 	for drop in drops:
 		$Panel/Label.text = "Found %s %s(s)" % [drop.amount, drop.item.name]

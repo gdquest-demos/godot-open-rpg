@@ -19,7 +19,7 @@ func get_children():
 	var learned = []
 	for i in range(len(all_skills)):
 		var skill = all_skills[i] as LearnedSkill
-		if skill.level < stats.level:
+		if skill.level <= stats.level:
 			learned.append(skill.skill)
 	return learned
 "
