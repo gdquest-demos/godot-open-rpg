@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://local_map/tilesets/grid/actor.png" type="Texture" id=1]
-[ext_resource path="res://local_map/tilesets/grid/obstacle.png" type="Texture" id=2]
-[ext_resource path="res://local_map/tilesets/grid/object.png" type="Texture" id=3]
+[ext_resource path="res://assets/tilesets/grid/actor.png" type="Texture" id=1]
+[ext_resource path="res://assets/tilesets/grid/obstacle.png" type="Texture" id=2]
+[ext_resource path="res://assets/tilesets/grid/object.png" type="Texture" id=3]
+
 
 [node name="Node2D" type="Node2D"]
 

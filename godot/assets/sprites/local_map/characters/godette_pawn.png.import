@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/obstacle.png-e19c668176beb44e79a7a9c100d3da76.stex"
+path="res://.import/godette_pawn.png-ca9dcb9e07516d0413d95d19c121b9ff.stex"
 
 [deps]
 
-source_file="res://local_map/tilesets/grid/obstacle.png"
-dest_files=[ "res://.import/obstacle.png-e19c668176beb44e79a7a9c100d3da76.stex" ]
+source_file="res://assets/sprites/local_map/characters/godette_pawn.png"
+dest_files=[ "res://.import/godette_pawn.png-ca9dcb9e07516d0413d95d19c121b9ff.stex" ]
 
 [params]
 

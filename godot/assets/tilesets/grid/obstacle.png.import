@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/object.png-e9552d959aaa848e14fb8919cccd5d16.stex"
+path="res://.import/obstacle.png-e9c741b773593222c62b62fed314b24e.stex"
 
 [deps]
 
-source_file="res://local_map/tilesets/grid/object.png"
-dest_files=[ "res://.import/object.png-e9552d959aaa848e14fb8919cccd5d16.stex" ]
+source_file="res://assets/tilesets/grid/obstacle.png"
+dest_files=[ "res://.import/obstacle.png-e9c741b773593222c62b62fed314b24e.stex" ]
 
 [params]
 

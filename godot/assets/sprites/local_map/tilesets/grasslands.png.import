@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grid_lines.png-ced7b22bfeb6cb1059b4b2ba6dbb03c3.stex"
+path="res://.import/grasslands.png-6ed6fe0e626d8cd0733b24faccbd758a.stex"
 
 [deps]
 
-source_file="res://local_map/tilesets/grid_lines/grid_lines.png"
-dest_files=[ "res://.import/grid_lines.png-ced7b22bfeb6cb1059b4b2ba6dbb03c3.stex" ]
+source_file="res://assets/sprites/local_map/tilesets/grasslands.png"
+dest_files=[ "res://.import/grasslands.png-6ed6fe0e626d8cd0733b24faccbd758a.stex" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/actor.png-0364e6d40438e0872c4cf20298820ccd.stex"
+path="res://.import/actor.png-70942d2f9354b2c7b56d377f6674eda8.stex"
 
 [deps]
 
-source_file="res://local_map/tilesets/grid/actor.png"
-dest_files=[ "res://.import/actor.png-0364e6d40438e0872c4cf20298820ccd.stex" ]
+source_file="res://assets/tilesets/grid/actor.png"
+dest_files=[ "res://.import/actor.png-70942d2f9354b2c7b56d377f6674eda8.stex" ]
 
 [params]
 
