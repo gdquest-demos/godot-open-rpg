@@ -10,6 +10,7 @@ onready var rewards = $Rewards
 
 var active : bool = false
 var party : Array = []
+var initial_formation : Formation
 
 # sent when the battler is starting to end (before battle_ended)
 signal battle_ends
@@ -20,6 +21,7 @@ signal victory
 signal gameover
 
 func initialize(formation : Formation, party : Array):
+	initial_formation = formation
 	ready_field(formation, party)
 		
 	# reparent the enemy battlers into the turn queue
@@ -92,7 +94,6 @@ func battle_end():
 		yield(rewards.on_battle_completed(), "completed")
 		emit_signal("battle_ended", self.party)
 	else:
-		emit_signal("battle_ended", self.party)
 		emit_signal("gameover")
 
 func play_turn():

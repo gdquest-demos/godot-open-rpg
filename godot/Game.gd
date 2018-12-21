@@ -8,8 +8,10 @@ onready var transition = $Overlays/TransitionColor
 onready var local_map = $LocalMap
 onready var party = $Party as Party
 onready var music_player = $MusicPlayer
+onready var game_over_interface : = $GameOverInterface
 
 var transitioning = false
+var combat_arena : CombatArena
 
 func _ready():
 	local_map.visible = true
@@ -27,9 +29,10 @@ func enter_battle(formation: Formation):
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
 	remove_child(local_map)
-	var combat_arena = combat_arena_scene.instance()
+	combat_arena = combat_arena_scene.instance()
 	add_child(combat_arena)
 	combat_arena.connect("victory", self, "_on_CombatArena_player_victory")
+	combat_arena.connect("gameover", self, "_on_combat_gameover")
 	combat_arena.initialize(formation, party.get_active_members())
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
@@ -52,3 +55,16 @@ func enter_battle(formation: Formation):
 
 func _on_CombatArena_player_victory():
 	music_player.play_victory_fanfare()
+
+func _on_combat_gameover() -> void:
+	transitioning = true
+	yield(transition.fade_to_color(), "completed")
+	game_over_interface.display(GameOverInterface.Reason.PARTY_DEFEATED)
+	yield(transition.fade_from_color(), "completed")
+	transitioning = false
+
+func _on_GameOverInterface_restart_requested():
+	game_over_interface.hide()
+	var formation = combat_arena.initial_formation
+	combat_arena.queue_free()
+	enter_battle(formation)

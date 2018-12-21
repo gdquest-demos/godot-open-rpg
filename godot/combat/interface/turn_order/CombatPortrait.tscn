@@ -10,8 +10,6 @@
 
 resource_name = "disable"
 length = 0.2
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -28,8 +26,6 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=2]
 
 length = 0.3
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Border:texture")
 tracks/0/interp = 1
@@ -54,25 +50,11 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 0.66, 0.66 ), Vector2( 1, 1 ) ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
 
 [sub_resource type="Animation" id=3]
 
 resource_name = "reduce"
 length = 0.4
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Border:texture")
 tracks/0/interp = 1
@@ -97,24 +79,10 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 0.66, 0.66 ) ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
 
 [sub_resource type="Animation" id=4]
 
 length = 0.3
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Border:texture")
 tracks/0/interp = 1
@@ -142,10 +110,6 @@ tracks/1/keys = {
 
 [node name="CombatPortrait" type="Control"]
 modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = -14.0
 margin_top = -14.0
 margin_right = 104.0
@@ -154,80 +118,38 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 124, 124 )
 rect_scale = Vector2( 0.66, 0.66 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 script = ExtResource( 1 )
 
 [node name="Border" type="TextureRect" parent="."]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = -72.0
 margin_top = -72.0
 margin_right = 72.0
 margin_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 2 )
-stretch_mode = 0
 
 [node name="Background" type="TextureRect" parent="."]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = -64.0
 margin_top = -64.0
 margin_right = 64.0
 margin_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 3 )
-stretch_mode = 0
 
 [node name="Icon" type="TextureRect" parent="Background"]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 128.0
 margin_bottom = 128.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 4 )
 expand = true
 stretch_mode = 5
 
+[node name="Tween" type="Tween" parent="."]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
 anims/disable = SubResource( 1 )
 anims/highlight = SubResource( 2 )
 anims/reduce = SubResource( 3 )
 anims/wait = SubResource( 4 )
-blend_times = [  ]
 
