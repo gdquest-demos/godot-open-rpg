@@ -6,7 +6,7 @@ signal combat_finished()
 signal dialogue_finished()
 
 onready var dialogue_box = $MapInterface/DialogueBox
-onready var grid = $Grid
+onready var grid = $GameBoard
 
 func _ready() -> void:
 	assert dialogue_box
