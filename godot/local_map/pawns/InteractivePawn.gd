@@ -58,7 +58,10 @@ func _on_body_exited(body : PhysicsBody2D) -> void:
 
 func start_interaction() -> void:
 	dialogue_balloon.hide()
-	for action in $Actions.get_children():
+	var actions = $Actions.get_children()
+	# An interactive pawn should have some interaction
+	assert actions != []
+	for action in actions:
 		yield(action.interact(), "completed")
 	if vanish_on_interaction:
 		queue_free()
