@@ -47,10 +47,14 @@ func get_key_input_direction():
 	)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event is InputEventScreenTouch:
+	# Using touch emulation from mouse and vice-versa so we can code
+	# with mouse events
+	if not event is InputEventMouseButton:
 		return
 	self._input_mode = INPUT_MODES.TOUCH
-	_path_current = game_board.find_path(global_position, event.position)
+	# InputEventMouse.global_position doesn't seem to work with the camera
+	# so instead I'm using CanvasItem.get_global_mouse_position()
+	_path_current = game_board.find_path(global_position, get_global_mouse_position())
 	if _path_current.size() > 0:
 		var pos = _path_current[_path_current.size()-1]
 		destination_point.position = game_board.map_to_world(Vector2(pos.x, pos.y))
