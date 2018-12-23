@@ -313,6 +313,12 @@ tap={
 
 pointing/emulate_touch_from_mouse=true
 
+[layer_names]
+
+2d_physics/layer_1="default"
+2d_physics/layer_2="pawn_leader"
+2d_physics/layer_3="pawn_interactive"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

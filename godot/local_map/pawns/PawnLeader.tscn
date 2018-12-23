@@ -71,6 +71,8 @@ extents = Vector2( 30, 30 )
 [node name="PawnLeader" type="KinematicBody2D"]
 position = Vector2( 32, 32 )
 z_index = 1
+collision_layer = 2
+collision_mask = 4
 script = ExtResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
