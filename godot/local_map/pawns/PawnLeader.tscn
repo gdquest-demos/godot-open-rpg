@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://local_map/pawns/PawnLeader.gd" type="Script" id=1]
-[ext_resource path="res://assets/sprites/local_map/characters/godette_pawn.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/local_map/characters/robi_pawn.png" type="Texture" id=2]
 [ext_resource path="res://local_map/DestinationPoint.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Animation" id=1]
@@ -69,7 +69,6 @@ tracks/2/keys = {
 extents = Vector2( 30, 30 )
 
 [node name="PawnLeader" type="KinematicBody2D"]
-position = Vector2( 32, 32 )
 z_index = 1
 collision_layer = 2
 collision_mask = 4
@@ -84,7 +83,7 @@ anims/walk = SubResource( 2 )
 [node name="Pivot" type="Position2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Pivot"]
-position = Vector2( -3.8147e-006, -3 )
+position = Vector2( -3.8147e-006, 20 )
 scale = Vector2( 0.33389, 0.33389 )
 texture = ExtResource( 2 )
 centered = false
@@ -97,5 +96,6 @@ shape = SubResource( 3 )
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( -1, -1 )
 current = true
 

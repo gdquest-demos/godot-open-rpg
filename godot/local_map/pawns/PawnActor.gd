@@ -5,6 +5,10 @@ class_name PawnActor
 var game_board
 signal moved(last_position, current_position)
 
+onready var pivot = $Pivot
+onready var anim_player = $AnimationPlayer
+onready var tween = $Tween
+
 func _ready():
 	update_look_direction(Vector2(1, 0))
 
@@ -21,16 +25,17 @@ func move_to(target_position):
 	# Move the node to the target cell instantly,
 	# and animate the sprite moving from the start to the target cell
 	var move_direction = (target_position - position).normalized()
-	$Tween.interpolate_property($Pivot, "position", - move_direction * 32, Vector2(), $AnimationPlayer.current_animation_length, Tween.TRANS_LINEAR, Tween.EASE_IN)
-	$AnimationPlayer.play("walk")
 	position = target_position
+	pivot.position = - move_direction * 40.0
+	tween.interpolate_property($Pivot, "position", pivot.position, Vector2(), anim_player.current_animation_length, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	anim_player.play("walk")
 
-	$Tween.start()
+	tween.start()
 	yield($AnimationPlayer, "animation_finished")
 	set_process(true)
 	
 func bump():
 	set_process(false)
-	$AnimationPlayer.play("bump")
-	yield($AnimationPlayer, "animation_finished")
+	anim_player.play("bump")
+	yield(anim_player, "animation_finished")
 	set_process(true)
