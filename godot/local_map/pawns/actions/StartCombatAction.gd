@@ -4,6 +4,6 @@ class_name StartCombatAction
 export var formation : PackedScene
 
 func interact() -> void:
+	get_tree().paused = false
 	local_map.start_encounter(formation)
-	yield(local_map, "combat_finished")
 	emit_signal("finished")

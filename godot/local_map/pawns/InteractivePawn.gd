@@ -57,11 +57,21 @@ func _on_body_exited(body : PhysicsBody2D) -> void:
 	dialogue_balloon.hide()
 
 func start_interaction() -> void:
+	"""
+	Pauses the game and play each action under the $Actions node
+	Actions that transition to another scene (e.g. StartCombatAction) may unpause
+	the game themselves
+	InteractivePawn processes even when the game is paused, but not
+	PawnLeader, the player-controlled pawn
+	"""
 	dialogue_balloon.hide()
+	get_tree().paused = true
 	var actions = $Actions.get_children()
 	# An interactive pawn should have some interaction
 	assert actions != []
 	for action in actions:
-		yield(action.interact(), "completed")
+		action.interact()
+		yield(action, "finished")
 	if vanish_on_interaction:
 		queue_free()
+	get_tree().paused = false

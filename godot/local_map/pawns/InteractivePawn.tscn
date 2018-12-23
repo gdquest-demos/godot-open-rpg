@@ -6,24 +6,14 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 
-custom_solver_bias = 0.0
 extents = Vector2( 30, 30 )
 
 [node name="InteractivePawn" type="Area2D"]
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
+pause_mode = 2
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-vanish_on_interaction = false
-auto_start_interaction = false
-sight_distance = 50
 facing = {
 "down": true,
 "left": true,
@@ -45,36 +35,16 @@ shape = SubResource( 1 )
 [node name="Raycasts" type="Node2D" parent="."]
 
 [node name="Up" type="RayCast2D" parent="Raycasts"]
-enabled = false
-exclude_parent = true
 cast_to = Vector2( 0, -1 )
-collision_mask = 1
-collide_with_areas = false
-collide_with_bodies = true
 
 [node name="Down" type="RayCast2D" parent="Raycasts"]
-enabled = false
-exclude_parent = true
 cast_to = Vector2( 0, 1 )
-collision_mask = 1
-collide_with_areas = false
-collide_with_bodies = true
 
 [node name="Left" type="RayCast2D" parent="Raycasts"]
-enabled = false
-exclude_parent = true
 cast_to = Vector2( -1, 0 )
-collision_mask = 1
-collide_with_areas = false
-collide_with_bodies = true
 
 [node name="Right" type="RayCast2D" parent="Raycasts"]
-enabled = false
-exclude_parent = true
 cast_to = Vector2( 1, 0 )
-collision_mask = 1
-collide_with_areas = false
-collide_with_bodies = true
 
 [node name="Actions" type="Node" parent="."]
 
