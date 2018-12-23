@@ -14,16 +14,24 @@ export var facing = {
 	"down": true
 }
 
+var active_raycasts := []
+
 func _ready() -> void:
-	connect('body_entered', self, '_on_body_entered')
-	connect('body_exited', self, '_on_body_exited')
-	
-	var enable_process = 0
+	# Initializes raycast nodes, deactivates the area if using raycasts
+	# for player detection
+	var use_area = true
 	for raycast in raycasts.get_children():
-		raycast.enabled = facing[raycast.name.to_lower()]
-		raycast.cast_to *= sight_distance
-		enable_process += int(raycast.enabled)
-	set_physics_process(enable_process > 0)
+		if not facing[raycast.name.to_lower()]:
+			continue
+		raycast.enabled = true
+		raycast.cast_to = raycast.cast_to.normalized() * sight_distance
+		active_raycasts.append(raycast)
+		use_area = false
+	
+	if use_area:
+		connect('body_entered', self, '_on_body_entered')
+		connect('body_exited', self, '_on_body_exited')
+		set_physics_process(false)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and dialogue_balloon.visible:
@@ -31,16 +39,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_tree().set_input_as_handled()
 
 func _physics_process(delta : float) -> void:
-	for raycast in raycasts.get_children():
-		if not raycast.is_colliding():
-			return
-		if AUTO_START_INTERACTION:
-			start_interaction()
-		elif dialogue_balloon.visible:
-			return
-		dialogue_balloon.show()
-	if dialogue_balloon.visible:
-		dialogue_balloon.hide()
+	# Only runs if using raycasts/specific directions for player detection
+	if not dialogue_balloon.visible:
+		for raycast in active_raycasts:
+			if not raycast.is_colliding():
+				continue
+			if AUTO_START_INTERACTION:
+				start_interaction()
+			dialogue_balloon.show()
+	else:
+		var inactive_count : int = 0
+		for raycast in active_raycasts:
+			if not raycast.is_colliding():
+				inactive_count += 1
+		if inactive_count == active_raycasts.size():
+			dialogue_balloon.visible = false
 
 func _on_body_entered(body : PhysicsBody2D) -> void:
 	if AUTO_START_INTERACTION:

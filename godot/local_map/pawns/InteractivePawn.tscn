@@ -37,19 +37,18 @@ shape = SubResource( 1 )
 [node name="Raycasts" type="Node2D" parent="."]
 
 [node name="Up" type="RayCast2D" parent="Raycasts"]
-cast_to = Vector2( 0, -1 )
+cast_to = Vector2( 0, -50 )
 collision_mask = 2
 
 [node name="Down" type="RayCast2D" parent="Raycasts"]
-cast_to = Vector2( 0, 1 )
 collision_mask = 2
 
 [node name="Left" type="RayCast2D" parent="Raycasts"]
-cast_to = Vector2( -1, 0 )
+cast_to = Vector2( -50, 0 )
 collision_mask = 2
 
 [node name="Right" type="RayCast2D" parent="Raycasts"]
-cast_to = Vector2( 1, 0 )
+cast_to = Vector2( 50, 0 )
 collision_mask = 2
 
 [node name="Actions" type="Node" parent="."]

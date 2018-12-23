@@ -40,7 +40,7 @@ tile_data = PoolIntArray( -65536, 1, 0, -65535, 1, 0, -65534, 1, 0, -65533, 1, 0
 script = ExtResource( 4 )
 
 [node name="SpawningPoint" parent="GameBoard" instance=ExtResource( 5 )]
-position = Vector2( 520, 360 )
+position = Vector2( 920, 600 )
 
 [node name="Pawns" type="YSort" parent="GameBoard"]
 script = ExtResource( 6 )
@@ -49,10 +49,10 @@ party_scene = ExtResource( 7 )
 [node name="EncounterPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
 position = Vector2( 440, 600 )
 facing = {
-"down": true,
-"left": true,
-"right": true,
-"up": true
+"down": false,
+"left": false,
+"right": false,
+"up": false
 }
 
 [node name="CollisionShape2D" parent="GameBoard/Pawns/EncounterPawn" index="2"]
