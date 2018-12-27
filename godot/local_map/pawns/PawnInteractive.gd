@@ -1,5 +1,5 @@
 extends PawnActor
-class_name InteractivePawn
+class_name PawnInteractive
 
 onready var raycasts : = $Raycasts as Node2D
 onready var dialogue_balloon : = $DialogueBalloon as Sprite
@@ -69,7 +69,7 @@ func start_interaction() -> void:
 	Pauses the game and play each action under the $Actions node
 	Actions that transition to another scene (e.g. StartCombatAction) may unpause
 	the game themselves
-	InteractivePawn processes even when the game is paused, but not
+	PawnInteractive processes even when the game is paused, but not
 	PawnLeader, the player-controlled pawn
 	"""
 	dialogue_balloon.hide()

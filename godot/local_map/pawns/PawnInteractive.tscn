@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://local_map/pawns/InteractivePawn.gd" type="Script" id=1]
+[ext_resource path="res://local_map/pawns/PawnInteractive.gd" type="Script" id=1]
 [ext_resource path="res://local_map/pawns/sprites/star.png" type="Texture" id=2]
 [ext_resource path="res://assets/sprites/dialogue_balloon.png" type="Texture" id=3]
 
