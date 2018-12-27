@@ -1,3 +1,8 @@
+"""
+Represents a Battler's actual stats: health, strength, etc.
+See the child class GrowthStats.gd for stats growth curves
+and lookup tables
+"""
 extends Resource
 
 class_name CharacterStats
@@ -91,9 +96,7 @@ func _get_experience() -> int:
 	return experience
 
 func _set_experience(value):
-	if value == null or value < 0:
-		value = 0
-	experience = value
+	experience = max(0, value)
 
 func _get_level() -> int:
 	return level

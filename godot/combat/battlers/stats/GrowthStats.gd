@@ -1,7 +1,12 @@
-extends "res://combat/battlers/stats/CharacterStats.gd"
+"""
+Uses curves and lookup tables to calculate a battler's stats
+
+"""
+extends CharacterStats
 
 class_name GrowthStats
 
+# level as a percentage of the max_level, in the [0.0, 1.0] range
 var _interpolated_level : float
 
 export var level_lookup : Array = []
@@ -16,7 +21,7 @@ func _set_experience(value : int = 0):
 	Calculate level, which updates all stats
 	"""
 	var max_level = len(level_lookup)
-	experience = value
+	experience = max(0, value)
 	var l = level
 	while l + 1 < max_level && experience > level_lookup[l+1]:
 		l += 1
