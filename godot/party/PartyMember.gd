@@ -15,5 +15,8 @@ func update_stats(stats : CharacterStats):
 	battler.stats = stats
 
 func ready_for_combat():
-	var copy = battler.duplicate()
-	return copy
+	"""
+	Returns a copy of the battler to add to the CombatArena
+	at the start of a battle
+	"""
+	return battler.duplicate()
