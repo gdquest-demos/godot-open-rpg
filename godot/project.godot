@@ -164,6 +164,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://local_map/pawns/PawnActor.gd"
 }, {
+"base": "Position2D",
+"class": "PawnAnim",
+"language": "GDScript",
+"path": "res://animation/PawnAnim.gd"
+}, {
 "base": "Node2D",
 "class": "PawnFollower",
 "language": "GDScript",
@@ -236,6 +241,7 @@ _global_script_class_icons={
 "Pathfinder": "",
 "Pawn": "",
 "PawnActor": "",
+"PawnAnim": "",
 "PawnFollower": "",
 "PawnLeader": "",
 "RectExtents": "",

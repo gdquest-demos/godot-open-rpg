@@ -6,7 +6,7 @@ var game_board
 signal moved(last_position, current_position)
 
 onready var pivot = $Pivot
-onready var anim_player = $AnimationPlayer
+onready var anim : PawnAnim = $Pivot/PawnAnim
 onready var tween = $Tween
 
 func _ready():
@@ -27,15 +27,12 @@ func move_to(target_position):
 	var move_direction = (target_position - position).normalized()
 	position = target_position
 	pivot.position = - move_direction * 40.0
-	tween.interpolate_property($Pivot, "position", pivot.position, Vector2(), anim_player.current_animation_length, Tween.TRANS_LINEAR, Tween.EASE_IN)
-	anim_player.play("walk")
-
+	tween.interpolate_property($Pivot, "position", pivot.position, Vector2(), anim.get_current_animation_length(), Tween.TRANS_LINEAR, Tween.EASE_IN)
 	tween.start()
-	yield($AnimationPlayer, "animation_finished")
+	yield(anim.play_walk(), "completed")
 	set_process(true)
 	
 func bump():
 	set_process(false)
-	anim_player.play("bump")
-	yield(anim_player, "animation_finished")
+	yield(anim.play_bump(), "completed")
 	set_process(true)
