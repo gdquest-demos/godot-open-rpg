@@ -1,3 +1,8 @@
+"""
+Base entity that represents a character or a monster in combat
+Every battler has an AI node so all characters can work as a monster
+or as a computer-controlled player ally
+"""
 extends Position2D
 
 class_name Battler
@@ -33,13 +38,13 @@ func initialize():
 	actions.initialize(skills.get_children())
 	stats.connect("health_depleted", self, "_on_health_depleted")
 
-func is_able_to_play():
-	"""Return true if the battler is able to play, false instead.
-
-	Currently only the battler's health is checked, but in the future we may
-	want to also check the battler status (frozen, petrified, etc.).
+func is_able_to_play() -> bool:
 	"""
-	return true if stats.health > 0 else false
+	Returns true if the battler can perform an action
+	Currently it only checks that the battler is alive,
+	but we should use this method later to check its current status as well
+	"""
+	return stats.health > 0
 
 func set_selected(value):
 	selected = value
