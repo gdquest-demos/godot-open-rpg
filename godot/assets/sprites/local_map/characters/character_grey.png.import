@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bat.png-0bcf6f7253a2c876add4431d2acd1df1.stex"
+path="res://.import/character_grey.png-2b63490fca7b8a0a0546fcbdbdb17542.stex"
 
 [deps]
 
-source_file="res://assets/sprites/monsters/bat.png"
-dest_files=[ "res://.import/bat.png-0bcf6f7253a2c876add4431d2acd1df1.stex" ]
+source_file="res://assets/sprites/local_map/characters/character_grey.png"
+dest_files=[ "res://.import/character_grey.png-2b63490fca7b8a0a0546fcbdbdb17542.stex" ]
 
 [params]
 

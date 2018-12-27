@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/character.png-94bb687dc75f85a5f83500b0a82295ad.stex"
+path="res://.import/star.png-221543f9e05f2816ef99221c29689117.stex"
 
 [deps]
 
-source_file="res://local_map/pawns/sprites/character.png"
-dest_files=[ "res://.import/character.png-94bb687dc75f85a5f83500b0a82295ad.stex" ]
+source_file="res://assets/sprites/local_map/characters/star.png"
+dest_files=[ "res://.import/star.png-221543f9e05f2816ef99221c29689117.stex" ]
 
 [params]
 
