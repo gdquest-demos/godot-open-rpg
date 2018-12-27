@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://animation/PawnAnim.gd" type="Script" id=1]
-[ext_resource path="res://assets/sprites/local_map/characters/robi_pawn.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/local_map/characters/character_grey.png" type="Texture" id=2]
 
 [sub_resource type="Animation" id=1]
 
@@ -63,6 +63,6 @@ anims/walk = SubResource( 2 )
 position = Vector2( 1.43051e-06, -1.90735e-06 )
 
 [node name="Body" type="Sprite" parent="Root"]
-position = Vector2( 0, -170.399 )
+scale = Vector2( 3, 3 )
 texture = ExtResource( 2 )
 
