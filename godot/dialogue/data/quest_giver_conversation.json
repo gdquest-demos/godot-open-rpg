@@ -1,0 +1,5 @@
+{
+    "001" : {"name":"Godette", "expression": "neutral", "text":"We are adventurers, right?." },
+    "002" : {"name":"Robi", "expression": "neutral", "text":"I guess so, why?" },
+    "003" : {"name":"Godette", "expression": "neutral", "text":"Let's go on a quest!" }
+}

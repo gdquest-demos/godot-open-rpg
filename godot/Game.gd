@@ -9,6 +9,7 @@ onready var local_map = $LocalMap
 onready var party = $Party as Party
 onready var music_player = $MusicPlayer
 onready var game_over_interface : = $GameOverInterface
+onready var quest_system : = $QuestSystem
 
 var transitioning = false
 var combat_arena : CombatArena
@@ -16,6 +17,7 @@ var combat_arena : CombatArena
 func _ready():
 	local_map.visible = true
 	local_map.spawn_party(party)
+	local_map.quest_system = quest_system
 
 func enter_battle(formation: Formation):
 	"""
@@ -24,7 +26,6 @@ func enter_battle(formation: Formation):
 	if transitioning:
 		return
 		
-	emit_signal("combat_started")
 	music_player.play_battle_theme()
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
@@ -37,6 +38,7 @@ func enter_battle(formation: Formation):
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
 	combat_arena.battle_start()
+	emit_signal("combat_started")
 	
 	# Get data from the battlers after the battle ended,
 	# Then copy into the Party node to save earned experience,

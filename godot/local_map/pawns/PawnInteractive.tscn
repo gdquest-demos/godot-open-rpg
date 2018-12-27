@@ -8,7 +8,9 @@
 
 extents = Vector2( 30, 30 )
 
-[node name="InteractivePawn" type="Area2D"]
+[node name="InteractivePawn" type="Area2D" groups=[
+"interactive_pawns",
+]]
 pause_mode = 2
 collision_layer = 4
 collision_mask = 2
