@@ -7,12 +7,13 @@ extends Node2D
 
 class_name PartyMember
 
+signal level_changed(new_value, old_value)
+
 export var pawn_anim_path : NodePath
 export var growth : Resource
 
-onready var battler = $Battler
-
-signal level_changed(new_value, old_value)
+onready var battler : Battler = $Battler
+onready var SAVE_KEY : String = "party_member_" + name
 
 func _ready():
 	assert pawn_anim_path
@@ -26,9 +27,9 @@ func update_stats(stats : CharacterStats):
 	that occurred during combat or through menu actions
 	"""
 	var before_level = growth.get_level(battler.stats.experience)
-	var after_level = growth.get_level(stats.experience)	
+	var after_level = growth.get_level(stats.experience)
 	battler.stats = stats
-	
+
 	if before_level != after_level:
 		refresh_stats()
 		emit_signal("level_changed", after_level, before_level)
@@ -52,4 +53,9 @@ func refresh_stats():
 	# TODO apply equipment stats
 	stats.reset()
 	battler.stats = stats
-	
+
+func save(save_game : Resource):
+	save_game.data[SAVE_KEY] = battler.stats
+
+func load(save_game : Resource):
+	battler.stats = save_game.data[SAVE_KEY]

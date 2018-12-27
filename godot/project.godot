@@ -215,6 +215,11 @@ _global_script_classes=[ {
 "path": "res://core/utils/RectExtents.gd"
 }, {
 "base": "Resource",
+"class": "SaveGame",
+"language": "GDScript",
+"path": "res://core/save/SaveGame.gd"
+}, {
+"base": "Resource",
 "class": "Skill",
 "language": "GDScript",
 "path": "res://combat/battlers/skills/Skill.gd"
@@ -281,6 +286,7 @@ _global_script_class_icons={
 "QuestSlayObjective": "",
 "QuestSystem": "",
 "RectExtents": "",
+"SaveGame": "",
 "Skill": "",
 "SkillAction": "",
 "StartCombatAction": "",

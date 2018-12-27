@@ -22,6 +22,7 @@ func _ready():
 	local_map.visible = true
 	local_map.spawn_party(party)
 	local_map.quest_system = quest_system
+	$Debug/DebugInterface.initialize($GameSaver)
 
 func enter_battle(formation: Formation):
 	"""
