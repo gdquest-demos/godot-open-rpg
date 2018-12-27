@@ -99,11 +99,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://combat/Hit.gd"
 }, {
-"base": "PawnActor",
-"class": "InteractivePawn",
-"language": "GDScript",
-"path": "res://local_map/pawns/PawnInteractive.gd"
-}, {
 "base": "Reference",
 "class": "Inventory",
 "language": "GDScript",
@@ -175,6 +170,11 @@ _global_script_classes=[ {
 "path": "res://local_map/pawns/PawnFollower.gd"
 }, {
 "base": "Node2D",
+"class": "PawnInteractive",
+"language": "GDScript",
+"path": "res://local_map/pawns/PawnInteractive.gd"
+}, {
+"base": "Node2D",
 "class": "PawnLeader",
 "language": "GDScript",
 "path": "res://local_map/pawns/PawnLeader.gd"
@@ -228,7 +228,6 @@ _global_script_class_icons={
 "GameOverInterface": "",
 "GrowthStats": "",
 "Hit": "",
-"InteractivePawn": "",
 "Inventory": "",
 "Item": "",
 "LearnedSkill": "",
@@ -243,6 +242,7 @@ _global_script_class_icons={
 "PawnActor": "",
 "PawnAnim": "",
 "PawnFollower": "",
+"PawnInteractive": "",
 "PawnLeader": "",
 "RectExtents": "",
 "Skill": "",
