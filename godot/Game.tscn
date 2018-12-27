@@ -19,8 +19,6 @@ visible = false
 [node name="Overlays" type="CanvasLayer" parent="."]
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 4 )]
-margin_left = -3.0
-margin_right = -3.0
 mouse_filter = 2
 
 [node name="GameOverInterface" parent="." instance=ExtResource( 5 )]
