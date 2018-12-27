@@ -6,8 +6,8 @@ var game_board
 signal moved(last_position, current_position)
 
 onready var pivot = $Pivot
-onready var anim : PawnAnim = $Pivot/PawnAnim
 onready var tween = $Tween
+onready var anim : PawnAnim = pivot.get_node("PawnAnim")
 
 func _ready():
 	update_look_direction(Vector2(1, 0))
@@ -36,3 +36,12 @@ func bump():
 	set_process(false)
 	yield(anim.play_bump(), "completed")
 	set_process(true)
+
+func change_skin(pawn_anim : PawnAnim):
+	"""
+	Replaces the pawn's animated character with another
+	"""
+	if anim:
+		anim.queue_free()
+	anim = pawn_anim
+	pivot.add_child(pawn_anim)
