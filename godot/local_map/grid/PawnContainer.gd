@@ -30,9 +30,6 @@ func spawn_pawn(pos : Vector2, pawn_previous : Object, pawn_name : String, is_le
 	add_child(new_pawn)
 	return new_pawn
 
-func request_move(pawn, direction):
-	return get_parent().request_move(pawn, direction)
-
 func rebuild_party() -> void:
 	var Leader_pos = party_members[0].position
 	for member in party_members:
