@@ -11,6 +11,8 @@ class_name PawnInteractive
 onready var raycasts : = $Raycasts as Node2D
 onready var dialogue_balloon : = $DialogueBalloon as Sprite
 
+const TOUCH_SAFE_MARGIN : int = 75
+
 export var vanish_on_interaction : = false
 export var AUTO_START_INTERACTION : = false
 export var sight_distance = 50
@@ -42,6 +44,8 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and dialogue_balloon.visible:
+		if (event is InputEventMouseButton or event is InputEventScreenTouch) and global_position.distance_to(get_global_mouse_position()) > TOUCH_SAFE_MARGIN:
+			return
 		start_interaction()
 		get_tree().set_input_as_handled()
 
