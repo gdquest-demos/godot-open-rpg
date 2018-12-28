@@ -75,6 +75,7 @@ func ready_field(formation : Formation, party_members : Array):
 		var combatant = party_member.ready_for_combat() as Battler
 		combatant.position = spawn_point.position
 		combatant.name = party_member.name
+		combatant.set_meta("party_member", party_member)
 		# stats are copied from the external party member so we may restart combat cleanly,
 		# such as allowing players to retry a fight if they get game over
 		spawn_point.replace_by(platform)

@@ -46,7 +46,6 @@ func enter_battle(formation: Formation):
 	# Then copy into the Party node to save earned experience,
 	# items, and currentstats
 	var updates = yield(combat_arena, "battle_ended")
-	party.update_members(updates)
 
 	emit_signal("combat_finished")
 	transitioning = true

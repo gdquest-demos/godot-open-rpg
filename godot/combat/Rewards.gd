@@ -50,7 +50,9 @@ func _reward_to_battlers() -> Array:
 	for member in survived:
 		var level = member.stats.level
 		member.stats.experience += exp_per_survivor
-		if level < member.stats.level:
+		var pm = member.get_meta("party_member")
+		pm.update_stats(member.stats)
+		if level != member.stats.level:
 			leveled_up.append(member)
 	return leveled_up
 
@@ -64,7 +66,7 @@ func on_battle_completed():
 	$Panel/Label.text = "EXP Earned %d" % experience_earned
 	yield(get_tree().create_timer(2.0), "timeout")
 	for battler in leveled_up:
-		$Panel/Label.text = "%s Leveled Up to %d" % [battler.name, battler.stats.level]
+		$Panel/Label.text = "%s Leveled Up to %d" % [battler.name, battler.stats.level + 1]
 		yield(get_tree().create_timer(2.0), "timeout")
 	for drop in drops:
 		$Panel/Label.text = "Found %s %s(s)" % [drop.amount, drop.item.name]

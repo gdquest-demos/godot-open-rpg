@@ -31,13 +31,3 @@ func get_unlocked_characters() -> Array:
 		if member.visible:
 			has_unlocked.append(member)
 	return has_unlocked
-
-func update_members(battlers : Array):
-	"""
-	Updates character stats from their battlers
-	after combat is complete
-	"""
-	for battler in battlers:
-		var character_name = battler.name
-		var stats = battler.stats as CharacterStats
-		find_node(character_name, false).update_stats(stats)
