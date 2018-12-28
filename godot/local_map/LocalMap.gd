@@ -13,6 +13,8 @@ signal dialogue_finished()
 onready var dialogue_box = $MapInterface/DialogueBox
 onready var grid = $GameBoard
 
+var quest_system
+
 func _ready() -> void:
 	assert dialogue_box
 	for action in get_tree().get_nodes_in_group("map_action"):

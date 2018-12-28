@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://local_map/LocalMap.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilesets/grasslands.tres" type="TileSet" id=2]
@@ -11,8 +11,9 @@
 [ext_resource path="res://local_map/pawns/actions/StartCombatAction.tscn" type="PackedScene" id=9]
 [ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=10]
 [ext_resource path="res://local_map/pawns/actions/DialogueAction.tscn" type="PackedScene" id=11]
-[ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=12]
-
+[ext_resource path="res://local_map/pawns/unique_pawns/QuestGiver.tscn" type="PackedScene" id=12]
+[ext_resource path="res://local_map/pawns/unique_pawns/QuestDialogueTest.tscn" type="PackedScene" id=13]
+[ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -48,6 +49,7 @@ script = ExtResource( 6 )
 party_scene = ExtResource( 7 )
 
 [node name="EncounterPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
+editor/display_folded = true
 position = Vector2( 440, 600 )
 facing = {
 "down": false,
@@ -63,6 +65,7 @@ shape = SubResource( 1 )
 formation = ExtResource( 10 )
 
 [node name="DialoguePawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
+editor/display_folded = true
 position = Vector2( 360, 360 )
 facing = {
 "down": false,
@@ -78,6 +81,7 @@ shape = SubResource( 2 )
 dialogue_file_path = "res://dialogue/data/test_conversation.json"
 
 [node name="DialogueCombatPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
+editor/display_folded = true
 position = Vector2( 1160, 600 )
 facing = {
 "down": true,
@@ -92,11 +96,29 @@ dialogue_file_path = "res://dialogue/data/test_conversation.json"
 [node name="StartCombat" parent="GameBoard/Pawns/DialogueCombatPawn/Actions" index="1" instance=ExtResource( 9 )]
 formation = ExtResource( 10 )
 
+[node name="QuestGiver" parent="GameBoard/Pawns" instance=ExtResource( 12 )]
+position = Vector2( 1040, 150 )
+facing = {
+"down": true,
+"left": true,
+"right": true,
+"up": true
+}
+
+[node name="QuestDialogueTest" parent="GameBoard/Pawns" instance=ExtResource( 13 )]
+position = Vector2( 1310, 440 )
+facing = {
+"down": true,
+"left": true,
+"right": true,
+"up": true
+}
+
 [node name="MapInterface" type="CanvasLayer" parent="."]
 pause_mode = 2
 layer = 100
 
-[node name="DialogueBox" parent="MapInterface" instance=ExtResource( 12 )]
+[node name="DialogueBox" parent="MapInterface" instance=ExtResource( 14 )]
 visible = false
 
 

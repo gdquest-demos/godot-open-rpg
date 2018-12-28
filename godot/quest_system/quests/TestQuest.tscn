@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://quest_system/quests/Quest.tscn" type="PackedScene" id=1]
+[ext_resource path="res://quest_system/quests/QuestSlayObjective.tscn" type="PackedScene" id=2]
+[ext_resource path="res://combat/battlers/enemies/porcupine/PorcupineBattler.tscn" type="PackedScene" id=3]
+[ext_resource path="res://quest_system/quests/QuestInteractObjective.tscn" type="PackedScene" id=4]
+[ext_resource path="res://local_map/pawns/unique_pawns/QuestDialogueTest.tscn" type="PackedScene" id=5]
+
+[node name="TestQuest" index="0" instance=ExtResource( 1 )]
+title = "Test Quest"
+description = "Just a quest for testing. Good luck!"
+
+[node name="QuestSlayObjective" parent="." index="0" instance=ExtResource( 2 )]
+amount = 3
+battler_to_slay = ExtResource( 3 )
+
+[node name="QuestInteractObjective" parent="." index="1" instance=ExtResource( 4 )]
+interact_with = ExtResource( 5 )
+

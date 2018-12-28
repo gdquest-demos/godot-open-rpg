@@ -5,7 +5,9 @@
 [ext_resource path="res://animation/PorcupineAnim.tscn" type="PackedScene" id=3]
 [ext_resource path="res://combat/battlers/ai/RandomAI.gd" type="Script" id=4]
 
-[node name="Porcupine" instance=ExtResource( 1 )]
+[node name="Porcupine" groups=[
+"enemies",
+] instance=ExtResource( 1 )]
 stats = ExtResource( 2 )
 
 [node name="PorcupineAnim" parent="Skin" index="2" instance=ExtResource( 3 )]

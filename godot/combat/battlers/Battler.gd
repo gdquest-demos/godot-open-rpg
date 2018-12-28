@@ -7,6 +7,8 @@ extends Position2D
 
 class_name Battler
 
+signal died(battler)
+
 export var TARGET_OFFSET_DISTANCE : float = 120.0
 
 export var stats : Resource
@@ -60,6 +62,7 @@ func take_damage(hit):
 func _on_health_depleted():
 	selectable = false
 	yield(skin.play_death(), "completed")
+	emit_signal("died", self)
 
 func appear():
 	var offset_direction = 1.0 if party_member else -1.0
