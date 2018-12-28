@@ -1,3 +1,7 @@
+"""
+Responsible for transitions between the main game screens:
+combat, game over, and the map
+"""
 extends Node
 
 signal combat_started()

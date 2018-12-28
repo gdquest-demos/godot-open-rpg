@@ -1,3 +1,8 @@
+"""
+Represents a playable character to add in the player's party
+Holds the data and nodes for the character's battler, pawn on the map,
+and the character's stats to save the game
+"""
 extends Node2D
 
 class_name PartyMember
@@ -24,4 +29,8 @@ func ready_for_combat():
 	return battler.duplicate()
 
 func get_pawn_anim():
+	"""
+	Returns a copy of the PawnAnim that represents this character,
+	e.g. to add it as a child of the currently loaded game map
+	"""
 	return get_node(pawn_anim_path).duplicate()

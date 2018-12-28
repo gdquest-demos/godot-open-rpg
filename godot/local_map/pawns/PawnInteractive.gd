@@ -1,3 +1,10 @@
+"""
+Pawn the player can interact with. Could be an NPC, a chest,
+anything that should react when the player walks next to it
+or presses a key while sitting next to this pawn.
+Can work either with raycasts for interactions based on
+look direction or using an Area2D
+"""
 extends PawnActor
 class_name PawnInteractive
 

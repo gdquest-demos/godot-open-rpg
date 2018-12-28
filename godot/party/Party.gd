@@ -1,3 +1,10 @@
+"""
+Container for the player's party
+Holds all playable game characters whether the player
+has already unlocked them or not in the game.
+After an encounter, it delegates stats update (experience and health) to each
+active party member
+"""
 extends Node2D
 class_name Party
 

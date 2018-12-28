@@ -1,3 +1,6 @@
+"""
+Pawn that can move on the GameBoard and play animations
+"""
 extends Pawn
 
 class_name PawnActor

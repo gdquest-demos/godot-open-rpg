@@ -1,6 +1,7 @@
 """
-Game board or Grid. Responsible for collisions, telling pawns
+Map Grid. Responsible for collisions, telling pawns
 if they can move to a given cell
+Uses a Pathfinder to find and return the path to cells
 """
 extends TileMap
 
