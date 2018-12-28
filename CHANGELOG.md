@@ -1,11 +1,12 @@
 # Changelog
 
-All notable changes to this project will be documented in this file
+<!-- ## [UNRELEASED] v0.4.0: Quests 📃🖋 -->
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+<!-- ### Source code -->
 
-## [UNRELEASED] v0.3.0: Motion and Dialogues 😮💬
+<!-- Added docstrings to a number of methods in the codebase, to help understand the code a little better -->
+
+## v0.3.0: Motion and Dialogues 😮💬
 
 ### New
 
@@ -16,9 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Map
 
-- Leader and followers now reflect the player's party
+- Leader and followers now reflect the player's party's size
 - Touch controls with pathfinding
 - NPCs now have two interaction modes and look directions: they can be triggered by walking in an area around them or by pressing space in front of them
+- Characters on the map now have a dedicated skin and animations so characters reflect the party
 
 #### Dialogues
 
@@ -29,11 +31,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Interface
 
 - CircularMenu: open and close animations
+- Added an interface to represent the characters' turn order in combat
 
 #### Core
 
 - Skills can now be unlocked as characters gain levels. Change the `level` property of the `Skill` to set the unlock level
 - Pathfinder class to find the path between two points with AStar
+
+#### Art
+
+- Added map sprites for Robi and Godette
+- Added a simple tileset for the grasslands
 
 #### Tools
 
@@ -45,7 +53,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated to Godot 3.1 alpha 3
 - Nicholas simplified and restructured the Battlers and Party members' code to make it more robust and easier to understand. Now the `Battler` delegates more calculations and logic to `CombatAction`
 - Party Members now have a battler attached to them
+- Increased the map's size
+
+#### Code structure
+
 - Improved the Grid's code
+- Refactored the grid, pawns, battlers and party to make the code easier to follow
+- Added docstrings to a few GDScript files
+- Cleaned up and removed unused functions and files
 
 ### Fixes
 
@@ -54,6 +69,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a bug with life bars where if your max hp is higher than 100, the bar wouldn't be properly filled all the way
 - Fixed death animation not playing when a battler dies
 - Fixed touch input sometimes passing through buttons
+- Fixed jerky animation when moving the player's pawn on the map
+- Fixed skills learned by characters at the wrong level
 
 ## v0.2.0: Better Encounters ⚔🌟 - 2018-12-01
 
