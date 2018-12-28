@@ -1,10 +1,22 @@
 # Changelog
 
-<!-- ## [UNRELEASED] v0.4.0: Quests 📃🖋 -->
+## [UNRELEASED] v0.4.0: Quests 📃🖋
 
-<!-- ### Source code -->
+### New
 
-<!-- Added docstrings to a number of methods in the codebase, to help understand the code a little better -->
+#### Quest system
+
+- Start, complete quests, and have multiple objectives per quest
+
+### Fixes
+
+- Fixed jerky move animation the first time a Pawn moves on the map
+- Only start interaction when clicking on the NPCs' area
+
+### Source code
+
+- Split GrowthStats and CharacterStats
+- Added docstrings to a number of files and methods in the codebase, to help understand the code a little better
 
 ## v0.3.0: Motion and Dialogues 😮💬
 
