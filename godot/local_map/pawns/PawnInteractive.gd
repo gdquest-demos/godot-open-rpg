@@ -10,8 +10,9 @@ class_name PawnInteractive
 
 signal interaction_finished(pawn)
 
-onready var raycasts : = $Raycasts as Node2D
-onready var dialogue_balloon : = $DialogueBalloon as Sprite
+onready var raycasts : Node2D = $Raycasts
+onready var dialogue_balloon : Sprite = $DialogueBalloon
+onready var collision_shape : CollisionShape2D = $CollisionShape2D
 
 export var vanish_on_interaction : = false
 export var AUTO_START_INTERACTION : = false
@@ -43,6 +44,12 @@ func _ready() -> void:
 		set_physics_process(false)
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Use the area to detect if the user is clicking on the NPCs' interaction zone
+	if event is InputEventMouseButton:
+		var extents = collision_shape.shape.extents
+		var as_rect := Rect2(-extents, extents * 2)
+		if not as_rect.has_point(get_local_mouse_position()):
+			return
 	if event.is_action_pressed("ui_accept") and dialogue_balloon.visible:
 		start_interaction()
 		get_tree().set_input_as_handled()
