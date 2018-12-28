@@ -11,5 +11,5 @@ func connect_signals() -> void:
 func _on_enemy_died(battler) -> void:
 	if battler.filename == battler_to_slay.resource_path:
 		amount -= 1
-		if amount == 0:
+		if amount == 0 and not finished:
 			finish()

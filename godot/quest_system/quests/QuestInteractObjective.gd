@@ -8,5 +8,5 @@ func _ready() -> void:
 		interactive_pawn.connect("interaction_finished", self, "_on_interaction_finished")
 
 func _on_interaction_finished(pawn) -> void:
-	if pawn.filename == interact_with.resource_path:
-		emit_signal("objective_finished", self)
+	if pawn.filename == interact_with.resource_path and not finished:
+		finish()
