@@ -20,10 +20,9 @@ script = ExtResource( 1 )
 
 [node name="Godette" parent="." instance=ExtResource( 2 )]
 pawn_anim_path = NodePath("GodettePawnAnim")
+growth = ExtResource( 3 )
 
 [node name="Battler" parent="Godette" index="0"]
-editor/display_folded = true
-stats = ExtResource( 3 )
 party_member = true
 turn_order_icon = ExtResource( 4 )
 
@@ -39,10 +38,9 @@ script = ExtResource( 8 )
 
 [node name="Robi" parent="." instance=ExtResource( 2 )]
 pawn_anim_path = NodePath("RobiPawnAnim")
+growth = ExtResource( 10 )
 
 [node name="Battler" parent="Robi" index="0"]
-editor/display_folded = true
-stats = ExtResource( 10 )
 party_member = true
 turn_order_icon = ExtResource( 11 )
 

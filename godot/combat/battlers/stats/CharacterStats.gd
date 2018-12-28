@@ -16,11 +16,11 @@ var modifiers = {}
 
 var health : int
 var mana : int setget set_mana
-export var max_health : int setget set_max_health, _get_max_health
-export var max_mana : int setget set_max_mana, _get_max_mana
-export var strength : int setget ,_get_strength
-export var defense : int setget ,_get_defense
-export var speed : int setget ,_get_speed
+export var max_health : int = 1 setget set_max_health, _get_max_health
+export var max_mana : int = 0 setget set_max_mana, _get_max_mana
+export var strength : int = 1 setget ,_get_strength
+export var defense : int = 1 setget ,_get_defense
+export var speed : int = 1 setget ,_get_speed
 var is_alive : bool setget ,_is_alive
 export var experience : int setget _set_experience
 var level : int
@@ -42,9 +42,13 @@ func copy():
 	return cp
 	
 func set_max_health(value):
-	max_health = max(0, value)
+	if value == null:
+		return
+	max_health = max(1, value)
 
 func set_max_mana(value):
+	if value == null:
+		return
 	max_mana = max(0, value)
 
 func take_damage(hit):
@@ -64,8 +68,7 @@ func set_mana(value):
 
 func heal(amount):
 	var old_health = health
-	health += amount
-	health = max(health, max_health)
+	health = min(health + amount, max_health)
 	emit_signal("health_changed", health, old_health)
 
 func add_modifier(id, modifier):
@@ -96,6 +99,8 @@ func _get_experience() -> int:
 	return experience
 
 func _set_experience(value):
+	if value == null:
+		return
 	experience = max(0, value)
 
 func _get_level() -> int:
