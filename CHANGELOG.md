@@ -8,6 +8,10 @@
 
 - Start, complete quests, and have multiple objectives per quest
 
+#### core
+
+- Save and Load the game: currently only for party members
+
 ### Fixes
 
 - Fixed jerky move animation the first time a Pawn moves on the map
