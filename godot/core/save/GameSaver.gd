@@ -42,4 +42,4 @@ func load(id : int):
 
 	var save_game : Resource = load(save_file_path)
 	for node in get_tree().get_nodes_in_group('save'):
-		node.load(save_game.data)
+		node.load(save_game)
