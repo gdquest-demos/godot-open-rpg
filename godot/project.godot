@@ -293,7 +293,7 @@ _global_script_class_icons={
 config/name="Godot Open RPG"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
-config/version="0.2.0"
+config/version="0.3.0"
 
 [autoload]
 
