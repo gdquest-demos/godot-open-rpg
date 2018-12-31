@@ -8,6 +8,7 @@ extends Node
 const SaveGame = preload('res://core/save/SaveGame.gd')
 # TODO: Use project setting to save to res://debug vs user://
 var SAVE_FOLDER : String = "res://debug/save"
+var SAVE_NAME_TEMPLATE : String = "save_%03d.tres"
 
 func save(id : int):
 	"""
@@ -23,7 +24,7 @@ func save(id : int):
 	if not directory.dir_exists(SAVE_FOLDER):
 		directory.make_dir_recursive(SAVE_FOLDER)
 	
-	var save_path = SAVE_FOLDER.plus_file('%s.tres' % id)
+	var save_path = SAVE_FOLDER.plus_file(SAVE_NAME_TEMPLATE % id)
 	var error : int = ResourceSaver.save(save_path, save_game)
 	if error != OK:
 		print('There was an issue writing the save %s to %s' % [id, save_path])
@@ -33,7 +34,7 @@ func load(id : int):
 	Reads a saved game from the disk and delegates loading
 	to the individual nodes to load
 	"""
-	var save_file_path : String = SAVE_FOLDER.plus_file('%s.tres' % id)
+	var save_file_path : String = SAVE_FOLDER.plus_file(SAVE_NAME_TEMPLATE % id)
 	var file : File = File.new()
 	if not file.file_exists(save_file_path):
 		print("Save file %s doesn't exist" % save_file_path)
