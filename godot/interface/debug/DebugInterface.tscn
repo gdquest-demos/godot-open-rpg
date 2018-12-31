@@ -45,3 +45,5 @@ margin_bottom = 154.0
 rect_min_size = Vector2( 100, 40 )
 text = "Load"
 
+[connection signal="pressed" from="Column/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="Column/LoadButton" to="." method="_on_LoadButton_pressed"]

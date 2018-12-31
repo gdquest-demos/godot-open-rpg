@@ -1,6 +1,6 @@
 extends Control
 
-onready var spin_box : SpinBox = $Panel/Column/HBoxContainer/SpinBox
+onready var spin_box : SpinBox = $Column/HBoxContainer/SpinBox
 
 var game_saver : Node = null
 
