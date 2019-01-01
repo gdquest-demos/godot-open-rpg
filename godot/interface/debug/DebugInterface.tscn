@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://interface/debug/DebugInterface.gd" type="Script" id=1]
+[ext_resource path="res://core/save/GameSaver.tscn" type="PackedScene" id=2]
 
 [node name="DebugInterface" type="Panel"]
 margin_right = 400.0
@@ -44,6 +45,8 @@ margin_right = 400.0
 margin_bottom = 154.0
 rect_min_size = Vector2( 100, 40 )
 text = "Load"
+
+[node name="GameSaver" parent="." instance=ExtResource( 2 )]
 
 [connection signal="pressed" from="Column/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="Column/LoadButton" to="." method="_on_LoadButton_pressed"]

@@ -1,11 +1,7 @@
 extends Control
 
 onready var spin_box : SpinBox = $Column/HBoxContainer/SpinBox
-
-var game_saver : Node = null
-
-func initialize(_game_saver):
-	game_saver = _game_saver
+onready var game_saver : Node = $GameSaver
 
 func _on_SaveButton_pressed() -> void:
 	game_saver.save(spin_box.value)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://party/Party.tscn" type="PackedScene" id=2]
@@ -8,8 +8,7 @@
 [ext_resource path="res://interface/game_over/GameOverInterface.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/audio/bgm/battle_theme.ogg" type="AudioStream" id=7]
 [ext_resource path="res://core/MusicPlayer.gd" type="Script" id=8]
-[ext_resource path="res://core/save/GameSaver.tscn" type="PackedScene" id=9]
-[ext_resource path="res://interface/debug/DebugInterface.tscn" type="PackedScene" id=10]
+[ext_resource path="res://interface/debug/DebugInterface.tscn" type="PackedScene" id=9]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -36,13 +35,10 @@ stream = ExtResource( 7 )
 bus = "Music"
 script = ExtResource( 8 )
 
-[node name="GameSaver" parent="." instance=ExtResource( 9 )]
-
 [node name="Debug" type="CanvasLayer" parent="."]
 layer = 100
 
-[node name="DebugInterface" parent="Debug" instance=ExtResource( 10 )]
-visible = false
+[node name="DebugInterface" parent="Debug" instance=ExtResource( 9 )]
 
 [connection signal="combat_finished" from="." to="LocalMap" method="_on_Game_combat_finished"]
 [connection signal="combat_started" from="." to="QuestSystem" method="_on_Game_combat_started"]
