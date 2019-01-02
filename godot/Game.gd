@@ -21,6 +21,7 @@ var combat_arena : CombatArena
 func _ready():
 	local_map.visible = true
 	local_map.spawn_party(party)
+	quest_system.initialize(party)
 	local_map.quest_system = quest_system
 	$Debug/DebugInterface.initialize($GameSaver)
 

@@ -26,7 +26,6 @@ editor/display_folded = true
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 5 )]
 mouse_filter = 2
-transition = 0.0
 
 [node name="GameOverInterface" parent="." instance=ExtResource( 6 )]
 layer = 0

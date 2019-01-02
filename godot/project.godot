@@ -55,6 +55,11 @@ _global_script_classes=[ {
 "path": "res://items/ConsumableItem.gd"
 }, {
 "base": "Node",
+"class": "DeliverQuestAction",
+"language": "GDScript",
+"path": "res://local_map/pawns/actions/DeliverQuestAction.gd"
+}, {
+"base": "Node",
 "class": "DialogueAction",
 "language": "GDScript",
 "path": "res://local_map/pawns/actions/DialogueAction.gd"
@@ -195,6 +200,11 @@ _global_script_classes=[ {
 "path": "res://quest_system/quests/QuestInteractObjective.gd"
 }, {
 "base": "Node",
+"class": "QuestItemReward",
+"language": "GDScript",
+"path": "res://quest_system/quests/QuestItemReward.gd"
+}, {
+"base": "Node",
 "class": "QuestObjective",
 "language": "GDScript",
 "path": "res://quest_system/QuestObjective.gd"
@@ -254,6 +264,7 @@ _global_script_class_icons={
 "CombatArena": "",
 "CombatPortrait": "",
 "ConsumableItem": "",
+"DeliverQuestAction": "",
 "DialogueAction": "",
 "DialogueBox": "",
 "DialoguePlayer": "",
@@ -282,6 +293,7 @@ _global_script_class_icons={
 "PawnLeader": "",
 "Quest": "",
 "QuestInteractObjective": "",
+"QuestItemReward": "",
 "QuestObjective": "",
 "QuestSlayObjective": "",
 "QuestSystem": "",
