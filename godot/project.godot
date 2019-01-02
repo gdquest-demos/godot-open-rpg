@@ -79,6 +79,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://combat/battlers/Formation.gd"
 }, {
+"base": "CanvasLayer",
+"class": "GUI",
+"language": "GDScript",
+"path": "res://interface/gui/GUI.gd"
+}, {
 "base": "TileMap",
 "class": "GameBoard",
 "language": "GDScript",
@@ -194,6 +199,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://quest_system/quests/QuestInteractObjective.gd"
 }, {
+"base": "Control",
+"class": "QuestJournal",
+"language": "GDScript",
+"path": "res://interface/gui/QuestJorunal.gd"
+}, {
 "base": "Node",
 "class": "QuestObjective",
 "language": "GDScript",
@@ -259,6 +269,7 @@ _global_script_class_icons={
 "DialoguePlayer": "",
 "Equipment": "",
 "Formation": "",
+"GUI": "",
 "GameBoard": "",
 "GameOverInterface": "",
 "GiveQuestAction": "",
@@ -282,6 +293,7 @@ _global_script_class_icons={
 "PawnLeader": "",
 "Quest": "",
 "QuestInteractObjective": "",
+"QuestJournal": "",
 "QuestObjective": "",
 "QuestSlayObjective": "",
 "QuestSystem": "",
