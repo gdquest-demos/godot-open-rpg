@@ -36,3 +36,10 @@ func notify_slay_objectives() -> void:
 		if not objective is QuestSlayObjective:
 			continue
 		(objective as QuestSlayObjective).connect_signals()
+
+func get_rewards_as_text() -> Array:
+	var rewards : = []
+	rewards.append(" - Experience: %s" % str(exp_reward))
+	for item_reward in item_rewards:
+		rewards.append(" - [%s] x (%s)\n" % [item_reward.item.name, str(item_reward.amount)])
+	return rewards

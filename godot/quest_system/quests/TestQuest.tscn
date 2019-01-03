@@ -9,11 +9,11 @@
 [ext_resource path="res://quest_system/quests/QuestInteractObjective.tscn" type="PackedScene" id=7]
 [ext_resource path="res://local_map/pawns/unique_pawns/QuestDialogueTest.tscn" type="PackedScene" id=8]
 
-[node name="TestQuest" index="0" instance=ExtResource( 1 )]
+[node name="TestQuest" instance=ExtResource( 1 )]
 title = "Test Quest"
-description = "Just a quest for testing. Good luck!"
+description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 exp_reward = 5
-has_to_be_delivered = false
+has_to_be_delivered = true
 
 [node name="QuestItemReward" parent="ItemRewards" index="0" instance=ExtResource( 2 )]
 item = ExtResource( 3 )
@@ -24,7 +24,7 @@ item = ExtResource( 4 )
 amount = 2
 
 [node name="QuestSlayObjective" parent="Objectives" index="0" instance=ExtResource( 5 )]
-amount = 3
+amount = 4
 battler_to_slay = ExtResource( 6 )
 
 [node name="QuestInteractObjective" parent="Objectives" index="1" instance=ExtResource( 7 )]
