@@ -1,3 +1,8 @@
+"""
+Widget for Godot's 2d viewport. Adds 4 draggable anchors to RectExtents node
+The user can click and drag these anchors to resize a RectExtents node around
+its center.
+"""
 tool
 extends EditorPlugin
 
@@ -8,9 +13,20 @@ enum Anchors {
 	BOTTOM_RIGHT
 }
 
+# Stores the currently edited rect_extents node
+# null if no RectExtents node is selected and active
 var rect_extents : RectExtents
+# List of all anchors drawn over the RectExtents node
+# Each anchor has the form { position: Vector2, rect: Rect2 }
 var anchors : Array
+# Get and stores the anchor the user is dragging from the anchors array above
 var dragged_anchor : Dictionary = {}
+# Stores the RectExtents' state when the user starts dragging an anchor
+# we need this info to safely add undo/redo support when the drag operation ends
+var rect_drag_start : Dictionary = {
+	'size': Vector2(),
+	'offset': Vector2()
+}
 
 const CIRCLE_RADIUS : float = 6.0
 const STROKE_RADIUS : float = 2.0
@@ -96,20 +112,25 @@ func forward_canvas_gui_input(event: InputEvent) -> bool:
 			for anchor in anchors:
 				if not anchor['rect'].has_point(event.position):
 					continue
-				var undo := get_undo_redo()
-				undo.create_action("Move anchor")
-				undo.add_undo_property(rect_extents, "size", rect_extents.size)
-				undo.add_undo_property(rect_extents, "offset", rect_extents.offset)
 				dragged_anchor = anchor
 				print("Drag start: %s" % dragged_anchor)
+				rect_drag_start = {
+					'size': rect_extents.size,
+					'offset': rect_extents.offset,
+				}
 				return true
 		elif dragged_anchor and not event.is_pressed():
-			print("Lifting the cursor: %s" % event.position)
 			drag_to(event.position)
 			dragged_anchor = {}
 			var undo := get_undo_redo()
+			undo.create_action("Move anchor")
+		
 			undo.add_do_property(rect_extents, "size", rect_extents.size)
+			undo.add_undo_property(rect_extents, "size", rect_drag_start['size'])
+		
 			undo.add_do_property(rect_extents, "offset", rect_extents.offset)
+			undo.add_undo_property(rect_extents, "offset", rect_drag_start['offset'])
+		
 			undo.commit_action()
 			return true
 	if not dragged_anchor:
@@ -122,8 +143,6 @@ func forward_canvas_gui_input(event: InputEvent) -> bool:
 	# Cancelling with ui_cancel
 	if event.is_action_pressed("ui_cancel"):
 		dragged_anchor = {}
-		var undo := get_undo_redo()
-		undo.commit_action()
-		undo.undo()
+		
 		return true
 	return false

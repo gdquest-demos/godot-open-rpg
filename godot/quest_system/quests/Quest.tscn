@@ -5,3 +5,7 @@
 [node name="Quest" type="Node"]
 script = ExtResource( 1 )
 
+[node name="ItemRewards" type="Node" parent="."]
+
+[node name="Objectives" type="Node" parent="."]
+
