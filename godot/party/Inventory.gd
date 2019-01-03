@@ -13,7 +13,7 @@ func add(item: Item, amount: int = 1) -> void:
 	if item in content:
 		content[item] += amount
 	else:
-		content[item] = 1 if item.is_unique else amount
+		content[item] = 1 if item.unique else amount
 
 func remove(item: Item, amount: int = 1):
 	assert item in content
