@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://local_map/pawns/PawnInteractive.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprites/icons/npc_quest_available.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "wobble"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("QuestBubble:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 0.31864, 1.68179, 0.277392 ),
+"update": 0,
+"values": [ Vector2( 0, -93 ), Vector2( 0, -130 ), Vector2( 0, -93 ) ]
+}
+
+[node name="QuestPawn" index="0" instance=ExtResource( 1 )]
+script = null
+
+[node name="QuestBubble" type="Sprite" parent="." index="2"]
+position = Vector2( 0, -122.815 )
+texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
+anims/wobble = SubResource( 1 )
+

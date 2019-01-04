@@ -11,8 +11,8 @@
 [ext_resource path="res://local_map/pawns/actions/StartCombatAction.tscn" type="PackedScene" id=9]
 [ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=10]
 [ext_resource path="res://local_map/pawns/actions/DialogueAction.tscn" type="PackedScene" id=11]
-[ext_resource path="res://local_map/pawns/unique_pawns/QuestGiver.tscn" type="PackedScene" id=12]
-[ext_resource path="res://local_map/pawns/unique_pawns/QuestDialogueTest.tscn" type="PackedScene" id=13]
+[ext_resource path="res://local_map/pawns/unique_pawns/TestQuestGiver.tscn" type="PackedScene" id=12]
+[ext_resource path="res://local_map/pawns/unique_pawns/TestQuestReceiver.tscn" type="PackedScene" id=13]
 [ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -96,8 +96,8 @@ dialogue_file_path = "res://dialogue/data/test_conversation.json"
 [node name="StartCombat" parent="GameBoard/Pawns/DialogueCombatPawn/Actions" index="1" instance=ExtResource( 9 )]
 formation = ExtResource( 10 )
 
-[node name="QuestGiver" parent="GameBoard/Pawns" instance=ExtResource( 12 )]
-position = Vector2( 1040, 150 )
+[node name="TestQuestGiver" parent="GameBoard/Pawns" instance=ExtResource( 12 )]
+position = Vector2( 1020, 140 )
 facing = {
 "down": true,
 "left": true,
@@ -105,8 +105,8 @@ facing = {
 "up": true
 }
 
-[node name="QuestDialogueTest" parent="GameBoard/Pawns" instance=ExtResource( 13 )]
-position = Vector2( 1310, 440 )
+[node name="PawnQuestReceiver" parent="GameBoard/Pawns" instance=ExtResource( 13 )]
+position = Vector2( 1300, 260 )
 facing = {
 "down": true,
 "left": true,

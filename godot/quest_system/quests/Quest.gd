@@ -2,6 +2,7 @@ extends Node
 class_name Quest
 
 signal quest_finished(quest)
+signal quest_delivered()
 
 export var title : String
 export var description : String
@@ -29,6 +30,7 @@ func _on_objective_finished(objective) -> void:
 		finished = true
 
 func deliver_quest() -> void:
+	emit_signal("quest_delivered")
 	active = false
 
 func notify_slay_objectives() -> void:
