@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://party/Party.tscn" type="PackedScene" id=2]
 [ext_resource path="res://local_map/LocalMap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://quest_system/QuestSystem.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/shaders/TransitionColor.tscn" type="PackedScene" id=5]
-[ext_resource path="res://interface/game_over/GameOverInterface.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/audio/bgm/battle_theme.ogg" type="AudioStream" id=7]
-[ext_resource path="res://core/MusicPlayer.gd" type="Script" id=8]
-[ext_resource path="res://interface/debug/DebugInterface.tscn" type="PackedScene" id=9]
+[ext_resource path="res://interface/gui/GUI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/shaders/TransitionColor.tscn" type="PackedScene" id=6]
+[ext_resource path="res://interface/game_over/GameOverInterface.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/audio/bgm/battle_theme.ogg" type="AudioStream" id=8]
+[ext_resource path="res://core/MusicPlayer.gd" type="Script" id=9]
+[ext_resource path="res://interface/debug/DebugInterface.tscn" type="PackedScene" id=10]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -20,24 +21,26 @@ visible = false
 
 [node name="QuestSystem" parent="." instance=ExtResource( 4 )]
 
+[node name="GUI" parent="." instance=ExtResource( 5 )]
+
 [node name="Overlays" type="CanvasLayer" parent="."]
 editor/display_folded = true
 
-[node name="TransitionColor" parent="Overlays" instance=ExtResource( 5 )]
+[node name="TransitionColor" parent="Overlays" instance=ExtResource( 6 )]
 mouse_filter = 2
 
-[node name="GameOverInterface" parent="." instance=ExtResource( 6 )]
+[node name="GameOverInterface" parent="." instance=ExtResource( 7 )]
 layer = 0
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
+stream = ExtResource( 8 )
 bus = "Music"
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 
 [node name="Debug" type="CanvasLayer" parent="."]
 layer = 100
 
-[node name="DebugInterface" parent="Debug" instance=ExtResource( 9 )]
+[node name="DebugInterface" parent="Debug" instance=ExtResource( 10 )]
 
 [connection signal="combat_finished" from="." to="LocalMap" method="_on_Game_combat_finished"]
 [connection signal="combat_started" from="." to="QuestSystem" method="_on_Game_combat_started"]

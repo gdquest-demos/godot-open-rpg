@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://quest_system/quests/Quest.tscn" type="PackedScene" id=1]
 [ext_resource path="res://quest_system/quests/QuestItemReward.tscn" type="PackedScene" id=2]
@@ -6,14 +6,12 @@
 [ext_resource path="res://items/Ether.tres" type="Resource" id=4]
 [ext_resource path="res://quest_system/quests/QuestSlayObjective.tscn" type="PackedScene" id=5]
 [ext_resource path="res://combat/battlers/enemies/porcupine/PorcupineBattler.tscn" type="PackedScene" id=6]
-[ext_resource path="res://quest_system/quests/QuestInteractObjective.tscn" type="PackedScene" id=7]
-[ext_resource path="res://local_map/pawns/unique_pawns/QuestDialogueTest.tscn" type="PackedScene" id=8]
 
 [node name="TestQuest" index="0" instance=ExtResource( 1 )]
 title = "Test Quest"
-description = "Just a quest for testing. Good luck!"
+description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 exp_reward = 5
-has_to_be_delivered = false
+has_to_be_delivered = true
 
 [node name="QuestItemReward" parent="ItemRewards" index="0" instance=ExtResource( 2 )]
 item = ExtResource( 3 )
@@ -26,7 +24,4 @@ amount = 2
 [node name="QuestSlayObjective" parent="Objectives" index="0" instance=ExtResource( 5 )]
 amount = 3
 battler_to_slay = ExtResource( 6 )
-
-[node name="QuestInteractObjective" parent="Objectives" index="1" instance=ExtResource( 7 )]
-interact_with = ExtResource( 8 )
 

@@ -10,3 +10,6 @@ func _ready() -> void:
 func _on_interaction_finished(pawn) -> void:
 	if pawn.filename == interact_with.resource_path and not finished:
 		finish()
+
+func as_text() -> String:
+	return "Speak with: %s %s" % [interact_with.instance().name, "(completed)" if finished else ""]

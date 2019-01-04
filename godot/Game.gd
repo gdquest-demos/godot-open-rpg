@@ -14,15 +14,17 @@ onready var party = $Party as Party
 onready var music_player = $MusicPlayer
 onready var game_over_interface : = $GameOverInterface
 onready var quest_system : = $QuestSystem
+onready var gui : = $GUI
 
 var transitioning = false
 var combat_arena : CombatArena
 
 func _ready():
-	local_map.visible = true
-	local_map.spawn_party(party)
 	quest_system.initialize(party)
 	local_map.quest_system = quest_system
+	local_map.spawn_party(party)
+	local_map.visible = true
+	gui.initialize(quest_system)
 
 func enter_battle(formation: Formation):
 	"""
@@ -30,7 +32,7 @@ func enter_battle(formation: Formation):
 	"""
 	if transitioning:
 		return
-		
+	gui.hide()
 	music_player.play_battle_theme()
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
@@ -49,7 +51,7 @@ func enter_battle(formation: Formation):
 	# Then copy into the Party node to save earned experience,
 	# items, and currentstats
 	var updates = yield(combat_arena, "battle_ended")
-
+	gui.show()
 	emit_signal("combat_finished")
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")

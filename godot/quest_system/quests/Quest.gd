@@ -2,6 +2,7 @@ extends Node
 class_name Quest
 
 signal quest_finished(quest)
+signal quest_delivered()
 
 export var title : String
 export var description : String
@@ -29,6 +30,7 @@ func _on_objective_finished(objective) -> void:
 		finished = true
 
 func deliver_quest() -> void:
+	emit_signal("quest_delivered")
 	active = false
 
 func notify_slay_objectives() -> void:
@@ -36,3 +38,10 @@ func notify_slay_objectives() -> void:
 		if not objective is QuestSlayObjective:
 			continue
 		(objective as QuestSlayObjective).connect_signals()
+
+func get_rewards_as_text() -> Array:
+	var rewards : = []
+	rewards.append(" - Experience: %s" % str(exp_reward))
+	for item_reward in item_rewards:
+		rewards.append(" - [%s] x (%s)\n" % [item_reward.item.name, str(item_reward.amount)])
+	return rewards

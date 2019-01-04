@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://local_map/pawns/PawnQuestReceiver.tscn" type="PackedScene" id=1]
+[ext_resource path="res://quest_system/quests/TestQuest.tscn" type="PackedScene" id=2]
+
+[node name="TestQuestReceiver" instance=ExtResource( 1 )]
+type = 0
+vanish_on_interaction = false
+AUTO_START_INTERACTION = false
+sight_distance = 50
+facing = {
+"down": true,
+"left": true,
+"right": true,
+"up": true
+}
+
+[node name="DeliverQuestAction" parent="Actions" index="0"]
+quest = ExtResource( 2 )
+
