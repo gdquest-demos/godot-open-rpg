@@ -46,8 +46,10 @@ func find_path(start_world_position, end_world_position : Vector2) -> PoolVector
 	"""
 	Returns an array of grid points that connect the start and end world position
 	"""
-	var start = world_to_map(start_world_position)
 	var end = world_to_map(end_world_position)
+	if get_cellv(end) == CELL_TYPES.OBSTACLE:
+		return PoolVector3Array()
+	var start = world_to_map(start_world_position)
 	return pathfinder.find_path(start, end)
 
 func update_pawn_position(pawn : PawnActor, cell_start : Vector2, cell_target : Vector2) -> Vector2:
