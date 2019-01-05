@@ -34,6 +34,12 @@ func update_stats(stats : CharacterStats):
 		refresh_stats()
 		emit_signal("level_changed", after_level, before_level)
 
+func refresh_stats():
+	var stats = growth.create_stats(battler.stats.experience)
+	# TODO apply equipment stats
+	stats.reset()
+	battler.stats = stats
+
 func ready_for_combat():
 	"""
 	Returns a copy of the battler to add to the CombatArena
@@ -47,12 +53,6 @@ func get_pawn_anim():
 	e.g. to add it as a child of the currently loaded game map
 	"""
 	return get_node(pawn_anim_path).duplicate()
-
-func refresh_stats():
-	var stats = growth.create_stats(battler.stats.experience)
-	# TODO apply equipment stats
-	stats.reset()
-	battler.stats = stats
 
 func save(save_game : Resource):
 	save_game.data[SAVE_KEY] = battler.stats

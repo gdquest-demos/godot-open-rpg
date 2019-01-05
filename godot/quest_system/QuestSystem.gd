@@ -31,21 +31,27 @@ func _on_Game_combat_started() -> void:
 
 func has_quest(other_quest : Quest) -> bool:
 	for quest in quests:
-		if quest.title == other_quest.title:
-			return true
+		if quest.title != other_quest.title:
+			continue
+		return true
 	return false
 
-func get_finished_quest(other_quest) -> Quest:
+func get_finished_quest(_quest) -> Quest:
+	assert has_quest(_quest)
 	for quest in quests:
-		if quest.title == other_quest.title and quest.finished and quest.active:
-			return quest
+		if not (quest.finished and quest.active):
+			continue
+		return quest
 	return null
 
 func reward_player(quest) -> void:
 	emit_signal("quest_delivered", quest)
 	for item_reward in quest.item_rewards:
 		party.inventory.add(item_reward.item, item_reward.amount)
-
+	
+	# TODO: Simplify the stats API on PartyMember. party_member.experience += value
+	# should level up the character and update the stats automatically
+	# so that all the code stays in PartyMember.gd
 	for party_member in party.get_active_members():
 		party_member.battler.stats.experience += quest.exp_reward
 		party_member.update_stats(party_member.battler.stats)

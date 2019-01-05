@@ -15,8 +15,8 @@ func _ready() -> void:
 	# using a group so LocalMap can initialize all MapActions
 	add_to_group("map_action")
 
-func initialize(map):
-	local_map = map
+func initialize(_local_map):
+	local_map = _local_map
 
 func interact() -> void:
 	print("You forgot to override the interact method in " + name)

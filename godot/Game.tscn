@@ -28,6 +28,7 @@ editor/display_folded = true
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 6 )]
 mouse_filter = 2
+transition = 0.0
 
 [node name="GameOverInterface" parent="." instance=ExtResource( 7 )]
 layer = 0
@@ -38,9 +39,11 @@ bus = "Music"
 script = ExtResource( 9 )
 
 [node name="Debug" type="CanvasLayer" parent="."]
+editor/display_folded = true
 layer = 100
 
 [node name="DebugInterface" parent="Debug" instance=ExtResource( 10 )]
+visible = false
 
 [connection signal="combat_finished" from="." to="LocalMap" method="_on_Game_combat_finished"]
 [connection signal="combat_started" from="." to="QuestSystem" method="_on_Game_combat_started"]
