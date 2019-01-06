@@ -10,8 +10,6 @@
 [node name="TestQuest" index="0" instance=ExtResource( 1 )]
 title = "Test Quest"
 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-exp_reward = 5
-has_to_be_delivered = true
 
 [node name="QuestItemReward" parent="ItemRewards" index="0" instance=ExtResource( 2 )]
 item = ExtResource( 3 )
