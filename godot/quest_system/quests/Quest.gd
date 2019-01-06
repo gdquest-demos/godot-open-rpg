@@ -20,8 +20,6 @@ onready var _reward_items : Node = $ItemRewards
 func _start():
 	for objective in get_objectives():
 		objective.connect("completed", self, "_on_Objective_completed")
-	for objective in get_objectives():
-		objective.finish()
 
 func get_objectives():
 	return objectives.get_children()
