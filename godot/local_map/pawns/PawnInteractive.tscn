@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://local_map/pawns/PawnInteractive.gd" type="Script" id=1]
 [ext_resource path="res://animation/PawnAnim.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/sprites/dialogue_balloon.png" type="Texture" id=3]
+[ext_resource path="res://quest_system/QuestBubble.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sprites/dialogue_balloon.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -18,21 +19,18 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-facing = {
-"down": true,
-"left": true,
-"right": true,
-"up": true
-}
 
 [node name="Pivot" type="Position2D" parent="."]
 
 [node name="PawnAnim" parent="Pivot" instance=ExtResource( 2 )]
 
+[node name="QuestBubble" parent="." instance=ExtResource( 3 )]
+position = Vector2( 56.0923, -39.7058 )
+
 [node name="DialogueBalloon" type="Sprite" parent="."]
 visible = false
 position = Vector2( 30, -30 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -55,4 +53,6 @@ cast_to = Vector2( 50, 0 )
 collision_mask = 2
 
 [node name="Actions" type="Node" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
 

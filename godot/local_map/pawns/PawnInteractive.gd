@@ -13,6 +13,7 @@ signal interaction_finished(pawn)
 onready var raycasts : Node2D = $Raycasts
 onready var dialogue_balloon : Sprite = $DialogueBalloon
 onready var collision_shape : CollisionShape2D = $CollisionShape2D
+onready var actions : Node = $Actions
 
 export var vanish_on_interaction : = false
 export var AUTO_START_INTERACTION : = false
@@ -26,7 +27,7 @@ export var facing = {
 
 var active_raycasts := []
 
-func _ready() -> void:
+func _ready():
 	# Initializes raycast nodes, deactivates the area if using raycasts
 	# for player detection
 	var use_area = true
@@ -42,6 +43,18 @@ func _ready() -> void:
 		connect('body_entered', self, '_on_body_entered')
 		connect('body_exited', self, '_on_body_exited')
 		set_physics_process(false)
+
+	# Quests
+	# Connects to quest-related actions
+	var quest : Quest
+	for action in actions.get_children():
+		if not action is GiveQuestAction or action is CompleteQuestAction:
+			continue
+		quest = action.quest
+		break
+	if not quest:
+		return
+	$QuestBubble.initialize(quest)
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Use the area to detect if the user is clicking on the NPCs' interaction zone

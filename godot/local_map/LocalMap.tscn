@@ -11,8 +11,8 @@
 [ext_resource path="res://local_map/pawns/actions/StartCombatAction.tscn" type="PackedScene" id=9]
 [ext_resource path="res://combat/battlers/formations/PorcupineFormation001.tscn" type="PackedScene" id=10]
 [ext_resource path="res://local_map/pawns/actions/DialogueAction.tscn" type="PackedScene" id=11]
-[ext_resource path="res://local_map/pawns/unique_pawns/TestQuestGiver.tscn" type="PackedScene" id=12]
-[ext_resource path="res://local_map/pawns/unique_pawns/TestQuestReceiver.tscn" type="PackedScene" id=13]
+[ext_resource path="res://local_map/pawns/TestQuestGiver.tscn" type="PackedScene" id=12]
+[ext_resource path="res://local_map/pawns/TestQuestReceiver.tscn" type="PackedScene" id=13]
 [ext_resource path="res://interface/gui/DialogueBox.tscn" type="PackedScene" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -42,7 +42,7 @@ tile_data = PoolIntArray( -65536, 1, 0, -65535, 1, 0, -65534, 1, 0, -65533, 1, 0
 script = ExtResource( 4 )
 
 [node name="SpawningPoint" parent="GameBoard" instance=ExtResource( 5 )]
-position = Vector2( 920, 600 )
+position = Vector2( 1020, 260 )
 
 [node name="Pawns" type="YSort" parent="GameBoard"]
 script = ExtResource( 6 )
@@ -58,7 +58,7 @@ facing = {
 "up": false
 }
 
-[node name="CollisionShape2D" parent="GameBoard/Pawns/EncounterPawn" index="2"]
+[node name="CollisionShape2D" parent="GameBoard/Pawns/EncounterPawn" index="3"]
 shape = SubResource( 1 )
 
 [node name="StartCombat" parent="GameBoard/Pawns/EncounterPawn/Actions" index="0" instance=ExtResource( 9 )]
@@ -74,7 +74,7 @@ facing = {
 "up": false
 }
 
-[node name="CollisionShape2D" parent="GameBoard/Pawns/DialoguePawn" index="2"]
+[node name="CollisionShape2D" parent="GameBoard/Pawns/DialoguePawn" index="3"]
 shape = SubResource( 2 )
 
 [node name="Dialogue" parent="GameBoard/Pawns/DialoguePawn/Actions" index="0" instance=ExtResource( 11 )]
@@ -97,22 +97,10 @@ dialogue_file_path = "res://dialogue/data/test_conversation.json"
 formation = ExtResource( 10 )
 
 [node name="TestQuestGiver" parent="GameBoard/Pawns" instance=ExtResource( 12 )]
-position = Vector2( 1020, 140 )
-facing = {
-"down": true,
-"left": true,
-"right": true,
-"up": true
-}
+position = Vector2( 1160, 200 )
 
-[node name="PawnQuestReceiver" parent="GameBoard/Pawns" instance=ExtResource( 13 )]
-position = Vector2( 1300, 260 )
-facing = {
-"down": true,
-"left": true,
-"right": true,
-"up": true
-}
+[node name="TestQuestGiver3" parent="GameBoard/Pawns" instance=ExtResource( 13 )]
+position = Vector2( 1320, 314 )
 
 [node name="MapInterface" type="CanvasLayer" parent="."]
 pause_mode = 2

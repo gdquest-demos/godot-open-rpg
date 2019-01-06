@@ -6,7 +6,9 @@ And Questitem
 extends Node
 class_name Quest
 
-signal completed(quest)
+signal started()
+signal completed()
+signal delivered()
 
 onready var objectives = $Objectives
 
@@ -20,6 +22,7 @@ onready var _reward_items : Node = $ItemRewards
 func _start():
 	for objective in get_objectives():
 		objective.connect("completed", self, "_on_Objective_completed")
+	emit_signal("started")
 
 func get_objectives():
 	return objectives.get_children()
@@ -34,7 +37,10 @@ func get_completed_objectives():
 
 func _on_Objective_completed(objective) -> void:
 	if get_completed_objectives().size() == get_objectives().size():
-		emit_signal("completed", self)
+		emit_signal("completed")
+
+func _deliver():
+	emit_signal("delivered")
 
 func notify_slay_objectives() -> void:
 	for objective in get_objectives():
@@ -44,7 +50,7 @@ func notify_slay_objectives() -> void:
 
 func get_rewards() -> Dictionary:
 	"""
-	Returns the rewards from the quest as a dictionary of the form:
+	Returns the rewards from the quest as a dictionary
 	"""
 	return {
 		'experience' : _reward_experience, # int

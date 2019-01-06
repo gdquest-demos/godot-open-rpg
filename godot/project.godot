@@ -194,16 +194,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://local_map/pawns/PawnLeader.gd"
 }, {
-"base": "Node2D",
-"class": "PawnQuestGiver",
-"language": "GDScript",
-"path": "res://local_map/pawns/PawnQuestGiver.gd"
-}, {
-"base": "Node2D",
-"class": "PawnQuestReceiver",
-"language": "GDScript",
-"path": "res://local_map/pawns/PawnQuestReceiver.gd"
-}, {
 "base": "Node",
 "class": "Quest",
 "language": "GDScript",
@@ -307,8 +297,6 @@ _global_script_class_icons={
 "PawnFollower": "",
 "PawnInteractive": "",
 "PawnLeader": "",
-"PawnQuestGiver": "",
-"PawnQuestReceiver": "",
 "Quest": "",
 "QuestInteractObjective": "",
 "QuestItemReward": "",
@@ -335,6 +323,10 @@ config/version="0.3.0"
 
 DialogueDatabase="*res://dialogue/DialogueDatabase.gd"
 QuestSystem="*res://quest_system/QuestSystem.tscn"
+
+[debug]
+
+gdscript/warnings/enable=false
 
 [display]
 

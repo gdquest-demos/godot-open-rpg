@@ -1,3 +1,7 @@
+"""
+Base interface for quest objective nodes. Extend it
+to create specific objectives
+"""
 extends Node
 class_name QuestObjective
 

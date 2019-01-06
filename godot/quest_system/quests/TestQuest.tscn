@@ -7,7 +7,7 @@
 [ext_resource path="res://quest_system/quests/QuestSlayObjective.tscn" type="PackedScene" id=5]
 [ext_resource path="res://combat/battlers/enemies/porcupine/PorcupineBattler.tscn" type="PackedScene" id=6]
 
-[node name="TestQuest" index="0" instance=ExtResource( 1 )]
+[node name="TestQuest" instance=ExtResource( 1 )]
 title = "Test Quest"
 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 
