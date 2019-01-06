@@ -234,11 +234,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://quest_system/quests/QuestSlayObjective.gd"
 }, {
-"base": "Node",
-"class": "QuestSystem",
-"language": "GDScript",
-"path": "res://quest_system/QuestSystem.gd"
-}, {
 "base": "Node2D",
 "class": "RectExtents",
 "language": "GDScript",
@@ -320,7 +315,6 @@ _global_script_class_icons={
 "QuestJournal": "",
 "QuestObjective": "",
 "QuestSlayObjective": "",
-"QuestSystem": "",
 "RectExtents": "",
 "SaveGame": "",
 "Skill": "",
@@ -340,6 +334,7 @@ config/version="0.3.0"
 [autoload]
 
 DialogueDatabase="*res://dialogue/DialogueDatabase.gd"
+QuestSystem="*res://quest_system/QuestSystem.tscn"
 
 [display]
 

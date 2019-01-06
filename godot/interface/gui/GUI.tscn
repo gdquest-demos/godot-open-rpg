@@ -1,15 +1,10 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://interface/gui/GUI.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/icons/quest_icon.png" type="Texture" id=2]
 [ext_resource path="res://interface/gui/QuestJournal.gd" type="Script" id=3]
-[ext_resource path="res://assets/sprites/icons/quest_active_icon.png" type="Texture" id=4]
-[ext_resource path="res://assets/sprites/icons/quest_inactive_icon.png" type="Texture" id=5]
-[ext_resource path="res://assets/sprites/icons/quest_finished_icon.png" type="Texture" id=6]
-[ext_resource path="res://assets/sprites/icons/quest_objective_finished.png" type="Texture" id=7]
-[ext_resource path="res://assets/sprites/icons/quest_objective_unfinished.png" type="Texture" id=8]
-[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_48.tres" type="DynamicFont" id=9]
-[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_32.tres" type="DynamicFont" id=10]
+[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_48.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_32.tres" type="DynamicFont" id=5]
 
 [sub_resource type="Animation" id=1]
 
@@ -78,11 +73,6 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
-quest_active_icon = ExtResource( 4 )
-quest_inactive_icon = ExtResource( 5 )
-quest_finished_icon = ExtResource( 6 )
-quest_objective_finished = ExtResource( 7 )
-quest_objective_unfinished = ExtResource( 8 )
 
 [node name="Column" type="VBoxContainer" parent="Container/QuestJournal"]
 anchor_right = 1.0
@@ -91,7 +81,7 @@ anchor_bottom = 1.0
 [node name="Title" type="Label" parent="Container/QuestJournal/Column"]
 margin_right = 1280.0
 margin_bottom = 60.0
-custom_fonts/font = ExtResource( 9 )
+custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0.321569 )
 custom_constants/shadow_offset_x = 0
 custom_constants/shadow_offset_y = 5
@@ -105,8 +95,8 @@ margin_right = 1280.0
 margin_bottom = 632.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/title_button_font = ExtResource( 9 )
-custom_fonts/font = ExtResource( 10 )
+custom_fonts/title_button_font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Container"]
 anims/slide_in_quest_journal = SubResource( 1 )
@@ -115,4 +105,3 @@ anims/slide_out_quest_journal = SubResource( 2 )
 [node name="Tween" type="Tween" parent="."]
 
 [connection signal="pressed" from="Container/QuestButton" to="." method="_on_QuestButton_pressed"]
-[connection signal="journal_updated" from="Container/QuestJournal" to="." method="_on_QuestJournal_journal_updated"]

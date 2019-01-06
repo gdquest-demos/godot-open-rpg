@@ -9,11 +9,12 @@ func connect_signals() -> void:
 		enemy.connect("died", self, "_on_enemy_died")
 
 func _on_enemy_died(battler) -> void:
-	if battler.filename == battler_to_slay.resource_path and not finished:
-		amount -= 1
-		emit_signal("objective_updated", self)
-		if amount == 0 and not finished:
-			finish()
+	if completed or battler.filename != battler_to_slay.resource_path:
+		return
+	amount -= 1
+	emit_signal("updated", self)
+	if amount == 0 and not completed:
+		finish()
 
 func as_text() -> String:
-	return "Slay %s %s(s) %s" % [str(amount), battler_to_slay.instance().name, "(completed)" if finished else ""]
+	return "Slay %s %s(s) %s" % [str(amount), battler_to_slay.instance().name, "(completed)" if completed else ""]

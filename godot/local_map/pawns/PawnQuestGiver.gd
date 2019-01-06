@@ -21,16 +21,16 @@ func _ready() -> void:
 		break
 
 func _on_quest_given(quest : Quest) -> void:
-	quest.connect("quest_finished", self, "_on_quest_finished")
+	quest.connect("quest_completed", self, "_on_quest_completed")
 	quest.connect("quest_delivered", self, "_on_quest_delivered")
 	quest_bubble.animation = "quest_active"
 
-func _on_quest_finished(quest : Quest) -> void:
-	assert quest.has_to_be_delivered
+func _on_quest_completed(quest : Quest) -> void:
+	assert quest.reward_on_delivery
 	for action in actions.get_children():
 		if not action is CompleteQuestAction:
 			continue
-		quest_bubble.animation = "quest_finished"
+		quest_bubble.animation = "quest_completed"
 
 func _on_quest_delivered() -> void:
 	animation_player.stop()

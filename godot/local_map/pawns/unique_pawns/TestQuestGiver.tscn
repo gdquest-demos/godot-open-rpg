@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://local_map/pawns/PawnQuestGiver.tscn" type="PackedScene" id=1]
 [ext_resource path="res://local_map/pawns/actions/DialogueAction.tscn" type="PackedScene" id=2]
-[ext_resource path="res://quest_system/quests/TestQuest.tscn" type="PackedScene" id=3]
 
 [node name="TestQuestGiver" index="0" instance=ExtResource( 1 )]
 facing = {
@@ -14,7 +13,4 @@ facing = {
 
 [node name="Dialogue" parent="Actions" index="0" instance=ExtResource( 2 )]
 dialogue_file_path = "res://dialogue/data/quest_giver_conversation.json"
-
-[node name="GiveQuestAction" parent="Actions" index="1"]
-quest = ExtResource( 3 )
 

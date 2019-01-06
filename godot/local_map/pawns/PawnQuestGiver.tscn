@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://local_map/pawns/PawnInteractive.tscn" type="PackedScene" id=1]
 [ext_resource path="res://local_map/pawns/PawnQuestGiver.gd" type="Script" id=2]
 [ext_resource path="res://local_map/pawns/actions/GiveQuestAction.tscn" type="PackedScene" id=3]
-[ext_resource path="res://quest_system/QuestBubble.tscn" type="PackedScene" id=4]
+[ext_resource path="res://quest_system/quests/TestQuest.tscn" type="PackedScene" id=4]
+[ext_resource path="res://quest_system/QuestBubble.tscn" type="PackedScene" id=5]
 
 [node name="PawnQuestGiver" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -15,7 +16,8 @@ facing = {
 }
 
 [node name="GiveQuestAction" parent="Actions" index="0" instance=ExtResource( 3 )]
+quest_scene = ExtResource( 4 )
 
-[node name="QuestBubble" parent="." index="5" instance=ExtResource( 4 )]
+[node name="QuestBubble" parent="." index="5" instance=ExtResource( 5 )]
 position = Vector2( 40, -31.5495 )
 

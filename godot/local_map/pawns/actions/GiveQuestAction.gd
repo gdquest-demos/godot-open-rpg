@@ -3,12 +3,16 @@ class_name GiveQuestAction
 
 signal quest_given(quest)
 
-export var quest : PackedScene
+export var quest_scene : PackedScene
+
+func _ready() -> void:
+	assert quest_scene
 
 func interact() -> void:
 	get_tree().paused = false
-	var quest_instance = quest.instance()
-	if not local_map.quest_system.has_quest(quest_instance):
-		emit_signal("quest_given", quest_instance)
-		local_map.quest_system.add_quest(quest_instance)
+	var quest : Quest = quest_scene.instance()
+	if not QuestSystem.is_available(quest):
+		return
+	QuestSystem.start(quest)
+	emit_signal("quest_given", quest)
 	emit_signal("finished")

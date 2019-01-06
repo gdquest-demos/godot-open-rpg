@@ -1,14 +1,14 @@
 extends Node
 class_name QuestObjective
 
-signal objective_finished(objective)
-signal objective_updated(objective)
+signal completed(objective)
+signal updated(objective)
 
-var finished : bool = false
+var completed : bool = false
 
 func finish() -> void:
-	finished = true
-	emit_signal("objective_finished", self)
+	completed = true
+	emit_signal("completed", self)
 
 func as_text() -> String:
-	return "OBJECTIVE TEXT NOT SET"
+	return "Objective %s as_text method should be overriden" % get_path()

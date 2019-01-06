@@ -14,11 +14,11 @@ onready var deliver_quest_action : = $Actions/CompleteQuestAction
 func _ready() -> void:
 	quest_bubble.hide()
 	deliver_quest_action.connect("quest_delivered", self, "_on_quest_delivered")
-	deliver_quest_action.connect("quest_finished", self, "_on_quest_finished")
+	deliver_quest_action.connect("quest_completed", self, "_on_quest_completed")
 
-func _on_quest_finished() -> void:
+func _on_quest_completed() -> void:
 	quest_bubble.show()
-	quest_bubble.animation = "quest_finished"
+	quest_bubble.animation = "quest_completed"
 	animation_player.play("wobble")
     
 func _on_quest_delivered() -> void:

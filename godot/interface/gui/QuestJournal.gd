@@ -7,19 +7,17 @@ onready var tree : = $Column/Tree
 
 export var quest_active_icon : Texture
 export var quest_inactive_icon : Texture
-export var quest_finished_icon : Texture
+export var quest_completed_icon : Texture
 export var quest_objective_finished : Texture
 export var quest_objective_unfinished : Texture
 
 var tree_root : TreeItem
 var active : = false
 
-func initialize(quest_system : QuestSystem) -> void:
-	quest_system.connect("quest_started", self, "_on_quest_started")
-	quest_system.connect("quest_finished", self, "_on_quest_finished")
-	quest_system.connect("quest_delivered", self, "_on_quest_delivered")
-
 func _ready() -> void:
+	QuestSystem.connect("quest_started", self, "_on_quest_started")
+	QuestSystem.connect("quest_completed", self, "_on_quest_completed")
+	QuestSystem.connect("quest_delivered", self, "_on_quest_delivered")
 	tree.set_hide_root(true)
 	tree_root = tree.create_item()
 	
@@ -27,7 +25,7 @@ func _get_quest_icon(quest : Quest) -> Texture:
 	if not quest.active:
 		return quest_inactive_icon
 	if quest.finished:
-		return quest_finished_icon
+		return quest_completed_icon
 	return quest_active_icon
 
 func _on_quest_started(quest : Quest) -> void:
@@ -65,12 +63,12 @@ func _on_objective_finished(objective : QuestObjective) -> void:
 	objective_item.set_icon(0, quest_objective_finished)
 	objective_item.set_text(0, objective.as_text())
 
-func _on_quest_finished(quest : Quest) -> void:
+func _on_quest_completed(quest : Quest) -> void:
 	emit_signal("journal_updated")
 	var quest_item = _find_quest_tree_item(quest)
 	if quest_item == null:
 		return
-	quest_item.set_icon(0, quest_finished_icon)
+	quest_item.set_icon(0, quest_completed_icon)
 
 func _on_quest_delivered(quest : Quest) -> void:
 	emit_signal("journal_updated")

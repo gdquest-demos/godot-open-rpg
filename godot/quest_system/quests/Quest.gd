@@ -1,47 +1,49 @@
+"""
+Represents a quest the player can take on
+Uses child Objective nodes to track tasks the player has to complete
+And Questitem
+"""
 extends Node
 class_name Quest
 
-signal quest_finished(quest)
-signal quest_delivered()
+signal completed(quest)
+
+onready var objectives = $Objectives
 
 export var title : String
 export var description : String
-export var exp_reward : int
-export var has_to_be_delivered : bool = false
 
-var item_rewards = []
-var objectives = []
-var finished_objectives = []
+export var reward_on_delivery : bool = false
+export var reward_experience : int
 
-var active : bool = false
-var finished : bool = false
+func _start():
+	for objective in get_objectives():
+		objective.connect("objective_finished", self, "_on_Objective_finished")
 
-func _ready() -> void:
-	active = true
-	item_rewards = $ItemRewards.get_children()
-	for objective in $Objectives.get_children():
-		objectives.append(objective)
-		objective.connect("objective_finished", self, "_on_objective_finished")
+func get_objectives():
+	return objectives.get_children()
 
-func _on_objective_finished(objective) -> void:
-	finished_objectives.append(objective)
-	if finished_objectives.size() == objectives.size():
-		emit_signal("quest_finished", self)
-		finished = true
+func get_completed_objectives():
+	var completed : Array = []
+	for objective in get_objectives():
+		if not objective.completed:
+			continue
+		completed.append(objective)
+	return completed
 
-func deliver_quest() -> void:
-	emit_signal("quest_delivered")
-	active = false
+func _on_Objective_finished(objective) -> void:
+	if get_completed_objectives().size() == get_objectives().size():
+		emit_signal("completed", self)
 
 func notify_slay_objectives() -> void:
-	for objective in objectives:
+	for objective in get_objectives():
 		if not objective is QuestSlayObjective:
 			continue
 		(objective as QuestSlayObjective).connect_signals()
 
 func get_rewards_as_text() -> Array:
-	var rewards : = []
-	rewards.append(" - Experience: %s" % str(exp_reward))
-	for item_reward in item_rewards:
-		rewards.append(" - [%s] x (%s)\n" % [item_reward.item.name, str(item_reward.amount)])
-	return rewards
+	var text : = []
+	text.append(" - Experience: %s" % str(reward_experience))
+	for item in $ItemRewards.get_children():
+		text.append(" - [%s] x (%s)\n" % [item.item.name, str(item.amount)])
+	return text

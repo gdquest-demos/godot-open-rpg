@@ -13,18 +13,15 @@ onready var local_map = $LocalMap
 onready var party = $Party as Party
 onready var music_player = $MusicPlayer
 onready var game_over_interface : = $GameOverInterface
-onready var quest_system : = $QuestSystem
 onready var gui : = $GUI
 
 var transitioning = false
 var combat_arena : CombatArena
 
 func _ready():
-	quest_system.initialize(party)
-	local_map.quest_system = quest_system
+	QuestSystem.initialize(party)
 	local_map.spawn_party(party)
 	local_map.visible = true
-	gui.initialize(quest_system)
 
 func enter_battle(formation: Formation):
 	"""

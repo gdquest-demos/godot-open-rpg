@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/sprites/icons/npc_quest_active.png" type="Texture" id=2]
 [ext_resource path="res://assets/sprites/icons/npc_quest_available.png" type="Texture" id=3]
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Position2D
 
@@ -38,7 +38,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -50 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=3]
 
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
@@ -58,13 +58,13 @@ animations = [ {
 } ]
 
 [node name="QuestBubble" type="Position2D"]
-script = SubResource( 3 )
+script = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/wobble = SubResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 1 )
+frames = SubResource( 3 )
 animation = "quest_available"
 offset = Vector2( 0.555588, -35.6669 )
 

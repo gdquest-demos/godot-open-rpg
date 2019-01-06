@@ -7,9 +7,6 @@ onready var quest_journal : = $Container/QuestJournal
 onready var quest_button : = $Container/QuestButton
 onready var animation_player : = $Container/AnimationPlayer
 
-func initialize(quest_system : QuestSystem) -> void:
-	quest_journal.initialize(quest_system)
-
 func _wiggle_element(element) -> void:
 	var wiggles = 6
 	var offset = Vector2(15, 0)
