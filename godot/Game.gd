@@ -19,7 +19,7 @@ var transitioning = false
 var combat_arena : CombatArena
 
 func _ready():
-	QuestSystem.initialize(party)
+	QuestSystem.initialize(self, party)
 	local_map.spawn_party(party)
 	local_map.visible = true
 
