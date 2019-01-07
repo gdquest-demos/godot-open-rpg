@@ -7,7 +7,7 @@
   <img src="https://i.imgur.com/lhi0U9v.png" alt="Godot Open RPG banner" />
 </p>
 
-OpenRPG is a tool and a demo to create Role Playing Games with turn-based combat. It's made with Godot 3.1 ([alpha 4](https://godotengine.org/article/dev-snapshot-godot-3-1-alpha-3)).
+OpenRPG is a tool and a demo to create Role Playing Games with turn-based combat. It's made with Godot 3.1 ([alpha 5](https://godotengine.org/article/dev-snapshot-godot-3-1-alpha-5)).
 
 *Looking for a Zelda-like game? Check out our [Open Source A-RPG demo](https://github.com/GDquest/make-pro-2d-games-with-godot/).*
 
