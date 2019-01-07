@@ -41,9 +41,7 @@ func get_battler_copy():
 	Returns a copy of the battler to add to the CombatArena
 	at the start of a battle
 	"""
-	var copy : Battler = battler.duplicate()
-	copy.stats = stats.copy()
-	return copy
+	return battler.duplicate()
 
 func get_pawn_anim():
 	"""

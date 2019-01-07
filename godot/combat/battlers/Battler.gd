@@ -36,6 +36,7 @@ func _ready() -> void:
 func initialize():
 	skin.initialize()
 	actions.initialize(skills.get_children())
+	stats = stats.copy()
 	stats.connect("health_depleted", self, "_on_health_depleted")
 
 func is_able_to_play() -> bool:
