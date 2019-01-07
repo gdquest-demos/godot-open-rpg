@@ -5,12 +5,15 @@
 [ext_resource path="res://animation/PorcupineAnim.tscn" type="PackedScene" id=3]
 [ext_resource path="res://combat/battlers/ai/RandomAI.gd" type="Script" id=4]
 
-[node name="Porcupine" groups=[
+[node name="Porcupine" index="0" groups=[
 "enemies",
 ] instance=ExtResource( 1 )]
 stats = ExtResource( 2 )
 
 [node name="PorcupineAnim" parent="Skin" index="2" instance=ExtResource( 3 )]
+
+[node name="Drops" parent="." index="5"]
+experience = 2
 
 [node name="AI" parent="." index="6"]
 script = ExtResource( 4 )

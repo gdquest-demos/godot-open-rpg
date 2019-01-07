@@ -22,36 +22,24 @@ export var strength : int = 1 setget ,_get_strength
 export var defense : int = 1 setget ,_get_defense
 export var speed : int = 1 setget ,_get_speed
 var is_alive : bool setget ,_is_alive
-export var experience : int setget _set_experience
 var level : int
 	
 func reset():
 	health = self.max_health
 	mana = self.max_mana
 	
-func copy():
+func copy() -> CharacterStats:
 	"""
 	Perform a more accurate duplication, as normally Resource duplication
 	does not retain any changes, instead duplicating from what's registered
 	in the ResourceLoader
 	"""
-	var cp = self.duplicate()
-	cp.experience = self.experience
-	cp.health = self.health
-	cp.mana = self.mana
-	return cp
-	
-func set_max_health(value):
-	if value == null:
-		return
-	max_health = max(1, value)
+	var copy = duplicate()
+	copy.health = health
+	copy.mana = mana
+	return copy
 
-func set_max_mana(value):
-	if value == null:
-		return
-	max_mana = max(0, value)
-
-func take_damage(hit):
+func take_damage(hit : Hit):
 	var old_health = health
 	health -= hit.damage
 	health = max(0, health)
@@ -59,25 +47,35 @@ func take_damage(hit):
 	if health == 0:
 		emit_signal("health_depleted")
 
-func set_mana(value):
+func heal(amount : int):
+	var old_health = health
+	health = min(health + amount, max_health)
+	emit_signal("health_changed", health, old_health)
+
+func set_mana(value : int):
 	var old_mana = mana
 	mana = max(0, value)
 	emit_signal("mana_changed", mana, old_mana)
 	if mana == 0:
 		emit_signal("mana_depleted")
+	
+func set_max_health(value : int):
+	if value == null:
+		return
+	max_health = max(1, value)
 
-func heal(amount):
-	var old_health = health
-	health = min(health + amount, max_health)
-	emit_signal("health_changed", health, old_health)
+func set_max_mana(value : int):
+	if value == null:
+		return
+	max_mana = max(0, value)
 
-func add_modifier(id, modifier):
+func add_modifier(id : int, modifier):
 	modifiers[id] = modifier
 
-func remove_modifier(id):
+func remove_modifier(id : int):
 	modifiers.erase(id)
 	
-func _is_alive():
+func _is_alive() -> bool:
 	return health >= 0
 
 func _get_max_health() -> int:
@@ -94,14 +92,6 @@ func _get_defense() -> int:
 	
 func _get_speed() -> int:
 	return speed
-
-func _get_experience() -> int:
-	return experience
-
-func _set_experience(value):
-	if value == null:
-		return
-	experience = max(0, value)
 
 func _get_level() -> int:
 	return level

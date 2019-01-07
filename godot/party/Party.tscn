@@ -41,6 +41,7 @@ pawn_anim_path = NodePath("RobiPawnAnim")
 growth = ExtResource( 10 )
 
 [node name="Battler" parent="Robi" index="0"]
+editor/display_folded = true
 party_member = true
 turn_order_icon = ExtResource( 11 )
 

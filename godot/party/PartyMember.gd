@@ -12,14 +12,17 @@ signal level_changed(new_value, old_value)
 export var pawn_anim_path : NodePath
 export var growth : Resource
 
+export var experience : int setget _set_experience
+var stats : Resource
+
 onready var battler : Battler = $Battler
 onready var SAVE_KEY : String = "party_member_" + name
 
 func _ready():
 	assert pawn_anim_path
 	assert growth
-	refresh_stats()
-	battler.stats.reset()
+	stats = growth.create_stats(experience)
+	battler.stats = stats
 
 func update_stats(stats : CharacterStats):
 	"""
@@ -28,24 +31,19 @@ func update_stats(stats : CharacterStats):
 	"""
 	var before_level = growth.get_level(battler.stats.experience)
 	var after_level = growth.get_level(stats.experience)
-	battler.stats = stats
-
 	if before_level != after_level:
-		refresh_stats()
+		stats.reset()
 		emit_signal("level_changed", after_level, before_level)
-
-func refresh_stats():
-	var stats = growth.create_stats(battler.stats.experience)
-	# TODO apply equipment stats
-	stats.reset()
 	battler.stats = stats
 
-func ready_for_combat():
+func get_battler_copy():
 	"""
 	Returns a copy of the battler to add to the CombatArena
 	at the start of a battle
 	"""
-	return battler.duplicate()
+	var copy : Battler = battler.duplicate()
+	copy.stats = stats.copy()
+	return copy
 
 func get_pawn_anim():
 	"""
@@ -54,8 +52,20 @@ func get_pawn_anim():
 	"""
 	return get_node(pawn_anim_path).duplicate()
 
+func _set_experience(value : int):
+	if value == null:
+		return
+	experience = max(0, value)
+
 func save(save_game : Resource):
-	save_game.data[SAVE_KEY] = battler.stats
+	save_game.data[SAVE_KEY] = {
+		'experience' : experience,
+		'health' : stats.health,
+		'mana' : stats.mana,
+	}
 
 func load(save_game : Resource):
-	battler.stats = save_game.data[SAVE_KEY]
+	var data : Dictionary = save_game.data[SAVE_KEY]
+	experience = data['experience']
+	stats.health = data['health']
+	stats.mana = data['mana']

@@ -55,34 +55,26 @@ func ready_field(formation : Formation, party_members : Array):
 	@param formation - the combat template of what the player will be fighting
 	@param party_members - list of active party battlers that will go to combat
 	"""
-	var spawn_positions = $SpawnPositions/Monsters
-	for enemy in formation.get_children():
-	 	# spawn a platform where the enemy is supposed to stand
-		var platform = formation.platform_template.instance()
-		platform.position = enemy.position
-		spawn_positions.add_child(platform)
-		var combatant = enemy.duplicate()
-		turn_queue.add_child(combatant)
-		combatant.stats.reset() # enemies need to start with full health
-		
+	for enemy_template in formation.get_children():
+		var enemy : Battler = enemy_template.duplicate()
+		turn_queue.add_child(enemy)
+		enemy.stats.reset() # ensure the enemy starts with full health and mana
+	
 	var party_spawn_positions = $SpawnPositions/Party
 	for i in len(party_members):
 		# TODO move this into a battler factory and pass already copied info into the scene
 		var party_member = party_members[i]
-		var platform = formation.platform_template.instance()
 		var spawn_point = party_spawn_positions.get_child(i)
-		platform.position = spawn_point.position
-		var combatant = party_member.ready_for_combat() as Battler
-		combatant.position = spawn_point.position
-		combatant.name = party_member.name
-		combatant.set_meta("party_member", party_member)
+		var battler : Battler = party_member.get_battler_copy()
+		battler.position = spawn_point.position
+		battler.name = party_member.name
+		battler.set_meta("party_member", party_member)
 		# stats are copied from the external party member so we may restart combat cleanly,
 		# such as allowing players to retry a fight if they get game over
-		spawn_point.replace_by(platform)
-		turn_queue.add_child(combatant)
-		self.party.append(combatant)
+		turn_queue.add_child(battler)
+		self.party.append(battler)
 		# safely attach the interface to the AI in case player input is needed
-		combatant.ai.set("interface", interface)
+		battler.ai.set("interface", interface)
 
 func battle_end():
 	emit_signal("battle_ends")
