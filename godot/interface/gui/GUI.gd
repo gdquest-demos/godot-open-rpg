@@ -7,6 +7,9 @@ onready var quest_journal : = $Container/QuestJournal
 onready var quest_button : = $Container/QuestButton
 onready var animation_player : = $Container/AnimationPlayer
 
+func _ready() -> void:
+	quest_journal.connect("updated", self, "_wiggle_element", [quest_button])
+
 func _wiggle_element(element) -> void:
 	var wiggles = 6
 	var offset = Vector2(15, 0)
@@ -43,6 +46,3 @@ func hide() -> void:
 
 func show() -> void:
 	container.show()
-
-func _on_QuestJournal_journal_updated():
-	_wiggle_element(quest_button)

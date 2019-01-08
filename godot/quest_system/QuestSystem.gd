@@ -24,6 +24,12 @@ func find_available(reference : Quest) -> Quest:
 	"""
 	return available_quests.find(reference)
 
+func get_available_quests() -> Array:
+	"""
+	Returns an Array of all quests under the Available node
+	"""
+	return available_quests.get_quests()
+
 func is_available(reference : Quest) -> bool:
 	return available_quests.find(reference) != null
 

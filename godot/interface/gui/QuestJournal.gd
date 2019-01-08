@@ -1,44 +1,41 @@
 extends Control
 class_name QuestJournal
 
-signal journal_updated()
+signal updated()
 
 onready var tree : = $Column/Tree
 
-export var quest_active_icon : Texture
-export var quest_inactive_icon : Texture
-export var quest_completed_icon : Texture
-export var quest_objective_finished : Texture
-export var quest_objective_unfinished : Texture
+export var active_icon : Texture
+export var inactive_icon : Texture
+export var completed_icon : Texture
+export var objective_completed : Texture
+export var objective_uncompleted : Texture
 
 var tree_root : TreeItem
 var active : = false
 
 func _ready() -> void:
-	QuestSystem.connect("quest_started", self, "_on_quest_started")
-	QuestSystem.connect("quest_completed", self, "_on_quest_completed")
-	QuestSystem.connect("quest_delivered", self, "_on_quest_delivered")
+	for quest in QuestSystem.get_available_quests():
+		quest.connect("started", self, "_on_quest_started", [quest])
+		quest.connect("completed", self, "_on_quest_completed", [quest])
+		quest.connect("delivered", self, "_on_quest_delivered", [quest])
 	tree.set_hide_root(true)
 	tree_root = tree.create_item()
-	
-func _get_quest_icon(quest : Quest) -> Texture:
-	if not quest.active:
-		return quest_inactive_icon
-	if quest.finished:
-		return quest_completed_icon
-	return quest_active_icon
 
 func _on_quest_started(quest : Quest) -> void:
-	emit_signal("journal_updated")
-	var quest_root = _add_tree_item(tree_root, quest.title, _get_quest_icon(quest), quest)
+	var quest_root = _add_tree_item(tree_root, quest.title, active_icon, quest)
 	_add_tree_item(quest_root, quest.description)
 	for reward_text in quest.get_rewards_as_text():
 		_add_tree_item(quest_root, reward_text)
-	for objective in quest.objectives:
-		objective.connect("objective_updated", self, "_on_objective_updated")
-		objective.connect("objective_finished", self, "_on_objective_finished")
-		_add_tree_item(quest_root, objective.as_text(),\
-			quest_objective_finished if objective.finished else quest_objective_unfinished, objective)
+	for objective in quest.get_objectives():
+		objective.connect("updated", self, "_on_Objective_updated")
+		objective.connect("completed", self, "_on_Objective_completed")
+		_add_tree_item(
+			quest_root, 
+			objective.as_text(),
+			objective_completed if objective.completed else objective_uncompleted, 
+			objective)
+	emit_signal("updated")
 
 func _add_tree_item(root : TreeItem, text : String, icon : Texture = null, metadata = null, selectable : bool = false, collapsed : bool = true) -> TreeItem:
 	var item = tree.create_item(root)
@@ -50,32 +47,32 @@ func _add_tree_item(root : TreeItem, text : String, icon : Texture = null, metad
 		item.set_metadata(0, metadata)
 	return item
 
-func _on_objective_updated(objective : QuestObjective) -> void:
-	var objective_item = _find_quest_objective_tree_item(objective)
+func _on_Objective_updated(objective : QuestObjective) -> void:
+	var objective_item = _find_objective_tree_item(objective)
 	if objective_item == null:
 		return
 	objective_item.set_text(0, objective.as_text())
 
-func _on_objective_finished(objective : QuestObjective) -> void:
-	var objective_item = _find_quest_objective_tree_item(objective)
+func _on_Objective_completed(objective : QuestObjective) -> void:
+	var objective_item = _find_objective_tree_item(objective)
 	if objective_item == null:
 		return
-	objective_item.set_icon(0, quest_objective_finished)
+	objective_item.set_icon(0, objective_completed)
 	objective_item.set_text(0, objective.as_text())
 
 func _on_quest_completed(quest : Quest) -> void:
-	emit_signal("journal_updated")
 	var quest_item = _find_quest_tree_item(quest)
 	if quest_item == null:
 		return
-	quest_item.set_icon(0, quest_completed_icon)
+	quest_item.set_icon(0, completed_icon)
+	emit_signal("updated")
 
 func _on_quest_delivered(quest : Quest) -> void:
-	emit_signal("journal_updated")
 	var quest_item = _find_quest_tree_item(quest)
 	if quest_item == null:
 		return
-	quest_item.set_icon(0, quest_inactive_icon)
+	quest_item.set_icon(0, inactive_icon)
+	emit_signal("updated")
 
 func _find_quest_tree_item(quest : Quest) -> TreeItem:
 	var quest_item = tree_root.get_children()
@@ -85,7 +82,7 @@ func _find_quest_tree_item(quest : Quest) -> TreeItem:
 		quest_item = quest_item.get_next()
 	return null
 
-func _find_quest_objective_tree_item(objective : QuestObjective) -> TreeItem:
+func _find_objective_tree_item(objective : QuestObjective) -> TreeItem:
 	var quest_item = tree_root.get_children()
 	while quest_item != null:
 		var objective_item = quest_item.get_children()

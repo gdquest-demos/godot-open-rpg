@@ -99,8 +99,8 @@ formation = ExtResource( 10 )
 [node name="TestQuestGiver" parent="GameBoard/Pawns" instance=ExtResource( 12 )]
 position = Vector2( 1160, 200 )
 
-[node name="TestQuestGiver3" parent="GameBoard/Pawns" instance=ExtResource( 13 )]
-position = Vector2( 1320, 314 )
+[node name="TestQuestReceiver" parent="GameBoard/Pawns" instance=ExtResource( 13 )]
+position = Vector2( 1330, 321.55 )
 
 [node name="MapInterface" type="CanvasLayer" parent="."]
 pause_mode = 2
