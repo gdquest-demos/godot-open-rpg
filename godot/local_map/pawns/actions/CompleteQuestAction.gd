@@ -23,4 +23,5 @@ func interact() -> void:
 		emit_signal("finished")
 		return
 	QuestSystem.deliver(quest)
+	active = false
 	emit_signal("finished")
