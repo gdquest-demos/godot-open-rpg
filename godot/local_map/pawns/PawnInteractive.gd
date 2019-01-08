@@ -15,6 +15,8 @@ onready var dialogue_balloon : Sprite = $DialogueBalloon
 onready var collision_shape : CollisionShape2D = $CollisionShape2D
 onready var actions : Node = $Actions
 
+onready var quest_bubble : Node = $QuestBubble
+
 export var vanish_on_interaction : = false
 export var AUTO_START_INTERACTION : = false
 export var sight_distance = 50
@@ -45,16 +47,15 @@ func _ready():
 		set_physics_process(false)
 
 	# Quests
-	# Connects to quest-related actions
-	var quest : Quest
+	# Send quest-related MapActions, if any, to the QuestBubble
+	var quest_actions : Array = []
 	for action in actions.get_children():
-		if not action is GiveQuestAction or action is CompleteQuestAction:
+		if not (action is GiveQuestAction or action is CompleteQuestAction):
 			continue
-		quest = action.quest
-		break
-	if not quest:
+		quest_actions.append(action)
+	if quest_actions.size() == 0:
 		return
-	$QuestBubble.initialize(quest)
+	quest_bubble.initialize(quest_actions)
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Use the area to detect if the user is clicking on the NPCs' interaction zone
