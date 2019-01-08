@@ -29,8 +29,8 @@ func update_stats(stats : CharacterStats):
 	Update this character's stats to match select changes
 	that occurred during combat or through menu actions
 	"""
-	var before_level = growth.get_level(battler.stats.experience)
-	var after_level = growth.get_level(stats.experience)
+	var before_level = stats.level
+	var after_level = growth.get_level(experience)
 	if before_level != after_level:
 		stats.reset()
 		emit_signal("level_changed", after_level, before_level)
