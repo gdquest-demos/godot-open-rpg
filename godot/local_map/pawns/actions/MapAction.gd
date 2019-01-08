@@ -10,6 +10,7 @@ class_name MapAction
 
 signal finished()
 var local_map
+var active : bool = true
 
 func _ready() -> void:
 	# using a group so LocalMap can initialize all MapActions
