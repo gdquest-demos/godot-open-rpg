@@ -12,13 +12,14 @@ var active : bool = false
 var party : Array = []
 var initial_formation : Formation
 
-# sent when the battler is starting to end (before battle_ended)
+# TODO: Refactor and clean up this script
+# sent when the battler is starting to end (before battle_completed)
 signal battle_ends
 # sent when battle is completed, contains status updates for the party
 # so that we may persist the data
-signal battle_ended(party)
+signal battle_completed
 signal victory
-signal gameover
+signal game_over
 
 func initialize(formation : Formation, party : Array):
 	initial_formation = formation
@@ -39,14 +40,11 @@ func battle_start():
 	play_turn()
 
 func play_intro():
-	# Play the appear animation on all battlers in cascade
 	for battler in turn_queue.get_party():
 		battler.appear()
-#		yield(get_tree().create_timer(0.15), "timeout")
 	yield(get_tree().create_timer(0.5), "timeout")
 	for battler in turn_queue.get_monsters():
 		battler.appear()
-#		yield(get_tree().create_timer(0.15), "timeout")
 	yield(get_tree().create_timer(0.5), "timeout")
 
 func ready_field(formation : Formation, party_members : Array):
@@ -85,9 +83,9 @@ func battle_end():
 	if player_won:
 		emit_signal("victory")
 		yield(rewards.on_battle_completed(), "completed")
-		emit_signal("battle_ended", self.party)
+		emit_signal("battle_completed")
 	else:
-		emit_signal("gameover")
+		emit_signal("game_over")
 
 func play_turn():
 	var battler : Battler = get_active_battler()

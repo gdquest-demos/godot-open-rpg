@@ -5,7 +5,6 @@ combat, game over, and the map
 extends Node
 
 signal combat_started()
-signal combat_finished()
 
 const combat_arena_scene = preload("res://combat/CombatArena.tscn")
 onready var transition = $Overlays/TransitionColor
@@ -29,30 +28,38 @@ func enter_battle(formation: Formation):
 	"""
 	if transitioning:
 		return
+
 	gui.hide()
 	music_player.play_battle_theme()
+
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
+
 	remove_child(local_map)
 	combat_arena = combat_arena_scene.instance()
 	add_child(combat_arena)
 	combat_arena.connect("victory", self, "_on_CombatArena_player_victory")
-	combat_arena.connect("gameover", self, "_on_combat_gameover")
+	combat_arena.connect("game_over", self, "_on_CombatArena_game_over")
+	combat_arena.connect("battle_completed", self, "_on_CombatArena_battle_completed", [combat_arena])
 	combat_arena.initialize(formation, party.get_active_members())
+
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
+
 	combat_arena.battle_start()
 	emit_signal("combat_started")
-	
-	# Get data from the battlers after the battle ended,
-	# Then copy into the Party node to save earned experience,
-	# items, and currentstats
-	var updates = yield(combat_arena, "battle_ended")
+
+func _on_CombatArena_battle_completed(arena):
+	"""
+	At the end of an encounter, fade the screen, remove the combat arena
+	and add the local map back
+	"""
 	gui.show()
-	emit_signal("combat_finished")
+	
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
 	combat_arena.queue_free()
+	
 	add_child(local_map)
 	yield(transition.fade_from_color(), "completed")
 	transitioning = false
@@ -61,7 +68,7 @@ func enter_battle(formation: Formation):
 func _on_CombatArena_player_victory():
 	music_player.play_victory_fanfare()
 
-func _on_combat_gameover() -> void:
+func _on_CombatArena_game_over() -> void:
 	transitioning = true
 	yield(transition.fade_to_color(), "completed")
 	game_over_interface.display(GameOverInterface.Reason.PARTY_DEFEATED)
