@@ -1,3 +1,7 @@
+"""
+Animated circular button that supports both keys and mouse input
+Reacts to mouse hover and focus events
+"""
 extends Button
 
 onready var animation_player : = $AnimationPlayer as AnimationPlayer
@@ -10,16 +14,25 @@ var target_position : Vector2
 var unfocused_scale : Vector2
 
 func initialize(action : CombatAction, target_position : Vector2) -> void:
+	"""
+	Places the Button on the screen, where the appear tween animation should end
+	Disables the button if the action isn't usable, for example
+	if the battler doesn't have enough mana
+	"""
 	unfocused_scale = rect_scale
 	rect_scale = Vector2()
 	self.target_position = target_position
+
+	button_icon.texture = action.icon
 	disabled = not action.can_use()
 	if disabled:
 		modulate = Color("#555555")
 	tooltip.initialize(self, action)
-	button_icon.texture = action.icon
-	connect('mouse_exited', self, '_on_mouse_exited')
-	connect('mouse_entered', self, '_on_mouse_entered')
+
+	connect('mouse_entered', self, 'enter_focus')
+	connect('mouse_exited', self, 'exit_focus')
+	connect('focus_entered', self, 'enter_focus')
+	connect('focus_exited', self, 'exit_focus')
 
 func enter_focus():
 	raise()
@@ -31,15 +44,3 @@ func enter_focus():
 func exit_focus():
 	tooltip.hide()
 	animation_player.play('deactivate')
-
-func _on_mouse_entered() -> void:
-	enter_focus()
-
-func _on_mouse_exited() -> void:
-	exit_focus()
-
-func _on_focus_entered() -> void:
-	enter_focus()
-
-func _on_focus_exited() -> void:
-	exit_focus()

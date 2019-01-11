@@ -280,5 +280,3 @@ anims/active = SubResource( 7 )
 anims/deactivate = SubResource( 8 )
 blend_times = [  ]
 
-[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
-[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
