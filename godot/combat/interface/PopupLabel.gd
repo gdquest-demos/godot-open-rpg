@@ -1,24 +1,24 @@
 extends Control
 
-onready var anim_player = get_node("AnimationPlayer")
-var _animation_name : String
+onready var anim_player : AnimationPlayer = $AnimationPlayer
+onready var label : Label = $Label
 
-export var offset : Vector2 = Vector2(0.0, -40.0)
+export var offset : = Vector2(0.0, -40.0)
 
-func initialize(battler : Battler, type : String, message : String):
+func start(battler : Battler, type : String, message : String) -> void:
 	"""
+	Initializes the node and starts its animation
 	@type: either health, mana, missed. Determines the animation the label will use
 	"""
-	assert type in ["health", "mana", "missed"]
-	var battler_extents : RectExtents = battler.skin.get_extents()
-	get_node("Label").text = message
+	assert type in ['miss', 'mana', 'health']
+	var extents : RectExtents = battler.skin.get_extents()
+	label.text = message
+	
+	var animation_name : = ""
 	if type == "missed":
-		offset = offset * 2
-		_animation_name = type
+		offset *= 2
+		animation_name = type
 	elif type == "health" or type == "mana":
-		_animation_name = type + "_loss" if int(message) <= 0 else type + "_gain"
-	rect_global_position = battler.global_position - Vector2(0.0, battler_extents.size.y) + offset
-	
-func play() -> void:
-	anim_player.play(_animation_name)
-	
+		animation_name = type + "_loss" if int(message) <= 0 else type + "_gain"
+	rect_global_position = battler.global_position - Vector2(0.0, extents.size.y) + offset
+	anim_player.play(animation_name)
