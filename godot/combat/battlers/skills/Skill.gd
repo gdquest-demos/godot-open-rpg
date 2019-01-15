@@ -2,6 +2,8 @@ extends Resource
 
 class_name Skill
 
+signal missed(text)
+
 export var name : String = "Skill"
 export var description : String = ""
 export var icon : Texture = load("res://icon.png")

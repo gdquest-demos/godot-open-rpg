@@ -22,7 +22,7 @@ func execute(targets):
 		for target in targets:
 			target.take_damage(hit)
 	else:
-		# miss
+		skill.emit_signal("missed", "Miss!")
 		pass
 		
 	yield(actor.get_tree().create_timer(1.0), "timeout")
