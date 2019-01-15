@@ -229,7 +229,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=6]
 
-resource_name = "miss"
+resource_name = "missed"
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Label:modulate")
@@ -303,5 +303,5 @@ anims/health_gain = SubResource( 2 )
 anims/health_loss = SubResource( 3 )
 anims/mana_gain = SubResource( 4 )
 anims/mana_loss = SubResource( 5 )
-anims/miss = SubResource( 6 )
+anims/missed = SubResource( 6 )
 

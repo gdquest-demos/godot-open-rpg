@@ -2,7 +2,7 @@ extends Resource
 
 class_name Skill
 
-signal attack_status(text)
+signal missed(text)
 
 export var name : String = "Skill"
 export var description : String = ""
