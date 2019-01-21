@@ -56,12 +56,8 @@ func deliver(quest : Quest):
 	var rewards = quest.get_rewards()
 	for item in rewards['items']:
 		party.inventory.add(item.item, item.amount)
-	# TODO: Simplify the stats API on PartyMember. party_member.experience += value
-	# should level up the character and update the stats automatically
-	# so that all the code stays in PartyMember.gd
 	for party_member in party.get_active_members():
 		party_member.experience += rewards['experience']
-		party_member.update_stats(party_member.battler.stats)
 
 	assert quest.get_parent() == completed_quests
 	completed_quests.remove_child(quest)
