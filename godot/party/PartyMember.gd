@@ -24,15 +24,15 @@ func _ready():
 	stats = growth.create_stats(experience)
 	battler.stats = stats
 
-func update_stats(stats : CharacterStats):
+func update_stats(before_stats : CharacterStats):
 	"""
 	Update this character's stats to match select changes
 	that occurred during combat or through menu actions
 	"""
-	var before_level = stats.level
+	var before_level = before_stats.level
 	var after_level = growth.get_level(experience)
 	if before_level != after_level:
-		stats.reset()
+		stats = growth.create_stats(experience)
 		emit_signal("level_changed", after_level, before_level)
 	battler.stats = stats
 
@@ -54,6 +54,8 @@ func _set_experience(value : int):
 	if value == null:
 		return
 	experience = max(0, value)
+	if stats:
+		update_stats(stats)
 
 func save(save_game : Resource):
 	save_game.data[SAVE_KEY] = {

@@ -42,25 +42,25 @@ func _get_interpolated_level(value : int = 0) -> float:
 	
 func _get_max_health(experience : int)-> int:
 	assert max_health_curve != null
-	var level : int = _get_interpolated_level(experience)
+	var level : float = _get_interpolated_level(experience)
 	return int(max_health_curve.interpolate_baked(level))
 
 func _get_max_mana(experience : int)-> int:
 	assert max_mana_curve != null
-	var level : int = _get_interpolated_level(experience)
+	var level : float = _get_interpolated_level(experience)
 	return int(max_mana_curve.interpolate_baked(level))
 
 func _get_strength(experience : int)-> int:
 	assert strength_curve != null
-	var level : int = _get_interpolated_level(experience)
+	var level : float = _get_interpolated_level(experience)
 	return int(strength_curve.interpolate_baked(level))
 
 func _get_defense(experience : int)-> int:
 	assert defense_curve != null
-	var level : int = _get_interpolated_level(experience)
+	var level : float = _get_interpolated_level(experience)
 	return int(defense_curve.interpolate_baked(level))
 
 func _get_speed(experience : int)-> int:
 	assert speed_curve != null
-	var level : int = _get_interpolated_level(experience)
+	var level : float = _get_interpolated_level(experience)
 	return int(speed_curve.interpolate_baked(level))
