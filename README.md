@@ -39,7 +39,6 @@ At GDquest, our mission is to bring game creators together to become better deve
 To support our Free projects, you can:
 
 - [Get our Godot course](https://gumroad.com/gdquest)
-- [Become our patron](https://www.patreon.com/gdquest) on Patreon
 
 ## Contributing Guidelines
 
