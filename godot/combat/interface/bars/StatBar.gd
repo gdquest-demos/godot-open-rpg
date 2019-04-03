@@ -1,6 +1,10 @@
 extends Control
 class_name StatBar
 
+signal button_focused(cost)
+signal button_unfocused
+signal action_selected(action)
+
 onready var bar = $Column/TextureProgress
 onready var label = $Column/LifeLabel
 
@@ -29,12 +33,27 @@ func set_value(new_value) -> void:
 func initialize(battler : Battler) -> void:
 	_connect_value_signals(battler)
 
+func connect_preview(menu : Control) -> void:
+	menu.connect("button_focused", self, "_on_button_focused")
+	menu.connect("button_unfocused", self, "_on_button_unfocused")
+	menu.connect("action_selected", self, "disconnect_preview", [menu])
+	
+#action passed to this function is unused, but is always passed with the signal
+func disconnect_preview(action: CombatAction, menu : Control) -> void:
+	menu.disconnect("button_focused", self, "_on_button_focused")
+	menu.disconnect("button_unfocused", self, "_on_button_unfocused")
+	
 func _connect_value_signals(battler : Battler) -> void:
 	print("Signals not connected in: " + name)
 
 func _on_value_changed(new_value, old_value) -> void:
 	self.value = new_value
 	
+func _on_button_focused(cost) -> void:
+	pass
+	
+func _on_button_unfocused() -> void:
+	pass
 
 func _on_value_depleted() -> void:
 	if HIDE_ON_DEPLETED:

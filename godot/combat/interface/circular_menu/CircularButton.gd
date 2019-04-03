@@ -4,10 +4,14 @@ Reacts to mouse hover and focus events
 """
 extends Button
 
+signal focused()
+signal unfocused()
+
 onready var animation_player : = $AnimationPlayer as AnimationPlayer
 onready var tooltip : = $Tooltip as Control
 onready var button_icon : = $Background/Icon as TextureRect
 
+var mana_cost = 0
 var mouse_over : bool
 var active : bool
 var target_position : Vector2
@@ -28,6 +32,8 @@ func initialize(action : CombatAction, target_position : Vector2) -> void:
 	if disabled:
 		modulate = Color("#555555")
 	tooltip.initialize(self, action)
+	if action is SkillAction:
+		mana_cost = action.skill.mana_cost
 
 	connect('mouse_entered', self, 'enter_focus')
 	connect('mouse_exited', self, 'exit_focus')
@@ -37,10 +43,16 @@ func initialize(action : CombatAction, target_position : Vector2) -> void:
 func enter_focus():
 	raise()
 	tooltip.show()
+	emit_signal("focused")
 	animation_player.play('activate')
 	yield(animation_player, "animation_finished")
 	animation_player.play('active')
+	
 
 func exit_focus():
 	tooltip.hide()
+	emit_signal("unfocused")
 	animation_player.play('deactivate')
+	yield(animation_player,"animation_finished")
+	
+	

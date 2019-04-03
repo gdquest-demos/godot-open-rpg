@@ -1,6 +1,8 @@
 extends Control
 
 signal action_selected(action)
+signal button_focused(cost)
+signal button_unfocused()
 
 onready var tween : = $Tween as Tween
 onready var buttons : = $Buttons as Control
@@ -28,6 +30,12 @@ func initialize(actor : Battler) -> void:
 		var target_position = _calculate_position(button, actions.size())
 		button.initialize(action, target_position)
 		button.connect("pressed", self, "_on_CircularButton_pressed", [action])
+		if action is SkillAction:
+			button.connect("focused", self, "emit_signal", ["button_focused", action.skill.mana_cost])
+			button.connect("unfocused", self, "emit_signal", ["button_unfocused"])
+	var bars = actor.bars.get_children()
+	for bar in bars:
+		bar.connect_preview(self)
 
 func open() -> void:
 	"""
@@ -89,9 +97,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	buttons.get_child(next_button_index).grab_focus()
 
 func _on_CircularButton_pressed(action):
+	emit_signal("button_unfocused")
 	yield(close(), "completed")
 	emit_signal("action_selected", action)
-
+	
 func _update() -> void:
 	if not is_inside_tree():
 		return
