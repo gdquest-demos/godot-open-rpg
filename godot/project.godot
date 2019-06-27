@@ -404,4 +404,5 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
+quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"
