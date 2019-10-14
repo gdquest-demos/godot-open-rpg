@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/robi_portrait_256.png-d86fee246dc6e3b4032b47db1ab50863.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

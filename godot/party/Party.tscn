@@ -4,16 +4,19 @@
 [ext_resource path="res://party/PartyMember.tscn" type="PackedScene" id=2]
 [ext_resource path="res://combat/battlers/jobs/GodetteJob.tres" type="Resource" id=3]
 [ext_resource path="res://assets/sprites/battlers/godette_portrait_256.png" type="Texture" id=4]
-[ext_resource path="res://animation/GodetteAnim.tscn" type="PackedScene" id=5]
+[ext_resource path="res://combat/animation/GodetteAnim.tscn" type="PackedScene" id=5]
 [ext_resource path="res://combat/battlers/skills/LearnedSkill.tscn" type="PackedScene" id=6]
 [ext_resource path="res://combat/battlers/skills/Lollislash.tres" type="Resource" id=7]
 [ext_resource path="res://combat/battlers/ai/PlayerInput.gd" type="Script" id=8]
-[ext_resource path="res://animation/GodettePawnAnim.tscn" type="PackedScene" id=9]
+[ext_resource path="res://map/pawns/GodettePawnAnim.tscn" type="PackedScene" id=9]
 [ext_resource path="res://combat/battlers/jobs/RobiJob.tres" type="Resource" id=10]
 [ext_resource path="res://assets/sprites/battlers/robi_portrait_256.png" type="Texture" id=11]
-[ext_resource path="res://animation/RobiAnim.tscn" type="PackedScene" id=12]
+[ext_resource path="res://combat/animation/RobiAnim.tscn" type="PackedScene" id=12]
 [ext_resource path="res://combat/battlers/skills/Slash.tres" type="Resource" id=13]
-[ext_resource path="res://animation/RobiPawnAnim.tscn" type="PackedScene" id=14]
+[ext_resource path="res://map/pawns/RobiPawnAnim.tscn" type="PackedScene" id=14]
+
+
+
 
 [node name="Party" type="Node2D"]
 script = ExtResource( 1 )

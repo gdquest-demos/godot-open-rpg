@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/grasslands.png-6ed6fe0e626d8cd0733b24faccbd758a.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

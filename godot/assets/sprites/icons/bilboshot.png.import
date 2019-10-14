@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/bilboshot.png-fc18d6a1c411d833ca0f6b6114780d4e.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

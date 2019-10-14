@@ -1,8 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://interface/default.theme" type="Theme" id=1]
+[ext_resource path="res://assets/theme/default.theme" type="Theme" id=1]
 [ext_resource path="res://interface/menus/Menu.gd" type="Script" id=2]
 [ext_resource path="res://interface/menus/MenuSfx.tscn" type="PackedScene" id=3]
+
+
 
 [node name="Menu" type="Control"]
 

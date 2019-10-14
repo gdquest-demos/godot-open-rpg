@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/tooltip.png-1d68c60c2181362a18f066ce2bf914e7.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

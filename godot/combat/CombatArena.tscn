@@ -8,8 +8,10 @@
 [ext_resource path="res://combat/interface/bars/BattlersBarsBuilder.tscn" type="PackedScene" id=6]
 [ext_resource path="res://combat/interface/turn_order/TurnOrder.tscn" type="PackedScene" id=7]
 [ext_resource path="res://combat/Rewards.gd" type="Script" id=8]
-[ext_resource path="res://interface/default.theme" type="Theme" id=9]
+[ext_resource path="res://assets/theme/default.theme" type="Theme" id=9]
 [ext_resource path="res://combat/background/Grasslands.tscn" type="PackedScene" id=10]
+
+
 
 [node name="CombatArena" type="Node2D"]
 script = ExtResource( 1 )

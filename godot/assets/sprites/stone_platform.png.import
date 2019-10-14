@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/stone_platform.png-3806e66d24ee44faf946ae6f9f2df1ad.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

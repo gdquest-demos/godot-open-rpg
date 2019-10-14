@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/porcupine.png-35c755b5665bf17262b3676679cab584.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

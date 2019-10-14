@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/quest_inactive_icon.png-502f8024a513e48ceb23c33f78a81ba5.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

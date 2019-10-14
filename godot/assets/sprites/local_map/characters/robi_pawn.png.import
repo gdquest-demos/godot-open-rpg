@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/robi_pawn.png-2222d436261bc10a46a70bd815b22a15.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

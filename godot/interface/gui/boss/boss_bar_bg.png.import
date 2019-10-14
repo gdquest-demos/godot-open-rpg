@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/boss_bar_bg.png-aed3843f4ed3efb0dbc21b2322fd9e56.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

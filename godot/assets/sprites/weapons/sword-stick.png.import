@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/sword-stick.png-ba7b54215dedae812df7ae31fb5a4b06.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

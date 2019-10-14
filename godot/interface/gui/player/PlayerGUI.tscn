@@ -1,10 +1,12 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://interface/default.theme" type="Theme" id=1]
+[ext_resource path="res://assets/theme/default.theme" type="Theme" id=1]
 [ext_resource path="res://interface/gui/player/PlayerGUI.gd" type="Script" id=2]
 [ext_resource path="res://interface/gui/player/life_bar/LifeBar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://core/inventory/items/coins/coin_single.png" type="Texture" id=4]
 [ext_resource path="res://assets/fonts/source_code_pro_explanations_bold.tres" type="DynamicFont" id=5]
+
+
 
 
 [sub_resource type="GDScript" id=3]

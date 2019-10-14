@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/godette_pawn.png-ca9dcb9e07516d0413d95d19c121b9ff.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

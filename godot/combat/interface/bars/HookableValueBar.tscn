@@ -1,9 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://interface/default.theme" type="Theme" id=1]
+[ext_resource path="res://assets/theme/default.theme" type="Theme" id=1]
 [ext_resource path="res://combat/interface/bars/background.png" type="Texture" id=2]
 [ext_resource path="res://combat/interface/bars/lifebar/fill.png" type="Texture" id=3]
 [ext_resource path="res://combat/interface/bars/ValueBarLabel.gd" type="Script" id=4]
+
+
 
 [node name="HookableValueBar" type="Control" groups=[
 "bars",

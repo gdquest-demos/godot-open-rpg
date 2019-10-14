@@ -6,8 +6,9 @@
 [ext_resource path="res://assets/fonts/default_theme/montserrat_eb_32.tres" type="DynamicFont" id=4]
 [ext_resource path="res://combat/interface/circular_menu/background-inactive.png" type="Texture" id=5]
 [ext_resource path="res://combat/interface/circular_menu/circle.png" type="Texture" id=6]
-[ext_resource path="res://interface/theme/icons/sword.png" type="Texture" id=7]
+[ext_resource path="res://assets/theme/icons/sword.png" type="Texture" id=7]
 [ext_resource path="res://combat/interface/circular_menu/background-selected.png" type="Texture" id=8]
+
 
 [sub_resource type="StyleBoxEmpty" id=1]
 

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://party/Party.tscn" type="PackedScene" id=2]
-[ext_resource path="res://local_map/LocalMap.tscn" type="PackedScene" id=3]
+[ext_resource path="res://map/LocalMap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://interface/gui/GUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/shaders/TransitionColor.tscn" type="PackedScene" id=5]
 [ext_resource path="res://interface/game_over/GameOverInterface.tscn" type="PackedScene" id=6]
@@ -41,6 +41,5 @@ layer = 100
 
 [node name="DebugInterface" parent="Debug" instance=ExtResource( 9 )]
 visible = false
-
 [connection signal="enemies_encountered" from="LocalMap" to="." method="enter_battle"]
 [connection signal="restart_requested" from="GameOverInterface" to="." method="_on_GameOverInterface_restart_requested"]
