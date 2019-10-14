@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/map/pawns/PawnLeader.gd" type="Script" id=1]
+[ext_resource path="res://src/map/pawns/PawnAnim.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/map/DestinationPoint.tscn" type="PackedScene" id=3]
+
+
+
+
+[sub_resource type="RectangleShape2D" id=3]
+
+extents = Vector2( 30, 30 )
+
+[node name="PawnLeader" type="KinematicBody2D"]
+z_index = 1
+collision_layer = 2
+collision_mask = 4
+script = ExtResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Pivot" type="Position2D" parent="."]
+
+[node name="PawnAnim" parent="Pivot" instance=ExtResource( 2 )]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
+
+[node name="DestinationPoint" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( -1, -1 )
+current = true
+

@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/combat/battlers/Formation.gd" type="Script" id=1]
+[ext_resource path="res://src/combat/background/StonePlatform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/combat/battlers/enemies/porcupine/PorcupineBattler.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sprites/battlers/porcupine_portrait_256.png" type="Texture" id=4]
+
+[node name="Formation" type="Node"]
+script = ExtResource( 1 )
+platform_template = ExtResource( 2 )
+background_image = null
+
+[node name="Porcupine3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 607.782, 444.148 )
+turn_order_icon = ExtResource( 4 )
+
+[node name="Porcupine2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 220.126, 596.094 )
+turn_order_icon = ExtResource( 4 )
+
+[node name="Porcupine" parent="." instance=ExtResource( 3 )]
+position = Vector2( 487.005, 767.519 )
+turn_order_icon = ExtResource( 4 )

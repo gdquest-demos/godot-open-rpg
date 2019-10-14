@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/theme/default.theme" type="Theme" id=1]
+[ext_resource path="res://src/interface/menus/Menu.gd" type="Script" id=2]
+[ext_resource path="res://src/interface/menus/MenuSfx.tscn" type="PackedScene" id=3]
+
+
+
+
+[node name="Menu" type="Control"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+_sections_unfolded = [ "Theme" ]
+SUB_MENU_PATH = null
+
+[node name="MenuSfx" parent="." index="0" instance=ExtResource( 3 )]
+
+

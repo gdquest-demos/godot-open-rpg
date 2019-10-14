@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/combat/battlers/stats/CharacterStats.gd" type="Script" id=1]
+
+
+[resource]
+
+script = ExtResource( 1 )
+max_health = 1
+max_mana = 1
+strength = 1
+defense = 1
+speed = 1
+

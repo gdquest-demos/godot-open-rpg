@@ -1,0 +1,125 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/interface/game_over/GameOverInterface.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_128.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_64.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/fonts/default_theme/montserrat_eb_48.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/sprites/select_arrow.png" type="Texture" id=5]
+
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "wiggle"
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -80, 0 ), Vector2( -120, 0 ), Vector2( -80, 0 ) ]
+}
+
+[node name="GameOverInterface" type="CanvasLayer"]
+layer = 2
+script = ExtResource( 1 )
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+self_modulate = Color( 0.203922, 0.0470588, 0.0470588, 0.870588 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 25.0
+margin_top = 25.0
+margin_right = -25.0
+margin_bottom = -25.0
+
+[node name="GameOver" type="Label" parent="Panel/VBoxContainer"]
+margin_top = 91.0
+margin_right = 1870.0
+margin_bottom = 248.0
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 2 )
+text = "GAME OVER"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Message" type="Label" parent="Panel/VBoxContainer"]
+margin_top = 344.0
+margin_right = 1870.0
+margin_bottom = 423.0
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 3 )
+text = "Your party was defeated"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Options" type="VBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 688.0
+margin_right = 1870.0
+margin_bottom = 1030.0
+size_flags_vertical = 3
+
+[node name="TryAgain" type="Button" parent="Panel/VBoxContainer/Options"]
+margin_left = 788.0
+margin_right = 1081.0
+margin_bottom = 66.0
+size_flags_horizontal = 6
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 4 )
+text = "TRY AGAIN"
+flat = true
+
+[node name="Load" type="Button" parent="Panel/VBoxContainer/Options"]
+margin_left = 771.0
+margin_top = 70.0
+margin_right = 1098.0
+margin_bottom = 136.0
+size_flags_horizontal = 6
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 4 )
+text = "LOAD GAME"
+flat = true
+
+[node name="Exit" type="Button" parent="Panel/VBoxContainer/Options"]
+margin_left = 872.0
+margin_top = 140.0
+margin_right = 997.0
+margin_bottom = 206.0
+size_flags_horizontal = 6
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 4 )
+text = "EXIT"
+flat = true
+
+[node name="SelectionArrow" type="Control" parent="Panel"]
+editor/display_folded = true
+
+[node name="TextureRect" type="TextureRect" parent="Panel/SelectionArrow"]
+margin_left = -90.4984
+margin_right = -29.4984
+margin_bottom = 61.0
+rect_pivot_offset = Vector2( 30, 30 )
+texture = ExtResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/SelectionArrow"]
+autoplay = "wiggle"
+anims/wiggle = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="pressed" from="Panel/VBoxContainer/Options/TryAgain" to="." method="_on_TryAgain_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Options/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Options/Exit" to="." method="_on_Exit_pressed"]

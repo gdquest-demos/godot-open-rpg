@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/map/pawns/PawnInteractive.gd" type="Script" id=1]
+[ext_resource path="res://src/map/pawns/PawnAnim.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/quest/QuestBubble.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sprites/dialogue_balloon.png" type="Texture" id=4]
+
+
+
+
+
+[sub_resource type="RectangleShape2D" id=1]
+
+extents = Vector2( 30, 30 )
+
+[node name="InteractivePawn" type="Area2D" groups=[
+"interactive_pawns",
+]]
+pause_mode = 2
+collision_layer = 4
+collision_mask = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Pivot" type="Position2D" parent="."]
+
+[node name="PawnAnim" parent="Pivot" instance=ExtResource( 2 )]
+
+[node name="QuestBubble" parent="." instance=ExtResource( 3 )]
+position = Vector2( 56.0923, -39.7058 )
+
+[node name="DialogueBalloon" type="Sprite" parent="."]
+visible = false
+position = Vector2( 30, -30 )
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Raycasts" type="Node2D" parent="."]
+
+[node name="Up" type="RayCast2D" parent="Raycasts"]
+cast_to = Vector2( 0, -50 )
+collision_mask = 2
+
+[node name="Down" type="RayCast2D" parent="Raycasts"]
+collision_mask = 2
+
+[node name="Left" type="RayCast2D" parent="Raycasts"]
+cast_to = Vector2( -50, 0 )
+collision_mask = 2
+
+[node name="Right" type="RayCast2D" parent="Raycasts"]
+cast_to = Vector2( 50, 0 )
+collision_mask = 2
+
+[node name="Actions" type="Node" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
+

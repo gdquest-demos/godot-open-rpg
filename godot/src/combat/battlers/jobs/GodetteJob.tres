@@ -1,0 +1,35 @@
+[gd_resource type="Resource" load_steps=7 format=2]
+
+[ext_resource path="res://src/combat/battlers/stats/GrowthStats.gd" type="Script" id=1]
+
+[sub_resource type="Curve" id=1]
+min_value = 0.99
+max_value = 210.0
+_data = [ Vector2( 0, 0 ), 0.0, 210.0, 0, 1, Vector2( 1, 210 ), 210.0, 0.0, 1, 0 ]
+
+[sub_resource type="Curve" id=2]
+max_value = 999.0
+_data = [ Vector2( 0, 68.7313 ), 0.0, 0.0, 0, 0, Vector2( 0.168959, 376.423 ), 1283.12, 1283.12, 0, 0, Vector2( 1, 999 ), -22.6083, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=3]
+max_value = 80.0
+_data = [ Vector2( 0, 7.616 ), 0.0, 0.0, 0, 0, Vector2( 0.611127, 44.224 ), 146.601, 146.601, 0, 0, Vector2( 1, 80 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=4]
+min_value = 0.99
+max_value = 145.0
+_data = [ Vector2( 0, 3 ), 0.0, 0.0, 0, 0, Vector2( 0.992522, 145 ), 198.8, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=5]
+min_value = 0.99
+max_value = 233.0
+_data = [ Vector2( 0, 8 ), 0.0, 803.058, 0, 0, Vector2( 0.251992, 114.45 ), -17.2645, 224.438, 0, 0, Vector2( 1, 233 ), 184.979, 0.0, 0, 0 ]
+
+[resource]
+script = ExtResource( 1 )
+level_lookup = [ 5, 11, 19, 28, 38, 49, 61, 74, 88, 103, 119, 136, 153, 172, 191, 211, 232, 254, 276, 300, 324, 349, 375, 401, 428, 456, 485, 515, 545, 576, 608, 640, 673, 707, 742, 777, 813, 850, 887, 925, 964, 1003, 1043, 1084, 1126, 1168, 1211, 1254, 1298, 1343, 1389, 1435, 1482, 1529, 1577, 1626, 1675, 1725, 1776, 1827, 1879, 1932, 1985, 2039, 2093, 2148, 2204, 2260, 2317, 2375, 2433, 2492, 2551, 2611, 2672, 2733, 2795, 2857, 2921, 2984, 3048, 3113, 3179, 3245, 3311, 3379, 3446, 3515, 3584, 3653, 3723, 3794, 3866, 3937, 4010, 4083, 4157, 4231, 4306, 4381 ]
+max_health_curve = SubResource( 2 )
+max_mana_curve = SubResource( 3 )
+strength_curve = SubResource( 5 )
+defense_curve = SubResource( 1 )
+speed_curve = SubResource( 4 )

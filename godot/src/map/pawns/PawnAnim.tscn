@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/map/pawns/PawnAnim.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/local_map/characters/character_grey.png" type="Texture" id=2]
+
+
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "bump"
+length = 0.1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Root:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.02, 0.04, 0.06, 0.08, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -1.5, -9 ), Vector2( 6.5, 2.5 ), Vector2( -11.5, 8.5 ), Vector2( 4, -5 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "walk"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Root:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15, 0.25 ),
+"transitions": PoolRealArray( 1, 0.303143, 2.61003, 1 ),
+"update": 0,
+"values": [ Vector2( 1.43051e-06, -1.90735e-06 ), Vector2( 1.43051e-06, -1.90735e-06 ), Vector2( 0, -20 ), Vector2( 1.43051e-06, -1.90735e-06 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Root:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.15, 0.25 ),
+"transitions": PoolRealArray( 1, 0.354553, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.20007, 0.917384 ), Vector2( 0.916712, 1.13495 ), Vector2( 1, 1 ) ]
+}
+
+[node name="PawnAnim" type="Position2D"]
+scale = Vector2( 0.328641, 0.328641 )
+script = ExtResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/bump = SubResource( 1 )
+anims/walk = SubResource( 2 )
+
+[node name="Root" type="Position2D" parent="."]
+position = Vector2( 1.43051e-06, -1.90735e-06 )
+
+[node name="Body" type="Sprite" parent="Root"]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 2 )
+

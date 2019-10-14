@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/combat/battlers/Battler.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/combat/battlers/enemies/porcupine/Porcupine.tres" type="Resource" id=2]
+[ext_resource path="res://src/combat/animation/PorcupineAnim.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/combat/battlers/ai/RandomAI.gd" type="Script" id=4]
+
+
+
+[node name="Porcupine" index="0" groups=[
+"enemies",
+] instance=ExtResource( 1 )]
+stats = ExtResource( 2 )
+
+[node name="PorcupineAnim" parent="Skin" index="2" instance=ExtResource( 3 )]
+
+[node name="Drops" parent="." index="5"]
+experience = 2
+
+[node name="AI" parent="." index="6"]
+script = ExtResource( 4 )
+
