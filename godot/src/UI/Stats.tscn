@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/themes/default.tres" type="Theme" id=1]
+[ext_resource path="res://src/UI/Stats.gd" type="Script" id=2]
+[ext_resource path="res://src/UI/StatBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/UI/StatBar.gd" type="Script" id=4]
+
+[node name="Stats" type="VBoxContainer"]
+margin_right = 275.0
+margin_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Health" parent="." instance=ExtResource( 3 )]
+margin_right = 275.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 4 )
+
+[node name="Mana" parent="." instance=ExtResource( 3 )]
+editor/display_folded = true
+margin_top = 30.0
+margin_right = 275.0
+margin_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 4 )
+
+[node name="Bar" parent="Mana" index="0"]
+tint_progress = Color( 0.32549, 0.647059, 0.862745, 1 )
+
+[node name="Label" parent="Mana" index="1"]
+custom_colors/font_color = Color( 0.435294, 0.741176, 0.945098, 1 )
+
+
+[editable path="Mana"]

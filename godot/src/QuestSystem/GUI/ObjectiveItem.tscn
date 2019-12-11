@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/QuestSystem/GUI/ObjectiveItem.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/icons/quest_objective_unfinished.png" type="Texture" id=2]
+
+[node name="ObjectiveItem" type="HSplitContainer"]
+margin_right = 880.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+dragger_visibility = 1
+script = ExtResource( 1 )
+
+[node name="Icon" type="TextureRect" parent="."]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Description" type="RichTextLabel" parent="."]
+margin_left = 42.0
+margin_right = 880.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+bbcode_enabled = true
+bbcode_text = "description of unfinished objective"
+text = "description of unfinished objective"
+scroll_active = false
+

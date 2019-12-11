@@ -9,330 +9,85 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Position2D",
+"base": "Node",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://src/Actor/Actor.gd"
+}, {
+"base": "Node2D",
 "class": "Battler",
 "language": "GDScript",
-"path": "res://src/combat/battlers/Battler.gd"
+"path": "res://src/Party/Battler.gd"
 }, {
 "base": "Node",
-"class": "BattlerAI",
+"class": "Behavior",
 "language": "GDScript",
-"path": "res://src/combat/battlers/ai/BattlerAI.gd"
-}, {
-"base": "Position2D",
-"class": "BattlerAnim",
-"language": "GDScript",
-"path": "res://src/combat/animation/BattlerAnim.gd"
-}, {
-"base": "Resource",
-"class": "BattlerTemplate",
-"language": "GDScript",
-"path": "res://src/combat/battlers/BattlerTemplate.gd"
-}, {
-"base": "Resource",
-"class": "CharacterStats",
-"language": "GDScript",
-"path": "res://src/combat/battlers/stats/CharacterStats.gd"
-}, {
-"base": "Node",
-"class": "CombatAction",
-"language": "GDScript",
-"path": "res://src/combat/CombatAction.gd"
+"path": "res://src/Actor/NoOpBehavior.gd"
 }, {
 "base": "Node2D",
-"class": "CombatArena",
+"class": "Board",
 "language": "GDScript",
-"path": "res://src/combat/CombatArena.gd"
+"path": "res://src/Board/Board.gd"
 }, {
-"base": "Control",
-"class": "CombatPortrait",
+"base": "HSplitContainer",
+"class": "ObjectiveItem",
 "language": "GDScript",
-"path": "res://src/combat/interface/turn_order/CombatPortrait.gd"
-}, {
-"base": "MapAction",
-"class": "CompleteQuestAction",
-"language": "GDScript",
-"path": "res://src/map/pawns/actions/CompleteQuestAction.gd"
-}, {
-"base": "Item",
-"class": "ConsumableItem",
-"language": "GDScript",
-"path": "res://src/items/ConsumableItem.gd"
-}, {
-"base": "MapAction",
-"class": "DialogueAction",
-"language": "GDScript",
-"path": "res://src/map/pawns/actions/DialogueAction.gd"
-}, {
-"base": "Control",
-"class": "DialogueBox",
-"language": "GDScript",
-"path": "res://src/map/DialogueBox.gd"
-}, {
-"base": "Node",
-"class": "DialoguePlayer",
-"language": "GDScript",
-"path": "res://src/dialogue/DialoguePlayer.gd"
-}, {
-"base": "Node",
-"class": "Drops",
-"language": "GDScript",
-"path": "res://src/combat/battlers/Drops.gd"
-}, {
-"base": "Item",
-"class": "Equipment",
-"language": "GDScript",
-"path": "res://src/items/Equipment.gd"
-}, {
-"base": "Node",
-"class": "Formation",
-"language": "GDScript",
-"path": "res://src/combat/battlers/Formation.gd"
-}, {
-"base": "CanvasLayer",
-"class": "GUI",
-"language": "GDScript",
-"path": "res://src/interface/gui/GUI.gd"
-}, {
-"base": "TileMap",
-"class": "GameBoard",
-"language": "GDScript",
-"path": "res://src/map/grid/GameBoard.gd"
-}, {
-"base": "CanvasLayer",
-"class": "GameOverInterface",
-"language": "GDScript",
-"path": "res://src/interface/game_over/GameOverInterface.gd"
-}, {
-"base": "MapAction",
-"class": "GiveQuestAction",
-"language": "GDScript",
-"path": "res://src/map/pawns/actions/GiveQuestAction.gd"
-}, {
-"base": "Resource",
-"class": "GrowthStats",
-"language": "GDScript",
-"path": "res://src/combat/battlers/stats/GrowthStats.gd"
-}, {
-"base": "Reference",
-"class": "Hit",
-"language": "GDScript",
-"path": "res://src/combat/Hit.gd"
-}, {
-"base": "Reference",
-"class": "Inventory",
-"language": "GDScript",
-"path": "res://src/party/Inventory.gd"
-}, {
-"base": "Resource",
-"class": "Item",
-"language": "GDScript",
-"path": "res://src/items/Item.gd"
-}, {
-"base": "Node",
-"class": "LearnedSkill",
-"language": "GDScript",
-"path": "res://src/combat/battlers/skills/LearnedSkill.gd"
-}, {
-"base": "Control",
-"class": "LifeBar",
-"language": "GDScript",
-"path": "res://src/combat/interface/bars/lifebar/LifeBar.gd"
-}, {
-"base": "Node",
-"class": "LocalMap",
-"language": "GDScript",
-"path": "res://src/map/LocalMap.gd"
-}, {
-"base": "Control",
-"class": "ManaBar",
-"language": "GDScript",
-"path": "res://src/combat/interface/bars/manabar/ManaBar.gd"
-}, {
-"base": "Node",
-"class": "MapAction",
-"language": "GDScript",
-"path": "res://src/map/pawns/actions/MapAction.gd"
-}, {
-"base": "Node2D",
-"class": "Party",
-"language": "GDScript",
-"path": "res://src/party/Party.gd"
-}, {
-"base": "Node2D",
-"class": "PartyMember",
-"language": "GDScript",
-"path": "res://src/party/PartyMember.gd"
-}, {
-"base": "Reference",
-"class": "Pathfinder",
-"language": "GDScript",
-"path": "res://src/map/grid/Pathfinder.gd"
-}, {
-"base": "Node2D",
-"class": "Pawn",
-"language": "GDScript",
-"path": "res://src/map/pawns/Pawn.gd"
-}, {
-"base": "Pawn",
-"class": "PawnActor",
-"language": "GDScript",
-"path": "res://src/map/pawns/PawnActor.gd"
-}, {
-"base": "Position2D",
-"class": "PawnAnim",
-"language": "GDScript",
-"path": "res://src/map/pawns/PawnAnim.gd"
-}, {
-"base": "PawnActor",
-"class": "PawnFollower",
-"language": "GDScript",
-"path": "res://src/map/pawns/PawnFollower.gd"
-}, {
-"base": "PawnActor",
-"class": "PawnInteractive",
-"language": "GDScript",
-"path": "res://src/map/pawns/PawnInteractive.gd"
-}, {
-"base": "PawnActor",
-"class": "PawnLeader",
-"language": "GDScript",
-"path": "res://src/map/pawns/PawnLeader.gd"
-}, {
-"base": "Node",
-"class": "Quest",
-"language": "GDScript",
-"path": "res://src/quest/Quest.gd"
-}, {
-"base": "QuestObjective",
-"class": "QuestInteractObjective",
-"language": "GDScript",
-"path": "res://src/quest/objectives/QuestInteractObjective.gd"
-}, {
-"base": "Node",
-"class": "QuestItemReward",
-"language": "GDScript",
-"path": "res://src/quest/QuestItemReward.gd"
-}, {
-"base": "Control",
-"class": "QuestJournal",
-"language": "GDScript",
-"path": "res://src/interface/gui/QuestJournal.gd"
-}, {
-"base": "Node",
-"class": "QuestObjective",
-"language": "GDScript",
-"path": "res://src/quest/objectives/QuestObjective.gd"
-}, {
-"base": "QuestObjective",
-"class": "QuestSlayObjective",
-"language": "GDScript",
-"path": "res://src/quest/objectives/QuestSlayObjective.gd"
-}, {
-"base": "Node2D",
-"class": "RectExtents",
-"language": "GDScript",
-"path": "res://src/main/utils/RectExtents.gd"
-}, {
-"base": "Resource",
-"class": "SaveGame",
-"language": "GDScript",
-"path": "res://src/main/save/SaveGame.gd"
-}, {
-"base": "Resource",
-"class": "Skill",
-"language": "GDScript",
-"path": "res://src/combat/battlers/skills/Skill.gd"
-}, {
-"base": "CombatAction",
-"class": "SkillAction",
-"language": "GDScript",
-"path": "res://src/combat/battlers/actions/SkillAction.gd"
-}, {
-"base": "MapAction",
-"class": "StartCombatAction",
-"language": "GDScript",
-"path": "res://src/map/pawns/actions/StartCombatAction.gd"
-}, {
-"base": "Control",
-"class": "StatBar",
-"language": "GDScript",
-"path": "res://src/combat/interface/bars/StatBar.gd"
+"path": "res://src/QuestSystem/GUI/ObjectiveItem.gd"
 }, {
 "base": "YSort",
-"class": "TurnQueue",
+"class": "Party",
 "language": "GDScript",
-"path": "res://src/combat/turn_queue/TurnQueue.gd"
+"path": "res://src/Party/Party.gd"
+}, {
+"base": "Node2D",
+"class": "PathFinder",
+"language": "GDScript",
+"path": "res://src/Board/PathFinder.gd"
+}, {
+"base": "HSplitContainer",
+"class": "RewardItem",
+"language": "GDScript",
+"path": "res://src/QuestSystem/GUI/RewardItem.gd"
+}, {
+"base": "Control",
+"class": "Skills",
+"language": "GDScript",
+"path": "res://src/UI/CircularMenu.gd"
+}, {
+"base": "VBoxContainer",
+"class": "Stats",
+"language": "GDScript",
+"path": "res://src/UI/Stats.gd"
 } ]
 _global_script_class_icons={
+"Actor": "res://assets/nodes/actor.svg",
 "Battler": "",
-"BattlerAI": "",
-"BattlerAnim": "",
-"BattlerTemplate": "",
-"CharacterStats": "",
-"CombatAction": "",
-"CombatArena": "",
-"CombatPortrait": "",
-"CompleteQuestAction": "",
-"ConsumableItem": "",
-"DialogueAction": "",
-"DialogueBox": "",
-"DialoguePlayer": "",
-"Drops": "",
-"Equipment": "",
-"Formation": "",
-"GUI": "",
-"GameBoard": "",
-"GameOverInterface": "",
-"GiveQuestAction": "",
-"GrowthStats": "",
-"Hit": "",
-"Inventory": "",
-"Item": "",
-"LearnedSkill": "",
-"LifeBar": "",
-"LocalMap": "",
-"ManaBar": "",
-"MapAction": "",
+"Behavior": "res://assets/nodes/behavior.svg",
+"Board": "",
+"ObjectiveItem": "",
 "Party": "",
-"PartyMember": "",
-"Pathfinder": "",
-"Pawn": "",
-"PawnActor": "",
-"PawnAnim": "",
-"PawnFollower": "",
-"PawnInteractive": "",
-"PawnLeader": "",
-"Quest": "",
-"QuestInteractObjective": "",
-"QuestItemReward": "",
-"QuestJournal": "",
-"QuestObjective": "",
-"QuestSlayObjective": "",
-"RectExtents": "",
-"SaveGame": "",
-"Skill": "",
-"SkillAction": "",
-"StartCombatAction": "",
-"StatBar": "",
-"TurnQueue": ""
+"PathFinder": "",
+"RewardItem": "",
+"Skills": "",
+"Stats": ""
 }
 
 [application]
 
 config/name="Godot Open RPG"
-run/main_scene="res://src/main/Game.tscn"
+run/main_scene="res://src/Game.tscn"
 config/icon="res://icon.png"
 config/version="0.3.0"
 
 [autoload]
 
-DialogueDatabase="*res://src/dialogue/DialogueDatabase.gd"
-QuestSystem="*res://src/quest/QuestSystem.tscn"
+Events="*res://src/Events.gd"
+Utils="*res://src/Utils.gd"
 
 [debug]
 
 gdscript/warnings/enable=false
+gdscript/completion/autocomplete_setters_and_getters=true
 
 [display]
 
@@ -345,7 +100,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "rect_extents_gizmo" )
+enabled=PoolStringArray(  )
 
 [input]
 
@@ -391,6 +146,16 @@ tap={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+trigger={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cycle={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [input_devices]
 
@@ -399,10 +164,7 @@ pointing/emulate_touch_from_mouse=true
 [layer_names]
 
 2d_physics/layer_1="default"
-2d_physics/layer_2="pawn_leader"
-2d_physics/layer_3="pawn_interactive"
 
 [rendering]
 
-quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"

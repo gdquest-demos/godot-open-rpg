@@ -1,0 +1,37 @@
+{
+	"quests": {
+		0: {
+			"lines": [
+				{"godette": "quest line01"},
+				{"robi": "quest line02"},
+				{"godette": "quest line03 back at you"},
+				{"npc": "quest line04"}
+			],
+			"quest_id": 1
+		},
+		1: {
+			"lines": [
+				{"godette": "quest line01 1"},
+				{"robi": "quest line02 2"},
+				{"robi": "quest line03 3"}
+			],
+			"quest_id": 0
+		}
+	},
+	"combat": {
+		0: [
+			{"robi": "combat line01"},
+			{"godette": "combat line02"}
+		]
+	},
+	"random": {
+		"godette": [
+			"random line01",
+			"random line02"
+		],
+		"robi": [
+			"random line01",
+			"random line02"
+		]
+	}
+}

@@ -1,0 +1,28 @@
+[gd_scene format=2]
+
+[node name="Detect" type="Node2D"]
+position = Vector2( 40, 40 )
+
+[node name="RayCastS" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 0, 80 )
+collide_with_areas = true
+
+[node name="RayCastW" type="RayCast2D" parent="."]
+rotation = 1.5708
+enabled = true
+cast_to = Vector2( 0, 80 )
+collide_with_areas = true
+
+[node name="RayCastN" type="RayCast2D" parent="."]
+rotation = -3.14159
+enabled = true
+cast_to = Vector2( 0, 80 )
+collide_with_areas = true
+
+[node name="RayCastE" type="RayCast2D" parent="."]
+rotation = -1.5708
+enabled = true
+cast_to = Vector2( 0, 80 )
+collide_with_areas = true
+
