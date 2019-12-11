@@ -24,7 +24,7 @@ func start(dialogue_dict):
 
 func next():
 	_index_current += 1
-	assert _index_current <= _conversation.size()
+	assert(_index_current <= _conversation.size())
 	_update()
 
 func _update():

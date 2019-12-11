@@ -8,7 +8,7 @@ export var quest_reference : PackedScene
 var quest : Quest = null
 
 func _ready() -> void:
-	assert quest_reference
+	assert(quest_reference)
 	quest = QuestSystem.find_available(quest_reference.instance())
 	quest.connect("started", self, "_on_Quest_started")
 

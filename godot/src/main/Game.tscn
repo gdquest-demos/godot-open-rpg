@@ -35,7 +35,6 @@ stream = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [node name="Debug" type="CanvasLayer" parent="."]
-editor/display_folded = true
 layer = 100
 
 [node name="DebugInterface" parent="Debug" instance=ExtResource( 9 )]

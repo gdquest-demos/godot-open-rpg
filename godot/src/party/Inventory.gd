@@ -16,8 +16,8 @@ func add(item: Item, amount: int = 1) -> void:
 		content[item] = 1 if item.unique else amount
 
 func remove(item: Item, amount: int = 1):
-	assert item in content
-	assert amount <= content[item]
+	assert(item in content)
+	assert(amount <= content[item])
 
 	content[item] -= amount
 	if content[item] == 0:

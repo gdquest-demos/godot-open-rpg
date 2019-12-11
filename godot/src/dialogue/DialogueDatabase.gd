@@ -5,7 +5,7 @@ var characters : Dictionary
 
 func _ready() -> void:
 	var dir = Directory.new()
-	assert dir.dir_exists(SOURCE_DIRECTORY)
+	assert(dir.dir_exists(SOURCE_DIRECTORY))
 	if not dir.open(SOURCE_DIRECTORY) == OK:
 		print("Could not read directory %s" % SOURCE_DIRECTORY)
 	dir.list_dir_begin()
@@ -22,6 +22,6 @@ func get_texture(character_name : String, expression : String = "neutral") -> Te
 	"""
 	Returns the Texture corresponding to a character's name and expression name
 	"""
-	assert character_name in characters
-	assert expression in characters[character_name].expressions
+	assert(character_name in characters)
+	assert(expression in characters[character_name].expressions)
 	return characters[character_name].expressions[expression]

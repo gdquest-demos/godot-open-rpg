@@ -59,7 +59,7 @@ func deliver(quest : Quest):
 	for party_member in party.get_active_members():
 		party_member.experience += rewards['experience']
 
-	assert quest.get_parent() == completed_quests
+	assert(quest.get_parent() == completed_quests)
 	completed_quests.remove_child(quest)
 	delivered_quests.add_child(quest)
 

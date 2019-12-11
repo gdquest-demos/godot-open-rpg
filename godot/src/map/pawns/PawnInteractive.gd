@@ -106,7 +106,7 @@ func start_interaction() -> void:
 	get_tree().paused = true
 	var actions = $Actions.get_children()
 	# An interactive pawn should have some interaction
-	assert actions != []
+	assert(actions != [])
 	for action in actions:
 		action.interact()
 		yield(action, "finished")
