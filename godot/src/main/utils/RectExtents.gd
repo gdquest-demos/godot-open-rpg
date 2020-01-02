@@ -1,7 +1,5 @@
-"""
-Represents and draws a bounding rectangle 
-centered around the center of its bottom edge
-"""
+# Represents and draws a bounding rectangle 
+# centered around the center of its bottom edge
 tool
 extends Node2D
 

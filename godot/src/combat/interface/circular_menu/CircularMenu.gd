@@ -18,9 +18,7 @@ export(float, 0.01, 0.1) var animation_offset : float = 0.08
 export(float, 0.1, 0.5) var animation_duration : float = 0.2
 
 func initialize(actor : Battler) -> void:
-	"""
-	Creates a circular menu from a battler's actions
-	"""
+	# Creates a circular menu from a battler's actions
 	var actions = actor.actions.get_actions()
 	for action in actions:
 		var button = CircularButton.instance()
@@ -30,10 +28,8 @@ func initialize(actor : Battler) -> void:
 		button.connect("pressed", self, "_on_CircularButton_pressed", [action])
 
 func open() -> void:
-	"""
-	Plays the open animation on every circular button, with a short time offset
-	Gives focus to the first button
-	"""
+	# Plays the open animation on every circular button, with a short time offset
+	# Gives focus to the first button
 	show()
 	for button_index in buttons.get_child_count():
 		var button = buttons.get_child(button_index)
@@ -45,10 +41,8 @@ func open() -> void:
 	buttons.get_child(0).grab_focus()
 
 func close() -> void:
-	"""
-	Play the close animation on every circular button, with a short time offset
-	Frees the node at the end of the animation
-	"""
+	# Play the close animation on every circular button, with a short time offset
+	# Frees the node at the end of the animation
 	for button_index in buttons.get_child_count():
 		var button = buttons.get_child(button_index)
 		button.animation_player.stop()
@@ -99,9 +93,7 @@ func _update() -> void:
 		button.rect_position = _calculate_position(button, buttons.get_child_count())
 
 func _calculate_position(button, buttons_count : int) -> Vector2:
-	"""
-	Returns the button's position relative to the menu
-	"""
+	# Returns the button's position relative to the menu
 	# The calculation is different if the menu is centered over the character,
 	# built clockwise, or counter-clockwise
 	var spacing_angle = spacing * PI

@@ -5,11 +5,9 @@ var party : Array = []
 var rewards : Array = []
 
 func initialize(battlers : Array):
-	"""
-	We rely on signals to only add experience of enemies that have been defeated.
-	This allows us to support enemies running away and not receiving exp for them,
-	as well as allowing the party to run away and only earn partial exp
-	"""
+	# We rely on signals to only add experience of enemies that have been defeated.
+	# This allows us to support enemies running away and not receiving exp for them,
+	# as well as allowing the party to run away and only earn partial exp
 	$Panel.visible = false
 	party = []
 	experience_earned = 0
@@ -21,9 +19,7 @@ func initialize(battlers : Array):
 			party.append(battler)
 	
 func _add_reward(battler : Battler):
-	"""
-	Appends dictionaries with the form { 'item': Item.tres, 'amount': amount } of dropped items to the drops array.
-	"""
+	# Appends dictionaries with the form { 'item': Item.tres, 'amount': amount } of dropped items to the drops array.
 	experience_earned += battler.drops.experience
 	for drop in battler.drops.get_drops():
 		if drop.chance - randf() > drop.chance:
@@ -36,11 +32,9 @@ func _add_reward(battler : Battler):
 
 # TODO: party shouldn't be Battlers but the actual party
 func _reward_to_battlers() -> Array:
-	"""
-	Rewards the surviving party members with experience points
+	# Rewards the surviving party members with experience points
 	
-	@returns Array of Battlers who have leveled up
-	"""
+# 	# @returns Array of Battlers who have leveled up
 	var survived = []
 	for member in party:
 		if not member.stats.is_alive:
@@ -60,10 +54,8 @@ func _reward_to_battlers() -> Array:
 	return leveled_up
 
 func on_battle_completed():
-	"""
-	On victory be sure to grant the battlers their earned exp
-	and show the interface
-	"""
+	# On victory be sure to grant the battlers their earned exp
+	# and show the interface
 	var leveled_up = _reward_to_battlers()
 	$Panel.visible = true
 	$Panel/Label.text = "EXP Earned %d" % experience_earned
@@ -77,8 +69,6 @@ func on_battle_completed():
 	$Panel.visible = false
 	
 func on_flee():
-	"""
-	End combat condition when the party flees
-	"""
+	# End combat condition when the party flees
 	experience_earned /= 2
 	on_battle_completed()

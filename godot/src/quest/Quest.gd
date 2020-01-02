@@ -1,8 +1,6 @@
-"""
-Represents a quest the player can take on
-Uses child Objective nodes to track tasks the player has to complete
-And Questitem
-"""
+# Represents a quest the player can take on
+# Uses child Objective nodes to track tasks the player has to complete
+# And Questitem
 extends Node
 class_name Quest
 
@@ -49,9 +47,7 @@ func notify_slay_objectives() -> void:
 		(objective as QuestSlayObjective).connect_signals()
 
 func get_rewards() -> Dictionary:
-	"""
-	Returns the rewards from the quest as a dictionary
-	"""
+	# Returns the rewards from the quest as a dictionary
 	return {
 		'experience' : _reward_experience, # int
 		'items': _reward_items.get_children() # Array of Item

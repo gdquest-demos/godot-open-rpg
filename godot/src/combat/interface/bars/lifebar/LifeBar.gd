@@ -1,5 +1,5 @@
-""" Can't extend from StatBar (the class_name) because this won't let us export
-the inherited variables from the base class """
+ # Can't extend from StatBar (the class_name) because this won't let us export
+# the inherited variables from the base class 
 extends "res://src/combat/interface/bars/StatBar.gd"
 class_name LifeBar
 

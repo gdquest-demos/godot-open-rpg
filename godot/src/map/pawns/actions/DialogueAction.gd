@@ -10,9 +10,7 @@ func interact() -> void:
 	emit_signal("finished")
 
 func load_dialogue(file_path) -> Dictionary:
-	"""
-	Parses a JSON file and returns it as a dictionary
-	"""
+	# Parses a JSON file and returns it as a dictionary
 	var file = File.new()
 	assert(file.file_exists(file_path))
 

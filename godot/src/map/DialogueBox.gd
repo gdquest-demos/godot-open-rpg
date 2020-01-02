@@ -14,10 +14,8 @@ onready var button_finished : = get_node("Panel/Colums/ButtonFinished") as Butto
 onready var portrait : = $Portrait as TextureRect
 
 func start(dialogue : Dictionary) -> void:
-	"""
-	Reinitializes the UI and asks the DialoguePlayer to 
-	play the dialogue
-	"""
+	# Reinitializes the UI and asks the DialoguePlayer to 
+	# play the dialogue
 	button_finished.hide()
 	button_next.show()
 	button_next.grab_focus()

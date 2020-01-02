@@ -1,7 +1,5 @@
-"""
-Completes the quest upon interacting
-with the Pawn that owns this node
-"""
+# Completes the quest upon interacting
+# with the Pawn that owns this node
 extends MapAction
 class_name CompleteQuestAction
 

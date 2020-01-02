@@ -1,7 +1,5 @@
-"""
-Animated exclamation and question mark that signals
-an InteractivePawn can start or end a quest
-"""
+# Animated exclamation and question mark that signals
+# an InteractivePawn can start or end a quest
 extends Position2D
 
 onready var animated_sprite : AnimatedSprite = $AnimatedSprite

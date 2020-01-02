@@ -1,8 +1,6 @@
-"""
-Initializes the map's pawns and emits signals so the
-Game node can start encounters
-Processes in pause mode
-"""
+# Initializes the map's pawns and emits signals so the
+# Game node can start encounters
+# Processes in pause mode
 extends Node
 class_name LocalMap
 

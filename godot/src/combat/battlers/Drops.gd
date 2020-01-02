@@ -1,7 +1,5 @@
-"""
-Holds a list of items to reward the player with upon e.g. 
-killing a monster
-"""
+# Holds a list of items to reward the player with upon e.g. 
+# killing a monster
 extends Node
 class_name Drops
 

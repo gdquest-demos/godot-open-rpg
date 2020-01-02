@@ -1,7 +1,5 @@
-"""
-Responsible for transitions between the main game screens:
-combat, game over, and the map
-"""
+# Responsible for transitions between the main game screens:
+# combat, game over, and the map
 extends Node
 
 signal combat_started()
@@ -24,9 +22,7 @@ func _ready():
 	local_map.connect("enemies_encountered", self, "enter_battle")
 
 func enter_battle(formation: Formation):
-	"""
-	Plays the combat transition animation and initializes the combat scene
-	"""
+	# Plays the combat transition animation and initializes the combat scene
 	if transitioning:
 		return
 
@@ -51,10 +47,8 @@ func enter_battle(formation: Formation):
 	emit_signal("combat_started")
 
 func _on_CombatArena_battle_completed(arena):
-	"""
-	At the end of an encounter, fade the screen, remove the combat arena
-	and add the local map back
-	"""
+	# At the end of an encounter, fade the screen, remove the combat arena
+	# and add the local map back
 	gui.show()
 	
 	transitioning = true

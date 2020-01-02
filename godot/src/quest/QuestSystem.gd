@@ -1,9 +1,7 @@
-"""
-Provides a simple API to start and to deliver quests, using the start() and
-deliver() methods respectively.
-Uses 4 QuestContainer nodes to stores all available, active, completed,
-and delivered (finished) quests.
-"""
+# Provides a simple API to start and to deliver quests, using the start() and
+# deliver() methods respectively.
+# Uses 4 QuestContainer nodes to stores all available, active, completed,
+# and delivered (finished) quests.
 extends Node
 
 onready var available_quests = $Available
@@ -18,16 +16,12 @@ func initialize(game, _party : Party ) -> void:
 	party = _party
 
 func find_available(reference : Quest) -> Quest:
-	"""
-	Returns the Quest corresponding to the reference instance,
-	to track its state or connect to it
-	"""
+	# Returns the Quest corresponding to the reference instance,
+	# to track its state or connect to it
 	return available_quests.find(reference)
 
 func get_available_quests() -> Array:
-	"""
-	Returns an Array of all quests under the Available node
-	"""
+	# Returns an Array of all quests under the Available node
 	return available_quests.get_quests()
 
 func is_available(reference : Quest) -> bool:
@@ -45,10 +39,8 @@ func _on_Quest_completed(quest):
 	completed_quests.add_child(quest)
 
 func deliver(quest : Quest):
-	"""
-	Marks the quest as complete, rewards the player,
-	and removes it from completed quests
-	"""
+	# Marks the quest as complete, rewards the player,
+	# and removes it from completed quests
 	quest._deliver()
 	# Player rewards
 	# TODO: consider removing the tie to the party. Instead maybe let the party node connect to

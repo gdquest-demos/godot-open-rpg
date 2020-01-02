@@ -13,10 +13,8 @@ var _conversation : Array
 var _index_current : int = 0
 
 func start(dialogue_dict):
-	"""
-	Takes a dictionary of conversation data returned by Dialogue.load()
-	and stores it in an array
-	"""
+	# Takes a dictionary of conversation data returned by Dialogue.load()
+	# and stores it in an array
 	emit_signal("started")
 	_conversation = dialogue_dict.values()
 	_index_current = 0

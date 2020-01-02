@@ -48,11 +48,9 @@ func play_intro():
 	yield(get_tree().create_timer(0.5), "timeout")
 
 func ready_field(formation : Formation, party_members : Array):
-	"""
-	use a formation as a factory for the scene's content
-	@param formation - the combat template of what the player will be fighting
-	@param party_members - list of active party battlers that will go to combat
-	"""
+	# use a formation as a factory for the scene's content
+	# @param formation - the combat template of what the player will be fighting
+	# @param party_members - list of active party battlers that will go to combat
 	for enemy_template in formation.get_children():
 		var enemy : Battler = enemy_template.duplicate()
 		turn_queue.add_child(enemy)

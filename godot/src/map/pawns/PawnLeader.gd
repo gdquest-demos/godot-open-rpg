@@ -1,7 +1,5 @@
-"""
-Player-controlled pawn.
-Set to Stop during pause
-"""
+# Player-controlled pawn.
+# Set to Stop during pause
 extends PawnActor
 class_name PawnLeader
 

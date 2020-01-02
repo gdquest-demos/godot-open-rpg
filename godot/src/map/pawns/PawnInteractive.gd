@@ -1,10 +1,8 @@
-"""
-Pawn the player can interact with. Could be an NPC, a chest,
-anything that should react when the player walks next to it
-or presses a key while sitting next to this pawn.
-Can work either with raycasts for interactions based on
-look direction or using an Area2D
-"""
+# Pawn the player can interact with. Could be an NPC, a chest,
+# anything that should react when the player walks next to it
+# or presses a key while sitting next to this pawn.
+# Can work either with raycasts for interactions based on
+# look direction or using an Area2D
 extends PawnActor
 class_name PawnInteractive
 
@@ -95,13 +93,11 @@ func _on_body_exited(body : PhysicsBody2D) -> void:
 	dialogue_balloon.hide()
 
 func start_interaction() -> void:
-	"""
-	Pauses the game and play each action under the $Actions node
-	Actions that transition to another scene (e.g. StartCombatAction) may unpause
-	the game themselves
-	PawnInteractive processes even when the game is paused, but not
-	PawnLeader, the player-controlled pawn
-	"""
+	# Pauses the game and play each action under the $Actions node
+	# Actions that transition to another scene (e.g. StartCombatAction) may unpause
+	# the game themselves
+	# PawnInteractive processes even when the game is paused, but not
+	# PawnLeader, the player-controlled pawn
 	dialogue_balloon.hide()
 	get_tree().paused = true
 	var actions = $Actions.get_children()

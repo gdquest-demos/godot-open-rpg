@@ -10,17 +10,13 @@ func initialize(battlers : Array) -> void:
 			skill.connect("missed", self, "spawn_label", [battler, "missed"])
 
 func spawn_label_number(new_value : int, old_value : int, battler : Battler, type : String) -> void:
-	"""
-	Spawns a damage or a mana cost animated label
-	Converts a difference to a string and delegates to spawn_label
-	"""
+	# Spawns a damage or a mana cost animated label
+	# Converts a difference to a string and delegates to spawn_label
 	var message : = str(new_value - old_value)
 	spawn_label(message, battler, type)
 
 func spawn_label(message : String, battler : Battler, type : String) -> void:
-	"""
-	Spawns an animated PopupLabel
-	"""
+	# Spawns an animated PopupLabel
 	var l : = PopupLabel.instance()
 	add_child(l)
 	l.start(battler, type, message)

@@ -1,8 +1,6 @@
-"""
-Represents a playable character to add in the player's party
-Holds the data and nodes for the character's battler, pawn on the map,
-and the character's stats to save the game
-"""
+# Represents a playable character to add in the player's party
+# Holds the data and nodes for the character's battler, pawn on the map,
+# and the character's stats to save the game
 extends Node2D
 
 class_name PartyMember
@@ -25,10 +23,8 @@ func _ready():
 	battler.stats = stats
 
 func update_stats(before_stats : CharacterStats):
-	"""
-	Update this character's stats to match select changes
-	that occurred during combat or through menu actions
-	"""
+	# Update this character's stats to match select changes
+	# that occurred during combat or through menu actions
 	var before_level = before_stats.level
 	var after_level = growth.get_level(experience)
 	if before_level != after_level:
@@ -37,17 +33,13 @@ func update_stats(before_stats : CharacterStats):
 	battler.stats = stats
 
 func get_battler_copy():
-	"""
-	Returns a copy of the battler to add to the CombatArena
-	at the start of a battle
-	"""
+	# Returns a copy of the battler to add to the CombatArena
+	# at the start of a battle
 	return battler.duplicate()
 
 func get_pawn_anim():
-	"""
-	Returns a copy of the PawnAnim that represents this character,
-	e.g. to add it as a child of the currently loaded game map
-	"""
+	# Returns a copy of the PawnAnim that represents this character,
+	# e.g. to add it as a child of the currently loaded game map
 	return get_node(pawn_anim_path).duplicate()
 
 func _set_experience(value : int):

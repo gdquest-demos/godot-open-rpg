@@ -1,8 +1,6 @@
-"""
-Map Grid. Responsible for collisions, telling pawns
-if they can move to a given cell
-Uses a Pathfinder to find and return the path to cells
-"""
+# Map Grid. Responsible for collisions, telling pawns
+# if they can move to a given cell
+# Uses a Pathfinder to find and return the path to cells
 extends TileMap
 
 class_name GameBoard
@@ -28,12 +26,10 @@ func get_cell_pawn(coordinates : Vector2) -> Pawn:
 	return null
 
 func request_move(pawn : PawnActor, direction : Vector2) -> Vector2:
-	"""
-	Checks if the Pawn can move in the given direction
-	If so, updates the grid's content and returns 
-	the target cell's position in world coordinates
-	If not, returns Vector2(0, 0)
-	"""
+	# Checks if the Pawn can move in the given direction
+	# If so, updates the grid's content and returns 
+	# the target cell's position in world coordinates
+	# If not, returns Vector2(0, 0)
 	var cell_start : Vector2 = world_to_map(pawn.position)
 	var cell_target : Vector2 = cell_start + direction
 	
@@ -43,9 +39,7 @@ func request_move(pawn : PawnActor, direction : Vector2) -> Vector2:
 	return Vector2()
 
 func find_path(start_world_position, end_world_position : Vector2) -> PoolVector3Array:
-	"""
-	Returns an array of grid points that connect the start and end world position
-	"""
+	# Returns an array of grid points that connect the start and end world position
 	var end = world_to_map(end_world_position)
 	if get_cellv(end) != CELL_TYPES.EMPTY:
 		return PoolVector3Array()

@@ -1,9 +1,7 @@
-"""
-Base command interface for all actions the player 
-or a character can perform on the map
-Uses a reference to the LocalMap to start interactions
-and wait for events to complete with coroutines
-"""
+# Base command interface for all actions the player 
+# or a character can perform on the map
+# Uses a reference to the LocalMap to start interactions
+# and wait for events to complete with coroutines
 extends Node
 
 class_name MapAction

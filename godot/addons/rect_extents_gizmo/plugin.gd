@@ -1,8 +1,6 @@
-"""
-Widget for Godot's 2d viewport. Adds 4 draggable anchors to RectExtents node
-The user can click and drag these anchors to resize a RectExtents node around
-its center.
-"""
+# Widget for Godot's 2d viewport. Adds 4 draggable anchors to RectExtents node
+# The user can click and drag these anchors to resize a RectExtents node around
+# its center.
 tool
 extends EditorPlugin
 
@@ -38,9 +36,7 @@ func edit(object: Object) -> void:
 	rect_extents = object
 
 func make_visible(visible: bool) -> void:
-	"""
-	Called when the editor is requested to become visible.
-	"""
+	# Called when the editor is requested to become visible.
 	if not rect_extents:
 		return
 	if not visible:
@@ -48,17 +44,13 @@ func make_visible(visible: bool) -> void:
 	update_overlays()
 
 func handles(object: Object) -> bool:
-	"""
-	Required to use forward_canvas_draw_... below
-	"""
+	# Required to use forward_canvas_draw_... below
 	return object is RectExtents
 
 func forward_canvas_draw_over_viewport(overlay: Control) -> void:
-	"""
-	Calculate the 4 anchor positions and bounding rectangles
-	from the selected RectExtents node and draw them as circles
-	over the viewport
-	"""
+	# Calculate the 4 anchor positions and bounding rectangles
+	# from the selected RectExtents node and draw them as circles
+	# over the viewport
 	if not rect_extents or not rect_extents.is_inside_tree():
 		return
 	

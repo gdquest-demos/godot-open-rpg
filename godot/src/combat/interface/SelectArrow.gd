@@ -16,10 +16,8 @@ var targets : Array
 var target_active : Battler
 
 func select_targets(battlers : Array) -> Array:
-	"""
-	Currently the arrow only allows you to select one target
-	Returns an array containing the target
-	"""
+	# Currently the arrow only allows you to select one target
+	# Returns an array containing the target
 	visible = true
 	targets = battlers
 	target_active = targets[0]
@@ -92,10 +90,8 @@ func _gui_input(event):
 	move_to(target_active)
 
 func find_closest_target(direction : Vector2) -> Battler:
-	"""
-	Returns the closest target in the given direction
-	Use DIRECTION_* constants
-	"""
+	# Returns the closest target in the given direction
+	# Use DIRECTION_* constants
 	if targets.size() == 1:
 		return targets[0]
 	var selected_target : Battler = null

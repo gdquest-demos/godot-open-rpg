@@ -10,10 +10,8 @@ func initialize(button : Control, action : CombatAction) -> void:
 	update_position(button)
 
 func _resize_background() -> void:
-	"""
-	Updates the horizontal size of the background image according to the label's size
-	Called after Godot re-drew the label
-	"""
+	# Updates the horizontal size of the background image according to the label's size
+	# Called after Godot re-drew the label
 	if background.rect_size.x < label.rect_size.x + tooltip_margin:
 		background.rect_size.x = label.rect_size.x + tooltip_margin
 	label.disconnect('draw', self, '_resize_background')

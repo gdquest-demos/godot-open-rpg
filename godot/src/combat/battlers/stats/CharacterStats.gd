@@ -1,8 +1,6 @@
-"""
-Represents a Battler's actual stats: health, strength, etc.
-See the child class GrowthStats.gd for stats growth curves
-and lookup tables
-"""
+# Represents a Battler's actual stats: health, strength, etc.
+# See the child class GrowthStats.gd for stats growth curves
+# and lookup tables
 extends Resource
 
 class_name CharacterStats
@@ -29,11 +27,9 @@ func reset():
 	mana = self.max_mana
 	
 func copy() -> CharacterStats:
-	"""
-	Perform a more accurate duplication, as normally Resource duplication
-	does not retain any changes, instead duplicating from what's registered
-	in the ResourceLoader
-	"""
+	# Perform a more accurate duplication, as normally Resource duplication
+	# does not retain any changes, instead duplicating from what's registered
+	# in the ResourceLoader
 	var copy = duplicate()
 	copy.health = health
 	copy.mana = mana

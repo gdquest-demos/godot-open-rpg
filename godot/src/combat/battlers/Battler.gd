@@ -1,8 +1,6 @@
-"""
-Base entity that represents a character or a monster in combat
-Every battler has an AI node so all characters can work as a monster
-or as a computer-controlled player ally
-"""
+# Base entity that represents a character or a monster in combat
+# Every battler has an AI node so all characters can work as a monster
+# or as a computer-controlled player ally
 extends Position2D
 
 class_name Battler
@@ -40,9 +38,7 @@ func initialize():
 	stats.connect("health_depleted", self, "_on_health_depleted")
 
 func is_able_to_play() -> bool:
-	"""
-	Returns true if the battler can perform an action
-	"""
+	# Returns true if the battler can perform an action
 	return stats.health > 0
 
 func set_selected(value):

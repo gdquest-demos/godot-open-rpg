@@ -1,7 +1,5 @@
-"""
-Animated circular button that supports both keys and mouse input
-Reacts to mouse hover and focus events
-"""
+# Animated circular button that supports both keys and mouse input
+# Reacts to mouse hover and focus events
 extends Button
 
 onready var animation_player : = $AnimationPlayer as AnimationPlayer
@@ -14,11 +12,9 @@ var target_position : Vector2
 var unfocused_scale : Vector2
 
 func initialize(action : CombatAction, target_position : Vector2) -> void:
-	"""
-	Places the Button on the screen, where the appear tween animation should end
-	Disables the button if the action isn't usable, for example
-	if the battler doesn't have enough mana
-	"""
+	# Places the Button on the screen, where the appear tween animation should end
+	# Disables the button if the action isn't usable, for example
+	# if the battler doesn't have enough mana
 	unfocused_scale = rect_scale
 	rect_scale = Vector2()
 	self.target_position = target_position

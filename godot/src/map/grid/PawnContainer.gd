@@ -1,8 +1,6 @@
-"""
-Container for all pawns on the map.
-Sorts pawns by their Y position,
-Spawns and rebuilds the player's party
-"""
+# Container for all pawns on the map.
+# Sorts pawns by their Y position,
+# Spawns and rebuilds the player's party
 extends YSort
 
 export var party_scene : PackedScene
