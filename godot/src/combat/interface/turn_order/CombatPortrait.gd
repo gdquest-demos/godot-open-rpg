@@ -22,27 +22,27 @@ func initialize(battler : Battler, play_animation : bool = true) -> void:
 
 func reduce() -> void:
 	# Used as the initialization animation.
-	# animation_player.play('reduce')
+	animation_player.play('reduce')
 
-# # func highlight() -> void:
-	Highlight the portrait.
+func highlight() -> void:
+	# Highlight the portrait.
 
 	# Used when the battler becomes active.
-	# animation_player.play('highlight')
+	animation_player.play('highlight')
 
-# # func wait() -> void:
-	Remove the portrait highlight.
+func wait() -> void:
+	# Remove the portrait highlight.
 
-	Used when the battler switch from the active to the waiting state.
-	# animation_player.play('wait')
+	# Used when the battler switch from the active to the waiting state.
+	animation_player.play('wait')
 
-# # func disable() -> void:
-	Disable (grey-out) the portrait.
+func disable() -> void:
+	# Disable (grey-out) the portrait.
 
-	Used when the battler won't be playing anymore (dead, petrified, etc.).
-	# animation_player.play('disable')
+	# Used when the battler won't be playing anymore (dead, petrified, etc.).
+	animation_player.play('disable')
 
-# # func _appear(alpha):
+func _appear(alpha):
 	# Tween the modulation alpha to make the portrait appear.
 	var from : Color = modulate
 	var to : Color = modulate

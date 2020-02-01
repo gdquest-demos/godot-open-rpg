@@ -55,7 +55,7 @@ func get_battlers():
 
 func print_queue():
 	# Prints the Battlers' and their speed in the turn order
-	# var string : String
-	# for battler in get_children():
-		# string += battler.name + "(%s)" % battler.stats.speed + " "
-	# print(string)
+	var string : String
+	for battler in get_children():
+		string += battler.name + "(%s)" % battler.stats.speed + " "
+	print(string)
