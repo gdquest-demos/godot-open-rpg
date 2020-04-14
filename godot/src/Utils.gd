@@ -1,19 +1,21 @@
 extends Node
 # General utility library that can be used across multiple projects as an autoload script.
 
-
-const ERR : = 1e-6
+const ERR := 1e-6
 
 
 func is_inside(point: Vector2, rect: Rect2) -> bool:
-	return (point.x > rect.position.x
-			and point.y > rect.position.y
-			and point.x < rect.size.x
-			and point.y < rect.size.y)
+	return (
+		point.x > rect.position.x
+		and point.y > rect.position.y
+		and point.x < rect.size.x
+		and point.y < rect.size.y
+	)
 
 
-func to_idx(v: Vector2, width: int) -> int:
-	return int(v.x + width * v.y)
+# Returns the coordinates as an integer, to convert 2D coordinates to a 1D array
+func as_index(vector: Vector2, width: int) -> int:
+	return int(vector.x + width * vector.y)
 
 
 func to_vector2(from: Vector3) -> Vector2:
