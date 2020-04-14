@@ -3,7 +3,8 @@
 extends Node
 class_name Drops
 
-export var experience : int = 0
+export var experience: int = 0
+
 
 func get_drops() -> Array:
 	return get_children()

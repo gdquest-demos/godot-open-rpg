@@ -8,24 +8,20 @@ class_name PawnInteractive
 
 signal interaction_finished(pawn)
 
-onready var raycasts : Node2D = $Raycasts
-onready var dialogue_balloon : Sprite = $DialogueBalloon
-onready var collision_shape : CollisionShape2D = $CollisionShape2D
-onready var actions : Node = $Actions
+onready var raycasts: Node2D = $Raycasts
+onready var dialogue_balloon: Sprite = $DialogueBalloon
+onready var collision_shape: CollisionShape2D = $CollisionShape2D
+onready var actions: Node = $Actions
 
-onready var quest_bubble : Node = $QuestBubble
+onready var quest_bubble: Node = $QuestBubble
 
-export var vanish_on_interaction : = false
-export var AUTO_START_INTERACTION : = false
+export var vanish_on_interaction := false
+export var AUTO_START_INTERACTION := false
 export var sight_distance = 50
-export var facing = {
-	"up": true,
-	"left": true,
-	"right": true,
-	"down": true
-}
+export var facing = {"up": true, "left": true, "right": true, "down": true}
 
 var active_raycasts := []
+
 
 func _ready():
 	# Initializes raycast nodes, deactivates the area if using raycasts
@@ -38,7 +34,7 @@ func _ready():
 		raycast.cast_to = raycast.cast_to.normalized() * sight_distance
 		active_raycasts.append(raycast)
 		use_area = false
-	
+
 	if use_area:
 		connect('body_entered', self, '_on_body_entered')
 		connect('body_exited', self, '_on_body_exited')
@@ -46,7 +42,7 @@ func _ready():
 
 	# Quests
 	# Send quest-related MapActions, if any, to the QuestBubble
-	var quest_actions : Array = []
+	var quest_actions: Array = []
 	for action in actions.get_children():
 		if not (action is GiveQuestAction or action is CompleteQuestAction):
 			continue
@@ -54,6 +50,7 @@ func _ready():
 	if quest_actions.size() == 0:
 		return
 	quest_bubble.initialize(quest_actions)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Use the area to detect if the user is clicking on the NPCs' interaction zone
@@ -66,7 +63,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		start_interaction()
 		get_tree().set_input_as_handled()
 
-func _physics_process(delta : float) -> void:
+
+func _physics_process(delta: float) -> void:
 	# Only runs if using raycasts/specific directions for player detection
 	if not dialogue_balloon.visible:
 		for raycast in active_raycasts:
@@ -76,21 +74,24 @@ func _physics_process(delta : float) -> void:
 				start_interaction()
 			dialogue_balloon.show()
 	else:
-		var inactive_count : int = 0
+		var inactive_count: int = 0
 		for raycast in active_raycasts:
 			if not raycast.is_colliding():
 				inactive_count += 1
 		if inactive_count == active_raycasts.size():
 			dialogue_balloon.visible = false
 
-func _on_body_entered(body : PhysicsBody2D) -> void:
+
+func _on_body_entered(body: PhysicsBody2D) -> void:
 	if AUTO_START_INTERACTION:
 		start_interaction()
 	else:
 		dialogue_balloon.show()
 
-func _on_body_exited(body : PhysicsBody2D) -> void:
+
+func _on_body_exited(body: PhysicsBody2D) -> void:
 	dialogue_balloon.hide()
+
 
 func start_interaction() -> void:
 	# Pauses the game and play each action under the $Actions node

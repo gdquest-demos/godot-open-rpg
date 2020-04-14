@@ -1,7 +1,8 @@
 extends MapAction
 class_name StartCombatAction
 
-export var formation : PackedScene
+export var formation: PackedScene
+
 
 func interact() -> void:
 	get_tree().paused = false

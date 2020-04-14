@@ -1,13 +1,15 @@
 extends MapAction
 class_name DialogueAction
 
-export (String, FILE, "*.json") var dialogue_file_path : String
+export (String, FILE, "*.json") var dialogue_file_path: String
 signal dialogue_loaded(data)
 
+
 func interact() -> void:
-	var dialogue : Dictionary =  load_dialogue(dialogue_file_path)
+	var dialogue: Dictionary = load_dialogue(dialogue_file_path)
 	yield(local_map.play_dialogue(dialogue), "completed")
 	emit_signal("finished")
+
 
 func load_dialogue(file_path) -> Dictionary:
 	# Parses a JSON file and returns it as a dictionary

@@ -1,7 +1,8 @@
 tool
 extends Position2D
 
-export var DRAW_COLOR : = Color("#e231b6")
+export var DRAW_COLOR := Color("#e231b6")
+
 
 func _draw() -> void:
 	if not Engine.editor_hint:

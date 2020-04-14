@@ -4,36 +4,30 @@
 tool
 extends EditorPlugin
 
-enum Anchors {
-	TOP_LEFT,
-	TOP_RIGHT,
-	BOTTOM_LEFT,
-	BOTTOM_RIGHT
-}
+enum Anchors { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT }
 
 # Stores the currently edited rect_extents node
 # null if no RectExtents node is selected and active
-var rect_extents : RectExtents
+var rect_extents: RectExtents
 # List of all anchors drawn over the RectExtents node
 # Each anchor has the form { position: Vector2, rect: Rect2 }
-var anchors : Array
+var anchors: Array
 # Get and stores the anchor the user is dragging from the anchors array above
-var dragged_anchor : Dictionary = {}
+var dragged_anchor: Dictionary = {}
 # Stores the RectExtents' state when the user starts dragging an anchor
 # we need this info to safely add undo/redo support when the drag operation ends
-var rect_drag_start : Dictionary = {
-	'size': Vector2(),
-	'offset': Vector2()
-}
+var rect_drag_start: Dictionary = {'size': Vector2(), 'offset': Vector2()}
 
-const CIRCLE_RADIUS : float = 6.0
-const STROKE_RADIUS : float = 2.0
+const CIRCLE_RADIUS: float = 6.0
+const STROKE_RADIUS: float = 2.0
 const STROKE_COLOR = Color("#f50956")
 const FILL_COLOR = Color("#ffffff")
+
 
 func edit(object: Object) -> void:
 	print("edit %s" % object.get_path())
 	rect_extents = object
+
 
 func make_visible(visible: bool) -> void:
 	# Called when the editor is requested to become visible.
@@ -43,9 +37,11 @@ func make_visible(visible: bool) -> void:
 		rect_extents = null
 	update_overlays()
 
+
 func handles(object: Object) -> bool:
 	# Required to use forward_canvas_draw_... below
 	return object is RectExtents
+
 
 func forward_canvas_draw_over_viewport(overlay: Control) -> void:
 	# Calculate the 4 anchor positions and bounding rectangles
@@ -53,23 +49,23 @@ func forward_canvas_draw_over_viewport(overlay: Control) -> void:
 	# over the viewport
 	if not rect_extents or not rect_extents.is_inside_tree():
 		return
-	
+
 	var pos = rect_extents.position
 	var offset = rect_extents.offset
-	var half_size : Vector2 = rect_extents.size / 2.0
-	var edit_anchors : = {
+	var half_size: Vector2 = rect_extents.size / 2.0
+	var edit_anchors := {
 		Anchors.TOP_LEFT: pos - half_size + offset,
 		Anchors.TOP_RIGHT: pos + Vector2(half_size.x, -1.0 * half_size.y) + offset,
 		Anchors.BOTTOM_LEFT: pos + Vector2(-1.0 * half_size.x, half_size.y) + offset,
 		Anchors.BOTTOM_RIGHT: pos + half_size + offset,
 	}
 
-	var transform_viewport : = rect_extents.get_viewport_transform()
-	var transform_global : = rect_extents.get_canvas_transform()
+	var transform_viewport := rect_extents.get_viewport_transform()
+	var transform_global := rect_extents.get_canvas_transform()
 	anchors = []
-	var anchor_size : Vector2 = Vector2(CIRCLE_RADIUS * 2.0, CIRCLE_RADIUS * 2.0)
+	var anchor_size: Vector2 = Vector2(CIRCLE_RADIUS * 2.0, CIRCLE_RADIUS * 2.0)
 	for coord in edit_anchors.values():
-		var anchor_center : Vector2 = transform_viewport * (transform_global * coord)
+		var anchor_center: Vector2 = transform_viewport * (transform_global * coord)
 		var new_anchor = {
 			'position': anchor_center,
 			'rect': Rect2(anchor_center - anchor_size / 2.0, anchor_size),
@@ -77,10 +73,12 @@ func forward_canvas_draw_over_viewport(overlay: Control) -> void:
 		draw_anchor(new_anchor, overlay)
 		anchors.append(new_anchor)
 
-func draw_anchor(anchor : Dictionary, overlay : Control) -> void:
+
+func draw_anchor(anchor: Dictionary, overlay: Control) -> void:
 	var pos = anchor['position']
 	overlay.draw_circle(pos, CIRCLE_RADIUS + STROKE_RADIUS, STROKE_COLOR)
 	overlay.draw_circle(pos, CIRCLE_RADIUS, FILL_COLOR)
+
 
 func drag_to(event_position: Vector2) -> void:
 	if not dragged_anchor:
@@ -89,10 +87,11 @@ func drag_to(event_position: Vector2) -> void:
 	var viewport_transform_inv := rect_extents.get_viewport().get_global_canvas_transform().affine_inverse()
 	var viewport_position: Vector2 = viewport_transform_inv.xform(event_position)
 	var transform_inv := rect_extents.get_global_transform().affine_inverse()
-	var target_position : Vector2 = transform_inv.xform(viewport_position.round())
+	var target_position: Vector2 = transform_inv.xform(viewport_position.round())
 	# Update the rectangle's size. Only resizes uniformly around the center for now
 	var target_size = (target_position - rect_extents.offset).abs() * 2.0
 	rect_extents.size = target_size
+
 
 func forward_canvas_gui_input(event: InputEvent) -> bool:
 	if not rect_extents or not rect_extents.visible:
@@ -116,13 +115,13 @@ func forward_canvas_gui_input(event: InputEvent) -> bool:
 			dragged_anchor = {}
 			var undo := get_undo_redo()
 			undo.create_action("Move anchor")
-		
+
 			undo.add_do_property(rect_extents, "size", rect_extents.size)
 			undo.add_undo_property(rect_extents, "size", rect_drag_start['size'])
-		
+
 			undo.add_do_property(rect_extents, "offset", rect_extents.offset)
 			undo.add_undo_property(rect_extents, "offset", rect_drag_start['offset'])
-		
+
 			undo.commit_action()
 			return true
 	if not dragged_anchor:
@@ -135,6 +134,6 @@ func forward_canvas_gui_input(event: InputEvent) -> bool:
 	# Cancelling with ui_cancel
 	if event.is_action_pressed("ui_cancel"):
 		dragged_anchor = {}
-		
+
 		return true
 	return false

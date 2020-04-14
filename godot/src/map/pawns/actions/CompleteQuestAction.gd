@@ -3,8 +3,9 @@
 extends MapAction
 class_name CompleteQuestAction
 
-export var quest_reference : PackedScene
-var quest : Quest = null
+export var quest_reference: PackedScene
+var quest: Quest = null
+
 
 func _ready() -> void:
 	assert(quest_reference)
@@ -12,8 +13,10 @@ func _ready() -> void:
 	active = false
 	quest.connect("completed", self, "_on_Quest_completed")
 
+
 func _on_Quest_completed() -> void:
 	active = true
+
 
 func interact() -> void:
 	get_tree().paused = false

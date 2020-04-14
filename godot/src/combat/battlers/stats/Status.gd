@@ -8,8 +8,10 @@ var statuses_active = {}
 # Example status
 const POISON = {
 	'name': "Poison",
-	'effect': {
-		'periodic_damage': {
+	'effect':
+	{
+		'periodic_damage':
+		{
 			'cycles': 5,
 			'stat': 'health',
 			'damage': 1,
@@ -18,21 +20,17 @@ const POISON = {
 }
 const INVINCIBLE = {
 	'name': "Invincible",
-	'effect': {
-		'stat_modifier': {
-			'add': {
-				'defense': 1000,
-				'magic_defense': 1000
-			}
-		}
-	}
+	'effect': {'stat_modifier': {'add': {'defense': 1000, 'magic_defense': 1000}}}
 }
+
 
 func add(id, status):
 	statuses_active[id] = status
 
+
 func remove(id):
 	statuses_active.erase(id)
+
 
 func as_string():
 	var string = ""

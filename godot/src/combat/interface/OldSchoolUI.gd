@@ -2,7 +2,8 @@ extends Control
 
 onready var monster_info = $Row/MonstersPanel/Column
 
-func initialize(battlers : Array):
+
+func initialize(battlers: Array):
 	for b in battlers:
 		var battler = b as Battler
 		if battler.party_member:

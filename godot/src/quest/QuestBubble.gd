@@ -2,18 +2,20 @@
 # an InteractivePawn can start or end a quest
 extends Position2D
 
-onready var animated_sprite : AnimatedSprite = $AnimatedSprite
-onready var animation_player : AnimationPlayer = $AnimationPlayer
+onready var animated_sprite: AnimatedSprite = $AnimatedSprite
+onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 
 func _ready() -> void:
 	hide()
 	animation_player.play("wobble")
 
-func initialize(quest_actions : Array):
+
+func initialize(quest_actions: Array):
 	var quest = quest_actions[0].quest
 	var name = get_parent().name
-	var action_give : GiveQuestAction
-	var action_complete : CompleteQuestAction
+	var action_give: GiveQuestAction
+	var action_complete: CompleteQuestAction
 	for action in quest_actions:
 		if action is GiveQuestAction:
 			action_give = action
@@ -29,12 +31,15 @@ func initialize(quest_actions : Array):
 		quest.connect("completed", self, "_on_Quest_completed")
 		quest.connect("delivered", self, "_on_Quest_delivered")
 
+
 func _on_Quest_started():
 	animated_sprite.animation = "quest_active"
+
 
 func _on_Quest_completed():
 	show()
 	animated_sprite.animation = "quest_complete"
+
 
 func _on_Quest_delivered():
 	animation_player.stop()

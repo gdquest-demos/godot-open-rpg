@@ -1,10 +1,12 @@
 extends GridContainer
 
+
 func initialize():
 	update_focus_neighbours()
 	get_child(0).grab_focus()
 
-func update_focus_neighbours(ignore=null):
+
+func update_focus_neighbours(ignore = null):
 	var buttons_to_update = get_children()
 	# There's a bug with the Node.tree_exited signal so the button is still in the tree
 	if ignore:
