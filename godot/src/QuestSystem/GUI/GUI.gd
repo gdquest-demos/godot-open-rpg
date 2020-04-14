@@ -13,7 +13,7 @@ var _button_close : Button = null
 var _button_previous : Button = null
 var _button_next : Button = null
 var _animation_player : AnimationPlayer = null
-var _quest_info : VBoxContainer = null
+var _quest_info : Container = null
 
 var _count : = 0 setget _set_count
 

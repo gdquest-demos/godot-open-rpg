@@ -2,8 +2,8 @@ extends Control
 
 
 var _animation_player : AnimationPlayer = null
-var _background : Button = null
-var _tooltip : Position2D = null
+var _background : TextureButton = null
+var _tooltip : Control = null
 
 
 func _ready() -> void:
