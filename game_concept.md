@@ -1,23 +1,20 @@
 # Game concept
 
-A turn-based role-playing game engine inspired by the old installments in the
-Final Fantasy series.
+A turn-based role-playing game engine inspired by the old installments in the Final Fantasy series.
 
 ## The goal
 
-The goal of this project is to provide the gamedev community with a demo that
-shows how game systems interlock together in a sizeable game, in Godot.
+The goal of this project is to provide the gamedev community with a demo that shows how game systems work together in a complete 2D Godot game demo.
 
-This demo is both a framework to create turn-based RPGs, it is also an
-educational and a community-driven, international project.
+We are creating a solid reference to create turn-based RPGs and a community-driven educational project.
 
-The initial demo intentionally draws inspiration from RPG Maker and old
-instalments in the Final Fantasy and Dragon Quest series. The idea is to make
-the engine's foundations both classic, so we all have a reference to work from,
-and flexible so we can all contribute to the project creatively.
+The demo draws inspiration from RPG Maker and old JRPGs like Final Fantasy or Dragon Quest on purpose.
 
-For more details on the project's scope and open tasks, check the [Github
-milestones](https://github.com/GDquest/godot-turn-based-rpg/milestones).
+For more details on the project's scope and open tasks, check the [Github milestones](https://github.com/GDquest/godot-turn-based-rpg/milestones).
+
+## Scope
+
+We're creating a vertical slice of gameplay, with a duration of roughly 10-20 minutes.
 
 ## Story
 
@@ -33,7 +30,7 @@ The story plays again and again. The stick is bent, and the cardboard is wet. Bu
 
 Eventually, the sun starts to set, and Robi and Godette realize they are late. They drop all their toys and run to the playground. There are drawings in the sandbox and toys scattered all around. Godot is there, running after a butterfly.
 
-## Mechanics ##
+## Mechanics
 
 The game's mechanics draw from classical JRPGs.
 
@@ -41,16 +38,9 @@ The idea is to produce a standard yet a flexible foundation, primarily inspired 
 
 ### Combat system
 
-The combat system aims to serve as a base to build turn-based role playing game. It draws inspiration from old instalments of the Final Fantasy and Dragon Quest series, as well as RPG Maker.
-
 Battle encounters are turn-based. The battlers act one after the other in an order decided depending on their speed.
 
-Each character has a distinct set of available combat actions depending on their job.
-
-<!-- #### Style -->
-
-<!-- Style points allow characters to unleash powerful attacks.  -->
-
+Each character has a distinct set of available combat actions and a slightly different gameplay or strategic options.
 
 ## Characters
 
@@ -68,11 +58,7 @@ Robi has focused, powerful attacks that target one enemy but temporarily leave i
 
 Robi relies on energy to fight. Energy slowly refills on every turn. When out of batteries, Robi falls in falls in Eco mode until his batteries fully recharged. In Eco mode, Robi becomes weaker.
 
-Robi can enter recharge mode to refill his energy a lot faster, in which case he's unusable for a few turns.
-
-##### Special abilities
-
-Meteor strike: Robi jumps out of the battlefield and propels himself up into the stratosphere. He fires a bullet that falls on his foes like a meteorite.
+Robi can enter recharge mode to refill his energy a lot faster, in which case he's unusable until fully recharged.
 
 ### Godette
 
@@ -102,11 +88,4 @@ The protagonists encounter bugs on their way to their goal. Bugs arise from anyw
 
 Bugs take various shapes inspired by insects and animals.
 
-*This gives us designers room to share some of our experiences into the game demos.*
-
-## Technology ##
-
-2d game powered by the Godot engine. For desktop platforms only
-(*Windows and Linux to start with*).
-
-## Prototypes ##
+_This gives us designers room to share some of our experiences into the game demos._
