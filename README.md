@@ -1,6 +1,6 @@
 # Godot Open RPG
 
-![Godot Open RPG banner](https://i.imgur.com/lhi0U9v.png)
+![Godot Open RPG banner](img/Open-RPG.png)
 
 OpenRPG is a tool and a demo to create Role Playing Games with turn-based combat.
 
