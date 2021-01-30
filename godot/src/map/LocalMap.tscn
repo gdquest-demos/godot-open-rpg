@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/map/LocalMap.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilesets/grasslands.tres" type="TileSet" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://src/map/pawns/TestQuestGiver.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/map/pawns/TestQuestReceiver.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/interface/gui/DialogueBox.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/combat/battlers/formations/SlimecupineFormation001.tscn" type="PackedScene" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 50, 50 )
@@ -73,7 +74,7 @@ facing = {
 shape = SubResource( 2 )
 
 [node name="Dialogue" parent="GameBoard/Pawns/DialoguePawn/Actions" index="0" instance=ExtResource( 11 )]
-dialogue_file_path = "res://dialogue/data/test_conversation.json"
+dialogue_file_path = "res://src/dialogue/data/test_conversation.json"
 
 [node name="DialogueCombatPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
 position = Vector2( 1160, 600 )
@@ -88,7 +89,7 @@ facing = {
 dialogue_file_path = "res://src/dialogue/data/test_conversation.json"
 
 [node name="StartCombat" parent="GameBoard/Pawns/DialogueCombatPawn/Actions" index="1" instance=ExtResource( 9 )]
-formation = ExtResource( 10 )
+formation = ExtResource( 15 )
 
 [node name="TestQuestGiver" parent="GameBoard/Pawns" instance=ExtResource( 12 )]
 position = Vector2( 1160, 200 )
