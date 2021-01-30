@@ -12,6 +12,8 @@ extents = Vector2( 30, 30 )
 "interactive_pawns",
 ]]
 pause_mode = 2
+position = Vector2( 0, -0.31498 )
+z_index = 50
 collision_layer = 4
 collision_mask = 2
 script = ExtResource( 1 )
