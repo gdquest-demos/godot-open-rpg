@@ -74,6 +74,9 @@ turn_order_icon = ExtResource( 11 )
 skill = ExtResource( 13 )
 level = 0
 
+[node name="AI" parent="Robi2/Battler" index="6"]
+script = ExtResource( 8 )
+
 [node name="RobiPawnAnim" parent="Robi2" instance=ExtResource( 14 )]
 
 [node name="Robi3" parent="." instance=ExtResource( 2 )]
@@ -89,6 +92,9 @@ turn_order_icon = ExtResource( 11 )
 [node name="Slash3" parent="Robi3/Battler/Skills" index="0" instance=ExtResource( 6 )]
 skill = ExtResource( 13 )
 level = 0
+
+[node name="AI" parent="Robi3/Battler" index="6"]
+script = ExtResource( 8 )
 
 [node name="RobiPawnAnim" parent="Robi3" instance=ExtResource( 14 )]
 
