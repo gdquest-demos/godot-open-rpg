@@ -329,6 +329,8 @@ config/version="0.3.0"
 
 DialogueDatabase="*res://src/dialogue/DialogueDatabase.gd"
 QuestSystem="*res://src/quest/QuestSystem.tscn"
+Data="*res://Data.gd"
+Util="*res://Util.gd"
 
 [debug]
 
