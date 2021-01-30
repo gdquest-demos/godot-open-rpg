@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/map/LocalMap.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilesets/grasslands.tres" type="TileSet" id=2]
@@ -18,11 +18,16 @@
 [ext_resource path="res://assets/backgrounds/FactoryRoom01.png" type="Texture" id=16]
 [ext_resource path="res://assets/sprites/npcs/ravi.png" type="Texture" id=17]
 [ext_resource path="res://assets/sprites/npcs/usir.png" type="Texture" id=18]
+[ext_resource path="res://assets/sprites/battlers/Red_Slime_128.png" type="Texture" id=19]
+[ext_resource path="res://src/combat/battlers/formations/LoneRedSlime.tscn" type="PackedScene" id=20]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 50, 50 )
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 64, 32 )
 
 [sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 50, 50 )
+
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 80, 80 )
 
 [node name="LocalMap" type="Node2D"]
@@ -47,10 +52,10 @@ __meta__ = {
 }
 
 [node name="Background" type="TextureRect" parent="."]
-margin_left = 30.0
-margin_top = 13.0
-margin_right = 1950.0
-margin_bottom = 1093.0
+margin_left = 24.0
+margin_top = 3.0
+margin_right = 1944.0
+margin_bottom = 1083.0
 texture = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -95,8 +100,30 @@ facing = {
 z_index = 51
 texture = ExtResource( 18 )
 
+[node name="RedSlime" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
+position = Vector2( 512.354, 652.613 )
+z_index = 51
+facing = {
+"down": false,
+"left": false,
+"right": false,
+"up": false
+}
+
+[node name="Sprite" type="Sprite" parent="GameBoard/Pawns/RedSlime"]
+position = Vector2( 0, -16 )
+z_index = 51
+texture = ExtResource( 19 )
+
+[node name="CollisionShape2D" parent="GameBoard/Pawns/RedSlime" index="4"]
+position = Vector2( 0, 16 )
+shape = SubResource( 4 )
+
+[node name="StartCombat" parent="GameBoard/Pawns/RedSlime/Actions" index="0" instance=ExtResource( 9 )]
+formation = ExtResource( 20 )
+
 [node name="DialogueCombatPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
-position = Vector2( 1564.87, 665.408 )
+position = Vector2( 214.22, 2273.38 )
 type = 1
 facing = {
 "down": true,
@@ -121,7 +148,7 @@ facing = {
 }
 
 [node name="CollisionShape2D" parent="GameBoard/Pawns/EncounterPawn" index="3"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="StartCombat" parent="GameBoard/Pawns/EncounterPawn/Actions" index="0" instance=ExtResource( 9 )]
 formation = ExtResource( 10 )
@@ -136,7 +163,7 @@ facing = {
 }
 
 [node name="CollisionShape2D" parent="GameBoard/Pawns/DialoguePawn" index="3"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Dialogue" parent="GameBoard/Pawns/DialoguePawn/Actions" index="0" instance=ExtResource( 11 )]
 dialogue_file_path = "res://src/dialogue/data/test_conversation.json"
@@ -153,6 +180,8 @@ layer = 100
 
 [node name="DialogueBox" parent="MapInterface" instance=ExtResource( 14 )]
 visible = false
+
+[editable path="GameBoard/Pawns/RedSlime"]
 
 [editable path="GameBoard/Pawns/DialogueCombatPawn"]
 

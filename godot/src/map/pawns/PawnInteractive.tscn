@@ -6,7 +6,6 @@
 [ext_resource path="res://assets/sprites/dialogue_balloon.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 30, 30 )
 
 [node name="InteractivePawn" type="Area2D" groups=[
 "interactive_pawns",
@@ -24,6 +23,7 @@ __meta__ = {
 [node name="Pivot" type="Position2D" parent="."]
 
 [node name="PawnAnim" parent="Pivot" instance=ExtResource( 2 )]
+visible = false
 
 [node name="QuestBubble" parent="." instance=ExtResource( 3 )]
 position = Vector2( 56.0923, -39.7058 )
@@ -56,3 +56,5 @@ collision_mask = 2
 [node name="Actions" type="Node" parent="."]
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Sprites" type="Node" parent="."]

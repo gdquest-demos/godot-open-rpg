@@ -6,6 +6,9 @@ signal monster_collection_menu_summoned()
 
 var slimes = []
 onready var party = $Background/Columns/Party
+onready var collection = $Background/Columns/Collection
+var battler_path = "assets/sprites/battlers/"
+var battler_ext = "_Slime_128.png"
 
 func add_slime(new_slime: Slime) -> void:
 	slimes.resize(slimes.size() + 1)
@@ -29,16 +32,17 @@ func _process(_delta):
 
 enum TEMPLATE { IMG = 0, NAME }
 func reload():
-	# First child is the main character; clear everything else and then start copying it
-	while party.get_child_count() > 1:
-		party.remove_child(party.get_child(1))
+	# First few children are labels etc and the main character; clear everything else and then start copying it
+	print("party size %s" % [party.get_child_count()])
+	while collection.get_child_count() > 3:
+		collection.remove_child(collection.get_child(3))
 	for i in range(0, slimes.size()):
 		var l = slimes[i]
-		var t = party.get_node("PartyMember/HBoxContainer").duplicate()
-		#t.get_child(TEMPLATE.IMG).
+		var t = collection.get_node("CollMember/CollContainer").duplicate()
+		t.get_child(TEMPLATE.IMG).texture = Data.getTexture(battler_path, "Red", battler_ext)
 		labelCell(t, TEMPLATE.NAME, "Slime")
 		t.visible = true
-		party.add_child(t)
+		collection.add_child(t)
 	get_parent().emit_signal("draw")
 
 func showingCat(c):

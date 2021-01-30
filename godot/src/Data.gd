@@ -55,30 +55,17 @@ static func parseCSV(path, file):
 			pass#Game.reportError(Game.CAT.FILE, "Line %s of %s could not be read" % [line_count, path])
 	return list
 
-static func saveCSV(fhead, fdata, filename, dict):
+static func saveCSV(folder, fdata, filename, arr):
 	#Game.debugMessage(Game.CAT.SAVE, "Saving file: %s" % [fdata + filename])
-	var dir = Directory.new()
-	dir.make_dir_recursive(fdata)
 	var file = File.new()
 	var count = 0
-	if file.open(fdata + filename, file.WRITE) == OK:
-		var hdr = File.new()
-		if hdr.open(fhead + filename, file.READ) == OK:
-			var colIDs = hdr.get_csv_line()
-			file.store_line(colIDs.join(","))
-			var defaults = hdr.get_csv_line()
-			file.store_line(defaults.join(","))
-			count += 2
-		for row in dict.keys():
-			var dataRow : PoolStringArray = []
-			for col in dict[row].keys():
-				var cell = dict[row][col]
-				if cell:
-					 cell = "\"" + str(cell) + "\""
-				dataRow.push_back(cell)
-			file.store_line(dataRow.join(","))
-			count += 1
-		file.close()
+	if file.open(folder + fdata + filename, file.WRITE) == OK:
+		var dataRow : PoolStringArray = []
+		for i in range(arr.size()):
+			var cell = arr[i]
+			dataRow.push_back(cell)
+		file.store_line(dataRow.join(","))
+	file.close()
 	#Game.verboseMessage(Game.CAT.SAVE, "Wrote %s lines" % [count])
 
 
