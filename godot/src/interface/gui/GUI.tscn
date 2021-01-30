@@ -6,9 +6,7 @@
 [ext_resource path="res://assets/fonts/default_theme/montserrat_eb_48.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/fonts/default_theme/montserrat_eb_32.tres" type="DynamicFont" id=5]
 
-
 [sub_resource type="Animation" id=1]
-
 resource_name = "slide_in_quest_journal"
 length = 0.2
 tracks/0/type = "value"
@@ -25,7 +23,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-
 resource_name = "slide_out_quest_journal"
 length = 0.2
 tracks/0/type = "value"
@@ -48,6 +45,9 @@ script = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="QuestButton" type="TextureButton" parent="Container"]
 anchor_left = 1.0
@@ -59,9 +59,11 @@ margin_top = -184.0
 margin_right = -64.0
 margin_bottom = -56.0
 texture_normal = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="QuestJournal" type="Control" parent="Container"]
-editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -104,5 +106,4 @@ anims/slide_in_quest_journal = SubResource( 1 )
 anims/slide_out_quest_journal = SubResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
-
 [connection signal="pressed" from="Container/QuestButton" to="." method="_on_QuestButton_pressed"]

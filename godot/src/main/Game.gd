@@ -11,6 +11,7 @@ onready var party = $Party as Party
 onready var music_player = $MusicPlayer
 onready var game_over_interface := $GameOverInterface
 onready var gui := $GUI
+onready var monster_collection_interface := $MonsterCollection
 
 var transitioning = false
 var combat_arena: CombatArena
@@ -27,6 +28,9 @@ func _ready():
 	local_map.visible = true
 	local_map.connect("enemies_encountered", self, "enter_battle")
 	debug.debugMessage(CAT.FILE, "Game load complete")
+	
+
+
 
 func enter_battle(formation: Formation):
 	# Plays the combat transition animation and initializes the combat scene
@@ -88,8 +92,14 @@ func _on_CombatArena_game_over() -> void:
 	transitioning = false
 
 
+
 func _on_GameOverInterface_restart_requested():
 	game_over_interface.hide()
 	var formation = combat_arena.initial_formation
 	combat_arena.queue_free()
 	enter_battle(formation)
+
+
+func _on_MonsterCollection_monster_collection_menu_summoned():
+	var bg = monster_collection_interface.get_node("Background")
+	bg.visible = !bg.visible
