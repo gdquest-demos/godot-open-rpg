@@ -3,12 +3,13 @@
 [ext_resource path="res://src/interface/debug/DebugInterface.gd" type="Script" id=1]
 [ext_resource path="res://src/main/save/GameSaver.tscn" type="PackedScene" id=2]
 
-
-
 [node name="DebugInterface" type="Panel"]
 margin_right = 400.0
 margin_bottom = 180.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Column" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -49,6 +50,5 @@ rect_min_size = Vector2( 100, 40 )
 text = "Load"
 
 [node name="GameSaver" parent="." instance=ExtResource( 2 )]
-
 [connection signal="pressed" from="Column/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="Column/LoadButton" to="." method="_on_LoadButton_pressed"]

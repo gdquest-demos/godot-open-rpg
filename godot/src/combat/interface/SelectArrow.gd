@@ -69,6 +69,8 @@ func _gui_input(event):
 	if ! visible:
 		return
 
+	if event.is_action_pressed("ui_debug_mode"):
+		Util.toggleDebug()
 	if event.is_action_pressed("ui_accept"):
 		emit_signal("target_selected", target_active)
 		accept_event()

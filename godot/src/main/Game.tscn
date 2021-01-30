@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/main/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/party/Party.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://assets/audio/bgm/battle_theme.ogg" type="AudioStream" id=7]
 [ext_resource path="res://src/main/MusicPlayer.gd" type="Script" id=8]
 [ext_resource path="res://src/interface/debug/DebugInterface.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/Debugger.gd" type="Script" id=10]
+[ext_resource path="res://src/interface/menus/MonsterCollection.tscn" type="PackedScene" id=11]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -34,8 +36,63 @@ layer = 0
 stream = ExtResource( 7 )
 script = ExtResource( 8 )
 
+[node name="DebugMode" type="CanvasLayer" parent="."]
+
+[node name="Debugger" type="ColorRect" parent="DebugMode"]
+visible = false
+margin_right = 1440.0
+margin_bottom = 810.0
+color = Color( 0, 0, 0, 1 )
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="HBoxContainer" parent="DebugMode/Debugger"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Speed" type="VBoxContainer" parent="DebugMode/Debugger/Buttons"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="LogList" type="VBoxContainer" parent="DebugMode/Debugger"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Filter" type="HBoxContainer" parent="DebugMode/Debugger/LogList"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="FilterButton" type="Button" parent="DebugMode/Debugger/LogList/Filter"]
+margin_right = 12.0
+margin_bottom = 20.0
+
+[node name="LogTemplate" type="HBoxContainer" parent="DebugMode/Debugger/LogList"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Date" type="Label" parent="DebugMode/Debugger/LogList/LogTemplate"]
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="Level" type="Label" parent="DebugMode/Debugger/LogList/LogTemplate"]
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="Category" type="Label" parent="DebugMode/Debugger/LogList/LogTemplate"]
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="LogText" type="Label" parent="DebugMode/Debugger/LogList/LogTemplate"]
+margin_right = 40.0
+margin_bottom = 14.0
+
 [node name="Debug" type="CanvasLayer" parent="."]
 layer = 100
 
 [node name="DebugInterface" parent="Debug" instance=ExtResource( 9 )]
 visible = false
+
+[node name="MonsterCollection" parent="." instance=ExtResource( 11 )]
+[connection signal="monster_collection_menu_summoned" from="MonsterCollection" to="." method="_on_MonsterCollection_monster_collection_menu_summoned"]

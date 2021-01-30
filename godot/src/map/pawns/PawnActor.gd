@@ -31,7 +31,8 @@ func move_to(target_position):
 	# and animate the sprite moving from the start to the target cell
 	var move_direction = (target_position - position).normalized()
 	position = target_position
-	pivot.position = -move_direction * 40.0
+	pivot.position = -move_direction * 80.0
+	#Note (Laura): To alter this speed, also alter PawnAnim > AnimationPlayer > Animation Length
 	tween.interpolate_property(
 		$Pivot,
 		"position",

@@ -43,12 +43,12 @@ func get_key_input_direction(event: InputEventKey) -> Vector2:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		_direction = get_key_input_direction(event)
-	elif (
-		event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed
-		or event is InputEventScreenTouch and event.pressed
-	):
-		_path_current = game_board.find_path(global_position, get_global_mouse_position())
-		if _path_current.size() > 0:
-			var pos := _path_current[_path_current.size() - 1]
-			destination_point.position = game_board.map_to_world(Vector2(pos.x, pos.y))
-			destination_point.show()
+#	elif (
+#		event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed
+#		or event is InputEventScreenTouch and event.pressed
+#	):
+#		_path_current = game_board.find_path(global_position, get_global_mouse_position())
+#		if _path_current.size() > 0:
+#			var pos := _path_current[_path_current.size() - 1]
+#			destination_point.position = game_board.map_to_world(Vector2(pos.x, pos.y))
+#			destination_point.show()

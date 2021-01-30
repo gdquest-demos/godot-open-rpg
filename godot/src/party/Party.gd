@@ -10,7 +10,6 @@ export var PARTY_SIZE: int = 4
 
 var inventory = Inventory.new()
 
-
 func get_active_members():
 	# Returns the first unlocked children until the party is filled
 	var active = []

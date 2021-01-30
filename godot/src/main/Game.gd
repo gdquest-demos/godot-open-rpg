@@ -11,16 +11,25 @@ onready var party = $Party as Party
 onready var music_player = $MusicPlayer
 onready var game_over_interface := $GameOverInterface
 onready var gui := $GUI
+onready var monster_collection_interface := $MonsterCollection
 
 var transitioning = false
 var combat_arena: CombatArena
 
+# Debugging
+var debug : Debugger
+enum CAT { MAP = 0, FILE, BATTLE, DEBUG }
 
 func _ready():
+	debug = Debugger.new()
+	debug.debugMessage(CAT.FILE, "Loading")
 	QuestSystem.initialize(self, party)
 	local_map.spawn_party(party)
 	local_map.visible = true
 	local_map.connect("enemies_encountered", self, "enter_battle")
+	debug.debugMessage(CAT.FILE, "Game load complete")
+	
+
 
 
 func enter_battle(formation: Formation):
@@ -41,6 +50,9 @@ func enter_battle(formation: Formation):
 	combat_arena.connect("game_over", self, "_on_CombatArena_game_over")
 	combat_arena.connect(
 		"battle_completed", self, "_on_CombatArena_battle_completed", [combat_arena]
+	)
+	combat_arena.connect(
+		"capture_reward", self, "_on_CombatArena_capture_reward", [combat_arena]
 	)
 	combat_arena.initialize(formation, party.get_active_members())
 
@@ -69,6 +81,8 @@ func _on_CombatArena_battle_completed(arena):
 func _on_CombatArena_player_victory():
 	music_player.play_victory_fanfare()
 
+func _on_CombatArena_capture_reward():
+	pass
 
 func _on_CombatArena_game_over() -> void:
 	transitioning = true
@@ -78,8 +92,15 @@ func _on_CombatArena_game_over() -> void:
 	transitioning = false
 
 
+
 func _on_GameOverInterface_restart_requested():
 	game_over_interface.hide()
 	var formation = combat_arena.initial_formation
 	combat_arena.queue_free()
 	enter_battle(formation)
+
+
+func _on_MonsterCollection_monster_collection_menu_summoned():
+	var bg = monster_collection_interface.get_node("Background")
+	monster_collection_interface.reload()
+	bg.visible = !bg.visible
