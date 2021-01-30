@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/map/LocalMap.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilesets/grasslands.tres" type="TileSet" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://src/interface/gui/DialogueBox.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/combat/battlers/formations/SlimecupineFormation001.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/backgrounds/FactoryRoom01.png" type="Texture" id=16]
+[ext_resource path="res://assets/sprites/npcs/ravi.png" type="Texture" id=17]
+[ext_resource path="res://assets/sprites/npcs/usir.png" type="Texture" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 50, 50 )
@@ -60,11 +62,37 @@ tile_data = PoolIntArray( 458767, 1, 0, 458768, 1, 0, 524301, 1, 0, 524302, 1, 0
 script = ExtResource( 4 )
 
 [node name="SpawningPoint" parent="GameBoard" instance=ExtResource( 5 )]
-position = Vector2( 927.798, 607.342 )
+position = Vector2( 226.322, 610.822 )
 
 [node name="Pawns" type="YSort" parent="GameBoard"]
 script = ExtResource( 6 )
 party_scene = ExtResource( 7 )
+
+[node name="Ravi" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
+position = Vector2( 480.251, 533.224 )
+facing = {
+"down": false,
+"left": false,
+"right": false,
+"up": false
+}
+
+[node name="Sprite" type="Sprite" parent="GameBoard/Pawns/Ravi"]
+z_index = 51
+texture = ExtResource( 17 )
+
+[node name="Usir" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
+position = Vector2( 285.813, 540.775 )
+facing = {
+"down": false,
+"left": false,
+"right": false,
+"up": false
+}
+
+[node name="Sprite" type="Sprite" parent="GameBoard/Pawns/Usir"]
+z_index = 51
+texture = ExtResource( 18 )
 
 [node name="EncounterPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
 position = Vector2( -633.52, 2281.44 )
@@ -82,7 +110,7 @@ shape = SubResource( 1 )
 formation = ExtResource( 10 )
 
 [node name="DialoguePawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
-position = Vector2( -396.663, 2279.44 )
+position = Vector2( -426.901, 2259.28 )
 facing = {
 "down": false,
 "left": false,
