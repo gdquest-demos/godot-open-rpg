@@ -27,6 +27,7 @@ func spawn_pawn(
 	var new_pawn: PawnActor = Leader.instance() if is_leader else Follower.instance()
 	new_pawn.name = party_member.name
 	new_pawn.position = game_board.spawning_point.position
+	new_pawn.z_index = 55
 	new_pawn.initialize(game_board)
 	if pawn_previous:
 		pawn_previous.connect("moved", new_pawn, "_on_target_Pawn_moved")
