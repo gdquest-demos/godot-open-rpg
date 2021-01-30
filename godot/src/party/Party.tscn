@@ -60,6 +60,37 @@ script = ExtResource( 8 )
 
 [node name="RobiPawnAnim" parent="Robi" instance=ExtResource( 14 )]
 
+[node name="Robi2" parent="." instance=ExtResource( 2 )]
+pawn_anim_path = NodePath("RobiPawnAnim")
+growth = ExtResource( 10 )
+
+[node name="Battler" parent="Robi2" index="0"]
+party_member = true
+turn_order_icon = ExtResource( 11 )
+
+[node name="RobiAnim2" parent="Robi2/Battler/Skin" index="2" instance=ExtResource( 12 )]
+
+[node name="Slash2" parent="Robi2/Battler/Skills" index="0" instance=ExtResource( 6 )]
+skill = ExtResource( 13 )
+level = 0
+
+[node name="RobiPawnAnim" parent="Robi2" instance=ExtResource( 14 )]
+
+[node name="Robi3" parent="." instance=ExtResource( 2 )]
+pawn_anim_path = NodePath("RobiPawnAnim")
+growth = ExtResource( 10 )
+
+[node name="Battler" parent="Robi3" index="0"]
+party_member = true
+turn_order_icon = ExtResource( 11 )
+
+[node name="RobiAnim3" parent="Robi3/Battler/Skin" index="2" instance=ExtResource( 12 )]
+
+[node name="Slash3" parent="Robi3/Battler/Skills" index="0" instance=ExtResource( 6 )]
+skill = ExtResource( 13 )
+level = 0
+
+[node name="RobiPawnAnim" parent="Robi3" instance=ExtResource( 14 )]
 
 [editable path="Godette"]
 
@@ -68,3 +99,11 @@ script = ExtResource( 8 )
 [editable path="Robi"]
 
 [editable path="Robi/Battler"]
+
+[editable path="Robi2"]
+
+[editable path="Robi2/Battler"]
+
+[editable path="Robi3"]
+
+[editable path="Robi3/Battler"]
