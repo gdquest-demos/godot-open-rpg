@@ -159,6 +159,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/map/pawns/actions/MapAction.gd"
 }, {
+"base": "CanvasLayer",
+"class": "MonsterCollection",
+"language": "GDScript",
+"path": "res://src/interface/menus/MonsterCollection.gd"
+}, {
 "base": "Node2D",
 "class": "Party",
 "language": "GDScript",
@@ -254,6 +259,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/combat/battlers/actions/SkillAction.gd"
 }, {
+"base": "CharacterStats",
+"class": "Slime",
+"language": "GDScript",
+"path": "res://src/slimes/Slime.gd"
+}, {
 "base": "MapAction",
 "class": "StartCombatAction",
 "language": "GDScript",
@@ -300,6 +310,7 @@ _global_script_class_icons={
 "LocalMap": "",
 "ManaBar": "",
 "MapAction": "",
+"MonsterCollection": "",
 "Party": "",
 "PartyMember": "",
 "Pathfinder": "",
@@ -319,6 +330,7 @@ _global_script_class_icons={
 "SaveGame": "",
 "Skill": "",
 "SkillAction": "",
+"Slime": "",
 "StartCombatAction": "",
 "StatBar": "",
 "TurnQueue": ""
