@@ -11,14 +11,10 @@
 [ext_resource path="res://assets/theme/default.theme" type="Theme" id=9]
 [ext_resource path="res://src/combat/background/Grasslands.tscn" type="PackedScene" id=10]
 
-
-
-
 [node name="CombatArena" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="SpawnPositions" type="Node" parent="."]
-editor/display_folded = true
 
 [node name="Monsters" type="Node" parent="SpawnPositions"]
 
@@ -36,36 +32,24 @@ z_index = 10
 [node name="CombatInterface" type="CanvasLayer" parent="." groups=[
 "interface",
 ]]
-editor/display_folded = true
 script = ExtResource( 3 )
 
 [node name="PopUpHandler" parent="CombatInterface" instance=ExtResource( 4 )]
 
 [node name="SelectArrow" parent="CombatInterface" instance=ExtResource( 5 )]
+MOVE_DURATION = 0.1
 
 [node name="BattlersBarsBuilder" parent="CombatInterface" instance=ExtResource( 6 )]
 
 [node name="TurnOrder" parent="CombatInterface" instance=ExtResource( 7 )]
 
 [node name="Rewards" type="CanvasLayer" parent="."]
-editor/display_folded = true
-layer = 1
-offset = Vector2( 0, 0 )
-rotation = 0.0
-scale = Vector2( 1, 1 )
-transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 8 )
 
 [node name="Panel" type="Panel" parent="Rewards"]
 anchor_right = 1.0
 margin_bottom = 160.0
 rect_min_size = Vector2( 0, 160 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 theme = ExtResource( 9 )
 
 [node name="Label" type="Label" parent="Rewards/Panel"]
@@ -76,4 +60,3 @@ align = 1
 valign = 1
 
 [node name="Grasslands" parent="." instance=ExtResource( 10 )]
-

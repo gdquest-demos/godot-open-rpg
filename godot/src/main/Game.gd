@@ -47,6 +47,9 @@ func enter_battle(formation: Formation):
 	combat_arena.connect(
 		"battle_completed", self, "_on_CombatArena_battle_completed", [combat_arena]
 	)
+	combat_arena.connect(
+		"capture_reward", self, "_on_CombatArena_capture_reward", [combat_arena]
+	)
 	combat_arena.initialize(formation, party.get_active_members())
 
 	yield(transition.fade_from_color(), "completed")
@@ -74,6 +77,8 @@ func _on_CombatArena_battle_completed(arena):
 func _on_CombatArena_player_victory():
 	music_player.play_victory_fanfare()
 
+func _on_CombatArena_capture_reward():
+	pass
 
 func _on_CombatArena_game_over() -> void:
 	transitioning = true

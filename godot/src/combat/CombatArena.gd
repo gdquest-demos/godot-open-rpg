@@ -18,6 +18,7 @@ signal battle_ends
 # sent when battle is completed, contains status updates for the party
 # so that we may persist the data
 signal battle_completed
+signal capture_reward
 signal victory
 signal game_over
 
@@ -76,7 +77,6 @@ func ready_field(formation: Formation, party_members: Array):
 		# safely attach the interface to the AI in case player input is needed
 		battler.ai.set("interface", interface)
 
-
 func battle_end():
 	emit_signal("battle_ends")
 	active = false
@@ -125,3 +125,7 @@ func get_targets() -> Array:
 		return turn_queue.get_monsters()
 	else:
 		return turn_queue.get_party()
+
+
+func capture_reward():
+	rewards.append({'item': 'slime', 'amount': 1})
