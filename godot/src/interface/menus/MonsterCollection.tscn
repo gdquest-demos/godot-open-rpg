@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/interface/menus/MonsterCollection.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/source_code_pro_explanations.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/sprites/battlers/godette_portrait_256.png" type="Texture" id=3]
+
+[sub_resource type="Theme" id=1]
+default_font = ExtResource( 2 )
 
 [node name="MonsterCollection" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -15,6 +20,8 @@ __meta__ = {
 }
 
 [node name="Columns" type="HBoxContainer" parent="Background"]
+margin_left = 20.0
+margin_top = 20.0
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
@@ -22,38 +29,50 @@ __meta__ = {
 }
 
 [node name="Party" type="VBoxContainer" parent="Background/Columns"]
+margin_right = 500.0
+margin_bottom = 128.0
+
+[node name="PartyMember" type="ColorRect" parent="Background/Columns/Party"]
+margin_right = 500.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 500, 128 )
+color = Color( 0.529412, 0.360784, 0, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/Columns/Party/PartyMember"]
+margin_right = 40.0
 margin_bottom = 40.0
-
-[node name="MarginContainer" type="MarginContainer" parent="Background/Columns/Party"]
-
-[node name="Border" type="ColorRect" parent="Background/Columns/Party/MarginContainer"]
-color = Color( 1, 0.72549, 0, 1 )
-
-[node name="MarginContainer" type="MarginContainer" parent="Background/Columns/Party/MarginContainer/Border"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 5.0
-margin_bottom = 5.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Background/Columns/Party/MarginContainer/Border/MarginContainer"]
-color = Color( 0.933333, 0.890196, 0.8, 1 )
+[node name="Image" type="TextureRect" parent="Background/Columns/Party/PartyMember/HBoxContainer"]
+margin_right = 258.0
+margin_bottom = 258.0
+rect_min_size = Vector2( 128, 128 )
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Label" type="Label" parent="Background/Columns/Party/MarginContainer/Border/MarginContainer/ColorRect"]
-margin_right = 40.0
-margin_bottom = 14.0
+[node name="Name" type="Label" parent="Background/Columns/Party/PartyMember/HBoxContainer"]
+margin_left = 130.0
+margin_top = 5.0
+margin_right = 163.0
+margin_bottom = 28.0
+theme = SubResource( 1 )
+text = "Sky"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Collection" type="VBoxContainer" parent="Background/Columns"]
-margin_left = 4.0
-margin_right = 4.0
-margin_bottom = 40.0
+margin_left = 504.0
+margin_right = 504.0
+margin_bottom = 128.0
 
 [node name="Merge" type="VBoxContainer" parent="Background/Columns"]
-margin_left = 8.0
-margin_right = 8.0
-margin_bottom = 40.0
+margin_left = 508.0
+margin_right = 508.0
+margin_bottom = 128.0

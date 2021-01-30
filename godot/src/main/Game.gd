@@ -102,4 +102,5 @@ func _on_GameOverInterface_restart_requested():
 
 func _on_MonsterCollection_monster_collection_menu_summoned():
 	var bg = monster_collection_interface.get_node("Background")
+	monster_collection_interface.reload()
 	bg.visible = !bg.visible

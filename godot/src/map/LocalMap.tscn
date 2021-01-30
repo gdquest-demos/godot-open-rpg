@@ -47,9 +47,10 @@ __meta__ = {
 }
 
 [node name="Background" type="TextureRect" parent="."]
-margin_top = 3.0
-margin_right = 1920.0
-margin_bottom = 1083.0
+margin_left = 30.0
+margin_top = 13.0
+margin_right = 1950.0
+margin_bottom = 1093.0
 texture = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -58,7 +59,7 @@ __meta__ = {
 [node name="GameBoard" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
 format = 1
-tile_data = PoolIntArray( 458767, 1, 0, 458768, 1, 0, 524301, 1, 0, 524302, 1, 0, 655370, 1, 0 )
+tile_data = PoolIntArray( 393219, 1, 0, 393220, 1, 0, 393221, 1, 0, 393222, 1, 0, 393223, 1, 0, 393229, 1, 0, 393230, 1, 0, 393231, 1, 0, 458755, 1, 0, 458759, 1, 0, 458760, 1, 0, 458761, 1, 0, 458762, 1, 0, 458763, 1, 0, 458764, 1, 0, 458765, 1, 0, 458766, 1, 0, 458767, 1, 0, 458768, 1, 0, 458769, 1, 0, 458770, 1, 0, 458771, 1, 0, 458772, 1, 0, 524290, 1, 0, 524291, 1, 0, 524296, 1, 0, 524297, 1, 0, 524298, 1, 0, 524299, 1, 0, 524300, 1, 0, 524301, 1, 0, 524302, 1, 0, 524308, 1, 0, 524309, 1, 0, 524310, 1, 0, 524311, 1, 0, 589826, 1, 0, 589834, 1, 0, 589835, 1, 0, 589836, 1, 0, 589837, 1, 0, 589840, 1, 0, 589841, 1, 0, 589847, 1, 0, 589848, 1, 0, 589849, 1, 0, 589850, 1, 0, 589851, 1, 0, 589852, 1, 0, 655362, 1, 0, 655369, 1, 0, 655370, 1, 0, 655375, 1, 0, 655376, 1, 0, 655377, 1, 0, 655378, 1, 0, 655379, 1, 0, 655380, 1, 0, 655388, 1, 0, 720898, 1, 0, 720899, 1, 0, 720904, 1, 0, 720905, 1, 0, 720906, 1, 0, 720908, 1, 0, 720909, 1, 0, 720910, 1, 0, 720911, 1, 0, 720912, 1, 0, 720913, 1, 0, 720914, 1, 0, 720915, 1, 0, 720916, 1, 0, 720917, 1, 0, 720918, 1, 0, 720924, 1, 0, 786435, 1, 0, 786436, 1, 0, 786437, 1, 0, 786438, 1, 0, 786444, 1, 0, 786445, 1, 0, 786446, 1, 0, 786447, 1, 0, 786448, 1, 0, 786449, 1, 0, 786450, 1, 0, 786451, 1, 0, 786452, 1, 0, 786453, 1, 0, 786454, 1, 0, 786459, 1, 0, 786460, 1, 0, 851974, 1, 0, 851975, 1, 0, 851976, 1, 0, 851977, 1, 0, 851978, 1, 0, 851981, 1, 0, 851982, 1, 0, 851983, 1, 0, 851984, 1, 0, 851985, 1, 0, 851986, 1, 0, 851987, 1, 0, 851988, 1, 0, 851989, 1, 0, 851990, 1, 0, 851991, 1, 0, 851994, 1, 0, 851995, 1, 0, 917514, 1, 0, 917515, 1, 0, 917518, 1, 0, 917519, 1, 0, 917520, 1, 0, 917521, 1, 0, 917522, 1, 0, 917523, 1, 0, 917524, 1, 0, 917525, 1, 0, 917530, 1, 0, 917531, 1, 0, 917532, 1, 0, 917533, 1, 0, 983051, 1, 0, 983052, 1, 0, 983056, 1, 0, 983057, 1, 0, 983064, 1, 0, 983067, 1, 0, 983068, 1, 0, 983069, 1, 0, 1048588, 1, 0, 1048589, 1, 0, 1048590, 1, 0, 1048595, 1, 0, 1048596, 1, 0, 1048597, 1, 0, 1048598, 1, 0, 1048599, 1, 0, 1048600, 1, 0, 1048603, 1, 0, 1114126, 1, 0, 1114127, 1, 0, 1114128, 1, 0, 1114129, 1, 0, 1114130, 1, 0, 1114131, 1, 0, 1114136, 1, 0, 1114137, 1, 0, 1114138, 1, 0, 1114139, 1, 0 )
 script = ExtResource( 4 )
 
 [node name="SpawningPoint" parent="GameBoard" instance=ExtResource( 5 )]
@@ -82,7 +83,7 @@ z_index = 51
 texture = ExtResource( 17 )
 
 [node name="Usir" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
-position = Vector2( 285.813, 540.775 )
+position = Vector2( 287.002, 480.125 )
 facing = {
 "down": false,
 "left": false,
@@ -93,6 +94,22 @@ facing = {
 [node name="Sprite" type="Sprite" parent="GameBoard/Pawns/Usir"]
 z_index = 51
 texture = ExtResource( 18 )
+
+[node name="DialogueCombatPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
+position = Vector2( 1564.87, 665.408 )
+type = 1
+facing = {
+"down": true,
+"left": true,
+"right": true,
+"up": true
+}
+
+[node name="Dialogue" parent="GameBoard/Pawns/DialogueCombatPawn/Actions" index="0" instance=ExtResource( 11 )]
+dialogue_file_path = "res://src/dialogue/data/test_conversation.json"
+
+[node name="StartCombat" parent="GameBoard/Pawns/DialogueCombatPawn/Actions" index="1" instance=ExtResource( 9 )]
+formation = ExtResource( 15 )
 
 [node name="EncounterPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
 position = Vector2( -633.52, 2281.44 )
@@ -124,22 +141,6 @@ shape = SubResource( 2 )
 [node name="Dialogue" parent="GameBoard/Pawns/DialoguePawn/Actions" index="0" instance=ExtResource( 11 )]
 dialogue_file_path = "res://src/dialogue/data/test_conversation.json"
 
-[node name="DialogueCombatPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
-position = Vector2( 1176.67, 603.969 )
-type = 1
-facing = {
-"down": true,
-"left": true,
-"right": true,
-"up": true
-}
-
-[node name="Dialogue" parent="GameBoard/Pawns/DialogueCombatPawn/Actions" index="0" instance=ExtResource( 11 )]
-dialogue_file_path = "res://src/dialogue/data/test_conversation.json"
-
-[node name="StartCombat" parent="GameBoard/Pawns/DialogueCombatPawn/Actions" index="1" instance=ExtResource( 9 )]
-formation = ExtResource( 15 )
-
 [node name="TestQuestGiver" parent="GameBoard/Pawns" instance=ExtResource( 12 )]
 position = Vector2( -187.764, 2278.95 )
 
@@ -153,8 +154,8 @@ layer = 100
 [node name="DialogueBox" parent="MapInterface" instance=ExtResource( 14 )]
 visible = false
 
+[editable path="GameBoard/Pawns/DialogueCombatPawn"]
+
 [editable path="GameBoard/Pawns/EncounterPawn"]
 
 [editable path="GameBoard/Pawns/DialoguePawn"]
-
-[editable path="GameBoard/Pawns/DialogueCombatPawn"]
