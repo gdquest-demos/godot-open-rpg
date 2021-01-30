@@ -1,7 +1,5 @@
 extends CombatAction
 
-onready var drops := $Drops
-
 func execute(targets):
 	assert(initialized)
 	if actor.party_member and not targets:

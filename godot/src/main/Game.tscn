@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/main/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/party/Party.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://src/main/MusicPlayer.gd" type="Script" id=8]
 [ext_resource path="res://src/interface/debug/DebugInterface.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/Debugger.gd" type="Script" id=10]
+[ext_resource path="res://src/interface/menus/MonsterCollection.tscn" type="PackedScene" id=11]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -93,13 +94,4 @@ layer = 100
 [node name="DebugInterface" parent="Debug" instance=ExtResource( 9 )]
 visible = false
 
-[node name="MonsterCollection" type="CanvasLayer" parent="."]
-
-[node name="Background" type="ColorRect" parent="MonsterCollection"]
-visible = false
-margin_right = 1920.0
-margin_bottom = 1080.0
-color = Color( 0.580392, 0.976471, 0.819608, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="MonsterCollection" parent="." instance=ExtResource( 11 )]

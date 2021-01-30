@@ -1,0 +1,56 @@
+[gd_scene format=2]
+
+[node name="MonsterCollection" type="CanvasLayer"]
+
+[node name="Background" type="ColorRect" parent="."]
+visible = false
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 0.0823529, 0.145098, 0.121569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Columns" type="HBoxContainer" parent="Background"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Party" type="VBoxContainer" parent="Background/Columns"]
+margin_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/Columns/Party"]
+
+[node name="Border" type="ColorRect" parent="Background/Columns/Party/MarginContainer"]
+color = Color( 1, 0.72549, 0, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/Columns/Party/MarginContainer/Border"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 5.0
+margin_bottom = 5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Background/Columns/Party/MarginContainer/Border/MarginContainer"]
+color = Color( 0.933333, 0.890196, 0.8, 1 )
+
+[node name="Label" type="Label" parent="Background/Columns/Party/MarginContainer/Border/MarginContainer/ColorRect"]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Collection" type="VBoxContainer" parent="Background/Columns"]
+margin_left = 4.0
+margin_right = 4.0
+margin_bottom = 40.0
+
+[node name="Merge" type="VBoxContainer" parent="Background/Columns"]
+margin_left = 8.0
+margin_right = 8.0
+margin_bottom = 40.0
