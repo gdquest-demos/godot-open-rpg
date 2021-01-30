@@ -92,3 +92,14 @@ layer = 100
 
 [node name="DebugInterface" parent="Debug" instance=ExtResource( 9 )]
 visible = false
+
+[node name="MonsterCollection" type="CanvasLayer" parent="."]
+
+[node name="Background" type="ColorRect" parent="MonsterCollection"]
+visible = false
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 0.580392, 0.976471, 0.819608, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

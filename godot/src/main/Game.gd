@@ -28,7 +28,6 @@ func _ready():
 	local_map.connect("enemies_encountered", self, "enter_battle")
 	debug.debugMessage(CAT.FILE, "Game load complete")
 
-
 func enter_battle(formation: Formation):
 	# Plays the combat transition animation and initializes the combat scene
 	if transitioning:
