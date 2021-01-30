@@ -2,6 +2,8 @@ extends CanvasLayer
 
 class_name MonsterCollection
 
+signal monster_collection_menu_summoned()
+
 var slimes = []
 
 func add_slime(new_slime: Slime) -> void:
@@ -25,6 +27,9 @@ func get_slime(target_pos: int) -> Slime:
 func _ready():
 	pass # Replace with function body.
 
+func _process(_delta):
+	if(Input.is_action_just_released("ui_select")):
+		emit_signal("monster_collection_menu_summoned")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
