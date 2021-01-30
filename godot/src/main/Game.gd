@@ -15,8 +15,13 @@ onready var gui := $GUI
 var transitioning = false
 var combat_arena: CombatArena
 
+# Debugging
+var debug : Debugger
+enum CAT { MAP = 0, FILE, BATTLE, DEBUG }
 
 func _ready():
+	debug = Debugger.new()
+	debug.debugMessage(CAT.FILE, "Loading")
 	QuestSystem.initialize(self, party)
 	local_map.spawn_party(party)
 	local_map.visible = true
@@ -83,3 +88,8 @@ func _on_GameOverInterface_restart_requested():
 	var formation = combat_arena.initial_formation
 	combat_arena.queue_free()
 	enter_battle(formation)
+
+
+# Functions from other classes
+func toggleDebug():
+	debug.toggleDebug()
