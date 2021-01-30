@@ -56,11 +56,11 @@ __meta__ = {
 [node name="GameBoard" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
 format = 1
-tile_data = PoolIntArray( 655370, 1, 0 )
+tile_data = PoolIntArray( 458767, 1, 0, 458768, 1, 0, 524301, 1, 0, 524302, 1, 0, 655370, 1, 0 )
 script = ExtResource( 4 )
 
 [node name="SpawningPoint" parent="GameBoard" instance=ExtResource( 5 )]
-position = Vector2( 948.434, 599.405 )
+position = Vector2( 927.798, 607.342 )
 
 [node name="Pawns" type="YSort" parent="GameBoard"]
 script = ExtResource( 6 )
@@ -97,7 +97,7 @@ shape = SubResource( 2 )
 dialogue_file_path = "res://src/dialogue/data/test_conversation.json"
 
 [node name="DialogueCombatPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
-position = Vector2( 1160, 600 )
+position = Vector2( 1176.67, 603.969 )
 type = 1
 facing = {
 "down": true,
