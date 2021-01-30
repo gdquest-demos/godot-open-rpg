@@ -39,8 +39,8 @@ script = ExtResource( 8 )
 
 [node name="Debugger" type="ColorRect" parent="DebugMode"]
 visible = false
-margin_right = 1920.0
-margin_bottom = 1080.0
+margin_right = 1440.0
+margin_bottom = 810.0
 color = Color( 0, 0, 0, 1 )
 script = ExtResource( 10 )
 __meta__ = {

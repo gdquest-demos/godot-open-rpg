@@ -15,27 +15,27 @@ static func nvl(s, def):
 	else:
 		return s
 
-#static func padNum(num : int, c : String, n : int):
-#	return Util.pad(str(num), c, n, true)
-#static func pad(inString : String, c : String, n : int, before = false):
-#	var s = inString
-#	while len(s) < n:
-#		if before: s = c + s
-#		else: s = s + c
-#	return s
+static func padNum(num : int, c : String, n : int):
+	return Util.pad(str(num), c, n, true)
+static func pad(inString : String, c : String, n : int, before = false):
+	var s = inString
+	while len(s) < n:
+		if before: s = c + s
+		else: s = s + c
+	return s
 	
 # ===== Dates ===========================================================
 
 const MONTHS = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]
-#static func getStringDateUnix(dateUnix : int):
-#	var date = OS.get_datetime_from_unix_time(dateUnix)
-#	return getStringDate(date)
-#static func getStringDate(date : Dictionary):
-#	return str(date.year) + "-" + Util.MONTHS[date.month-1] + "-" + padNum(date.day, '0', 2)
-#
-#static func getStringTime(date : Dictionary):
-#	return str(date.hour) + ":" + str(date.minute) + ":" + padNum(date.second, '0', 2)
-#	#year, month, day, weekday, dst (Daylight Savings Time), hour, minute, second.
+static func getStringDateUnix(dateUnix : int):
+	var date = OS.get_datetime_from_unix_time(dateUnix)
+	return getStringDate(date)
+static func getStringDate(date : Dictionary):
+	return str(date.year) + "-" + Util.MONTHS[date.month-1] + "-" + padNum(date.day, '0', 2)
+
+static func getStringTime(date : Dictionary):
+	return str(date.hour) + ":" + str(date.minute) + ":" + padNum(date.second, '0', 2)
+	#year, month, day, weekday, dst (Daylight Savings Time), hour, minute, second.
 
 # ===== Display =========================================================
 

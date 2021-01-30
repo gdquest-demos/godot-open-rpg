@@ -12,20 +12,20 @@ const category = { CAT.MAP: "Map", CAT.FILE: "File", CAT.BATTLE: "Battle", CAT.D
 
 func _ready():
 	verbosity = LEVELS.ERROR
-#	loglist = $LogList#get_node("/root/DebugMode/Debugger/LogList")
-#	template = $LogList/LogTemplate
-#	# Filter buttons
-#	for f in category.values():
-#		var btn = $LogList/Filter/FilterButton.duplicate()
-#		btn.visible = true
-#		btn.text = f
-#		$LogList/Filter.add_child(btn)
-#	# Message log timer
-#	logTimer = Timer.new()
-#	logTimer.set_wait_time(0.1)
-#	logTimer.connect("timeout", self, "_on_timer_timeout") 
-#	add_child(logTimer)
-#	logTimer.start()	
+	loglist = $LogList#get_node("/root/DebugMode/Debugger/LogList")
+	template = $LogList/LogTemplate
+	# Filter buttons
+	for f in category.values():
+		var btn = $LogList/Filter/FilterButton.duplicate()
+		btn.visible = true
+		btn.text = f
+		$LogList/Filter.add_child(btn)
+	# Message log timer
+	logTimer = Timer.new()
+	logTimer.set_wait_time(0.1)
+	logTimer.connect("timeout", self, "_on_timer_timeout") 
+	add_child(logTimer)
+	logTimer.start()
 
 func _input(event):
 	if event.is_action_pressed("ui_debug_mode"):
@@ -122,20 +122,18 @@ func reload():
 			loglist.remove_child(loglist.get_child(1))
 		var i = debugLog.size() - 1
 		var count = 0
-		while count < LOG_SIZE and i > 0:
-		#while count < LOG_SIZE and i < debugLog.size():
+		while count < LOG_SIZE and i >= 0:
 			var l = debugLog[i]
 			if showingCat(l.category) and l.level <= verbosity:
 				var t = template.duplicate()
 				labelCell(t, TEMPLATE.TEXT, l.message)
-				#labelCell(t, TEMPLATE.DATE, Util.getStringTime(l.date))
+				labelCell(t, TEMPLATE.DATE, Util.getStringTime(l.date))
 				labelCell(t, TEMPLATE.LEVEL, PREFIX[l.level])
 				labelCell(t, TEMPLATE.CAT, category[l.category])
 				t.visible = true
 				loglist.add_child(t)
 				count += 1
 			i -= 1
-			#i += 1
 		get_parent().emit_signal("draw")
 	isDirty = false
 
@@ -181,9 +179,10 @@ func _on_SpeedButton_pressed():
 	drawSpeedMenu()
 
 func drawSpeedMenu():
-	for s in SPEEDS.values():
-		var btn = $Buttons/Speed.get_child(s+2)
-		btn.visible = speed_menu_open
+	pass
+	#for s in SPEEDS.values():
+	#	var btn = $Buttons/Speed.get_child(s+2)
+	#	btn.visible = speed_menu_open
 
 func _on_SpeedSlow_pressed():
 	changeSpeed(SPEEDS.SLOW)
