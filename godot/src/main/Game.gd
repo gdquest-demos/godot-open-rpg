@@ -88,8 +88,3 @@ func _on_GameOverInterface_restart_requested():
 	var formation = combat_arena.initial_formation
 	combat_arena.queue_free()
 	enter_battle(formation)
-
-
-# Functions from other classes
-func toggleDebug():
-	debug.toggleDebug()
