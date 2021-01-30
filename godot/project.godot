@@ -320,7 +320,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Godot Open RPG"
+config/name="GGJ2021"
 run/main_scene="res://src/main/Game.tscn"
 config/icon="res://icon.png"
 config/version="0.3.0"
