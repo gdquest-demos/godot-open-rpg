@@ -6,7 +6,6 @@ export var stats: Resource
 export var hp: int
 export var mp: int
 export var xp: int
-export var flavour: String
 
 
 # Declare member variables here. Examples:
