@@ -5,12 +5,7 @@
 [ext_resource path="res://src/quest/QuestBubble.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/sprites/dialogue_balloon.png" type="Texture" id=4]
 
-
-
-
-
 [sub_resource type="RectangleShape2D" id=1]
-
 extents = Vector2( 30, 30 )
 
 [node name="InteractivePawn" type="Area2D" groups=[
@@ -59,4 +54,3 @@ collision_mask = 2
 [node name="Actions" type="Node" parent="."]
 
 [node name="Tween" type="Tween" parent="."]
-
