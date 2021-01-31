@@ -159,6 +159,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/map/pawns/actions/MapAction.gd"
 }, {
+"base": "MapAction",
+"class": "MapTransition",
+"language": "GDScript",
+"path": "res://src/map/pawns/actions/MapTransition.gd"
+}, {
 "base": "CanvasLayer",
 "class": "MonsterCollection",
 "language": "GDScript",
@@ -315,6 +320,7 @@ _global_script_class_icons={
 "LocalMap": "",
 "ManaBar": "",
 "MapAction": "",
+"MapTransition": "",
 "MonsterCollection": "",
 "Party": "",
 "PartyMember": "",

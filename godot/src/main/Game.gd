@@ -16,6 +16,9 @@ onready var monster_collection_interface := $MonsterCollection
 var transitioning = false
 var combat_arena: CombatArena
 
+var maps = []
+
+
 # Debugging
 var debug : Debugger
 enum CAT { MAP = 0, FILE, BATTLE, DEBUG }
@@ -28,9 +31,16 @@ func _ready():
 	local_map.visible = true
 	local_map.connect("enemies_encountered", self, "enter_battle")
 	debug.debugMessage(CAT.FILE, "Game load complete")
+
+func clear_maps() -> void:
+	maps.resize(3)
+	maps[0] = get_node("LocalMap")
+	maps[1] = get_node("LocalMap2")
+	maps[2] = get_node("LocalMap3")
 	
-
-
+	maps[0].visible = false
+	maps[1].visible = false
+	maps[2].visible = false
 
 func enter_battle(formation: Formation):
 	# Plays the combat transition animation and initializes the combat scene

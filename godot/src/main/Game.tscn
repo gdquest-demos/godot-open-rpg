@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/main/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/party/Party.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://src/interface/debug/DebugInterface.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/Debugger.gd" type="Script" id=10]
 [ext_resource path="res://src/interface/menus/MonsterCollection.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/map/LocalMap2.tscn" type="PackedScene" id=12]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
@@ -20,14 +21,20 @@ visible = false
 
 [node name="LocalMap" parent="." instance=ExtResource( 3 )]
 
+[node name="LocalMap2" parent="." instance=ExtResource( 12 )]
+visible = false
+
+[node name="LocalMap3" parent="." instance=ExtResource( 3 )]
+
 [node name="GUI" parent="." instance=ExtResource( 4 )]
 
 [node name="Overlays" type="CanvasLayer" parent="."]
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 5 )]
 pause_mode = 2
+margin_left = 2.5199
+margin_right = 2.5199
 mouse_filter = 2
-transition = 0.0
 
 [node name="GameOverInterface" parent="." instance=ExtResource( 6 )]
 layer = 0
