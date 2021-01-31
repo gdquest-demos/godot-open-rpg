@@ -19,6 +19,7 @@ script = ExtResource( 1 )
 visible = false
 
 [node name="LocalMap" parent="." instance=ExtResource( 3 )]
+position = Vector2( 8, 0 )
 
 [node name="GUI" parent="." instance=ExtResource( 4 )]
 
