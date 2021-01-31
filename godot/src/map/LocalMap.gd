@@ -12,6 +12,7 @@ onready var grid = $GameBoard
 
 
 func _ready() -> void:
+	print("Map Name! %s" %[name])
 	assert(dialogue_box)
 	for action in get_tree().get_nodes_in_group("map_action"):
 		(action as MapAction).initialize(self)

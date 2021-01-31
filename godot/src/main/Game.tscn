@@ -26,8 +26,10 @@ visible = false
 
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 5 )]
 pause_mode = 2
-margin_left = 10.0795
-margin_right = 10.0795
+margin_left = 11.1389
+margin_top = 2.1189
+margin_right = 11.1389
+margin_bottom = 2.1189
 mouse_filter = 2
 
 [node name="GameOverInterface" parent="." instance=ExtResource( 6 )]

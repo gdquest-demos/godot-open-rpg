@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/map/LocalMap.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilesets/grasslands.tres" type="TileSet" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://src/interface/gui/DialogueBox.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/combat/battlers/formations/SlimecupineFormation001.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/backgrounds/Factory_scene_2.png" type="Texture" id=16]
+[ext_resource path="res://src/map/pawns/actions/MapTransition.tscn" type="PackedScene" id=17]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 50, 50 )
@@ -119,7 +120,14 @@ position = Vector2( -187.764, 2278.95 )
 [node name="TestQuestReceiver" parent="GameBoard/Pawns" instance=ExtResource( 13 )]
 position = Vector2( 13.6241, 2282.99 )
 
-[node name="TransitionPoint" type="Position2D" parent="GameBoard"]
+[node name="TransitionPawn1" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
+position = Vector2( 320.208, 33.1228 )
+
+[node name="ToMap1" parent="GameBoard/Pawns/TransitionPawn1/Actions" index="0" instance=ExtResource( 17 )]
+target_map = "res://src/map/LocalMap.tscn"
+current_map = "LocalMap"
+spawn_x = 1700
+spawn_y = 1050
 
 [node name="MapInterface" type="CanvasLayer" parent="."]
 pause_mode = 2
@@ -133,3 +141,5 @@ visible = false
 [editable path="GameBoard/Pawns/EncounterPawn"]
 
 [editable path="GameBoard/Pawns/DialoguePawn"]
+
+[editable path="GameBoard/Pawns/TransitionPawn1"]
