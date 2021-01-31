@@ -6,7 +6,7 @@
 extends Node2D
 class_name Party
 
-export var PARTY_SIZE: int = 3
+export var PARTY_SIZE: int = 4
 
 var inventory = Inventory.new()
 
