@@ -19,7 +19,6 @@ script = ExtResource( 1 )
 visible = false
 
 [node name="LocalMap" parent="." instance=ExtResource( 3 )]
-position = Vector2( 8, 0 )
 
 [node name="GUI" parent="." instance=ExtResource( 4 )]
 
@@ -28,6 +27,7 @@ position = Vector2( 8, 0 )
 [node name="TransitionColor" parent="Overlays" instance=ExtResource( 5 )]
 pause_mode = 2
 mouse_filter = 2
+transition = 0.0
 
 [node name="GameOverInterface" parent="." instance=ExtResource( 6 )]
 layer = 0
