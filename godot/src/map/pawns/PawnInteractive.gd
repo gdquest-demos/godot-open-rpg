@@ -106,7 +106,7 @@ func start_interaction() -> void:
 	assert(actions != [])
 	for action in actions:
 		action.interact()
-		yield(action, "finished")
+		#yield(action, "finished")
 	emit_signal("interaction_finished", self)
 	if vanish_on_interaction:
 		queue_free()
