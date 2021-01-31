@@ -1,0 +1,2 @@
+extends PawnInteractive
+class_name RedSlimeCombat

@@ -104,3 +104,8 @@ func _on_MonsterCollection_monster_collection_menu_summoned():
 	var bg = monster_collection_interface.get_node("Background")
 	monster_collection_interface.reload()
 	bg.visible = !bg.visible
+
+func _process(_delta):
+	if(Input.is_action_just_released("ui_quicksave")):
+		Data.saveCSV("saves/", "slimes", ".csv", monster_collection_interface.slimes)
+

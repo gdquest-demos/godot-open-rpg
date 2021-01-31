@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/combat/battlers/Formation.gd" type="Script" id=1]
+[ext_resource path="res://src/combat/background/StonePlatform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/combat/battlers/enemies/slimes/RedSlimeBattler.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sprites/battlers/Red_Slime.png" type="Texture" id=4]
+
+[node name="Formation" type="Node"]
+script = ExtResource( 1 )
+platform_template = ExtResource( 2 )
+
+[node name="Slimecupine" parent="." instance=ExtResource( 3 )]
+position = Vector2( 487.005, 767.519 )
+turn_order_icon = ExtResource( 4 )

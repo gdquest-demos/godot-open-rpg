@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/interface/menus/MonsterCollection.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/source_code_pro_explanations.tres" type="DynamicFont" id=2]
-[ext_resource path="res://assets/sprites/battlers/godette_portrait_256.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/battlers/main_portrait_128.png" type="Texture" id=3]
+[ext_resource path="res://assets/fonts/source_code_pro_explanations_bold.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/sprites/icons/ascend_icon.png" type="Texture" id=5]
 
 [sub_resource type="Theme" id=1]
+default_font = ExtResource( 4 )
+
+[sub_resource type="Theme" id=2]
 default_font = ExtResource( 2 )
+
+[sub_resource type="Theme" id=3]
+default_font = ExtResource( 4 )
 
 [node name="MonsterCollection" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -30,49 +38,168 @@ __meta__ = {
 
 [node name="Party" type="VBoxContainer" parent="Background/Columns"]
 margin_right = 500.0
-margin_bottom = 128.0
+margin_bottom = 171.0
+
+[node name="Label" type="Label" parent="Background/Columns/Party"]
+margin_right = 500.0
+margin_bottom = 31.0
+theme = SubResource( 1 )
+text = "Party"
+
+[node name="HSeparator" type="HSeparator" parent="Background/Columns/Party"]
+margin_top = 35.0
+margin_right = 500.0
+margin_bottom = 39.0
 
 [node name="PartyMember" type="ColorRect" parent="Background/Columns/Party"]
+margin_top = 43.0
 margin_right = 500.0
-margin_bottom = 128.0
+margin_bottom = 171.0
 rect_min_size = Vector2( 500, 128 )
 color = Color( 0.529412, 0.360784, 0, 1 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Background/Columns/Party/PartyMember"]
+[node name="PartyContainer" type="HBoxContainer" parent="Background/Columns/Party/PartyMember"]
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Image" type="TextureRect" parent="Background/Columns/Party/PartyMember/HBoxContainer"]
-margin_right = 258.0
-margin_bottom = 258.0
+[node name="Image" type="TextureRect" parent="Background/Columns/Party/PartyMember/PartyContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 128, 128 )
-rect_scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 stretch_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Name" type="Label" parent="Background/Columns/Party/PartyMember/HBoxContainer"]
-margin_left = 130.0
-margin_top = 5.0
-margin_right = 163.0
-margin_bottom = 28.0
-theme = SubResource( 1 )
+[node name="Name" type="Label" parent="Background/Columns/Party/PartyMember/PartyContainer"]
+margin_left = 132.0
+margin_top = 52.0
+margin_right = 165.0
+margin_bottom = 75.0
+theme = SubResource( 2 )
 text = "Sky"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Collection" type="VBoxContainer" parent="Background/Columns"]
+visible = false
 margin_left = 504.0
-margin_right = 504.0
-margin_bottom = 128.0
+margin_right = 644.0
+margin_bottom = 171.0
 
-[node name="Merge" type="VBoxContainer" parent="Background/Columns"]
-margin_left = 508.0
-margin_right = 508.0
+[node name="Label" type="Label" parent="Background/Columns/Collection"]
+margin_right = 140.0
+margin_bottom = 31.0
+theme = SubResource( 3 )
+text = "Collection	"
+
+[node name="HSeparator" type="HSeparator" parent="Background/Columns/Collection"]
+margin_top = 35.0
+margin_right = 140.0
+margin_bottom = 39.0
+
+[node name="CollMember" type="ColorRect" parent="Background/Columns/Collection"]
+visible = false
+margin_top = 43.0
+margin_right = 500.0
+margin_bottom = 171.0
+rect_min_size = Vector2( 500, 128 )
+color = Color( 0.529412, 0.360784, 0, 1 )
+
+[node name="CollContainer" type="HBoxContainer" parent="Background/Columns/Collection/CollMember"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Image" type="TextureRect" parent="Background/Columns/Collection/CollMember/CollContainer"]
+margin_right = 128.0
 margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Background/Columns/Collection/CollMember/CollContainer"]
+margin_left = 132.0
+margin_top = 52.0
+margin_right = 165.0
+margin_bottom = 75.0
+theme = SubResource( 2 )
+text = "Sky"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Artifacts" type="VBoxContainer" parent="Background/Columns"]
+margin_left = 504.0
+margin_right = 630.0
+margin_bottom = 171.0
+
+[node name="Label" type="Label" parent="Background/Columns/Artifacts"]
+margin_right = 126.0
+margin_bottom = 31.0
+theme = SubResource( 1 )
+text = "Artifacts"
+
+[node name="HSeparator" type="HSeparator" parent="Background/Columns/Artifacts"]
+margin_top = 35.0
+margin_right = 126.0
+margin_bottom = 39.0
+
+[node name="ArtifactMember" type="ColorRect" parent="Background/Columns/Artifacts"]
+visible = false
+margin_top = 43.0
+margin_right = 500.0
+margin_bottom = 171.0
+rect_min_size = Vector2( 500, 128 )
+color = Color( 0.529412, 0.360784, 0, 1 )
+
+[node name="ArtifactContainer" type="HBoxContainer" parent="Background/Columns/Artifacts/ArtifactMember"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Image" type="TextureRect" parent="Background/Columns/Artifacts/ArtifactMember/ArtifactContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Background/Columns/Artifacts/ArtifactMember/ArtifactContainer"]
+margin_left = 132.0
+margin_top = 52.0
+margin_right = 165.0
+margin_bottom = 75.0
+theme = SubResource( 2 )
+text = "Sky"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Actions" type="VBoxContainer" parent="Background/Columns"]
+margin_left = 634.0
+margin_right = 762.0
+margin_bottom = 171.0
+
+[node name="MergeButton" type="TextureButton" parent="Background/Columns/Actions"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 178.0
+margin_bottom = 178.0
+texture_normal = ExtResource( 5 )
+[connection signal="button_down" from="Background/Columns/Actions/MergeButton" to="." method="_on_MergeButton_button_down"]
