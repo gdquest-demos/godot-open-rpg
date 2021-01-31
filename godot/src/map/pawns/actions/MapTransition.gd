@@ -13,6 +13,10 @@ func interact():
 	game_node.clear_maps()
 	var new_map = game_node.get_node("LocalMap2")
 	new_map.visible = true
+	var gb = new_map.get_node("GameBoard")
+	var ysort = gb.get_node("Pawns")
+	ysort.spawn_party(gb, game_node.get_node("Party"))
+	#ysort.rebuild_party()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

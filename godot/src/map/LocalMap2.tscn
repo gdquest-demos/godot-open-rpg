@@ -17,10 +17,10 @@
 [ext_resource path="res://src/combat/battlers/formations/SlimecupineFormation001.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/backgrounds/Factory_scene_2.png" type="Texture" id=16]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 50, 50 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 80, 80 )
 
 [node name="LocalMap" type="Node2D"]
@@ -61,7 +61,7 @@ tile_data = PoolIntArray( -65534, 1, 0, -65533, 1, 0, -65532, 1, 0, -65531, 1, 0
 script = ExtResource( 4 )
 
 [node name="SpawningPoint" parent="GameBoard" instance=ExtResource( 5 )]
-position = Vector2( 350, 75 )
+position = Vector2( 351.26, 33.4226 )
 
 [node name="Pawns" type="YSort" parent="GameBoard"]
 script = ExtResource( 6 )
@@ -93,7 +93,7 @@ facing = {
 }
 
 [node name="CollisionShape2D" parent="GameBoard/Pawns/EncounterPawn" index="3"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="StartCombat" parent="GameBoard/Pawns/EncounterPawn/Actions" index="0" instance=ExtResource( 9 )]
 formation = ExtResource( 10 )
@@ -108,7 +108,7 @@ facing = {
 }
 
 [node name="CollisionShape2D" parent="GameBoard/Pawns/DialoguePawn" index="3"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="Dialogue" parent="GameBoard/Pawns/DialoguePawn/Actions" index="0" instance=ExtResource( 11 )]
 dialogue_file_path = "res://src/dialogue/data/test_conversation.json"
