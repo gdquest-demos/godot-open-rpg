@@ -73,7 +73,7 @@ facing = {
 shape = SubResource( 2 )
 
 [node name="Dialogue" parent="GameBoard/Pawns/DialoguePawn/Actions" index="0" instance=ExtResource( 11 )]
-dialogue_file_path = "res://dialogue/data/test_conversation.json"
+dialogue_file_path = "res://src/dialogue/data/test_conversation.json"
 
 [node name="DialogueCombatPawn" parent="GameBoard/Pawns" instance=ExtResource( 8 )]
 position = Vector2( 1160, 600 )
