@@ -24,7 +24,7 @@ And more! Do you want to contribute and improve your programming skills with God
 
 ### The current project's scope
 
-Our initial goal is to create a mini-demo with the full combat loop, character experience, skills, some pretty art, and basic map navigaton and conversation with NPCs.
+Our initial goal is to create a mini-demo with the full combat loop, character experience, skills, some pretty art, and basic map navigation and conversation with NPCs.
 
 ## Contributing Guidelines
 
