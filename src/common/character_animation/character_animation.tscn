@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dd73a06rgy3h4"]
+
+[ext_resource type="Script" path="res://src/common/character_animation/character_animation.gd" id="1_nai7d"]
+
+[node name="CharacterAnimation" type="Marker2D"]
+script = ExtResource("1_nai7d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Base" type="Marker2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="Base"]
+
+[node name="Shadow" type="Sprite2D" parent="Base"]

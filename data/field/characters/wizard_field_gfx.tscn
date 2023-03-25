@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxap1tvw1bim4"]
+
+[ext_resource type="PackedScene" uid="uid://dd73a06rgy3h4" path="res://src/common/character_animation/character_animation.tscn" id="1_3k402"]
+[ext_resource type="Texture2D" uid="uid://8ry5inpldbfg" path="res://assets/characters/wizard.atlastex" id="2_8fgy8"]
+
+[sub_resource type="Animation" id="Animation_i34nl"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Base/Sprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Base/Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7wevp"]
+resource_name = "run"
+length = 0.3
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Base/Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15, 0.25),
+"transitions": PackedFloat32Array(1, 0.5, 1.5, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, -10), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_csiqv"]
+_data = {
+"idle": SubResource("Animation_i34nl"),
+"run": SubResource("Animation_7wevp")
+}
+
+[node name="WizardGFX" instance=ExtResource("1_3k402")]
+
+[node name="AnimationPlayer" parent="." index="0"]
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_csiqv")
+}
+blend_times = [&"run", &"idle", 0.05]
+
+[node name="Sprite" parent="Base" index="0"]
+texture = ExtResource("2_8fgy8")
+offset = Vector2(0, -7)

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://en0nseag8tr"]
+
+[ext_resource type="Script" path="res://src/main.gd" id="1_5iecm"]
+[ext_resource type="PackedScene" uid="uid://cu4bvxsxgttb1" path="res://src/field/gamestate_field.tscn" id="2_1rc5w"]
+[ext_resource type="PackedScene" path="res://src/util/fps_label/fps_label.tscn" id="2_o2d7h"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_5iecm")
+
+[node name="States" type="Node" parent="."]
+
+[node name="Combat" type="Node" parent="States"]
+
+[node name="Field" parent="States" instance=ExtResource("2_1rc5w")]
+
+[node name="MainMenu" type="Node" parent="States"]
+
+[node name="Debug" type="CanvasLayer" parent="."]
+
+[node name="FPS" parent="Debug" instance=ExtResource("2_o2d7h")]

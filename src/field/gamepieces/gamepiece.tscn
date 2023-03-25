@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://b626e0bngfvjj"]
+
+[ext_resource type="Script" path="res://src/field/gamepieces/gamepiece.gd" id="1_xhsbn"]
+
+[sub_resource type="Curve2D" id="Curve2D_tg3um"]
+
+[node name="Gamepiece" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_xhsbn")
+
+[node name="Path2D" type="Path2D" parent="."]
+y_sort_enabled = true
+curve = SubResource("Curve2D_tg3um")
+
+[node name="PathFollower" type="PathFollow2D" parent="Path2D"]
+rotates = false
+loop = false
+
+[node name="GFX" type="Node2D" parent="Path2D/PathFollower"]
+
+[node name="CameraAnchor" type="RemoteTransform2D" parent="Path2D/PathFollower/GFX"]
+
+[node name="Controller" type="Node" parent="."]
+
+[node name="AI" type="Node" parent="Controller"]
+
+[node name="LocalPlayer" type="Node" parent="Controller"]
