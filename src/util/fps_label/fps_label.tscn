@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/util/fps_label/fps_label.gd" id="1_ocp32"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_p07l4"]
+font_size = 48
+
+[node name="FPS" type="Label"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 98.0
+offset_bottom = 86.0
+text = "FPS"
+label_settings = SubResource("LabelSettings_p07l4")
+script = ExtResource("1_ocp32")
+
+[node name="Timer" type="Timer" parent="."]
