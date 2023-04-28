@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmb4dsak5kian"
-path="res://.godot/imported/Icons_17.png-3fb51267191f5f5ffff73f8d6da14af1.ctex"
+uid="uid://4ua1ohn2tllf"
+path="res://.godot/imported/gobot_field.png-5f823b51a69fe9b11b884401a88434b5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/portrait/Icons_17.png"
-dest_files=["res://.godot/imported/Icons_17.png-3fb51267191f5f5ffff73f8d6da14af1.ctex"]
+source_file="res://assets/characters/gobot_field.png"
+dest_files=["res://.godot/imported/gobot_field.png-5f823b51a69fe9b11b884401a88434b5.ctex"]
 
 [params]
 

@@ -29,6 +29,11 @@ extends Node2D
 var _boundaries: Rect2i
 
 
+func _ready() -> void:
+	if not Engine.is_editor_hint():
+		hide()
+
+
 func _draw() -> void:
 	if not grid:
 		return

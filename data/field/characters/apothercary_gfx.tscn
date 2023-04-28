@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfdgbc5c72mcu"]
+
+[ext_resource type="PackedScene" uid="uid://caxhff6by5nqu" path="res://src/field/gamepieces/animation/gamepiece_animation.tscn" id="1_uhd4d"]
+[ext_resource type="Texture2D" uid="uid://ber3qsogrcx52" path="res://assets/characters/apothecary.atlastex" id="2_uq5qy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2hcu"]
+size = Vector2(16, 16)
+
+[node name="ApothercaryGFX" instance=ExtResource("1_uhd4d")]
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_l2hcu")
+
+[node name="Sprite" parent="GFX" index="0"]
+texture = ExtResource("2_uq5qy")
+offset = Vector2(0, -6)

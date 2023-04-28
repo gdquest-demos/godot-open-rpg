@@ -8,20 +8,10 @@ extends Resource
 const INVALID_CELL: = Vector2i(-1, -1)
 const INVALID_INDEX: = -1
 
-const _SQUARE_MAPPINGS: = {
+const _DIRECTION_MAPPINGS: = {
 	Directions.Points.N: Vector2i.UP,
 	Directions.Points.E: Vector2i.RIGHT,
 	Directions.Points.S: Vector2i.DOWN,
-	Directions.Points.W: Vector2i.LEFT,
-}
-const _OCTOGONAL_MAPPINGS: = {
-	Directions.Points.NW: Vector2i.UP + Vector2i.LEFT,
-	Directions.Points.N: Vector2i.UP,
-	Directions.Points.NE: Vector2i.UP + Vector2i.RIGHT,
-	Directions.Points.E: Vector2i.RIGHT,
-	Directions.Points.SE: Vector2i.DOWN + Vector2i.RIGHT,
-	Directions.Points.S: Vector2i.DOWN,
-	Directions.Points.SW: Vector2i.DOWN + Vector2i.LEFT,
 	Directions.Points.W: Vector2i.LEFT,
 }
 
@@ -39,8 +29,6 @@ const _OCTOGONAL_MAPPINGS: = {
 	set(value):
 		cell_size = value
 		_half_cell_size = cell_size/2
-
-@export var diagonal_links: = false
 
 var _half_cell_size: = cell_size / 2
 
@@ -70,9 +58,7 @@ func index_to_cell(index: int) -> Vector2i:
 
 
 func get_adjacent_cell(cell: Vector2i, direction: int) -> Vector2i:
-	if diagonal_links:
-		return cell + _OCTOGONAL_MAPPINGS.get(direction, Vector2i.ZERO)
-	return cell + _SQUARE_MAPPINGS.get(direction, Vector2i.ZERO)
+	return cell + _DIRECTION_MAPPINGS.get(direction, Vector2i.ZERO)
 
 
 func get_adjacent_cells(cell: Vector2i) -> Array[Vector2i]:

@@ -1,4 +1,4 @@
-# Finds paths between cells accounting for terrain maps and [Gamepiece] positioning.
+## A wrapper for [AStar2D] that provides several utility methods for dealing with cell coordinates.
 class_name Pathfinder
 extends AStar2D
 
@@ -8,15 +8,14 @@ var _grid: Grid = null
 # Only cells within the grid boundary will be considered.
 func _init(pathable_cells: Array[Vector2i], grid: Grid) -> void:
 	_grid = grid
-	assert(_grid, "Pathfinder error: invalid grid objec passed to pathfinder constructor!")
-	
-	FieldEvents.gamepiece_initialized.connect(_on_gamepiece_initialized)
+	assert(_grid, "Pathfinder error: invalid grid object passed to pathfinder constructor!")
 	
 	_build_cell_list(pathable_cells)
 	_connect_cells()
 
 
-func get_cell_path(source_cell: Vector2i, target_cell: Vector2i) -> Array[Vector2i]:
+## Get a path between cells. Returns an empty array if no path is available.
+func get_path_cells(source_cell: Vector2i, target_cell: Vector2i) -> Array[Vector2i]:
 	# Check to make sure that the source and target cells fall within the grid boundaries...
 	if not _grid.boundaries.has_point(source_cell) or not _grid.boundaries.has_point(target_cell):
 		return []
@@ -27,8 +26,7 @@ func get_cell_path(source_cell: Vector2i, target_cell: Vector2i) -> Array[Vector
 	if not has_point(source_id) or not has_point(target_id):
 		return []
 	
-	# Disabled cells are those occupied by gamepieces, so assume that gamepiece at the start of the
-	# path will be invovled in pathfinding.
+	# Disabled cells are usually occupied. Allow movement out of a disabled cell.
 	var disable_source: = is_point_disabled(source_id)
 	set_point_disabled(source_id, false)
 	
@@ -42,13 +40,16 @@ func get_cell_path(source_cell: Vector2i, target_cell: Vector2i) -> Array[Vector
 	return path_cells
 
 
-func get_cell_path_to_adjacent_cell(source_cell: Vector2i, 
+## Get the shortest path to any cell adjacent to the specified target.
+##
+## Returns an empty array if there are no paths available.
+func get_path_cells_to_adjacent_cell(source_cell: Vector2i, 
 		target_cell: Vector2i) -> Array[Vector2i]:
 	var shortest_path: Array[Vector2i] = []
 	var shortest_path_length: = INF
 	
 	for cell in _grid.get_adjacent_cells(target_cell):
-		var cell_path: = get_cell_path(source_cell, cell)
+		var cell_path: = get_path_cells(source_cell, cell)
 		
 		if not cell_path.is_empty() and cell_path.size() < shortest_path_length:
 			shortest_path_length = cell_path.size()
@@ -57,20 +58,41 @@ func get_cell_path_to_adjacent_cell(source_cell: Vector2i,
 	return shortest_path
 
 
-func is_path_valid(cells: Array[Vector2i]) -> bool:
-	for cell in cells:
-		var cell_id: = _grid.cell_to_index(cell)
-		if cell_id == Grid.INVALID_INDEX or not has_point(cell_id) or is_point_disabled(cell_id):
-			return false
+## Manually update whether or not a single cell is blocked.
+## [br][br][b]Note:[/b] This is different from cells that are no longer pathable due to changes in
+## terrain.
+func block_cell(cell: Vector2i, value: = true) -> void:
+	var cell_id: = _grid.cell_to_index(cell)
+	if cell_id != Grid.INVALID_INDEX:
+		set_point_disabled(cell_id, value)
+
+
+## Update the blocked cells in the pathfinder in a single batch.
+##
+## Cells that were previously blocked but that are not included in the 'blocked' parameter will be
+## cleared for pathfinding.
+func set_blocked_cells(blocked: Array[Vector2i]) -> void:
+	for id in get_point_ids():
+		var cell: = _grid.index_to_cell(id)
+		block_cell(cell, cell in blocked)
+
+
+func get_blocked_cells() -> Array[Vector2i]:
+	var blocked_cells: Array[Vector2i] = []
+	for id in get_point_ids():
+		if is_point_disabled(id):
+			blocked_cells.append(_grid.index_to_cell(id))
 	
-	return false
+	return blocked_cells
 
 
+## Verify that a cell exists within the pathfinder. It may or may not be blocked.
 func has_cell(value: Vector2i) -> bool:
 	var index: = _grid.cell_to_index(value)
 	return has_point(index)
 
 
+## Get all cells that are registered with the pathfinder.
 func get_cells() -> Array[Vector2i]:
 	var cells: Array[Vector2i] = []
 	
@@ -100,40 +122,6 @@ func _connect_cells() -> void:
 				
 				if target_id != Grid.INVALID_INDEX and has_point(target_id):
 					connect_points(source_id, target_id)
-
-
-func _set_cell_blocked(cell: Vector2i, value: = true) -> void:
-	var cell_id: = _grid.cell_to_index(cell)
-	if cell_id != Grid.INVALID_INDEX:
-		set_point_disabled(cell_id, value)
-
-
-func _on_gamepiece_initialized(gamepiece: Gamepiece) -> void:
-	gamepiece.blocks_movement_changed.connect(
-		_on_gamepiece_blocks_movement_changed.bind(gamepiece))
-	gamepiece.cell_changed.connect(_on_gamepiece_moved.bind(gamepiece))
-	gamepiece.freed.connect(_on_gamepiece_freed.bind(gamepiece))
-	
-	if gamepiece.blocks_movement:
-		_set_cell_blocked(gamepiece.cell, true)
-
-
-func _on_gamepiece_blocks_movement_changed(gamepiece: Gamepiece) -> void:
-	if gamepiece.blocks_movement:
-		_set_cell_blocked(gamepiece.cell, true)
-	else:
-		_set_cell_blocked(gamepiece.cell, false)
-
-
-func _on_gamepiece_moved(old_cell: Vector2i, gamepiece: Gamepiece) -> void:
-	if gamepiece.blocks_movement:
-		_set_cell_blocked(old_cell, false)
-		_set_cell_blocked(gamepiece.cell, true)
-
-
-func _on_gamepiece_freed(gamepiece: Gamepiece) -> void:
-	if gamepiece.blocks_movement:
-		_set_cell_blocked(gamepiece.cell)
 
 
 func _to_string() -> String:

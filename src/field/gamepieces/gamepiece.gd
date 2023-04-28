@@ -1,29 +1,31 @@
 @tool
 
-## A Gamepiece is a scene that occupies a cell on the [Gameboard].
-##
-## Gamepieces are moved by assigning a path via [method travel_along_path] which uses pixel
-## coordinates. Often these are derived from a cell-based path, but not always (e.g. cutscenes).
-## They may also return to the cell they occupy immediately by calling 
-## [method place_at_current_cell].[br][br]
-##
-## For a gamepiece to be visible it must be assigned a [CharacterAnimation] via 
-## [method set_animation].
+## A Gamepiece is a scene that is snapped to the [Gameboard].
 class_name Gamepiece
 extends Node2D
 
-signal almost_arrived
+## Emitted when a gamepiece is about to finish travlling to its destination cell. The remaining
+## distance that the gamepiece could travel is based on how far the gamepiece has travelled this
+## frame. [br][br]
+## The signal is emitted prior to wrapping up the path and traveller, allowing other objects to
+## extend the move path, if necessary.
+signal arriving(remaining_distance: float)
+
+## Emitted when the gamepiece has finished travelling to its destination cell.
 signal arrived
 signal blocks_movement_changed
 signal cell_changed(old_cell: Vector2i)
-signal freed
+signal direction_changed(new_direction: Vector2)
 
-enum States { IDLE, TRAVEL, BUSY }
+## Emitted when the gamepiece begins to travel towards a destination cell.
+signal travel_begun
 
-## The proxy used to set [member _animation], a reference to the gamepieces's [CharacterAnimation] 
-## scene. [PackedScene]s that are not derived from [CharacterAnimation] will not be accepted.
-@export var animation_scene: PackedScene:
-	set = set_animation
+const GROUP_NAME: = "_GAMEPIECES"
+
+@export var grid: Grid:
+	set(value):
+		grid = value
+		update_configuration_warnings()
 
 @export var blocks_movement: = false:
 	set(value):
@@ -31,201 +33,160 @@ enum States { IDLE, TRAVEL, BUSY }
 			blocks_movement = value
 			blocks_movement_changed.emit()
 
-@export var move_speed: = 750.0
+@export var max_speed: = 96.0
 
-@export var _grid: Grid
-
+## The gamepiece's position is snapped to whichever cell it currently occupies. [br][br]
+## The gamepiece will move by steps, being placed at whichever cell it currently occupies. This is
+## useful for snapping it's collision shape to the grid, so that there is never ambiguity to which
+## space/cell is occupied in the physics engine. [br][br]
+## It is not desirable, however, for the graphical representation of the gamepiece (or the camera!)
+## to jump around the gameboard with the gamepiece. Rather, a follower will travel a movement path
+## to give the appearance of smooth movement. Other objects (such as sprites and animation) will
+## derive their position from this follower and, consequently, appear to move smoothly.
 var cell: = Vector2i.ZERO:
 	set = set_cell
 
-var _animation: CharacterAnimation = null
+var direction: = Vector2.ZERO:
+	set(value):
+		value = value.normalized()
+		if not direction.is_equal_approx(value):
+			direction = value
+			direction_changed.emit(direction)
 
-var _state: = States.IDLE:
-	set = set_state
+var move_speed: = 64.0
 
-@onready var camera_anchor: = $Path2D/PathFollower/GFX/CameraAnchor as RemoteTransform2D
-@onready var _path: = $Path2D as Path2D
-@onready var _path_follower: = $Path2D/PathFollower as PathFollow2D
+## A camera will smoothly follow a travelling gamepiece by receiving the camera_anchor's transform.
+@onready var camera_anchor: = $Decoupler/Path2D/PathFollow2D/CameraAnchor as RemoteTransform2D
+
+## The graphical representation of the gamepiece may smoothly follow a travelling gamepiece by 
+## receiving the gfx_anchor's transform.
+@onready var gfx_anchor: = $Decoupler/Path2D/PathFollow2D/GFXAnchor as RemoteTransform2D
+
+# The following objects allow the gamepiece to appear to move smoothly around the gameboard.
+# Please note that the path is decoupled from the gamepiece's position (scale is set to match
+# the gamepiece in _ready(), however) in order to simplify path management. All path coordinates may 
+# be provided in game-world coordinates and will remain relative to the origin even as the 
+# gamepiece's position changes.
+@onready var _path: = $Decoupler/Path2D as Path2D
+@onready var _follower: = $Decoupler/Path2D/PathFollow2D as PathFollow2D
 
 
 func _ready() -> void:
-	set_process(false)
-	set_process_unhandled_input(false)
+	set_physics_process(false)
+	update_configuration_warnings()
 	
-	# A gamepiece must be initialized with several properties before it can function in-game. 
-	# By default, hide the gamepiece until it has been intialized to prevent it appearing 
-	#	incorrectly or at an incorrect location.
 	if not Engine.is_editor_hint():
-		hide()
+		assert(grid, "Gamepiece '%s' must have a grid to function!" % name)
+		
+		add_to_group(GROUP_NAME)
+		
+		move_speed = max_speed
+		
+		# Ensure that the gamepiece and its path are at the same scale. This will allow providing
+		# movement coordinates in local scale, simplifying path creation.
+		_path.global_scale = global_scale
+		
+		# Snap the gamepiece to it's initial grid position.
+		# Note that the path's coordinates are decoupled from the gamepiece's in order to simplify
+		# path creation (origin is the point of reference), so the follower needs to be initialized
+		# to the gamepiece's position.
+		cell = grid.pixel_to_cell(position)
+		_follower.position = position
 
 
-@warning_ignore("native_method_override")
-func queue_free() -> void:
-	freed.emit()
-	super.queue_free()
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+	if not grid:
+		warnings.append("Gamepiece requires a Grid object to function!")
+	
+	return warnings
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var move_distance: = move_speed * delta
 	
-	# We need to let the controller know that the gamepiece will arrive at the end of its path THIS
-	# frame. The controller may want to extend the path (for example, if a move key is held down).
-	# If we do NOT do so, there will be a single frame where the gamepiece's velocity drops,
-	# causing jittery movement.
-	if _path_follower.progress + move_distance >= _path.curve.get_baked_length():
-		almost_arrived.emit()
+	# We need to let others know that the gamepiece will arrive at the end of its path THIS frame.
+	# A controller may want to extend the path (for example, if a move key is held down or if
+	# another waypoint should be added to the move path).
+	# If we do NOT do so and the path is extended post arrival, there will be a single frame where
+	# the gamepiece's velocity is discontinuous (drops, then increases again), causing jittery 
+	# movement.
+	# The excess travel distance allows us to know how much to extend the path by. A VERY fast
+	# gamepiece may jump a few cells at a time.
+	var excess_travel_distance: =  _follower.progress + move_distance \
+		- _path.curve.get_baked_length()
+	if excess_travel_distance >= 0:
+		arriving.emit(excess_travel_distance)
 	
-	_path_follower.progress += move_distance
+	# Movement may have been extended, so check if we need to cap movement to the waypoint.
+	var has_arrived: = _follower.progress + move_distance >= _path.curve.get_baked_length()
+	if has_arrived:
+		move_distance = _path.curve.get_baked_length() - _follower.progress
 	
-	# Determine the gamepiece's facing based on the current offset along the move path.
-	if _animation:
-		var current_transform: = _path.curve.sample_baked_with_rotation(_path_follower.progress, 
-			_path_follower.cubic_interp)
-		update_direction(current_transform.get_rotation() - PI/2)
+	var old_follower_position: = _follower.position
+	_follower.progress += move_distance
 	
-	# If we've reached the end of the path, wrap up movement.
-	if _path_follower.progress >= _path.curve.get_baked_length():
+	# This breaks down at very high speeds. At that point the cell path determines direction.
+	print(_follower.position - old_follower_position)
+	direction = (_follower.position - old_follower_position).normalized()
+	
+	# If we've reached the end of the path, either travel to the next waypoint or wrap up movement.
+	if has_arrived:
 		_on_travel_finished()
 
 
-# Will be used to pause travel along the current path.
-func _unhandled_input(_event: InputEvent) -> void:
-	pass
-
-
-## Setup the gamepiece, including dependencies needed for it to function correctly.
-##
-## A gamepiece is automatically initialized by the [Gameboard] after it has been placed at its
-## starting position.
-func initialize(grid: Grid) -> void:
-	_grid = grid
+## Calling travel_to_cell on a moving gamepiece will update it's position to that indicated by the
+## cell coordinates and add the cell to the movement path.
+func travel_to_cell(destination_cell: Vector2i) -> void:
+	# Note that updating the gamepiece's cell will snap it to its new grid position. This will
+	# be accounted for below when calculating the waypoint's pixel coordinates.
+	var old_position: = position
+	cell = destination_cell
 	
-	# Move the gamepiece to occupy the cell closest to its position (placed in editor, usually).
-	set_cell(_grid.pixel_to_cell(position))
-	position = _grid.cell_to_pixel(cell)
-	
-	show()
-	
-	FieldEvents.gamepiece_initialized.emit(self)
+	# If the gamepiece is not yet moving, we'll setup a new path.
+	if not _path.curve:
+		_path.curve = Curve2D.new()
 
-
-func place_at_current_cell() -> void:
-	position = _grid.cell_to_pixel(cell)
-
-
-func add_point_to_path(waypoint: Vector2) -> void:
-	if _path.curve:
-		_path.curve.add_point(waypoint-position)
-
-
-func travel_along_path(waypoints: PackedVector2Array) -> void:
-	if waypoints.is_empty():
-		_follow_curve(null)
-
-	else:
-		var new_curve: = Curve2D.new()
-		new_curve.add_point(Vector2i(0, 0))
+		# The path needs at least two points for the follower to work correctly, so a new path
+		# will travel from the gamepiece's old position.
+		_path.curve.add_point(old_position)
+		_follower.progress = 0
 		
-		for point in waypoints:
-			new_curve.add_point(point-position)
-
-		_follow_curve(new_curve)
-
-
-func update_direction(new_angle: float) -> void:
-	var new_facing: = Directions.angle_to_direction(new_angle)
-	_animation.set_facing(new_facing)
-
-
-func set_animation(value: PackedScene) -> void:
-	var animation_value: CharacterAnimation = null
+		set_physics_process(true)
 	
-	# Instantiate the provided PackedScene to ensure that it's a valid CharacterAnimation.
-	if value:
-		var instance: = value.instantiate()
-		animation_value = instance as CharacterAnimation
-		
-		if not animation_value:
-			print("%s::set_animation() error - value is not a CharacterAnimation scene!" % name)
-			instance.free()
-			return
+	# The gamepiece serves as the waypoint's frame of reference.
+	_path.curve.add_point(grid.cell_to_pixel(destination_cell))
 	
-	animation_scene = value
-	if not is_inside_tree():
-		await ready
-	
-	# value is a valid CharacterAnimation scene, so free up any old animation objects and assign the
-	# new animation.
-	if _animation:
-		_animation.queue_free()
-	_animation = animation_value
-	
-	if _animation:
-		$Path2D/PathFollower/GFX.add_child(_animation)
-		_animation.owner = self
+	travel_begun.emit()
 
 
-func get_animation() -> CharacterAnimation:
-	return _animation
+func is_moving() -> bool:
+	return is_physics_processing()
 
 
 func set_cell(value: Vector2i) -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	var old_cell: = cell
 	cell = value
 	
+	if not is_inside_tree():
+		await ready
+	
+	print("Set cell to ", cell)
+	
+	var old_position: = position
+	position = grid.cell_to_pixel(cell)
+	_follower.position = old_position
+	
 	cell_changed.emit(old_cell)
-
-
-func set_state(value: States) -> void:
-	if value == _state:
-		return
-	
-	_state = value
-	match _state:
-		States.TRAVEL:
-			if _animation:
-				_animation.play("run")
-		_:
-			if _animation:
-				_animation.play("idle")
-	
-	set_process(_state == States.TRAVEL)
-	set_process_unhandled_input(_state == States.TRAVEL)
-
-
-func get_state() -> States:
-	return _state
-
-
-## Walk along the set path. 
-## There may be multiple ways to create a path, but only _follow_curve will begin travel.
-func _follow_curve(new_curve: Curve2D) -> void:
-	_reset_path()
-	
-	_path.curve = new_curve
-	
-	if _path.curve and not _path.curve.get_baked_points().is_empty():
-		_state = States.TRAVEL
-	
-	else:
-		_on_travel_finished()
-
-
-## Stop moving, update the gamepiece's position, and reset all movement variables to 0.
-func _reset_path() -> void:
-	position += _path_follower.position
-	_path_follower.position = Vector2.ZERO
-	
-	_path.curve = null
-	_path_follower.progress = 0.0
-	
-	set_process(false)
-	set_process_unhandled_input(false)
+	FieldEvents.gamepiece_cell_changed.emit(self, old_cell)
 
 
 func _on_travel_finished() -> void:
-	_reset_path()
-	place_at_current_cell()
-	
-	_state = States.IDLE
+	_path.curve = null
+	_follower.progress = 0
+		
+	set_physics_process(false)
 	arrived.emit()

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://caxhff6by5nqu"]
+
+[ext_resource type="Script" path="res://src/field/gamepieces/animation/gamepiece_animation.gd" id="1_l0scw"]
+
+[node name="CharacterAnimation" type="Marker2D"]
+script = ExtResource("1_l0scw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+debug_color = Color(0.690196, 0.188235, 0.380392, 0.419608)
+
+[node name="GFX" type="Marker2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="GFX"]
+
+[node name="Shadow" type="Sprite2D" parent="GFX"]
