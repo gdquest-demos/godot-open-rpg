@@ -127,7 +127,6 @@ func _physics_process(delta: float) -> void:
 	_follower.progress += move_distance
 	
 	# This breaks down at very high speeds. At that point the cell path determines direction.
-	print(_follower.position - old_follower_position)
 	direction = (_follower.position - old_follower_position).normalized()
 	
 	# If we've reached the end of the path, either travel to the next waypoint or wrap up movement.
