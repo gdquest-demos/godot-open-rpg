@@ -30,7 +30,7 @@ var _focus: = Grid.INVALID_CELL:
 
 
 func _ready() -> void:
-	assert(grid, "\n%s::intialize error - The Grid object is invalid!" % name)
+	assert(grid, "\n%s::initialize error - The Grid object is invalid!" % name)
 	
 	highlight_strategy = CursorHighlightDefault.new()
 
