@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dfftvqkqapf6b"]
+[gd_scene load_steps=22 format=3 uid="uid://6yf8stoy7vsd"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Resource" uid="uid://ct5k1x5ggblvc" path="res://data/default_grid.tres" id="4_4on5f"]
@@ -32,12 +32,12 @@ sources/0 = SubResource("TileSetAtlasSource_orie5")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn0hs"]
 size = Vector2(16, 16)
 
-[node name="Gameboard" type="Node2D" node_paths=PackedStringArray("focus")]
+[node name="Gameboard" type="Node2D" node_paths=PackedStringArray("focused_game_piece")]
 scale = Vector2(5, 5)
 script = ExtResource("2_bkxev")
 gamepiece_mask = 2
 terrain_mask = 1
-focus = NodePath("Objects/Gamepieces/Player")
+focused_game_piece = NodePath("Objects/Gamepieces/Player")
 is_active = true
 
 [node name="Terrain" type="TileMap" parent="."]

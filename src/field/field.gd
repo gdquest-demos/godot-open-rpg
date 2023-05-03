@@ -10,8 +10,8 @@ extends Node
 ## The physics layers which will be used to search for terrain obejcts.
 @export_flags_2d_physics var terrain_mask: = 0
 
-@export var focus: Gamepiece = null:
-	set = set_focus
+@export var focused_game_piece: Gamepiece = null:
+	set = set_focused_game_piece
 
 @export var is_active: = false:
 	set = set_is_active
@@ -19,21 +19,21 @@ extends Node
 
 func _ready() -> void:
 	randomize()
-	place_camera_at_focus()
+	place_camera_at_focused_game_piece()
 
 
-func place_camera_at_focus() -> void:
+func place_camera_at_focused_game_piece() -> void:
 	camera.reset_smoothing()
 
 
-func set_focus(value: Gamepiece) -> void:
-	if value == focus:
+func set_focused_game_piece(value: Gamepiece) -> void:
+	if value == focused_game_piece:
 		return
 	
-	if focus:
-		focus.camera_anchor.remote_path = ""
+	if focused_game_piece:
+		focused_game_piece.camera_anchor.remote_path = ""
 	
-	focus = value
+	focused_game_piece = value
 	
 	if not is_inside_tree():
 		await ready
@@ -43,19 +43,19 @@ func set_focus(value: Gamepiece) -> void:
 		controller.queue_free()
 	
 	
-	if focus:
-		focus.camera_anchor.remote_path = focus.camera_anchor.get_path_to(camera)
+	if focused_game_piece:
+		focused_game_piece.camera_anchor.remote_path = focused_game_piece.camera_anchor.get_path_to(camera)
 		
 		var new_controller = PlayerController.new()
 		new_controller.gamepiece_mask = gamepiece_mask
 		new_controller.terrain_mask = terrain_mask
 		
-		focus.add_child(new_controller)
+		focused_game_piece.add_child(new_controller)
 		new_controller.is_active = true
 
 
 func set_is_active(value: bool) -> void:
-	if not focus:
+	if not focused_game_piece:
 		value = false
 	if value == is_active:
 		return
