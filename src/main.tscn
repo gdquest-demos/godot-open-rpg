@@ -1,11 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://6yf8stoy7vsd"]
+[gd_scene load_steps=22 format=3 uid="uid://q8xq4np3t6is"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
-[ext_resource type="Resource" uid="uid://ct5k1x5ggblvc" path="res://data/default_grid.tres" id="4_4on5f"]
+[ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
 [ext_resource type="TileSet" uid="uid://ba2bnli4c27pk" path="res://assets/terrain/tilesets/kenney_terrain.tres" id="5_rv0gh"]
+[ext_resource type="Resource" path="res://data/default_gameboard.tres" id="6_kd8tv"]
 [ext_resource type="TileSet" uid="uid://biq84075xlypd" path="res://assets/terrain/tilesets/kenney_obstacles.tres" id="7_po5fq"]
 [ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://assets/terrain/dungeon_tilemap.png" id="9_woa3f"]
-[ext_resource type="Script" path="res://src/field/cursor/field_cursor.gd" id="10_tjkmb"]
 [ext_resource type="PackedScene" uid="uid://b626e0bngfvjj" path="res://src/field/gamepieces/gamepiece.tscn" id="11_yntrj"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/path_loop_ai_controller.gd" id="12_glwd5"]
 [ext_resource type="PackedScene" uid="uid://cdkha7cc72h35" path="res://data/field/characters/generic_character_gfx.tscn" id="12_n5rm1"]
@@ -63,23 +63,23 @@ layer_1/tile_data = PackedInt32Array(589838, 524288, 7, 786440, 262144, 0, 78643
 [node name="PlayerCursor" type="TileMap" parent="Objects"]
 tile_set = SubResource("TileSet_uvju2")
 format = 2
-script = ExtResource("10_tjkmb")
-grid = ExtResource("4_4on5f")
+script = ExtResource("5_3guor")
+gameboard = ExtResource("6_kd8tv")
 
 [node name="PlayerPathDestinationMarker" type="Sprite2D" parent="Objects"]
 modulate = Color(0.909804, 0.270588, 0.215686, 0.705882)
 texture = ExtResource("13_osl4o")
 script = ExtResource("14_0j4ru")
-grid = ExtResource("4_4on5f")
+gameboard = ExtResource("6_kd8tv")
 
 [node name="Gamepieces" type="Node2D" parent="Objects"]
 y_sort_enabled = true
 
 [node name="Player" parent="Objects/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(167.6, 119.2)
-grid = ExtResource("4_4on5f")
+gameboard = ExtResource("6_kd8tv")
 blocks_movement = true
-max_speed = 96.0
+move_speed = 96.0
 metadata/_edit_group_ = true
 
 [node name="GoBotGFX" parent="Objects/Gamepieces/Player" instance=ExtResource("12_oablq")]
@@ -101,7 +101,7 @@ shape = SubResource("RectangleShape2D_nn0hs")
 
 [node name="Knight" parent="Objects/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(344, 40)
-grid = ExtResource("4_4on5f")
+gameboard = ExtResource("6_kd8tv")
 blocks_movement = true
 metadata/_edit_group_ = true
 
@@ -109,7 +109,7 @@ metadata/_edit_group_ = true
 
 [node name="Runner" parent="Objects/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(216, 200)
-grid = ExtResource("4_4on5f")
+gameboard = ExtResource("6_kd8tv")
 blocks_movement = true
 metadata/_edit_group_ = true
 
@@ -130,7 +130,7 @@ width = 2.0
 
 [node name="BeeKeeper" parent="Objects/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(56, 168)
-grid = ExtResource("4_4on5f")
+gameboard = ExtResource("6_kd8tv")
 blocks_movement = true
 metadata/_edit_group_ = true
 
@@ -138,7 +138,7 @@ metadata/_edit_group_ = true
 
 [node name="Smith" parent="Objects/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(280, 120)
-grid = ExtResource("4_4on5f")
+gameboard = ExtResource("6_kd8tv")
 blocks_movement = true
 metadata/_edit_group_ = true
 
@@ -146,7 +146,7 @@ metadata/_edit_group_ = true
 
 [node name="Wizard" parent="Objects/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(40, 40)
-grid = ExtResource("4_4on5f")
+gameboard = ExtResource("6_kd8tv")
 blocks_movement = true
 metadata/_edit_group_ = true
 
@@ -154,7 +154,6 @@ metadata/_edit_group_ = true
 
 [node name="MapBoundaries" type="Node2D" parent="."]
 script = ExtResource("18_cqtg7")
-grid = ExtResource("4_4on5f")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

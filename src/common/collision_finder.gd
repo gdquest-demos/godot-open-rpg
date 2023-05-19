@@ -1,4 +1,14 @@
 ## Find all collision shapes of a given mask within a specified search radius.
+##
+## The CollisionFinder is used to search for objects that contain a [CollisionObject2D]. In the 
+## OpenRPG it serves as the cornerstone of the [Gameboard]/[Gamepiece] system, since objects 
+## (gamepieces, terrain, etc.) are found dynamically by collision shape.
+##
+## [br][br]For example, to see if a given cell is occupied a CollisionFinder would be used to 
+## [method search] for collision shapes at that cell's location.
+##
+## [br][br][b]Note:[/b] physics objects update on the physics 'tick' so changes in position often
+## need a single frame before they may be found by [method search].
 class_name CollisionFinder
 extends RefCounted
 
@@ -25,10 +35,11 @@ func _init(space_state: PhysicsDirectSpaceState2D, search_radius: float, collisi
 ## Find all collision shapes intersecting the query shape at position (in global coordinates).
 ##
 ## Please see [method PhysicsDirectSpaceState2D.intersect_shape] for possible return values.
+## [br][br][b]Note:[/b] [code]position[/code] must be given in global coordinates.
 func search(position: Vector2) -> Array[Dictionary]:
 	# To find collision shapes we'll query the PhysicsDirectSpaceState2D (usually from the main
-	# viewport's current World2D). If there intersercts a collision shape matching the provided 
-	# collision mask then it will be included in the results
+	# viewport's current World2D). Any intersecting collision shape matching the provided collision
+	# mask will be included in the results.
 	query_parameters.transform.origin = position
 	
 	return _space_state.intersect_shape(query_parameters)

@@ -1,17 +1,17 @@
 @tool
-## Draws the boundaries set by a [Grid] object.
+## Draws the boundaries set by a [Gameboard] object.
 ##
 ## Used within the editor to illustrate which cells will be included in the pathfinder calculations.
 extends Node2D
 
-@export var grid: Grid:
+@export var gameboard: Gameboard:
 	set(value):
-		grid = value
+		gameboard = value
 		
-		if grid:
+		if gameboard:
 			_boundaries = Rect2i(
-				grid.boundaries.position * grid.cell_size,
-				grid.boundaries.size * grid.cell_size
+				gameboard.boundaries.position * gameboard.cell_size,
+				gameboard.boundaries.size * gameboard.cell_size
 			)
 		
 		queue_redraw()
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	if not grid:
+	if not gameboard:
 		return
 	
 	draw_rect(_boundaries, boundary_color, false, line_width)

@@ -60,27 +60,27 @@ func _find_waypoints_from_line2D() -> void:
 		return
 	
 	# Add the first cell to the path, since subsequent additions will have the first cell removed.
-	_waypoints.append(_grid.pixel_to_cell(move_path.get_point_position(0) + _focus.position))
+	_waypoints.append(_gameboard.pixel_to_cell(move_path.get_point_position(0) + _focus.position))
 	
 	# Create a looping path from the points specified by move_path. Will fail if a path cannot be
 	# found between some of the move_path's points.
 	for i in range(1, move_path.get_point_count()):
-		var source: = _grid.pixel_to_cell(move_path.get_point_position(i-1) + _focus.position)
-		var destination: = _grid.pixel_to_cell(move_path.get_point_position(i) + _focus.position)
+		var source: = _gameboard.pixel_to_cell(move_path.get_point_position(i-1) + _focus.position)
+		var target: = _gameboard.pixel_to_cell(move_path.get_point_position(i) + _focus.position)
 		
-		var path_subset: = pathfinder.get_path_cells(source, destination)
+		var path_subset: = pathfinder.get_path_cells(source, target)
 		if path_subset.is_empty():
 			print("'%s' PathLoopAiController::_find_waypoints_from_line2D() error - " % name +
-				"Failed to find a path between cells %s and %s." % [source, destination])
+				"Failed to find a path between cells %s and %s." % [source, target])
 			return
 		
 		# Trim the first cell in the path found to prevent duplicates.
 		_waypoints.append_array(path_subset.slice(1))
 	
 	# Finally, connect the ending and starting cells to complete the loop.
-	var last_cell: = _grid.pixel_to_cell(move_path.get_point_position(move_path.get_point_count()-1) 
-		+ _focus.position)
-	var first_cell: = _grid.pixel_to_cell(move_path.get_point_position(0) + _focus.position)
+	var last_pos: = move_path.get_point_position(move_path.get_point_count()-1) + _focus.position
+	var last_cell: = _gameboard.pixel_to_cell(last_pos)
+	var first_cell: = _gameboard.pixel_to_cell(move_path.get_point_position(0) + _focus.position)
 	
 	# If we've made it this far there must be a path between the first and last cell.
 	_waypoints.append_array(pathfinder.get_path_cells(last_cell, first_cell).slice(1))
@@ -98,7 +98,7 @@ func _on_focus_arriving(excess_distance: float) -> void:
 			return
 		
 		var distance_to_waypoint: = \
-			_focus.position.distance_to(_grid.cell_to_pixel(waypoint))
+			_focus.position.distance_to(_gameboard.cell_to_pixel(waypoint))
 		
 		_focus.travel_to_cell(waypoint)
 		excess_distance -= distance_to_waypoint

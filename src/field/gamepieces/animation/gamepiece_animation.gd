@@ -1,14 +1,17 @@
 @tool
-## Encapsulates gamepiece animation as an optional component.
+## Encapsulates [Gamepiece] animation as an optional component.
 ##
-## [br][br][b]Note:[/b] Expects a gamepiece object as parent. The animation will use gamepiece info
-## that is exposed via signal.
+## Allows [method play]ing animations that automatically adapt to the parent [Gamepiece]'s state.
+## Transitions between animations are handled automatically, including changes to direction.
+## [br][br][b]Note:[/b] Requires a [Gamepiece] as parent.
 class_name GamepieceAnimation
 extends Marker2D
 
-const BLOCK_COLOR: = Color(0.690196, 0.188235, 0.376471, .42)
+## Name of the animation sequence used to reset animation properties to default. Note that this
+## animation is only played for a single frame during animation transitions.
 const RESET_SEQUENCE_KEY: = "RESET"
 
+## Mapping that pairs cardinal [constant Directions.Points] with a [String] suffix.
 const DIRECTION_SUFFIXES: = {
 	Directions.Points.N: "_n",
 	Directions.Points.E: "_e",
@@ -16,13 +19,15 @@ const DIRECTION_SUFFIXES: = {
 	Directions.Points.W: "_w",
 }
 
+## The animation currently being played.
 var current_sequence_id: = "":
 	set = play
 
-## Animations may optionally be direction-based. Setting the facing will use directional animations
-## if they are available; otherwise non-directional animations will be used.
-var facing: = Directions.Points.N:
-	set = set_facing
+## The direction faced by the gamepiece.
+## [br][br]Animations may optionally be direction-based. Setting the direction will use directional 
+## animations if they are available; otherwise non-directional animations will be used.
+var direction: = Directions.Points.N:
+	set = set_direction
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
 @onready var _collision_shape: = $Area2D/CollisionShape2D as CollisionShape2D
@@ -71,6 +76,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return warnings
 
 
+## Change the currently playing animation to a new value, if it exists.
+## [br][br]Animations may be added with or without a directional suffix (i.e. _n for north/up).
+## Directional animations will be preferred with direction-less animations as a fallback.
 func play(value: String) -> void:
 	if value == current_sequence_id:
 		return
@@ -81,7 +89,7 @@ func play(value: String) -> void:
 	# We need to check to see if the animation is valid.
 	# First of all, look for a directional equivalent - e.g. idle_n. If that fails, look for 
 	# the new sequence id itself.
-	var sequence_suffix: String = DIRECTION_SUFFIXES.get(facing, "")
+	var sequence_suffix: String = DIRECTION_SUFFIXES.get(direction, "")
 	if _anim.has_animation(value + sequence_suffix):
 		current_sequence_id = value
 		_swap_animation(value + sequence_suffix, false)
@@ -91,16 +99,19 @@ func play(value: String) -> void:
 		_swap_animation(value, false)
 
 
-func set_facing(value: Directions.Points) -> void:
-	if value == facing:
+## Change the animation's direction.
+## If the currently running animation has a directional variant matching the new direction it will
+## be played. Otherwise the direction-less animation will play.
+func set_direction(value: Directions.Points) -> void:
+	if value == direction:
 		return
 	
-	facing = value
+	direction = value
 	
 	if not is_inside_tree():
 		await ready
 	
-	var sequence_suffix: String = DIRECTION_SUFFIXES.get(facing, "")
+	var sequence_suffix: String = DIRECTION_SUFFIXES.get(direction, "")
 	if _anim.has_animation(current_sequence_id + sequence_suffix):
 		_swap_animation(current_sequence_id + sequence_suffix, true)
 	
@@ -108,10 +119,15 @@ func set_facing(value: Directions.Points) -> void:
 		_swap_animation(current_sequence_id, true)
 
 
+## Returns true if the parent gamepiece should block other gamepieces.
+## Note that the collision shape's [member CollisionShape2D.disabled] property determines whether
+## or not the gamepiece will be picked up by the physics system.
 func blocks_movement() -> bool:
 	return not _collision_shape.disabled
 
 
+# Transition to the next animation sequence, accounting for the RESET track and current animation
+# elapsed time.
 func _swap_animation(next_sequence: String, keep_position: bool) -> void:
 	var next_anim = _anim.get_animation(next_sequence)
 	
@@ -141,8 +157,8 @@ func _on_gamepiece_arrived() -> void:
 
 func _on_gamepiece_direction_changed(new_direction: Vector2) -> void:
 	if not new_direction.is_equal_approx(Vector2.ZERO):
-		var new_facing: = Directions.angle_to_direction(new_direction.angle())
-		set_facing(new_facing)
+		var direction_value: = Directions.angle_to_direction(new_direction.angle())
+		set_direction(direction_value)
 
 
 # Change the collision shape's colour depending on whether or not it blocks pathfinding.
@@ -150,7 +166,6 @@ func _on_gamepiece_direction_changed(new_direction: Vector2) -> void:
 # occupied by gamepieces.
 func _on_gamepiece_blocks_movement_changed(gamepiece: Gamepiece) -> void:
 	if gamepiece.blocks_movement:
-		_collision_shape.debug_color = BLOCK_COLOR
 		_collision_shape.disabled = false
 	
 	else:

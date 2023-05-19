@@ -1,7 +1,17 @@
+@tool
 ## Base controller responsible for the pathfinding state and movement of a gamepiece.
 ##
-## [b]Note:[/b] The controller is an optional component. Only gamepieces requiring player input or
-## AI will be controlled.
+## A controller is responsible for all gamepiece behaviour, especially movement. The base controller
+## provides several utility methods that query the [Gameboard]/[Gamepiece] state. 
+##
+## [br][br]Please note that the GamepieceController class doesn't [i]do[/i] anything. Specific 
+## controllers will usually be subclassed from this base class. See [PlayerController] for a
+## detailed example.
+##
+## [br][br]Requires a gamepiece as parent. The controller is derived from Node2D to account for
+## [member global_scale] when searching for paths/objects.
+## [br][br][b]Note:[/b] The controller is an optional component. Only gamepieces requiring player 
+## input or AI will be controlled.
 class_name GamepieceController
 extends Node2D
 
@@ -16,13 +26,15 @@ const IS_BLOCKING_METHOD: = "blocks_movement"
 ## gamepieces.
 @export_flags_2d_physics var gamepiece_mask: = 0
 
+## A pathfinder will be built from and respond to the physics state. This will be used to determine
+## movement for the parent [Gamepiece].
 var pathfinder: Pathfinder
 
 # Keep track of cells that need an update and do so as a batch before the next path search.
 var _cells_to_update: PackedVector2Array = []
 
 var _focus: Gamepiece
-var _grid: Grid
+var _gameboard: Gameboard
 
 var _gamepiece_searcher: CollisionFinder
 var _terrain_searcher: CollisionFinder
@@ -34,26 +46,42 @@ func _ready() -> void:
 		assert(_focus, "The GamepieceController must have a Gamepiece as a parent. "
 			+ "%s is not a gamepiece!" % get_parent().name)
 		
-		_grid = _focus.grid
-		assert(_grid, "%s error: invalid grid object!" % name)
+		_gameboard = _focus.gameboard
+		assert(_gameboard, "%s error: invalid Gameboard object!" % name)
 		
-		# The controller will be notified of any key changes in the gameboard and respond accordingly.
+		# The controller will be notified of any changes in the gameboard and respond accordingly.
 		FieldEvents.gamepiece_cell_changed.connect(_on_gamepiece_cell_changed)
 		FieldEvents.terrain_changed.connect(_on_terrain_passability_changed)
 		
 		# Create the objects that will be used to query the state of the gamepieces and terrain.
-		var min_cell_axis: = minf(_grid.cell_size.x-1, _grid.cell_size.y-1)
-		_gamepiece_searcher = CollisionFinder.new(get_world_2d().direct_space_state, min_cell_axis/2.0,
+		var min_cell_axis: = minf(_gameboard.cell_size.x-1, _gameboard.cell_size.y-1) / 2.0
+		_gamepiece_searcher = CollisionFinder.new(get_world_2d().direct_space_state, min_cell_axis,
 			gamepiece_mask)
-		_terrain_searcher = CollisionFinder.new(get_world_2d().direct_space_state, min_cell_axis/2.0,
+		_terrain_searcher = CollisionFinder.new(get_world_2d().direct_space_state, min_cell_axis,
 			terrain_mask)
 		
 		await get_tree().process_frame
 		_rebuild_pathfinder()
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PARENTED:
+		update_configuration_warnings()
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+	if not get_parent() is Gamepiece:
+		warnings.append("Expects a Gamepiece as parent to correctly function. "
+			+ "Please only use GamepieceController as a child of a Gamepiece for correct animation.")
+	
+	return warnings
+
+
+## Returns true if a given cell is occupied by something that has a collider matching 
+## [member gamepiece_mask].
 func is_cell_blocked(cell: Vector2i) -> bool:
-	var search_coordinates: = Vector2(_grid.cell_to_pixel(cell)) * global_scale
+	var search_coordinates: = Vector2(_gameboard.cell_to_pixel(cell)) * global_scale
 	var collisions = _gamepiece_searcher.search(search_coordinates)
 	
 	# Take advantage of duck typing: any colliding object could block movement. Look at the owner
@@ -70,46 +98,41 @@ func is_cell_blocked(cell: Vector2i) -> bool:
 	return FieldEvents.did_gp_move_to_cell_this_frame(cell)
 
 
-func get_gamepieces_at_cell(cell: Vector2i) -> Array[Gamepiece]:
-	var gamepieces: Array[Gamepiece] = []
-	for gamepiece in get_tree().get_nodes_in_group(Gamepiece.GROUP_NAME):
-		if gamepiece.cell == cell:
-			gamepieces.append(gamepiece)
-	
-	return gamepieces
-
-
+## Find all collision matching [member gamepiece_mask] at a given cell.
 func get_collisions(cell: Vector2i) -> Array:
-	var search_coordinates: = Vector2(_grid.cell_to_pixel(cell)) * global_scale
+	var search_coordinates: = Vector2(_gameboard.cell_to_pixel(cell)) * global_scale
 	return _gamepiece_searcher.search(search_coordinates)
 
 
+# Completely rebuild the pathfinder, searching for all empty terrain within the gameboard 
+# boundaries.
+# Empty terrain is considered a cell that is NOT occupied by a collider with a terrain_mask.
 func _rebuild_pathfinder() -> void:
 	var pathable_cells: Array[Vector2i] = []
 	
-	# Loop through ALL cells within the grid boundaries. The only cells that will not be considered
+	# Loop through ALL cells within the board boundaries. The only cells that will not be considered
 	# walkable are those that contain a collision shape matching the terrain layer mask.
-	for x in range(_grid.boundaries.position.x, _grid.boundaries.end.x):
-		for y in range(_grid.boundaries.position.y, _grid.boundaries.end.y):
+	for x in range(_gameboard.boundaries.position.x, _gameboard.boundaries.end.x):
+		for y in range(_gameboard.boundaries.position.y, _gameboard.boundaries.end.y):
 			var cell: = Vector2i(x, y)
 			
 			# To find collision shapes we'll query a PhysicsDirectSpaceState2D (usually that of the
 			# current viewport's World2D). If there is a collision shape matching terrainn_mask
 			# then we'll know to discard the cell. Otherwise it may be considered walkable.
-			var search_coordinates: = Vector2(_grid.cell_to_pixel(cell)) * global_scale
+			var search_coordinates: = Vector2(_gameboard.cell_to_pixel(cell)) * global_scale
 			var collisions: = _terrain_searcher.search(search_coordinates)
 			if collisions.is_empty():
 				pathable_cells.append(cell)
 	
-	pathfinder = Pathfinder.new(pathable_cells, _grid)
+	pathfinder = Pathfinder.new(pathable_cells, _gameboard)
 	_find_all_blocked_cells()
 
 
-## The following method searches ALL cells contained in the pathfinder for objects that might block
-## gamepiece movement. 
-## 
-## This method may be overwritten depending on the movement behaviour of a controller's focus. For
-## instance, a teleporting or flying focus will not be blocked by grounded gamepieces.
+# The following method searches ALL cells contained in the pathfinder for objects that might block
+# gamepiece movement. 
+# 
+# This method may be overwritten depending on the movement behaviour of a controller's focus. For
+# instance, a teleporting or flying focus will not be blocked by grounded gamepieces.
 func _find_all_blocked_cells() -> void:
 	var blocked_cells: Array[Vector2i] = []
 	

@@ -93,12 +93,13 @@ func _on_focus_arriving(excess_distance: float) -> void:
 	# a valid movement path since obstacles may shift while in transit.
 	if not _waypoints.is_empty():
 		while not _waypoints.is_empty() and excess_distance > 0:
-			if is_cell_blocked(_waypoints[0]) or FieldEvents.did_gp_move_to_cell_this_frame(_waypoints[0]):
+			if is_cell_blocked(_waypoints[0]) \
+					or FieldEvents.did_gp_move_to_cell_this_frame(_waypoints[0]):
 				return
 			
 			_current_waypoint = _waypoints.pop_front()
 			var distance_to_waypoint: = \
-				_focus.position.distance_to(_grid.cell_to_pixel(_current_waypoint))
+				_focus.position.distance_to(_gameboard.cell_to_pixel(_current_waypoint))
 			
 			_focus.travel_to_cell(_current_waypoint)
 			excess_distance -= distance_to_waypoint

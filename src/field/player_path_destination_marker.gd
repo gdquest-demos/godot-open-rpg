@@ -1,6 +1,6 @@
 extends Sprite2D
 
-@export var grid: Grid
+@export var gameboard: Gameboard
 
 
 func _ready() -> void:
@@ -16,5 +16,5 @@ func _on_gamepiece_arrived(gamepiece: Gamepiece) -> void:
 func _on_player_path_set(gamepiece: Gamepiece, destination_cell: Vector2i) -> void:
 	gamepiece.arrived.connect(_on_gamepiece_arrived.bind(gamepiece))
 	
-	position = grid.cell_to_pixel(destination_cell)
+	position = gameboard.cell_to_pixel(destination_cell)
 	show()
