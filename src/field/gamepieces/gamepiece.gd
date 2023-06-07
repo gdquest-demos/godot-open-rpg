@@ -37,6 +37,9 @@ signal cell_changed(old_cell: Vector2i)
 ## Emitted when the gamepiece's [member direction] changes, usually as it travels about the board.
 signal direction_changed(new_direction: Vector2)
 
+## Emitted whenever [member can_travel] changes. Useful for controllers that cache travel paths.
+signal can_travel_changed
+
 ## The [Gameboard] object used to tie the gamepiece to the gameboard. A gamepiece without a valid 
 ## gameboard reference will produce errors, stopping the program.
 @export var gameboard: Gameboard:
@@ -79,6 +82,15 @@ var direction: = Vector2.ZERO:
 			direction = value
 			direction_changed.emit(direction)
 
+## If is [code]true[/code], the gamepiece will accept new travel destinations via
+## [method travel_to_cell]. If set to false, the current path will continue to be followed.
+## [br][br]This may be used, for example, to pause gamepiece movement.
+var can_travel: = true:
+	set(value):
+		if value != can_travel:
+			can_travel = value
+			can_travel_changed.emit()
+
 ## A camera may smoothly follow a travelling gamepiece by receiving the camera_anchor's transform.
 @onready var camera_anchor: = $Decoupler/Path2D/PathFollow2D/CameraAnchor as RemoteTransform2D
 
@@ -101,6 +113,8 @@ func _ready() -> void:
 	
 	if not Engine.is_editor_hint():
 		assert(gameboard, "Gamepiece '%s' must have a gameboard reference to function!" % name)
+		
+		add_to_group(Groups.GAMEPIECES)
 		
 		# Ensure that the gamepiece and its path are at the same scale. This will enable providing
 		# movement coordinates in local scale, simplifying path creation.
@@ -166,7 +180,7 @@ func _physics_process(delta: float) -> void:
 	
 	# If we've reached the end of the path, either travel to the next waypoint or wrap up movement.
 	if has_arrived:
-		_on_travel_finished()
+		finish_travel()
 
 
 ## Begin travelling towards the specified cell.
@@ -174,10 +188,16 @@ func _physics_process(delta: float) -> void:
 ## follower will begin moving smoothly towards the destination at [member move_speed]. The 
 ## [signal arriving] and [signal arrived] signals will be emitted accordingly as the path follower
 ## reaches the destination cell.
+## [br][br]The destination will only be set if [member can_travel] is [code]true[/code].
 ## [br][br]To move the gamepiece instantly to a new cell, call [method set_cell] instead.
 ## [br][br][b]Note:[/b] Calling travel_to_cell on a moving gamepiece will update it's position to 
 ## that indicated by the cell coordinates and add the cell to the movement path.
 func travel_to_cell(destination_cell: Vector2i) -> void:
+	if not can_travel:
+		return
+	
+	set_physics_process(true)
+	
 	# Note that updating the gamepiece's cell will snap it to its new grid position. This will
 	# be accounted for below when calculating the waypoint's pixel coordinates.
 	var old_position: = position
@@ -191,8 +211,6 @@ func travel_to_cell(destination_cell: Vector2i) -> void:
 		# will travel from the gamepiece's old position.
 		_path.curve.add_point(old_position)
 		_follower.progress = 0
-		
-		set_physics_process(true)
 	
 	# The gamepiece serves as the waypoint's frame of reference.
 	_path.curve.add_point(gameboard.cell_to_pixel(destination_cell))
@@ -200,8 +218,16 @@ func travel_to_cell(destination_cell: Vector2i) -> void:
 	travel_begun.emit()
 
 
+func finish_travel() -> void:
+	_path.curve = null
+	_follower.progress = 0
+		
+	set_physics_process(false)
+	arrived.emit()
+
+
 ## Returns [code]true[/code] if the gamepiece is currently traversing a path.
-func is_moving() -> bool:
+func is_travelling() -> bool:
 	return is_physics_processing()
 
 
@@ -217,14 +243,8 @@ func set_cell(value: Vector2i) -> void:
 	
 	var old_position: = position
 	position = gameboard.cell_to_pixel(cell)
-	_follower.position = old_position
+	
+	if is_travelling():
+		_follower.position = old_position
 	
 	cell_changed.emit(old_cell)
-
-
-func _on_travel_finished() -> void:
-	_path.curve = null
-	_follower.progress = 0
-		
-	set_physics_process(false)
-	arrived.emit()

@@ -4,8 +4,6 @@
 class_name PlayerController
 extends GamepieceController
 
-const GROUP_NAME: = "_PLAYER_CONTROLLER_GROUP"
-
 var is_active: = false:
 	set(value):
 		is_active = value
@@ -28,7 +26,7 @@ var _current_waypoint: Vector2i
 func _ready() -> void:
 	super._ready()
 	
-	add_to_group(GROUP_NAME)
+	add_to_group(Groups.PLAYER_CONTROLLERS)
 	
 	FieldEvents.cell_selected.connect(_on_cell_selected)
 	
@@ -43,8 +41,16 @@ func _ready() -> void:
 	is_active = true
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("right_mouse"):
+		_focus.can_travel = !_focus.can_travel
+	
+#	elif event.is_action_released("ui_accept"):
+#		_focus.set_cell(Vector2i(8, 5))
+
+
 func _physics_process(_delta: float) -> void:
-	if not _focus.is_moving():
+	if not _focus.is_travelling() and _focus.can_travel:
 		var move_dir: = _get_move_direction()
 		if move_dir:
 			var target_cell: = Vector2i.ZERO
@@ -132,18 +138,27 @@ func _on_focus_arrived() -> void:
 
 
 func _on_cell_selected(cell: Vector2i) -> void:
-	if not _focus.is_moving():
+	if not _focus.is_travelling() and _focus.can_travel:
 		# Don't move to the cell the focus is standing on. May want to open inventory.
 		if cell == _focus.cell:
 			return
 			
-		# We'll want different behaviour depending on what's underneath the cursor.
-		# If there is an interactable, blocking object beneath the cursor, we'll walk *next* to 
-		# the cell.
-		
-		# If the cell beneath the cursor is empty the focus can follow a path to the cell.
+		# We'll want different behaviour depending on what's underneath the cursor...
 		_update_changed_cells()
-		_waypoints = pathfinder.get_path_cells(_focus.cell, cell)
+		var collisions: = get_collisions(cell)
+		
+		# ...If the cell beneath the cursor is empty the focus can follow a path to the cell.
+		if collisions.is_empty():
+			_waypoints = pathfinder.get_path_cells(_focus.cell, cell)
+		
+		# ...Otherwise, if there is an interactable, blocking object beneath the cursor, we'll walk
+		# *next* to the cell.
+		else:
+			for collision in collisions:
+				var gamepiece: = collision.collider.owner as Gamepiece
+				if gamepiece.blocks_movement:
+					_waypoints = pathfinder.get_path_cells_to_adjacent_cell(_focus.cell, cell)
+					break
 		
 		# Only follow a valid path with a length greater than 0 (more than one waypoint).
 		if _waypoints.size() > 1:

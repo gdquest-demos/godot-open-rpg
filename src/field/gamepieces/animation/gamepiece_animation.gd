@@ -47,6 +47,8 @@ func _ready() -> void:
 			+ " Please only use GamepieceAnimation as a child of a Gamepiece for correct animation."
 			+ " Current parent is named %s." % get_parent().name)
 		
+		$Area2D.owner = gamepiece
+		
 		gamepiece.blocks_movement_changed.connect( \
 			_on_gamepiece_blocks_movement_changed.bind(gamepiece))
 		_on_gamepiece_blocks_movement_changed(gamepiece)
@@ -119,13 +121,6 @@ func set_direction(value: Directions.Points) -> void:
 		_swap_animation(current_sequence_id, true)
 
 
-## Returns true if the parent gamepiece should block other gamepieces.
-## Note that the collision shape's [member CollisionShape2D.disabled] property determines whether
-## or not the gamepiece will be picked up by the physics system.
-func blocks_movement() -> bool:
-	return not _collision_shape.disabled
-
-
 # Transition to the next animation sequence, accounting for the RESET track and current animation
 # elapsed time.
 func _swap_animation(next_sequence: String, keep_position: bool) -> void:
@@ -164,6 +159,8 @@ func _on_gamepiece_direction_changed(new_direction: Vector2) -> void:
 # Change the collision shape's colour depending on whether or not it blocks pathfinding.
 # Please turn on 'Visible Collision Shapes' under the editor's Debug menu to see which cells are
 # occupied by gamepieces.
+# Note that the collision shape's [member CollisionShape2D.disabled] property determines whether
+# or not the gamepiece will be picked up by the physics system.
 func _on_gamepiece_blocks_movement_changed(gamepiece: Gamepiece) -> void:
 	if gamepiece.blocks_movement:
 		_collision_shape.disabled = false

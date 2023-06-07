@@ -16,7 +16,7 @@ class_name GamepieceController
 extends Node2D
 
 # Colliding objects that have the following property set to true will block movement.
-const IS_BLOCKING_METHOD: = "blocks_movement"
+const BLOCKING_PROPERTY: = "blocks_movement"
 
 ## Colliders matching the following mask will be used to determine which cells are walkable. Cells
 ## containing any terrain collider will not be included for pathfinding.
@@ -88,9 +88,9 @@ func is_cell_blocked(cell: Vector2i) -> bool:
 	# of the collision shape for a blocking flag.
 	# Please see BLOCKING_PROPERTY for more information.
 	for collision in collisions:
-		if collision.collider.owner.has_method(IS_BLOCKING_METHOD):
-			if collision.collider.owner.call(IS_BLOCKING_METHOD):
-				return true
+		var blocks_movement: bool = collision.collider.owner.get(BLOCKING_PROPERTY)
+		if blocks_movement:
+			return true
 	
 	# There is one last check to make. It is possible that a gamepiece has decided to move to cell 
 	# THIS frame. It's collision shape will not move until next frame, so the events manager may

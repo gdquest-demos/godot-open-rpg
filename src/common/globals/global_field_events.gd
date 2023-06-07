@@ -13,6 +13,9 @@ signal cell_selected(cell: Vector2i)
 ## Gamepiece related signals, usually emitted by the the gamepieces themselves.
 signal gamepiece_cell_changed(gamepiece: Gamepiece, old_cell: Vector2i)
 
+## Emitted when a new [Event] has been added to the scene tree and has run its _ready function.
+signal event_ready(event: Event)
+
 ## Emitted when the player sets a movement path for their focused gamepiece.
 ## The destination is the last cell in the path.
 signal player_path_set(gamepiece: Gamepiece, destination_cell: Vector2i)

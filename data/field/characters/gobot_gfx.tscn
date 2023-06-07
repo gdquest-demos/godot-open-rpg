@@ -14,6 +14,9 @@ libraries = {
 "": ExtResource("2_mw4lc")
 }
 
+[node name="Area2D" parent="." index="1"]
+collision_mask = 3
+
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 shape = SubResource("RectangleShape2D_xkmti")
 
