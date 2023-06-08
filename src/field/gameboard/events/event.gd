@@ -19,9 +19,9 @@ func _ready() -> void:
 func run() -> void:
 	add_to_group(Groups.ACTIVE_EVENTS)
 	
-	var cinematic_mode: CinematicModeListener = null
+	var cinematic_mode: CinematicEventHelper = null
 	if is_cinematic:
-		cinematic_mode = CinematicModeListener.new()
+		cinematic_mode = CinematicEventHelper.new()
 		add_child(cinematic_mode)
 		
 		finished.connect(cinematic_mode.queue_free)

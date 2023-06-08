@@ -4,7 +4,7 @@
 ## Additionally, the function will begin a process that will wait for all currently moving
 ## gamepieces to finish their movement at which point [signal cinematic_mode_started] will be
 ## emitted.
-class_name CinematicModeListener
+class_name CinematicEventHelper
 extends Node
 
 # Emitted when all gamepieces have finished travelling and cinematic mode can begin without
