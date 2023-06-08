@@ -1,8 +1,5 @@
 extends Node
 
-@onready var camera: = $Camera2D as Camera2D
-@onready var music: = $MusicPlayer as MusicPlayer
-
 ## The physics layers which will be used to search for gamepiece objects.
 ## Please see the project properties for the specific physics layers. [b]All[/b] collision shapes
 ## matching the mask will be checked regardless of position in the scene tree.
@@ -14,13 +11,13 @@ extends Node
 @export var focused_game_piece: Gamepiece = null:
 	set = set_focused_game_piece
 
-@export var is_active: = false:
-	set = set_is_active
+@onready var camera: = $Camera2D as Camera2D
+@onready var cursor: = $Objects/PlayerCursor as FieldCursor
+@onready var music: = $MusicPlayer as MusicPlayer
 
 
 func _ready() -> void:
 	randomize()
-	place_camera_at_focused_game_piece()
 	
 	# The field needs to setup all events. Events dynamically added to the scene tree will be picked
 	# up by the following method...
@@ -31,23 +28,40 @@ func _ready() -> void:
 		_setup_event(event)
 	
 	music.play(load("res://assets/audio/music/Insect Factory LOOP.wav"))
+	
+	place_camera_at_focused_game_piece.call_deferred()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_released("ui_accept"):
-		if music.is_playing():
-			music.stop()
+func place_camera_at_focused_game_piece() -> void:
+	camera.reset_smoothing()
+
+
+func set_focused_game_piece(value: Gamepiece) -> void:
+	if value == focused_game_piece:
+		return
+	
+	if focused_game_piece:
+		focused_game_piece.camera_anchor.remote_path = ""
+	
+	focused_game_piece = value
+	
+	if not is_inside_tree():
+		await ready
+	
+	# Free up any lingering human controller(s).
+	for controller in get_tree().get_nodes_in_group(Groups.PLAYER_CONTROLLERS):
+		controller.queue_free()
+	
+	if focused_game_piece:
+		var camera_path: = focused_game_piece.camera_anchor.get_path_to(camera)
+		focused_game_piece.camera_anchor.remote_path = camera_path
 		
-		else:
-			music.play(load("res://assets/audio/music/Insect Factory LOOP.wav"))
-
-
-func pause() -> void:
-	pass
-
-
-func unpause() -> void:
-	pass
+		var new_controller = PlayerController.new()
+		new_controller.gamepiece_mask = gamepiece_mask
+		new_controller.terrain_mask = terrain_mask
+		
+		focused_game_piece.add_child(new_controller)
+		new_controller.is_active = true
 
 
 ## Mute all field game state related audio channels.
@@ -79,6 +93,9 @@ func mute(decrescendo_time: = -1.0) -> void:
 		await get_tree().process_frame
 
 
+## Unute all field game state related audio channels.
+## A 'rise' time may be provided, which will allow the audio channels to gain inensity until at full
+## volume.
 func unmute(crescendo_time: = -1.0) -> void:
 	var volume_tween: = create_tween()
 	var music_bus_idx: = AudioServer.get_bus_index("FieldMusic")
@@ -105,62 +122,11 @@ func unmute(crescendo_time: = -1.0) -> void:
 		await get_tree().process_frame
 
 
-func place_camera_at_focused_game_piece() -> void:
-	camera.reset_smoothing()
-
-
-func set_focused_game_piece(value: Gamepiece) -> void:
-	if value == focused_game_piece:
-		return
-	
-	if focused_game_piece:
-		focused_game_piece.camera_anchor.remote_path = ""
-	
-	focused_game_piece = value
-	
-	if not is_inside_tree():
-		await ready
-	
-	# Free up any lingering human controller(s).
-	for controller in get_tree().get_nodes_in_group(Groups.PLAYER_CONTROLLERS):
-		controller.queue_free()
-	
-	if focused_game_piece:
-		focused_game_piece.camera_anchor.remote_path = focused_game_piece.camera_anchor.get_path_to(camera)
-		
-		var new_controller = PlayerController.new()
-		new_controller.gamepiece_mask = gamepiece_mask
-		new_controller.terrain_mask = terrain_mask
-		
-		focused_game_piece.add_child(new_controller)
-		new_controller.is_active = true
-
-
-func set_is_active(value: bool) -> void:
-	if not focused_game_piece:
-		value = false
-	if value == is_active:
-		return
-	
-	is_active = value
-	
-	if not is_inside_tree():
-		await ready
-	
-	for controller in get_tree().get_nodes_in_group(Groups.PLAYER_CONTROLLERS):
-		(controller as PlayerController).is_active = is_active
-
-
+# Inject essential dependencies to events.
 func _setup_event(event: Event) -> void:
-	if event:
-		print("Setting up event %s" % event.name)
-		event.music_player = music
-		
-		event.pause_field = pause
-		event.unpause_field = unpause
-		event.mute_field = mute
-		event.unmute_field = unmute
+	event.music_player = music
 
 
+# Dynamic events need to be setup on their creation.
 func _on_event_ready(event: Event) -> void:
 	_setup_event(event)

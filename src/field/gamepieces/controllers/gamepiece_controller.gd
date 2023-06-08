@@ -15,6 +15,9 @@
 class_name GamepieceController
 extends Node2D
 
+# Emitted whenever [member is_active] changes.
+signal is_active_changed
+
 # Colliding objects that have the following property set to true will block movement.
 const BLOCKING_PROPERTY: = "blocks_movement"
 
@@ -30,6 +33,20 @@ const BLOCKING_PROPERTY: = "blocks_movement"
 ## movement for the parent [Gamepiece].
 var pathfinder: Pathfinder
 
+## An active controller may manipulate its focused gamepiece. Similarly, a controller should be
+## written so that it will not issue orders when inactive.
+var is_active: = false:
+	set(value):
+		if not value == is_active:
+			is_active = value
+			
+			set_process(is_active)
+			set_physics_process(is_active)
+			set_process_input(is_active)
+			set_process_unhandled_input(is_active)
+			
+			is_active_changed.emit()
+
 # Keep track of cells that need an update and do so as a batch before the next path search.
 var _cells_to_update: PackedVector2Array = []
 
@@ -41,6 +58,11 @@ var _terrain_searcher: CollisionFinder
 
 
 func _ready() -> void:
+	set_process(false)
+	set_physics_process(false)
+	set_process_input(false)
+	set_process_unhandled_input(false)
+	
 	if not Engine.is_editor_hint():
 		_focus = get_parent() as Gamepiece
 		assert(_focus, "The GamepieceController must have a Gamepiece as a parent. "
@@ -48,6 +70,12 @@ func _ready() -> void:
 		
 		_gameboard = _focus.gameboard
 		assert(_gameboard, "%s error: invalid Gameboard object!" % name)
+		
+		add_to_group(Groups.CONTROLLERS)
+		
+		# Controllers must be disabled by cinematic mode by responding to the following signals:
+		FieldEvents.cinematic_mode_enabled.connect(_on_cinematic_mode_enabled)
+		FieldEvents.cinematic_mode_disabled.connect(_on_cinematic_mode_disabled)
 		
 		# The controller will be notified of any changes in the gameboard and respond accordingly.
 		FieldEvents.gamepiece_cell_changed.connect(_on_gamepiece_cell_changed)
@@ -157,6 +185,14 @@ func _update_changed_cells() -> void:
 			checked_coordinates[cell] = null
 	
 	_cells_to_update.clear()
+
+
+func _on_cinematic_mode_enabled() -> void:
+	is_active = false
+
+
+func _on_cinematic_mode_disabled() -> void:
+	is_active = true
 
 
 # Whenever a gamepiece moves, flag its destination and origin as in need of an update.

@@ -1,11 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://q8xq4np3t6is"]
+[gd_scene load_steps=29 format=3 uid="uid://q8xq4np3t6is"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
 [ext_resource type="TileSet" uid="uid://ba2bnli4c27pk" path="res://assets/terrain/tilesets/kenney_terrain.tres" id="5_rv0gh"]
 [ext_resource type="Resource" path="res://data/default_gameboard.tres" id="6_kd8tv"]
 [ext_resource type="TileSet" uid="uid://biq84075xlypd" path="res://assets/terrain/tilesets/kenney_obstacles.tres" id="7_po5fq"]
-[ext_resource type="Script" path="res://src/field/gameboard/events/trigger.gd" id="9_eiopw"]
+[ext_resource type="Script" path="res://world/demo_area/test_trigger.gd" id="9_3jvoh"]
 [ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://assets/terrain/dungeon_tilemap.png" id="9_woa3f"]
 [ext_resource type="PackedScene" uid="uid://b626e0bngfvjj" path="res://src/field/gamepieces/gamepiece.tscn" id="11_yntrj"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/path_loop_ai_controller.gd" id="12_glwd5"]
@@ -76,10 +76,39 @@ tracks/1/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_74p7i"]
+resource_name = "show"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.5001),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/ColorRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_galkm"]
 _data = {
 "RESET": SubResource("Animation_fxecy"),
-"hide": SubResource("Animation_3ril5")
+"hide": SubResource("Animation_3ril5"),
+"show": SubResource("Animation_74p7i")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn0hs"]
@@ -91,7 +120,6 @@ script = ExtResource("2_bkxev")
 gamepiece_mask = 2
 terrain_mask = 1
 focused_game_piece = NodePath("Objects/Gamepieces/Player")
-is_active = true
 
 [node name="Terrain" type="TileMap" parent="."]
 tile_set = ExtResource("5_rv0gh")
@@ -131,7 +159,8 @@ gameboard = ExtResource("6_kd8tv")
 position = Vector2(136, 88)
 collision_layer = 16
 collision_mask = 2
-script = ExtResource("9_eiopw")
+script = ExtResource("9_3jvoh")
+is_cinematic = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Triggers/DoorEvent"]
 shape = SubResource("RectangleShape2D_kkgwi")
@@ -140,6 +169,7 @@ debug_color = Color(0.968627, 0.952941, 0.717647, 0.419608)
 [node name="CanvasLayer" type="CanvasLayer" parent="Objects/Triggers/DoorEvent"]
 
 [node name="ColorRect" type="ColorRect" parent="Objects/Triggers/DoorEvent/CanvasLayer"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

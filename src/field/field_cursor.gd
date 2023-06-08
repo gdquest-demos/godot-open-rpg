@@ -5,6 +5,9 @@
 class_name FieldCursor
 extends TileMap
 
+# Emitted whenever [member is_active] changes.
+signal is_active_changed
+
 ## Emitted when the highlighted cell changes to a new value. An invalid cell is indicated by a value
 ## of [constant Gameboard.INVALID_CELL].
 signal focus_changed(old_focus: Vector2i, new_focus: Vector2i)
@@ -15,6 +18,21 @@ signal selected(selected_cell: Vector2i)
 ## The [Gameboard] object used to convert touch/mouse coordinates to game coordinates. The reference
 ## must be valid for the cursor to function properly.
 @export var gameboard: Gameboard
+
+## An active cursor will interact with the gameboard, whereas an inactive cursor will do nothing.
+var is_active: = true:
+	set(value):
+		if not value == is_active:
+			is_active = value
+			if not is_active:
+				set_focus(Gameboard.INVALID_CELL)
+			
+			set_process(is_active)
+			set_physics_process(is_active)
+			set_process_input(is_active)
+			set_process_unhandled_input(is_active)
+			
+			is_active_changed.emit()
 
 ## The cursor may focus on any cell from those included in valid_cells.
 ## The valid cell list may be used to change what is 'highlightable' at any given moment (e.g. an
@@ -32,6 +50,10 @@ var focus: = Gameboard.INVALID_CELL:
 
 func _ready() -> void:
 	assert(gameboard, "\n%s::initialize error - Invalid Gameboard reference!" % name)
+	
+	# The cursor must be disabled by cinematic mode by responding to the following signals:
+	FieldEvents.cinematic_mode_enabled.connect(_on_cinematic_mode_enabled)
+	FieldEvents.cinematic_mode_disabled.connect(_on_cinematic_mode_disabled)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -94,3 +116,12 @@ func _get_cell_under_mouse() -> Vector2i:
 # A wrapper for cell validity criteria.
 func _is_cell_invalid(cell: Vector2i) -> bool:
 	return not valid_cells.is_empty() and not cell in valid_cells
+
+
+# The cursor should not affect the field while in cinematic mode.
+func _on_cinematic_mode_enabled() -> void:
+	is_active = false
+
+
+func _on_cinematic_mode_disabled() -> void:
+	is_active = true

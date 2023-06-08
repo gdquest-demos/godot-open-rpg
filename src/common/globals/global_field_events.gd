@@ -1,14 +1,17 @@
 ## A signal bus to connect distant scenes to various field-exclusive events.
 extends Node
 
-# We want the Field Event manager's _process method to run after all Gamepieces and Controllers.
+## We want the Field Event manager's _process method to run after all Gamepieces and Controllers.
 const PROCESS_PRIORITY: = 99999999
 
 ## Emitted when the cursor moves to a new position on the field gameboard.
 signal cell_highlighted(cell: Vector2i)
 
-# Emitted when the player selects a cell on the field gameboard via the [FieldCursor].
+## Emitted when the player selects a cell on the field gameboard via the [FieldCursor].
 signal cell_selected(cell: Vector2i)
+
+signal cinematic_mode_enabled
+signal cinematic_mode_disabled
 
 ## Gamepiece related signals, usually emitted by the the gamepieces themselves.
 signal gamepiece_cell_changed(gamepiece: Gamepiece, old_cell: Vector2i)

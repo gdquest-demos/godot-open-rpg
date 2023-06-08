@@ -27,6 +27,10 @@ func _ready() -> void:
 		
 		_focus.arriving.connect(_on_focus_arriving)
 		_focus.arrived.connect(_on_focus_arrived)
+		
+		is_active_changed.connect(_on_is_active_changed)
+	
+	is_active = true
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -86,9 +90,17 @@ func _find_waypoints_from_line2D() -> void:
 	_waypoints.append_array(pathfinder.get_path_cells(last_cell, first_cell).slice(1))
 
 
+func _on_is_active_changed() -> void:
+	if is_active:
+		_timer.start()
+
+
 func _on_focus_arriving(excess_distance: float) -> void:
+	if not is_active:
+		return
+	
 	# If the gamepiece is currently following a path, continue moving along the path if it is still
-	# a valid movement path since obstacles may shift while in transit.
+	# a valid movement path, since obstacles may shift while in transit.
 	while _current_waypoint_index >= 0 and _current_waypoint_index < _waypoints.size() - 1 \
 			and excess_distance > 0:
 		_current_waypoint_index += 1
@@ -105,10 +117,16 @@ func _on_focus_arriving(excess_distance: float) -> void:
 
 
 func _on_focus_arrived() -> void:
+	if not is_active:
+		return
+	
 	_timer.start()
 
 
 func _on_timer_timeout() -> void:
+	if not is_active:
+		return
+	
 	if _current_waypoint_index < 0 or _current_waypoint_index >= _waypoints.size():
 		_current_waypoint_index = 0
 	

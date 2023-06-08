@@ -4,15 +4,6 @@
 class_name PlayerController
 extends GamepieceController
 
-var is_active: = false:
-	set(value):
-		is_active = value
-		
-		set_process(is_active)
-		set_physics_process(is_active)
-		set_process_input(is_active)
-		set_process_unhandled_input(is_active)
-
 # Keep track of the target of a path. Used to face/interact with the object at a path's end.
 # It is reset on cancelling the move path or continuing movement via arrows/gamepad directions.
 var _target: Gamepiece = null
@@ -26,27 +17,15 @@ var _current_waypoint: Vector2i
 func _ready() -> void:
 	super._ready()
 	
-	add_to_group(Groups.PLAYER_CONTROLLERS)
-	
-	FieldEvents.cell_selected.connect(_on_cell_selected)
-	
-	_focus.arriving.connect(_on_focus_arriving)
-	_focus.arrived.connect(_on_focus_arrived)
-	
-	set_process(false)
-	set_physics_process(false)
-	set_process_input(false)
-	set_process_unhandled_input(false)
-	
-	is_active = true
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_released("right_mouse"):
-		_focus.can_travel = !_focus.can_travel
-	
-#	elif event.is_action_released("ui_accept"):
-#		_focus.set_cell(Vector2i(8, 5))
+	if not Engine.is_editor_hint():
+		add_to_group(Groups.PLAYER_CONTROLLERS)
+		
+		FieldEvents.cell_selected.connect(_on_cell_selected)
+		
+		is_active_changed.connect(_on_is_active_changed)
+		
+		_focus.arriving.connect(_on_focus_arriving)
+		_focus.arrived.connect(_on_focus_arrived)
 
 
 func _physics_process(_delta: float) -> void:
@@ -86,6 +65,48 @@ func _get_move_direction() -> Vector2:
 	)
 
 
+func _on_cell_selected(cell: Vector2i) -> void:
+	if is_active and not _focus.is_travelling() and _focus.can_travel:
+		# Don't move to the cell the focus is standing on. May want to open inventory.
+		if cell == _focus.cell:
+			return
+			
+		# We'll want different behaviour depending on what's underneath the cursor...
+		_update_changed_cells()
+		var collisions: = get_collisions(cell)
+		
+		# ...If the cell beneath the cursor is empty the focus can follow a path to the cell.
+		if collisions.is_empty():
+			_waypoints = pathfinder.get_path_cells(_focus.cell, cell)
+		
+		# ...Otherwise, if there is an interactable, blocking object beneath the cursor, we'll walk
+		# *next* to the cell.
+		else:
+			for collision in collisions:
+				var gamepiece: = collision.collider.owner as Gamepiece
+				if gamepiece.blocks_movement:
+					_waypoints = pathfinder.get_path_cells_to_adjacent_cell(_focus.cell, cell)
+					break
+		
+		# Only follow a valid path with a length greater than 0 (more than one waypoint).
+		if _waypoints.size() > 1:
+			FieldEvents.player_path_set.emit(_focus, _waypoints.back())
+			
+			# The first waypoint is the focus' current cell and may be discarded.
+			_waypoints.remove_at(0)
+			_current_waypoint = _waypoints.pop_front()
+			
+			_focus.travel_to_cell(_current_waypoint)
+
+
+func _on_is_active_changed() -> void:
+	if is_active and not _waypoints.is_empty():
+		_waypoints.remove_at(0)
+		_current_waypoint = _waypoints.pop_front()
+		
+		_focus.travel_to_cell(_current_waypoint)
+
+
 # The controller's focus will finish travelling this frame unless it is extended.
 # There are a few cases where the controller will want to extend the path:
 #	a) The gamepiece is following a series of waypoints, and needs to know which cell is next. Note
@@ -93,6 +114,10 @@ func _get_move_direction() -> Vector2:
 #		instance) so that the path can be checked for any changes *as the gamepiece travels*.
 #	b) A movement key/button is held down and the gamepiece should smoothly flow into the next cell.
 func _on_focus_arriving(excess_distance: float) -> void:
+	# If the controller is not active, allow the gamepiece to arrive without interference.
+	if not is_active:
+		return
+
 	var move_direction: = _get_move_direction()
 	
 	# If the gamepiece is currently following a path, continue moving along the path if it is still
@@ -126,6 +151,11 @@ func _on_focus_arriving(excess_distance: float) -> void:
 
 
 func _on_focus_arrived() -> void:
+	# If the controller is not active, do not process further instructions and don't clear the 
+	# waypoint list (in case the focus may continue walking when active again).
+	if not is_active:
+		return
+	
 	_waypoints.clear()
 	
 	if _target:
@@ -135,37 +165,3 @@ func _on_focus_arrived() -> void:
 		# TODO: Interactions go here.
 		
 		_target = null
-
-
-func _on_cell_selected(cell: Vector2i) -> void:
-	if not _focus.is_travelling() and _focus.can_travel:
-		# Don't move to the cell the focus is standing on. May want to open inventory.
-		if cell == _focus.cell:
-			return
-			
-		# We'll want different behaviour depending on what's underneath the cursor...
-		_update_changed_cells()
-		var collisions: = get_collisions(cell)
-		
-		# ...If the cell beneath the cursor is empty the focus can follow a path to the cell.
-		if collisions.is_empty():
-			_waypoints = pathfinder.get_path_cells(_focus.cell, cell)
-		
-		# ...Otherwise, if there is an interactable, blocking object beneath the cursor, we'll walk
-		# *next* to the cell.
-		else:
-			for collision in collisions:
-				var gamepiece: = collision.collider.owner as Gamepiece
-				if gamepiece.blocks_movement:
-					_waypoints = pathfinder.get_path_cells_to_adjacent_cell(_focus.cell, cell)
-					break
-		
-		# Only follow a valid path with a length greater than 0 (more than one waypoint).
-		if _waypoints.size() > 1:
-			FieldEvents.player_path_set.emit(_focus, _waypoints.back())
-			
-			# The first waypoint is the focus' current cell and may be discarded.
-			_waypoints.remove_at(0)
-			_current_waypoint = _waypoints.pop_front()
-			
-			_focus.travel_to_cell(_current_waypoint)
