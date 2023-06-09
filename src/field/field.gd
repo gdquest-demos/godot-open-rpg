@@ -5,6 +5,9 @@ extends Node
 ## matching the mask will be checked regardless of position in the scene tree.
 @export_flags_2d_physics var gamepiece_mask: = 0
 
+## Colliders matching the following mask will be used to determine which cells have [Interaction]s.
+@export_flags_2d_physics var interaction_mask: = 0
+
 ## The physics layers which will be used to search for terrain obejcts.
 @export_flags_2d_physics var terrain_mask: = 0
 
@@ -58,6 +61,7 @@ func set_focused_game_piece(value: Gamepiece) -> void:
 		
 		var new_controller = PlayerController.new()
 		new_controller.gamepiece_mask = gamepiece_mask
+		new_controller.interaction_mask = interaction_mask
 		new_controller.terrain_mask = terrain_mask
 		
 		focused_game_piece.add_child(new_controller)

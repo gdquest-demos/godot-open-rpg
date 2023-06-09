@@ -4,6 +4,9 @@
 class_name PlayerController
 extends GamepieceController
 
+## Colliders matching the following mask will be used to determine which cells have [Interaction]s.
+@export_flags_2d_physics var interaction_mask: = -1
+
 # Keep track of the target of a path. Used to face/interact with the object at a path's end.
 # It is reset on cancelling the move path or continuing movement via arrows/gamepad directions.
 var _target: Gamepiece = null
@@ -13,6 +16,8 @@ var _target: Gamepiece = null
 var _waypoints: Array[Vector2i] = []
 var _current_waypoint: Vector2i
 
+var _interaction_searcher: CollisionFinder
+
 
 func _ready() -> void:
 	super._ready()
@@ -20,12 +25,22 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		add_to_group(Groups.PLAYER_CONTROLLERS)
 		
+		var min_cell_axis: = minf(_gameboard.cell_size.x-1, _gameboard.cell_size.y-1) / 2.0
+		_interaction_searcher = CollisionFinder.new(get_world_2d().direct_space_state, 
+			min_cell_axis, interaction_mask)
+		
 		FieldEvents.cell_selected.connect(_on_cell_selected)
 		
 		is_active_changed.connect(_on_is_active_changed)
 		
 		_focus.arriving.connect(_on_focus_arriving)
 		_focus.arrived.connect(_on_focus_arrived)
+
+
+func _unhandled_input(input_event: InputEvent) -> void:
+	if input_event.is_action_released("interact"):
+		var offset: = _focus.direction * Vector2(_gameboard.cell_size)
+		_run_event_at_position((_focus.position + offset) * global_scale)
 
 
 func _physics_process(_delta: float) -> void:
@@ -85,6 +100,7 @@ func _on_cell_selected(cell: Vector2i) -> void:
 			for collision in collisions:
 				var gamepiece: = collision.collider.owner as Gamepiece
 				if gamepiece.blocks_movement:
+					_target = gamepiece
 					_waypoints = pathfinder.get_path_cells_to_adjacent_cell(_focus.cell, cell)
 					break
 		
@@ -97,6 +113,16 @@ func _on_cell_selected(cell: Vector2i) -> void:
 			_current_waypoint = _waypoints.pop_front()
 			
 			_focus.travel_to_cell(_current_waypoint)
+
+
+func _run_event_at_position(search_coordinates: Vector2) -> void:
+	var collisions: = _interaction_searcher.search(search_coordinates)
+	
+	for collision in collisions:
+		var event = collision.collider as Event
+		if event:
+			event.run()
+			return
 
 
 func _on_is_active_changed() -> void:
@@ -162,6 +188,5 @@ func _on_focus_arrived() -> void:
 		var distance_to_target: = _target.position - _focus.position
 		_focus.direction = distance_to_target
 		
-		# TODO: Interactions go here.
-		
+		_run_event_at_position(_target.position * global_scale)
 		_target = null

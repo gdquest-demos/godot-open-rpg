@@ -75,7 +75,7 @@ var cell: = Vector2i.ZERO:
 ## The [code]direction[/code] is a vector that points where the gamepiece is facing.
 ## In the event that the gamepiece is moving along a path, direction is updated automatically as
 ## long as the gamepiece continues to move.
-var direction: = Vector2.ZERO:
+var direction: = Vector2.DOWN:
 	set(value):
 		value = value.normalized()
 		if not direction.is_equal_approx(value):

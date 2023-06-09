@@ -15,6 +15,8 @@ signal focus_changed(old_focus: Vector2i, new_focus: Vector2i)
 ## Emitted when a cell is selected via input event.
 signal selected(selected_cell: Vector2i)
 
+enum Icons { DEFAULT }
+
 ## The [Gameboard] object used to convert touch/mouse coordinates to game coordinates. The reference
 ## must be valid for the cursor to function properly.
 @export var gameboard: Gameboard

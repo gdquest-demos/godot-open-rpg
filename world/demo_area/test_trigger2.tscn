@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://buc5u3jxjr83m"]
+
+[ext_resource type="Script" path="res://world/demo_area/test_trigger2.gd" id="1_0acoo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gd1k"]
+size = Vector2(15, 15)
+
+[node name="Area2D" type="Area2D"]
+position = Vector2(168, 88)
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_0acoo")
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4gd1k")
+debug_color = Color(0.968627, 0.952941, 0.717647, 0.419608)
