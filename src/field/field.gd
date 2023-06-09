@@ -129,6 +129,10 @@ func unmute(crescendo_time: = -1.0) -> void:
 # Inject essential dependencies to events.
 func _setup_event(event: Event) -> void:
 	event.music_player = music
+	
+	if event is Interaction:
+		event.highlighted.connect(cursor._on_interaction_highlighted.bind(event))
+		event.unhighlighted.connect(cursor._on_interaction_unhighlighted.bind(event))
 
 
 # Dynamic events need to be setup on their creation.

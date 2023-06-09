@@ -1,4 +1,7 @@
 ## A field map-based [Event] that is triggered by colliding with a [Gamepiece].
+##
+## In the event that the triggering gamepiece is travelling, the trigger will wait for the gamepiece
+## to arrive before calling [method run].
 class_name Trigger
 extends Event
 

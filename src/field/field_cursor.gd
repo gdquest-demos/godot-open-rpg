@@ -15,7 +15,12 @@ signal focus_changed(old_focus: Vector2i, new_focus: Vector2i)
 ## Emitted when a cell is selected via input event.
 signal selected(selected_cell: Vector2i)
 
-enum Icons { DEFAULT }
+enum Images { DEFAULT, WARNING }
+
+const TEXTURES: = {
+	Images.DEFAULT: preload("res://assets/gui/cursors/cursor_default.png"),
+	Images.WARNING: preload("res://assets/gui/cursors/cursor_default.png")
+}
 
 ## The [Gameboard] object used to convert touch/mouse coordinates to game coordinates. The reference
 ## must be valid for the cursor to function properly.
@@ -52,6 +57,8 @@ var focus: = Gameboard.INVALID_CELL:
 
 func _ready() -> void:
 	assert(gameboard, "\n%s::initialize error - Invalid Gameboard reference!" % name)
+	
+	Input.set_custom_mouse_cursor(TEXTURES[Images.DEFAULT])
 	
 	# The cursor must be disabled by cinematic mode by responding to the following signals:
 	FieldEvents.cinematic_mode_enabled.connect(_on_cinematic_mode_enabled)
@@ -118,6 +125,14 @@ func _get_cell_under_mouse() -> Vector2i:
 # A wrapper for cell validity criteria.
 func _is_cell_invalid(cell: Vector2i) -> bool:
 	return not valid_cells.is_empty() and not cell in valid_cells
+
+
+func _on_interaction_highlighted(image: Images, interaction: CollisionObject2D) -> void:
+	pass
+
+
+func _on_interaction_unhighlighted(interaction: CollisionObject2D) -> void:
+	pass
 
 
 # The cursor should not affect the field while in cinematic mode.

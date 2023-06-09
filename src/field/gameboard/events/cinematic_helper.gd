@@ -1,9 +1,7 @@
-
-## Disable all input methods into the field state, including controllers (both player and AI), the
-## cursor, and other input events.
-## Additionally, the function will begin a process that will wait for all currently moving
-## gamepieces to finish their movement at which point [signal cinematic_mode_started] will be
-## emitted.
+## A background object attached to a cinematic/'cutscene' event to transition to the cutscene.
+## 
+## The helper transitions the field game state to cinematic mode, at which point 
+## [signal cinematic_mode_ready] is emitted. 
 class_name CinematicEventHelper
 extends Node
 

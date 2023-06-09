@@ -1,13 +1,24 @@
+## A scripted sequence that changes the game state.
+##
+## Examples include dialogue, adding and removing characters from the field, changing the player's
+## party, etc.
 class_name Event
 extends Area2D
 
-signal cinematic_mode_ready
-
 signal finished
 
-## If [code]true[/code] the trigger will become inactive after it is triggered by a gamepiece.
+## If [code]true[/code] the event will become inactive after it is run once.
 @export var one_shot: = false
 
+## If [code]true[/code] this event will cause the field gamestate to enter 'cinematic mode', which
+## is often known as a cutscene.
+## In cinematic mode input methods (both AI & player) are disabled and the cinematic event will wait 
+## until all gamepieces have finished travelling to execute.
+## [br][br][b]Note[/b]: It is possible for multiple events to trigger cutscene mode, which may lead
+## to undesirable consequences. There are several ways to resolve such a collision (run both, have
+## a higher priority event run and cancel the other, etc.) which must be determined by the designer,
+## since the behaviour will be specific to the game design. As it is, [i]be warned[/i] that a design
+## leading to overlapping cinematic events will need to be addressed by the designer.
 @export var is_cinematic: = false
 
 ## If [code]true[/code] the event will be "collidable". Otherwise, the event will not receive or
@@ -29,6 +40,7 @@ signal finished
 		for node in find_children("*", "CollisionPolygon2D"):
 			(node as CollisionPolygon2D).disabled = !is_active
 
+## Maintain a reference to the field music player, ensuring only one track is played at a time.
 var music_player: MusicPlayer = null
 
 
@@ -38,6 +50,10 @@ func _ready() -> void:
 	FieldEvents.event_ready.emit(self)
 
 
+## Immediately execute the event.
+## [br][br]The function will emit [signal finished] when it has completed.
+## [br][br]Note that run() depends entirely on [method _execute]. run() is not intended to be 
+## overwritten by derived classes.
 func run() -> void:
 	if is_active:
 		if one_shot:
@@ -60,5 +76,7 @@ func run() -> void:
 		finished.emit()
 
 
+## _execute() is where the event will play out. It is intended to be overwritten by derived events. 
+## _execute() may or may not be asynchronous.
 func _execute() -> void:
 	await get_tree().process_frame
