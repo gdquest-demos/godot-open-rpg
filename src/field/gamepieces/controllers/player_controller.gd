@@ -40,7 +40,8 @@ func _ready() -> void:
 func _unhandled_input(input_event: InputEvent) -> void:
 	if input_event.is_action_released("interact"):
 		var offset: = _focus.direction * Vector2(_gameboard.cell_size)
-		_run_event_at_position((_focus.position + offset) * global_scale)
+		if _run_event_at_position((_focus.position + offset) * global_scale):
+			get_viewport().set_input_as_handled()
 
 
 func _physics_process(_delta: float) -> void:
@@ -115,14 +116,15 @@ func _on_cell_selected(cell: Vector2i) -> void:
 			_focus.travel_to_cell(_current_waypoint)
 
 
-func _run_event_at_position(search_coordinates: Vector2) -> void:
+func _run_event_at_position(search_coordinates: Vector2) -> bool:
 	var collisions: = _interaction_searcher.search(search_coordinates)
 	
 	for collision in collisions:
 		var event = collision.collider as Event
 		if event:
 			event.run()
-			return
+			return true
+	return false
 
 
 func _on_is_active_changed() -> void:

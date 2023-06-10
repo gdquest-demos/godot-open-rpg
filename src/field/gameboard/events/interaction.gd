@@ -1,4 +1,4 @@
-## ISpecialized [Event]s that are intended to be children of [Gamepiece]s (though not required). 
+## Specialized [Event]s that are intended to be children of [Gamepiece]s (though not required). 
 ##
 ## Interactions are triggered exclusively by the player via the interaction input action or by
 ## clicking on a cell with an interaction object (for example an NPC to talk to).
@@ -10,16 +10,21 @@ extends Event
 signal highlighted(image: int)
 signal unhighlighted
 
-@export var cursor_image: = FieldCursor.Images
+@export var mouse_image: FieldCursor.Images
 
 
 func _ready() -> void:
 	super._ready()
+	
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
 
 
 func _on_mouse_entered() -> void:
-	highlighted.emit(cursor_image)
+	highlighted.emit()
+	print("Mouse entered!")
 
 
 func _on_mouse_exited() -> void:
 	unhighlighted.emit()
+	print("Mouse left!")

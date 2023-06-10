@@ -32,6 +32,8 @@ func _ready() -> void:
 	
 	music.play(load("res://assets/audio/music/Insect Factory LOOP.wav"))
 	
+	cursor.interaction_mask = interaction_mask
+	
 	place_camera_at_focused_game_piece.call_deferred()
 
 
@@ -128,11 +130,12 @@ func unmute(crescendo_time: = -1.0) -> void:
 
 # Inject essential dependencies to events.
 func _setup_event(event: Event) -> void:
+	print("Setup event ", event.name)
 	event.music_player = music
 	
 	if event is Interaction:
-		event.highlighted.connect(cursor._on_interaction_highlighted.bind(event))
-		event.unhighlighted.connect(cursor._on_interaction_unhighlighted.bind(event))
+		event.highlighted.connect(cursor._find_interactables_under_cursor)
+		event.unhighlighted.connect(cursor._find_interactables_under_cursor)
 
 
 # Dynamic events need to be setup on their creation.

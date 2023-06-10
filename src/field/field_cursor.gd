@@ -15,16 +15,42 @@ signal focus_changed(old_focus: Vector2i, new_focus: Vector2i)
 ## Emitted when a cell is selected via input event.
 signal selected(selected_cell: Vector2i)
 
-enum Images { DEFAULT, WARNING }
+enum Images { DEFAULT, INTERACT }
 
+enum Sizes { NORMAL, SMALL, TINY }
+
+## Use a default mouse texture to prevent a image-less mouse.
+const DEFAULT_MOUSE_TEXTURE: = preload("res://assets/gui/cursors/cursor_default.png")
+
+## The different mouse images are mapped to a dictionary that use an array of enum constants as
+## keys. The keys include the image and size of the mouse image to be drawn according to the
+## following format: [[enum Images], [enum Sizes]][br]
 const TEXTURES: = {
-	Images.DEFAULT: preload("res://assets/gui/cursors/cursor_default.png"),
-	Images.WARNING: preload("res://assets/gui/cursors/cursor_default.png")
+	[Images.DEFAULT, Sizes.NORMAL]: preload("res://assets/gui/cursors/cursor_default.png"),
+	[Images.DEFAULT, Sizes.SMALL]: preload("res://assets/gui/cursors/cursor_default_small.png"),
+	[Images.DEFAULT, Sizes.TINY]: preload("res://assets/gui/cursors/cursor_default_tiny.png"),
+	
+	[Images.INTERACT, Sizes.NORMAL]: preload("res://assets/gui/cursors/cursor_interact.png"),
+	[Images.INTERACT, Sizes.SMALL]: preload("res://assets/gui/cursors/cursor_interact_small.png"),
+	[Images.INTERACT, Sizes.TINY]: preload("res://assets/gui/cursors/cursor_interact_tiny.png"),
 }
+
+## If the ratio of the window size to the target viewport dimensions (set in [ProjectSettings]) is
+## smaller than this cutoff but larger than [constant TINY_MOUSE_CUTOFF], the small version of the
+## current mouse image will be drawn. Otherwise, the full sized image will be drawn at the mouse
+## position.
+const SMALL_MOUSE_CUTOFF: = 0.6
+
+## If the ratio of the window size to the target viewport dimensions (set in [ProjectSettings]) is
+## smaller than this cutoff the tiny version of the current mouse image will be drawn.
+const TINY_MOUSE_CUTOFF: = 0.3
 
 ## The [Gameboard] object used to convert touch/mouse coordinates to game coordinates. The reference
 ## must be valid for the cursor to function properly.
 @export var gameboard: Gameboard
+
+## Colliders matching the following mask will be used to determine which cursor image is drawn.
+@export_flags_2d_physics var interaction_mask: = 0
 
 ## An active cursor will interact with the gameboard, whereas an inactive cursor will do nothing.
 var is_active: = true:
@@ -54,20 +80,47 @@ var valid_cells: Array[Vector2i] = []:
 var focus: = Gameboard.INVALID_CELL:
 	set = set_focus
 
+var mouse_image: = Images.DEFAULT:
+	set(value):
+		if value in Images.values():
+			mouse_image = value
+			_update_custom_mouse_image()
+
+var mouse_size: = Sizes.NORMAL:
+	set(value):
+		if value in Sizes.values():
+			mouse_size = value
+			_update_custom_mouse_image()
+
+
+# Used to determine the topmost object that will try to change the cursor image.
+var _interaction_finder: CollisionFinder
+
+# The target resolution's width set in project properties. Used when scaling the cursor to determine
+# the current window scale factor.
+@onready var _window_size_target_width: float \
+	= ProjectSettings.get_setting("display/window/size/viewport_width")
+
 
 func _ready() -> void:
 	assert(gameboard, "\n%s::initialize error - Invalid Gameboard reference!" % name)
 	
-	Input.set_custom_mouse_cursor(TEXTURES[Images.DEFAULT])
+	get_window().size_changed.connect(_scale_cursor)
+	_scale_cursor()
+	
+	mouse_image = Images.DEFAULT
 	
 	# The cursor must be disabled by cinematic mode by responding to the following signals:
 	FieldEvents.cinematic_mode_enabled.connect(_on_cinematic_mode_enabled)
 	FieldEvents.cinematic_mode_disabled.connect(_on_cinematic_mode_disabled)
+	
+	_interaction_finder = CollisionFinder.new(get_world_2d().direct_space_state, 0.2, 
+		interaction_mask)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		get_viewport().set_input_as_handled()
+#		get_viewport().set_input_as_handled()
 		set_focus(_get_cell_under_mouse())
 	
 	elif event.is_action_released("select"):
@@ -127,12 +180,32 @@ func _is_cell_invalid(cell: Vector2i) -> bool:
 	return not valid_cells.is_empty() and not cell in valid_cells
 
 
-func _on_interaction_highlighted(image: Images, interaction: CollisionObject2D) -> void:
-	pass
+func _update_custom_mouse_image() -> void:
+	var texture: Texture = TEXTURES.get([mouse_image, mouse_size], DEFAULT_MOUSE_TEXTURE)
+	Input.set_custom_mouse_cursor(texture)
 
 
-func _on_interaction_unhighlighted(interaction: CollisionObject2D) -> void:
-	pass
+# Rescale the cursor depending on window size. This needs to be done as custom cursors are not
+# scaled with the rest of the window content.
+func _scale_cursor() -> void:
+	var window_scale: = float(get_window().size.x) / _window_size_target_width
+	if window_scale <= TINY_MOUSE_CUTOFF:
+		mouse_size = Sizes.TINY
+	elif window_scale <= SMALL_MOUSE_CUTOFF:
+		mouse_size = Sizes.SMALL
+	else:
+		mouse_size = Sizes.NORMAL
+
+
+# Check underneath the cursor for any objects that would change the mosue image.
+func _find_interactables_under_cursor() -> void:
+	var collisions: = _interaction_finder.search(get_global_mouse_position()-global_position)
+	for collision in collisions:
+		var image: = collision.collider.get("mouse_image") as Images
+		if image:
+			mouse_image = image
+			return
+	mouse_image = Images.DEFAULT
 
 
 # The cursor should not affect the field while in cinematic mode.
