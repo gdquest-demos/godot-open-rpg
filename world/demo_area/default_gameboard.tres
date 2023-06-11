@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_2pet3")
-boundaries = Rect2i(0, 0, 10, 6)
+boundaries = Rect2i(0, 0, 10, 20)
 cell_size = Vector2i(16, 16)

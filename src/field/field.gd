@@ -130,7 +130,6 @@ func unmute(crescendo_time: = -1.0) -> void:
 
 # Inject essential dependencies to events.
 func _setup_event(event: Event) -> void:
-	print("Setup event ", event.name)
 	event.music_player = music
 	
 	if event is Interaction:
