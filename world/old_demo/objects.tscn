@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dhskaoair7mcd"]
+[gd_scene load_steps=19 format=3 uid="uid://dhskaoair7mcd"]
 
 [ext_resource type="TileSet" uid="uid://biq84075xlypd" path="res://assets/terrain/tilesets/kenney_obstacles.tres" id="1_f71bf"]
 [ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://assets/terrain/dungeon_tilemap.png" id="2_dywt2"]
@@ -6,8 +6,6 @@
 [ext_resource type="Resource" path="res://world/old_demo/default_gameboard.tres" id="4_vge2g"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="5_raxc7"]
 [ext_resource type="Script" path="res://src/field/player_path_destination_marker.gd" id="6_h06d8"]
-[ext_resource type="Script" path="res://world/demo_area/test_trigger.gd" id="7_jgpc4"]
-[ext_resource type="PackedScene" uid="uid://buc5u3jxjr83m" path="res://world/demo_area/test_trigger2.tscn" id="8_8ledf"]
 [ext_resource type="PackedScene" uid="uid://b626e0bngfvjj" path="res://src/field/gamepieces/gamepiece.tscn" id="9_oeluw"]
 [ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://data/field/characters/gobot_gfx.tscn" id="10_5g3os"]
 [ext_resource type="Texture2D" uid="uid://ber3qsogrcx52" path="res://assets/characters/apothecary.atlastex" id="11_14sbj"]
@@ -17,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://kiwma43jc3n6" path="res://data/field/characters/lady_gfx.tscn" id="15_ylo16"]
 [ext_resource type="PackedScene" uid="uid://bvtk5qllej4b8" path="res://data/field/characters/smith_gfx.tscn" id="16_gw43l"]
 [ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://data/field/characters/wizard_gfx.tscn" id="17_gl1bm"]
-[ext_resource type="Script" path="res://world/demo_area/test_interaction.gd" id="18_ox8u1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_orie5"]
 resource_name = "Overlay"
@@ -29,91 +26,8 @@ separation = Vector2i(1, 1)
 [sub_resource type="TileSet" id="TileSet_uvju2"]
 sources/0 = SubResource("TileSetAtlasSource_orie5")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kkgwi"]
-size = Vector2(15, 15)
-
-[sub_resource type="Animation" id="Animation_fxecy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_3ril5"]
-resource_name = "hide"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/ColorRect:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_74p7i"]
-resource_name = "show"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.5001),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/ColorRect:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_galkm"]
-_data = {
-"RESET": SubResource("Animation_fxecy"),
-"hide": SubResource("Animation_3ril5"),
-"show": SubResource("Animation_74p7i")
-}
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn0hs"]
 size = Vector2(16, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qvy7a"]
-size = Vector2(15, 15)
 
 [node name="Objects" type="TileMap"]
 y_sort_enabled = true
@@ -143,38 +57,6 @@ script = ExtResource("6_h06d8")
 gameboard = ExtResource("4_vge2g")
 
 [node name="Triggers" type="Node2D" parent="."]
-
-[node name="DoorEvent" type="Area2D" parent="Triggers"]
-position = Vector2(136, 88)
-collision_layer = 16
-collision_mask = 2
-script = ExtResource("7_jgpc4")
-activate_trigger = ExtResource("8_8ledf")
-is_cinematic = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/DoorEvent"]
-shape = SubResource("RectangleShape2D_kkgwi")
-debug_color = Color(0.968627, 0.952941, 0.717647, 0.419608)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Triggers/DoorEvent"]
-
-[node name="ColorRect" type="ColorRect" parent="Triggers/DoorEvent/CanvasLayer"]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Triggers/DoorEvent"]
-libraries = {
-"": SubResource("AnimationLibrary_galkm")
-}
-
-[node name="Timer" type="Timer" parent="Triggers/DoorEvent"]
-wait_time = 0.2
 
 [node name="Gamepieces" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -258,16 +140,3 @@ blocks_movement = true
 metadata/_edit_group_ = true
 
 [node name="KnightGFX" parent="Gamepieces/Wizard" instance=ExtResource("17_gl1bm")]
-
-[node name="Interaction" type="Area2D" parent="Gamepieces/Wizard"]
-collision_layer = 32
-collision_mask = 0
-monitoring = false
-script = ExtResource("18_ox8u1")
-is_cinematic = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Gamepieces/Wizard/Interaction"]
-shape = SubResource("RectangleShape2D_qvy7a")
-debug_color = Color(0.968627, 0.952941, 0.717647, 0.419608)
-
-[node name="Timer" type="Timer" parent="Gamepieces/Wizard/Interaction"]

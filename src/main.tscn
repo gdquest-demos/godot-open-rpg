@@ -1,14 +1,20 @@
-[gd_scene load_steps=18 format=3 uid="uid://q8xq4np3t6is"]
+[gd_scene load_steps=45 format=3 uid="uid://q8xq4np3t6is"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="PackedScene" uid="uid://u1yu8yoly723" path="res://world/old_demo/terrain.tscn" id="2_gu4g2"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
 [ext_resource type="Resource" uid="uid://drs6x0iv6kpkg" path="res://world/demo_area/default_gameboard.tres" id="6_kb2po"]
 [ext_resource type="TileSet" uid="uid://biq84075xlypd" path="res://assets/terrain/tilesets/kenney_obstacles.tres" id="7_po5fq"]
+[ext_resource type="Script" path="res://world/demo_area/key_trigger.gd" id="9_63lh6"]
+[ext_resource type="Texture2D" uid="uid://qbgdao5f7ora" path="res://assets/items/key.atlastex" id="9_pk0qg"]
 [ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://assets/terrain/dungeon_tilemap.png" id="9_woa3f"]
-[ext_resource type="Script" path="res://src/field/gameboard/events/interaction.gd" id="11_fls00"]
+[ext_resource type="PackedScene" uid="uid://cdkha7cc72h35" path="res://data/field/characters/generic_character_gfx.tscn" id="11_bjmgh"]
+[ext_resource type="Script" path="res://world/demo_area/keyhole_interaction.gd" id="11_pns73"]
 [ext_resource type="PackedScene" uid="uid://b626e0bngfvjj" path="res://src/field/gamepieces/gamepiece.tscn" id="11_yntrj"]
+[ext_resource type="Script" path="res://world/demo_area/exit_trigger.gd" id="12_cyrem"]
+[ext_resource type="Script" path="res://world/demo_area/move_interaction.gd" id="12_nbtdh"]
 [ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://data/field/characters/gobot_gfx.tscn" id="12_oablq"]
+[ext_resource type="PackedScene" uid="uid://dem1vsdrktxld" path="res://src/field/gameboard/events/popup_event_icon.tscn" id="12_uucaa"]
 [ext_resource type="Script" path="res://src/field/field_camera.gd" id="13_ev55l"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="13_osl4o"]
 [ext_resource type="Script" path="res://src/field/player_path_destination_marker.gd" id="14_0j4ru"]
@@ -25,8 +31,251 @@ separation = Vector2i(1, 1)
 [sub_resource type="TileSet" id="TileSet_uvju2"]
 sources/0 = SubResource("TileSetAtlasSource_orie5")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kq8sc"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s0hau"]
 size = Vector2(15, 15)
+
+[sub_resource type="Animation" id="Animation_k3pt2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1ht7l"]
+resource_name = "bounce"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4)]
+}
+
+[sub_resource type="Animation" id="Animation_eimtr"]
+resource_name = "fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(2.37841, 1),
+"update": 2,
+"values": [Vector2(0, 0), Vector2(0, -16)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jk8w5"]
+_data = {
+"RESET": SubResource("Animation_k3pt2"),
+"bounce": SubResource("Animation_1ht7l"),
+"fade": SubResource("Animation_eimtr")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53tew"]
+size = Vector2(15, 15)
+
+[sub_resource type="LabelSettings" id="LabelSettings_b0u1c"]
+font_size = 8
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_mtsfh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_pfqgl"]
+resource_name = "show_need_key"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_50kq7"]
+_data = {
+"RESET": SubResource("Animation_mtsfh"),
+"show_need_key": SubResource("Animation_pfqgl")
+}
+
+[sub_resource type="Animation" id="Animation_ltodc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xm6il"]
+resource_name = "fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xq6ig"]
+_data = {
+"RESET": SubResource("Animation_ltodc"),
+"fade": SubResource("Animation_xm6il")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bltqm"]
+size = Vector2(15, 30)
+
+[sub_resource type="Animation" id="Animation_t1h8k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_a8p6r"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8mlw0"]
+_data = {
+"RESET": SubResource("Animation_t1h8k"),
+"fade_out": SubResource("Animation_a8p6r")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ieki"]
+size = Vector2(15, 15)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1lbud"]
+font_size = 8
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_u6jeb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(14, -8)]
+}
+
+[sub_resource type="Animation" id="Animation_1sw4t"]
+resource_name = "bounce"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(6.06287, 0.176777),
+"update": 0,
+"values": [Vector2(14, -8), Vector2(14, -12)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ywvv1"]
+_data = {
+"RESET": SubResource("Animation_u6jeb"),
+"bounce": SubResource("Animation_1sw4t")
+}
 
 [node name="Gameboard" type="Node2D" node_paths=PackedStringArray("focused_game_piece")]
 scale = Vector2(5, 5)
@@ -45,16 +294,9 @@ tile_set = ExtResource("7_po5fq")
 format = 2
 layer_0/name = "Blocking"
 layer_0/y_sort_enabled = true
-layer_1/name = "NonBlocking"
-layer_1/enabled = true
-layer_1/modulate = Color(0.517647, 0.145098, 1, 1)
-layer_1/y_sort_enabled = true
-layer_1/y_sort_origin = 0
-layer_1/z_index = 100
-layer_1/tile_data = PackedInt32Array()
+layer_0/tile_data = PackedInt32Array(262149, 327680, 0, 327685, 327680, 0, 393221, 327680, 0, 393222, 262144, 2, 458758, 327680, 0, 458759, 327680, 0, 458760, 262144, 2, 393224, 327680, 0, 327688, 262144, 2, 327687, 327680, 0, 262151, 262144, 2, 262150, 327680, 0, 327686, 327680, 0, 393223, 327680, 0, 262152, 262144, 2, 196616, 327680, 0, 196617, 327680, 0, 131081, 327680, 0, 65545, 327680, 0, 9, 327680, 0, 8, 327680, 0, 7, 262144, 2, 6, 262144, 2, 5, 262144, 2, 4, 262144, 2, 3, 262144, 2, 2, 262144, 2, 1, 262144, 2, 0, 327680, 0, 65536, 327680, 0, 131072, 262144, 2, 196608, 327680, 0, 262144, 262144, 2, 327680, 327680, 0, 393216, 262144, 2, 458752, 262144, 2, 524288, 327680, 0, 524289, 262144, 2, 589825, 262144, 2, 589826, 327680, 0, 655362, 327680, 0, 720898, 327680, 0, 786434, 262144, 2, 786433, 262144, 2, 851969, 327680, 0, 851970, 262144, 2, 917506, 327680, 0, 917507, 262144, 2, 917508, 262144, 2, 983044, 327680, 0, 1048580, 720896, 3, 1048579, 262144, 2, 1048578, 327680, 0, 1048577, 262144, 2, 1048576, 327680, 0, 983040, 327680, 0, 917505, 327680, 0, 983043, 262144, 2, 983042, 327680, 0, 983041, 327680, 0, 917504, 262144, 2, 851968, 262144, 2, 786432, 327680, 0, 720896, 262144, 2, 655360, 327680, 0, 589824, 262144, 2, 655361, 327680, 0, 720897, 262144, 2, 524295, 262144, 2, 524290, 327680, 0, 458756, 262144, 2, 458757, 262144, 2, 524293, 327680, 0, 524294, 327680, 0, 524296, 262144, 2, 524297, 262144, 2, 458761, 327680, 0, 393225, 327680, 0, 327689, 262144, 2, 262153, 327680, 0, 589833, 262144, 2, 655369, 327680, 0, 720905, 327680, 0, 786441, 327680, 0, 851977, 262144, 2, 917513, 262144, 2, 983049, 262144, 2, 1048585, 327680, 0, 1114121, 327680, 0, 1179657, 327680, 0, 1245193, 262144, 2, 1245192, 327680, 0, 1245191, 327680, 0, 1245190, 327680, 0, 1245189, 327680, 0, 1245188, 327680, 0, 1245187, 327680, 0, 1245186, 262144, 2, 1245185, 262144, 2, 1245184, 262144, 2, 1179652, 720896, 5, 1114116, 720896, 4)
 
 [node name="PlayerCursor" type="TileMap" parent="Objects"]
-visible = false
 tile_set = SubResource("TileSet_uvju2")
 format = 2
 script = ExtResource("5_3guor")
@@ -62,19 +304,126 @@ gameboard = ExtResource("6_kb2po")
 interaction_mask = 32
 
 [node name="PlayerPathDestinationMarker" type="Sprite2D" parent="Objects"]
+visible = false
 modulate = Color(0.909804, 0.270588, 0.215686, 0.705882)
 texture = ExtResource("13_osl4o")
 script = ExtResource("14_0j4ru")
 gameboard = ExtResource("6_kb2po")
 
 [node name="Triggers" type="Node2D" parent="Objects"]
+y_sort_enabled = true
+
+[node name="Key" type="Area2D" parent="Objects/Triggers"]
+position = Vector2(104, 24)
+collision_layer = 16
+collision_mask = 4
+script = ExtResource("9_63lh6")
+key_interaction_path = NodePath("../KeyHoleInteraction")
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Triggers/Key"]
+shape = SubResource("RectangleShape2D_s0hau")
+debug_color = Color(0.968627, 0.952941, 0.717647, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/Triggers/Key"]
+texture = ExtResource("9_pk0qg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Objects/Triggers/Key/Sprite2D"]
+autoplay = "bounce"
+libraries = {
+"": SubResource("AnimationLibrary_jk8w5")
+}
+
+[node name="KeyHoleInteraction" type="Area2D" parent="Objects/Triggers" node_paths=PackedStringArray("object_tiles")]
+position = Vector2(72, 280)
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("11_pns73")
+object_tiles = NodePath("../..")
+mouse_image = 1
+is_cinematic = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Triggers/KeyHoleInteraction"]
+shape = SubResource("RectangleShape2D_53tew")
+debug_color = Color(0.968627, 0.952941, 0.717647, 0.419608)
+
+[node name="Label2" type="Label" parent="Objects/Triggers/KeyHoleInteraction"]
+visible = false
+offset_left = -19.2
+offset_top = -21.0
+offset_right = 19.8
+offset_bottom = -7.0
+text = "Need Key"
+label_settings = SubResource("LabelSettings_b0u1c")
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Objects/Triggers/KeyHoleInteraction/Label2"]
+libraries = {
+"": SubResource("AnimationLibrary_50kq7")
+}
+
+[node name="KeyHole" type="Marker2D" parent="Objects/Triggers/KeyHoleInteraction"]
+position = Vector2(-60.6, -4)
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Objects/Triggers/KeyHoleInteraction/KeyHole"]
+offset_right = 53.0
+offset_bottom = 14.0
+text = "Find Key ->"
+label_settings = SubResource("LabelSettings_b0u1c")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Objects/Triggers/KeyHoleInteraction/KeyHole"]
+libraries = {
+"": SubResource("AnimationLibrary_xq6ig")
+}
+
+[node name="Timer" type="Timer" parent="Objects/Triggers/KeyHoleInteraction"]
+wait_time = 0.2
+
+[node name="Exit" type="Area2D" parent="Objects/Triggers"]
+position = Vector2(24, 288)
+collision_layer = 16
+collision_mask = 4
+script = ExtResource("12_cyrem")
+is_cinematic = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Triggers/Exit"]
+shape = SubResource("RectangleShape2D_bltqm")
+debug_color = Color(0.968627, 0.952941, 0.717647, 0.419608)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Objects/Triggers/Exit"]
+
+[node name="ColorRect" type="ColorRect" parent="Objects/Triggers/Exit/CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Objects/Triggers/Exit"]
+libraries = {
+"": SubResource("AnimationLibrary_8mlw0")
+}
+
+[node name="Label3" type="Label" parent="Objects/Triggers/Exit"]
+offset_left = -101.6
+offset_top = -3.39999
+offset_right = -9.6
+offset_bottom = 10.6
+text = "Get to the exit! ->"
+label_settings = SubResource("LabelSettings_b0u1c")
+horizontal_alignment = 1
 
 [node name="Gamepieces" type="Node2D" parent="Objects"]
 y_sort_enabled = true
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="Objects/Gamepieces" instance=ExtResource("11_yntrj")]
-position = Vector2(76, 51.4)
+position = Vector2(89.4, 245.6)
 gameboard = ExtResource("6_kb2po")
 blocks_movement = true
 move_speed = 96.0
@@ -82,15 +431,48 @@ metadata/_edit_group_ = true
 
 [node name="GoBotGFX" parent="Objects/Gamepieces/Player" instance=ExtResource("12_oablq")]
 
-[node name="Area2D" type="Area2D" parent="Objects/Gamepieces/Player"]
-collision_layer = 32
-collision_mask = 4
-script = ExtResource("11_fls00")
-mouse_image = 1
+[node name="Blocker" parent="Objects/Gamepieces" instance=ExtResource("11_yntrj")]
+position = Vector2(58, 120)
+gameboard = ExtResource("6_kb2po")
+blocks_movement = true
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Gamepieces/Player/Area2D"]
-shape = SubResource("RectangleShape2D_kq8sc")
+[node name="GenericCharacterAnimation" parent="Objects/Gamepieces/Blocker" instance=ExtResource("11_bjmgh")]
+
+[node name="Move" type="Area2D" parent="Objects/Gamepieces/Blocker" node_paths=PackedStringArray("moving_gamepiece")]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("12_nbtdh")
+moving_gamepiece = NodePath("..")
+mouse_image = 1
+one_shot = true
+is_cinematic = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Gamepieces/Blocker/Move"]
+shape = SubResource("RectangleShape2D_3ieki")
 debug_color = Color(0.968627, 0.952941, 0.717647, 0.419608)
+
+[node name="PopupEventIcon" parent="Objects/Gamepieces/Blocker/Move" instance=ExtResource("12_uucaa")]
+detect_radius = 64.0
+appear_time = 0.4
+disappear_time = 0.2
+
+[node name="Label" type="Label" parent="Objects/Gamepieces/Blocker/Move/PopupEventIcon"]
+z_index = 100
+offset_left = 14.0
+offset_top = -8.0
+offset_right = 53.0
+offset_bottom = 6.0
+text = "<- CLICK"
+label_settings = SubResource("LabelSettings_1lbud")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Objects/Gamepieces/Blocker/Move/PopupEventIcon/Label"]
+autoplay = "bounce"
+libraries = {
+"": SubResource("AnimationLibrary_ywvv1")
+}
 
 [node name="MapBoundaries" type="Node2D" parent="."]
 script = ExtResource("18_cqtg7")

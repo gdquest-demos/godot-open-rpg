@@ -1,3 +1,5 @@
+## A marker drawn at the destination of the player's current move path. 
+## Usually paired with touch or mouse input.
 extends Sprite2D
 
 @export var gameboard: Gameboard

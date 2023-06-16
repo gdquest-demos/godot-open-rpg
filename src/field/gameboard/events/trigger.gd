@@ -5,6 +5,7 @@
 class_name Trigger
 extends Event
 
+# Keep track of the gamepiece that tripped the trigger.
 var _gamepiece: Gamepiece = null
 
 

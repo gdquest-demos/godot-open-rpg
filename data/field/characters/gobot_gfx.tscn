@@ -15,6 +15,7 @@ libraries = {
 }
 
 [node name="Area2D" parent="." index="1"]
+collision_layer = 6
 collision_mask = 3
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]

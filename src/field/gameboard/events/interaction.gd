@@ -10,6 +10,7 @@ extends Event
 signal highlighted(image: int)
 signal unhighlighted
 
+## The mouse cursor will change to match the texture determined by [enum FieldCursor.Images].
 @export var mouse_image: FieldCursor.Images
 
 
@@ -22,9 +23,7 @@ func _ready() -> void:
 
 func _on_mouse_entered() -> void:
 	highlighted.emit()
-	print("Mouse entered!")
 
 
 func _on_mouse_exited() -> void:
 	unhighlighted.emit()
-	print("Mouse left!")

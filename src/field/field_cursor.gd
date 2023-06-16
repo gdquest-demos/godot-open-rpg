@@ -120,7 +120,6 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-#		get_viewport().set_input_as_handled()
 		set_focus(_get_cell_under_mouse())
 	
 	elif event.is_action_released("select"):
