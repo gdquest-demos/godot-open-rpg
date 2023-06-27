@@ -122,11 +122,10 @@ func _on_cell_selected(cell: Vector2i) -> void:
 
 func _run_event_at_position(search_coordinates: Vector2) -> bool:
 	var collisions: = _interaction_searcher.search(search_coordinates)
-	
 	for collision in collisions:
-		var event = collision.collider as Event
-		if event:
-			event.run()
+		var interactable = collision.collider as Interactable
+		if interactable:
+			interactable.run()
 			return true
 	return false
 

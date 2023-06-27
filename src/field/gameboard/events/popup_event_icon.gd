@@ -43,7 +43,7 @@ func _ready() -> void:
 	_shape.shape.radius = detect_radius
 	
 	if not Engine.is_editor_hint():
-		var interaction: = get_parent() as Interaction
+		var interaction: = get_parent() as Interactable
 		assert(interaction, "EventIcon expects an Interaction as parent. Current parent is named "
 			+ " %s." % get_parent().name)
 		
