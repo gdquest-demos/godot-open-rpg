@@ -9,9 +9,8 @@
 ## [br][br][b]Note:[/b] The [code]gameboard[/code] is considered to be the playable area on which a
 ## Gamepiece may be placed. The gameboard is made up of cells, each of which may be occupied by one
 ##  or more gamepieces.
-
-class_name Gamepiece
-extends Node2D
+@icon("res://assets/editor/icons/Gamepiece.svg")
+class_name Gamepiece extends Node2D
 
 ## Emitted when the gamepiece begins to travel towards a destination cell.
 signal travel_begun

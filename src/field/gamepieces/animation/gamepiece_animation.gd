@@ -4,8 +4,8 @@
 ## Allows [method play]ing animations that automatically adapt to the parent [Gamepiece]'s state.
 ## Transitions between animations are handled automatically, including changes to direction.
 ## [br][br][b]Note:[/b] Requires a [Gamepiece] as parent.
-class_name GamepieceAnimation
-extends Marker2D
+@icon("res://assets/editor/icons/GamepieceAnimation.svg")
+class_name GamepieceAnimation extends Marker2D
 
 ## Name of the animation sequence used to reset animation properties to default. Note that this
 ## animation is only played for a single frame during animation transitions.

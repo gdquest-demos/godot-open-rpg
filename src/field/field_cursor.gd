@@ -49,9 +49,6 @@ const TINY_MOUSE_CUTOFF: = 0.3
 ## must be valid for the cursor to function properly.
 @export var gameboard: Gameboard
 
-## Colliders matching the following mask will be used to determine which cursor image is drawn.
-@export_flags_2d_physics var interaction_mask: = 0
-
 ## An active cursor will interact with the gameboard, whereas an inactive cursor will do nothing.
 var is_active: = true:
 	set(value):
@@ -92,10 +89,6 @@ var mouse_size: = Sizes.NORMAL:
 			mouse_size = value
 			_update_custom_mouse_image()
 
-
-# Used to determine the topmost object that will try to change the cursor image.
-var _interaction_finder: CollisionFinder
-
 # The target resolution's width set in project properties. Used when scaling the cursor to determine
 # the current window scale factor.
 @onready var _window_size_target_width: float \
@@ -111,11 +104,8 @@ func _ready() -> void:
 	mouse_image = Images.DEFAULT
 	
 	# The cursor must be disabled by cinematic mode by responding to the following signals:
-	FieldEvents.cinematic_mode_enabled.connect(_on_cinematic_mode_enabled)
-	FieldEvents.cinematic_mode_disabled.connect(_on_cinematic_mode_disabled)
-	
-	_interaction_finder = CollisionFinder.new(get_world_2d().direct_space_state, 0.2, 
-		interaction_mask)
+	FieldEvents.cinematic_mode_enabled.connect(_on_cutscene_enabled)
+	FieldEvents.cinematic_mode_disabled.connect(_on_cutscene_disabled)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -196,21 +186,10 @@ func _scale_cursor() -> void:
 		mouse_size = Sizes.NORMAL
 
 
-# Check underneath the cursor for any objects that would change the mosue image.
-func _find_interactables_under_cursor() -> void:
-	var collisions: = _interaction_finder.search(get_global_mouse_position()-global_position)
-	for collision in collisions:
-		var image: = collision.collider.get("mouse_image") as Images
-		if image:
-			mouse_image = image
-			return
-	mouse_image = Images.DEFAULT
-
-
 # The cursor should not affect the field while in cinematic mode.
-func _on_cinematic_mode_enabled() -> void:
+func _on_cutscene_enabled() -> void:
 	is_active = false
 
 
-func _on_cinematic_mode_disabled() -> void:
+func _on_cutscene_disabled() -> void:
 	is_active = true

@@ -107,7 +107,6 @@ func _on_cell_selected(cell: Vector2i) -> void:
 		
 		# Only follow a valid path with a length greater than 0 (more than one waypoint).
 		if _waypoints.size() > 1:
-			print(_waypoints)
 			FieldEvents.player_path_set.emit(_focus, _waypoints.back())
 			
 			# The first waypoint is the focus' current cell and may be discarded.
@@ -122,12 +121,6 @@ func _on_cell_selected(cell: Vector2i) -> void:
 
 func _run_event_at_position(search_coordinates: Vector2) -> bool:
 	var collisions: = _interaction_searcher.search(search_coordinates)
-	
-	for collision in collisions:
-		var event = collision.collider as Event
-		if event:
-			event.run()
-			return true
 	return false
 
 

@@ -22,17 +22,7 @@ extends Node
 func _ready() -> void:
 	randomize()
 	
-	# The field needs to setup all events. Events dynamically added to the scene tree will be picked
-	# up by the following method...
-	FieldEvents.event_ready.connect(_on_event_ready)
-	
-	# ... but existing events are already ready, so must now be setup seperately.
-	for event in get_tree().get_nodes_in_group(Groups.EVENTS):
-		_setup_event(event)
-	
 	music.play(load("res://assets/audio/music/Insect Factory LOOP.wav"))
-	
-	cursor.interaction_mask = interaction_mask
 	
 	place_camera_at_focused_game_piece.call_deferred()
 
@@ -126,17 +116,3 @@ func unmute(crescendo_time: = -1.0) -> void:
 	
 	else:
 		await get_tree().process_frame
-
-
-# Inject essential dependencies to events.
-func _setup_event(event: Event) -> void:
-	event.music_player = music
-	
-	if event is Interaction:
-		event.highlighted.connect(cursor._find_interactables_under_cursor)
-		event.unhighlighted.connect(cursor._find_interactables_under_cursor)
-
-
-# Dynamic events need to be setup on their creation.
-func _on_event_ready(event: Event) -> void:
-	_setup_event(event)
