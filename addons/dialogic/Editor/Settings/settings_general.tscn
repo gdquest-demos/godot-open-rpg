@@ -1,0 +1,258 @@
+[gd_scene load_steps=10 format=3 uid="uid://b873ho41sklv8"]
+
+[ext_resource type="Script" path="res://addons/dialogic/Editor/Settings/settings_general.gd" id="2"]
+[ext_resource type="StyleBox" uid="uid://dmsjhgv22dns8" path="res://addons/dialogic/Editor/Common/TitleBgStylebox.tres" id="2_u584y"]
+[ext_resource type="Script" path="res://addons/dialogic/Editor/Settings/HintLabelStylingScript.gd" id="2_uxx4f"]
+[ext_resource type="PackedScene" uid="uid://7mvxuaulctcq" path="res://addons/dialogic/Editor/Events/Fields/FilePicker.tscn" id="3_i7rug"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rst74"]
+content_margin_left = 3.75
+content_margin_top = 3.75
+content_margin_right = 3.75
+content_margin_bottom = 3.75
+bg_color = Color(0.545098, 0.545098, 0.545098, 0.211765)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4ui3"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="Image" id="Image_n4wcr"]
+data = {
+"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 131, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 131, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 131, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 231, 255, 93, 93, 55, 255, 97, 97, 58, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 93, 93, 41, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 97, 97, 42, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 98, 98, 47, 255, 97, 97, 42, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 93, 93, 233, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 94, 94, 46, 255, 93, 93, 236, 255, 93, 93, 233, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_f5p1c"]
+image = SubResource("Image_n4wcr")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mwvq"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.545098, 0.545098, 0.545098, 0.211765)
+
+[node name="General" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SecondColumn" type="VBoxContainer" parent="Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Scroll/SecondColumn"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("2_u584y")
+text = "Color palette"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Scroll/SecondColumn"]
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="Colors" type="HBoxContainer" parent="Scroll/SecondColumn/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Color1" type="ColorPickerButton" parent="Scroll/SecondColumn/ScrollContainer/Colors"]
+layout_mode = 2
+color = Color(0.231373, 0.545098, 0.94902, 1)
+
+[node name="Color2" type="ColorPickerButton" parent="Scroll/SecondColumn/ScrollContainer/Colors"]
+layout_mode = 2
+color = Color(0, 0.694118, 0.372549, 1)
+
+[node name="Color3" type="ColorPickerButton" parent="Scroll/SecondColumn/ScrollContainer/Colors"]
+layout_mode = 2
+color = Color(0.580392, 0.407843, 0.909804, 1)
+
+[node name="Color4" type="ColorPickerButton" parent="Scroll/SecondColumn/ScrollContainer/Colors"]
+layout_mode = 2
+color = Color(0.870588, 0.360784, 0.360784, 1)
+
+[node name="Color5" type="ColorPickerButton" parent="Scroll/SecondColumn/ScrollContainer/Colors"]
+layout_mode = 2
+color = Color(0.980392, 0.584314, 0.164706, 1)
+
+[node name="Color6" type="ColorPickerButton" parent="Scroll/SecondColumn/ScrollContainer/Colors"]
+layout_mode = 2
+color = Color(0.486275, 0.486275, 0.486275, 1)
+
+[node name="ResetColorsButton" type="Button" parent="Scroll/SecondColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Reset colors to default"
+
+[node name="TitleLabel" type="Label" parent="Scroll/SecondColumn"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_rst74")
+text = "Extensions"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Scroll/SecondColumn"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/SecondColumn/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Extensions folder"
+
+[node name="ExtensionsFolderPicker" parent="Scroll/SecondColumn/HBoxContainer" instance=ExtResource("3_i7rug")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_v4ui3")
+placeholder = "res://addons/dialogic_additions/Events"
+file_mode = 2
+resource_icon = SubResource("ImageTexture_f5p1c")
+
+[node name="Label2" type="Label" parent="Scroll/SecondColumn"]
+layout_mode = 2
+text = "You should restart godot after changing this path!"
+horizontal_alignment = 2
+autowrap_mode = 3
+script = ExtResource("2_uxx4f")
+
+[node name="CreateExtensionButton" type="Button" parent="Scroll/SecondColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Create New Extension"
+
+[node name="ExtensionCreator" type="VBoxContainer" parent="Scroll/SecondColumn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="ExtensionCreatorOptions" type="GridContainer" parent="Scroll/SecondColumn/ExtensionCreator"]
+layout_mode = 2
+columns = 2
+
+[node name="NameLabel" type="Label" parent="Scroll/SecondColumn/ExtensionCreator/ExtensionCreatorOptions"]
+layout_mode = 2
+text = "Name:"
+
+[node name="NameEdit" type="LineEdit" parent="Scroll/SecondColumn/ExtensionCreator/ExtensionCreatorOptions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "e.g. \"Print\", \"Item\", \"Door\", \"Quest\""
+
+[node name="ModeLabel" type="Label" parent="Scroll/SecondColumn/ExtensionCreator/ExtensionCreatorOptions"]
+layout_mode = 2
+text = "Setup mode:"
+
+[node name="ExtensionMode" type="OptionButton" parent="Scroll/SecondColumn/ExtensionCreator/ExtensionCreatorOptions"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 4
+selected = 0
+popup/item_0/text = "Event only"
+popup/item_0/id = 0
+popup/item_1/text = "Event+Subsystem"
+popup/item_1/id = 1
+popup/item_2/text = "Subsystem only"
+popup/item_2/id = 2
+popup/item_3/text = "Complex"
+popup/item_3/id = 3
+
+[node name="SubmitExtensionButton" type="Button" parent="Scroll/SecondColumn/ExtensionCreator"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Create"
+
+[node name="Label3" type="Label" parent="Scroll/SecondColumn"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("2_u584y")
+text = "Section Order"
+
+[node name="SectionList" type="Tree" parent="Scroll/SecondColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme_override_constants/button_margin = 0
+allow_reselect = true
+allow_rmb_select = true
+hide_folding = true
+hide_root = true
+drop_mode_flags = 1
+
+[node name="VSeparator" type="VSeparator" parent="."]
+layout_mode = 2
+
+[node name="General" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleLabel3" type="Label" parent="General"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_3mwvq")
+text = "Timer"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="General"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="General/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Process in physics"
+
+[node name="PhysicsTimerButton" type="CheckBox" parent="General/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TitleLabel4" type="Label" parent="General"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_3mwvq")
+text = "Layout Node Behaviour"
+
+[node name="Label3" type="Label" parent="General"]
+layout_mode = 2
+text = "The layout scene configured in the Layout editor is automatically instanced when calling Dialogic.start(). Depending on your game, you might want it to be deleted after the dialogue, be hidden (as reinstancing often is wasting resources) or kept visible. "
+autowrap_mode = 3
+script = ExtResource("2_uxx4f")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="General"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="General/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "On timeline end:"
+
+[node name="LayoutNodeEndBehaviour" type="OptionButton" parent="General/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 3
+selected = 0
+fit_to_longest_item = false
+popup/item_0/text = "Delete Layout Node"
+popup/item_0/id = 0
+popup/item_1/text = "Hide Layout Node"
+popup/item_1/id = 1
+popup/item_2/text = "Keep Layout Node"
+popup/item_2/id = 2
+
+[connection signal="pressed" from="Scroll/SecondColumn/CreateExtensionButton" to="." method="_on_create_extension_button_pressed"]
+[connection signal="pressed" from="Scroll/SecondColumn/ExtensionCreator/SubmitExtensionButton" to="." method="_on_submit_extension_button_pressed"]
+[connection signal="button_clicked" from="Scroll/SecondColumn/SectionList" to="." method="_on_section_list_button_clicked"]
+[connection signal="item_selected" from="General/HBoxContainer4/LayoutNodeEndBehaviour" to="." method="_on_layout_node_end_behaviour_item_selected"]
