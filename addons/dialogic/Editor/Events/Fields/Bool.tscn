@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dm5hxmhyyxgq"]
-
-[ext_resource type="Script" path="res://addons/dialogic/Editor/Events/Fields/Bool.gd" id="1"]
-
-[node name="Bool" type="CheckButton"]
-script = ExtResource("1")
