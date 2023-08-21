@@ -1,0 +1,86 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5yq6xh412ilm"]
+
+[ext_resource type="Script" path="res://addons/dialogic/Modules/History/settings_history.gd" id="1_hbhst"]
+
+[node name="History" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"DialogicPanelA"
+script = ExtResource("1_hbhst")
+
+[node name="HistoryOptions" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title3" type="Label" parent="HistoryOptions"]
+layout_mode = 2
+theme_type_variation = &"DialogicSettingsSection"
+text = "Simple History"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HistoryOptions"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HistoryOptions/HBoxContainer"]
+layout_mode = 2
+text = "Enabled"
+
+[node name="SimpleHistoryEnabled" type="CheckBox" parent="HistoryOptions/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FullHistoryInfo2" type="Label" parent="HistoryOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DialogicHintText2"
+text = "When enabled some events (Text, Join, Leave, Choice) will store a log that can easily be displayed. The default layout will have a history panel if this is enabled. "
+autowrap_mode = 3
+
+[node name="Title" type="Label" parent="HistoryOptions"]
+layout_mode = 2
+theme_type_variation = &"DialogicSettingsSection"
+text = "Full History"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="HistoryOptions"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HistoryOptions/HBoxContainer5"]
+layout_mode = 2
+text = "Enabled"
+
+[node name="FullHistoryEnabled" type="CheckBox" parent="HistoryOptions/HBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FullHistoryInfo" type="Label" parent="HistoryOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DialogicHintText2"
+text = "When enabled a copy of each event that is played is stored. This can be used to implement some undo logic or other complitacted things. "
+autowrap_mode = 3
+
+[node name="Title2" type="Label" parent="HistoryOptions"]
+layout_mode = 2
+theme_type_variation = &"DialogicSettingsSection"
+text = "Already read History"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="HistoryOptions"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HistoryOptions/HBoxContainer4"]
+layout_mode = 2
+text = "Enabled"
+
+[node name="AlreadyReadHistoryEnabled" type="CheckBox" parent="HistoryOptions/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AlreadReadInfo" type="Label" parent="HistoryOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DialogicHintText2"
+text = "When enabled the signals [Dialogic.History.already_read_event_reached] and [Dialogic.History.not_read_event_reached] are emmited. This could be used to auto-skip already read text or show an indicator."
+autowrap_mode = 3

@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd340w7blofak"]
+
+[ext_resource type="Script" path="res://addons/dialogic/Modules/Save/settings_save.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://dbpkta2tjsqim" path="res://addons/dialogic/Editor/Common/hint_tooltip_icon.tscn" id="2_v2wt8"]
+
+[node name="Saving" type="VBoxContainer"]
+offset_right = 1084.0
+offset_bottom = 212.0
+script = ExtResource("2")
+
+[node name="Grid" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Grid"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Grid/HBoxContainer"]
+layout_mode = 2
+text = "Autosave"
+
+[node name="HintTooltip" parent="Grid/HBoxContainer" instance=ExtResource("2_v2wt8")]
+layout_mode = 2
+hint_text = "If enabled dialogic will autosave the full state to the current slot depending on the autosave method."
+
+[node name="Autosave" type="CheckBox" parent="Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AutosaveModeLabel" type="HBoxContainer" parent="Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Grid/AutosaveModeLabel"]
+layout_mode = 2
+text = "Autosave Mode"
+
+[node name="AutosaveModeContent" type="HBoxContainer" parent="Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AutosaveMode" type="OptionButton" parent="Grid/AutosaveModeContent"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Timeline Start+End+Jump"
+popup/item_0/id = 0
+popup/item_1/text = "Each X seconds"
+popup/item_1/id = 1
+popup/item_2/text = "Every Text Event"
+popup/item_2/id = 2
+
+[node name="AutosaveDelay" type="SpinBox" parent="Grid/AutosaveModeContent"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+suffix = "s"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Grid"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="Grid/HBoxContainer2"]
+layout_mode = 2
+text = "Default slot name"
+
+[node name="HintTooltip3" parent="Grid/HBoxContainer2" instance=ExtResource("2_v2wt8")]
+layout_mode = 2
+tooltip_text = "If enabled dialogic will autosave the full state to the current slot depending on the autosave method."
+hint_text = "The name of the default slot. "
+
+[node name="DefaultSaveSlotName" type="LineEdit" parent="Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_to_text_length = true
+
+[node name="InfoSection" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="InfoSection"]
+layout_mode = 2
+text = "You can save from code by calling Dialogic.Save.save(slot_name). For more information lookup the \"Subsystem_Save\" script in the documentation (Search Help button).
+
+You can also save the dialogic data to your own files by saving the dictionary you get from Dialogic.get_full_state() and later loading it with Dialogic.load_full_state(dict)."
+autowrap_mode = 3
+
+[connection signal="toggled" from="Grid/Autosave" to="." method="_on_autosave_toggled"]
+[connection signal="item_selected" from="Grid/AutosaveModeContent/AutosaveMode" to="." method="_on_autosave_mode_item_selected"]
+[connection signal="value_changed" from="Grid/AutosaveModeContent/AutosaveDelay" to="." method="_on_autosave_delay_value_changed"]
+[connection signal="text_changed" from="Grid/DefaultSaveSlotName" to="." method="_on_default_save_slot_name_text_changed"]
