@@ -25,8 +25,8 @@ func _ready() -> void:
 		_timer.timeout.connect(_on_timer_timeout)
 		_timer.start()
 		
-		_focus.arriving.connect(_on_focus_arriving)
-		_focus.arrived.connect(_on_focus_arrived)
+		_gamepiece.arriving.connect(_on_gamepiece_arriving)
+		_gamepiece.arrived.connect(_on_gamepiece_arrived)
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -60,13 +60,13 @@ func _find_waypoints_from_line2D() -> void:
 		return
 	
 	# Add the first cell to the path, since subsequent additions will have the first cell removed.
-	_waypoints.append(_gameboard.pixel_to_cell(move_path.get_point_position(0) + _focus.position))
+	_waypoints.append(_gameboard.pixel_to_cell(move_path.get_point_position(0) + _gamepiece.position))
 	
 	# Create a looping path from the points specified by move_path. Will fail if a path cannot be
 	# found between some of the move_path's points.
 	for i in range(1, move_path.get_point_count()):
-		var source: = _gameboard.pixel_to_cell(move_path.get_point_position(i-1) + _focus.position)
-		var target: = _gameboard.pixel_to_cell(move_path.get_point_position(i) + _focus.position)
+		var source: = _gameboard.pixel_to_cell(move_path.get_point_position(i-1) + _gamepiece.position)
+		var target: = _gameboard.pixel_to_cell(move_path.get_point_position(i) + _gamepiece.position)
 		
 		var path_subset: = pathfinder.get_path_cells(source, target)
 		if path_subset.is_empty():
@@ -78,15 +78,15 @@ func _find_waypoints_from_line2D() -> void:
 		_waypoints.append_array(path_subset.slice(1))
 	
 	# Finally, connect the ending and starting cells to complete the loop.
-	var last_pos: = move_path.get_point_position(move_path.get_point_count()-1) + _focus.position
+	var last_pos: = move_path.get_point_position(move_path.get_point_count()-1) + _gamepiece.position
 	var last_cell: = _gameboard.pixel_to_cell(last_pos)
-	var first_cell: = _gameboard.pixel_to_cell(move_path.get_point_position(0) + _focus.position)
+	var first_cell: = _gameboard.pixel_to_cell(move_path.get_point_position(0) + _gamepiece.position)
 	
 	# If we've made it this far there must be a path between the first and last cell.
 	_waypoints.append_array(pathfinder.get_path_cells(last_cell, first_cell).slice(1))
 
 
-func _on_focus_arriving(excess_distance: float) -> void:
+func _on_gamepiece_arriving(excess_distance: float) -> void:
 	# If the gamepiece is currently following a path, continue moving along the path if it is still
 	# a valid movement path since obstacles may shift while in transit.
 	while _current_waypoint_index >= 0 and _current_waypoint_index < _waypoints.size() - 1 \
@@ -98,13 +98,13 @@ func _on_focus_arriving(excess_distance: float) -> void:
 			return
 		
 		var distance_to_waypoint: = \
-			_focus.position.distance_to(_gameboard.cell_to_pixel(waypoint))
+			_gamepiece.position.distance_to(_gameboard.cell_to_pixel(waypoint))
 		
-		_focus.travel_to_cell(waypoint)
+		_gamepiece.travel_to_cell(waypoint)
 		excess_distance -= distance_to_waypoint
 
 
-func _on_focus_arrived() -> void:
+func _on_gamepiece_arrived() -> void:
 	_timer.start()
 
 
@@ -113,14 +113,14 @@ func _on_timer_timeout() -> void:
 		_current_waypoint_index = 0
 	
 	var waypoint: = _waypoints[_current_waypoint_index]
-	if waypoint == _focus.cell:
+	if waypoint == _gamepiece.cell:
 		_current_waypoint_index += 1
 		if _current_waypoint_index >= _waypoints.size():
 			_current_waypoint_index = 0
 		waypoint = _waypoints[_current_waypoint_index]
 	
-	if waypoint != _focus.cell and is_cell_blocked(waypoint):
+	if waypoint != _gamepiece.cell and is_cell_blocked(waypoint):
 		_timer.start()
 	
 	else:
-		_focus.travel_to_cell(waypoint)
+		_gamepiece.travel_to_cell(waypoint)

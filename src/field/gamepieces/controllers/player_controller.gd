@@ -32,8 +32,8 @@ func _ready() -> void:
 	
 	FieldEvents.cell_selected.connect(_on_cell_selected)
 	
-	_focus.arriving.connect(_on_focus_arriving)
-	_focus.arrived.connect(_on_focus_arrived)
+	_gamepiece.arriving.connect(_on_gamepiece_arriving)
+	_gamepiece.arrived.connect(_on_gamepiece_arrived)
 	
 	set_process(false)
 	set_physics_process(false)
@@ -44,7 +44,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if not _focus.is_moving():
+	if not _gamepiece.is_moving():
 		var move_dir: = _get_move_direction()
 		if move_dir:
 			var target_cell: = Vector2i.ZERO
@@ -56,21 +56,21 @@ func _physics_process(_delta: float) -> void:
 			else:
 				move_dir = Vector2(0, move_dir.y)
 			
-			_focus.direction = move_dir
-			target_cell = _focus.cell + Vector2i(move_dir)
+			_gamepiece.direction = move_dir
+			target_cell = _gamepiece.cell + Vector2i(move_dir)
 			
 			# If there is a gamepiece at the target cell, do not move on top of it.
 			_update_changed_cells()
 			if not is_cell_blocked(target_cell) and \
 					not FieldEvents.did_gp_move_to_cell_this_frame(target_cell):
-				var move_path: = pathfinder.get_path_cells(_focus.cell, target_cell)
+				var move_path: = pathfinder.get_path_cells(_gamepiece.cell, target_cell)
 				
 				# Path is invalid. Bump animation?
 				if move_path.size() <= 1:
 					pass
 				
 				else:
-					_focus.travel_to_cell(target_cell)
+					_gamepiece.travel_to_cell(target_cell)
 
 
 func _get_move_direction() -> Vector2:
@@ -86,7 +86,7 @@ func _get_move_direction() -> Vector2:
 #		that the controller is responsible for the waypoints (instead of the gamepiece, for
 #		instance) so that the path can be checked for any changes *as the gamepiece travels*.
 #	b) A movement key/button is held down and the gamepiece should smoothly flow into the next cell.
-func _on_focus_arriving(excess_distance: float) -> void:
+func _on_gamepiece_arriving(excess_distance: float) -> void:
 	var move_direction: = _get_move_direction()
 	
 	# If the gamepiece is currently following a path, continue moving along the path if it is still
@@ -99,9 +99,9 @@ func _on_focus_arriving(excess_distance: float) -> void:
 			
 			_current_waypoint = _waypoints.pop_front()
 			var distance_to_waypoint: = \
-				_focus.position.distance_to(_gameboard.cell_to_pixel(_current_waypoint))
+				_gamepiece.position.distance_to(_gameboard.cell_to_pixel(_current_waypoint))
 			
-			_focus.travel_to_cell(_current_waypoint)
+			_gamepiece.travel_to_cell(_current_waypoint)
 			excess_distance -= distance_to_waypoint
 	
 	# There is no path to follow, so defer to movement keys or buttons that are currently held down.
@@ -110,21 +110,21 @@ func _on_focus_arriving(excess_distance: float) -> void:
 		
 		var next_cell: Vector2i
 		if not is_zero_approx(move_direction.x):
-			next_cell = _focus.cell + Vector2i(int(move_direction.x), 0)
+			next_cell = _gamepiece.cell + Vector2i(int(move_direction.x), 0)
 		else:
-			next_cell = _focus.cell + Vector2i(0, int(move_direction.y))
+			next_cell = _gamepiece.cell + Vector2i(0, int(move_direction.y))
 		
 		if pathfinder.has_cell(next_cell) and not is_cell_blocked(next_cell) and \
 				not FieldEvents.did_gp_move_to_cell_this_frame(next_cell):
-			_focus.travel_to_cell(next_cell)
+			_gamepiece.travel_to_cell(next_cell)
 
 
-func _on_focus_arrived() -> void:
+func _on_gamepiece_arrived() -> void:
 	_waypoints.clear()
 	
 	if _target:
-		var distance_to_target: = _target.position - _focus.position
-		_focus.direction = distance_to_target
+		var distance_to_target: = _target.position - _gamepiece.position
+		_gamepiece.direction = distance_to_target
 		
 		# TODO: Interactions go here.
 		
@@ -132,9 +132,9 @@ func _on_focus_arrived() -> void:
 
 
 func _on_cell_selected(cell: Vector2i) -> void:
-	if not _focus.is_moving():
+	if not _gamepiece.is_moving():
 		# Don't move to the cell the focus is standing on. May want to open inventory.
-		if cell == _focus.cell:
+		if cell == _gamepiece.cell:
 			return
 			
 		# We'll want different behaviour depending on what's underneath the cursor.
@@ -143,14 +143,14 @@ func _on_cell_selected(cell: Vector2i) -> void:
 		
 		# If the cell beneath the cursor is empty the focus can follow a path to the cell.
 		_update_changed_cells()
-		_waypoints = pathfinder.get_path_cells(_focus.cell, cell)
+		_waypoints = pathfinder.get_path_cells(_gamepiece.cell, cell)
 		
 		# Only follow a valid path with a length greater than 0 (more than one waypoint).
 		if _waypoints.size() > 1:
-			FieldEvents.player_path_set.emit(_focus, _waypoints.back())
+			FieldEvents.player_path_set.emit(_gamepiece, _waypoints.back())
 			
 			# The first waypoint is the focus' current cell and may be discarded.
 			_waypoints.remove_at(0)
 			_current_waypoint = _waypoints.pop_front()
 			
-			_focus.travel_to_cell(_current_waypoint)
+			_gamepiece.travel_to_cell(_current_waypoint)

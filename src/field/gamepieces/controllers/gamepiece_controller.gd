@@ -33,7 +33,7 @@ var pathfinder: Pathfinder
 # Keep track of cells that need an update and do so as a batch before the next path search.
 var _cells_to_update: PackedVector2Array = []
 
-var _focus: Gamepiece
+var _gamepiece: Gamepiece
 var _gameboard: Gameboard
 
 var _gamepiece_searcher: CollisionFinder
@@ -42,11 +42,11 @@ var _terrain_searcher: CollisionFinder
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		_focus = get_parent() as Gamepiece
-		assert(_focus, "The GamepieceController must have a Gamepiece as a parent. "
+		_gamepiece = get_parent() as Gamepiece
+		assert(_gamepiece, "The GamepieceController must have a Gamepiece as a parent. "
 			+ "%s is not a gamepiece!" % get_parent().name)
 		
-		_gameboard = _focus.gameboard
+		_gameboard = _gamepiece.gameboard
 		assert(_gameboard, "%s error: invalid Gameboard object!" % name)
 		
 		# The controller will be notified of any changes in the gameboard and respond accordingly.
