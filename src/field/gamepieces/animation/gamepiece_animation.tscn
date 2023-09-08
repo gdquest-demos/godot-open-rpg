@@ -12,7 +12,7 @@ collision_layer = 2
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-debug_color = Color(0.690196, 0.188235, 0.380392, 0.419608)
+debug_color = Color(0.67451, 0.156863, 0.278431, 0.419608)
 
 [node name="GFX" type="Marker2D" parent="."]
 

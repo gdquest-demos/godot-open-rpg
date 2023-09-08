@@ -1,5 +1,7 @@
 extends Node
 
+const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/PlayerController.tscn")
+
 @onready var camera: = $Camera2D as Camera2D
 
 ## The physics layers which will be used to search for gamepiece objects.
@@ -19,6 +21,8 @@ extends Node
 
 func _ready() -> void:
 	randomize()
+	
+	$UI/DialogueLayout.hide()
 	place_camera_at_focused_game_piece()
 
 
@@ -45,7 +49,7 @@ func set_focused_game_piece(value: Gamepiece) -> void:
 	if focused_game_piece:
 		focused_game_piece.camera_anchor.remote_path = focused_game_piece.camera_anchor.get_path_to(camera)
 		
-		var new_controller = PlayerController.new()
+		var new_controller = PLAYER_CONTROLLER.instantiate()
 		new_controller.gamepiece_mask = gamepiece_mask
 		new_controller.terrain_mask = terrain_mask
 		

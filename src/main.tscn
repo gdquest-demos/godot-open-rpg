@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=30 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -16,8 +16,15 @@
 [ext_resource type="PackedScene" uid="uid://se1wnxu5svgj" path="res://data/field/characters/knight_gfx.tscn" id="14_av6f5"]
 [ext_resource type="PackedScene" uid="uid://kiwma43jc3n6" path="res://data/field/characters/lady_gfx.tscn" id="17_sieyv"]
 [ext_resource type="PackedScene" uid="uid://bvtk5qllej4b8" path="res://data/field/characters/smith_gfx.tscn" id="18_2msel"]
+[ext_resource type="Script" path="res://src/field/interaction.gd" id="18_756tb"]
 [ext_resource type="Script" path="res://src/field/gameboard/debug_map_boundaries.gd" id="18_cqtg7"]
 [ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://data/field/characters/wizard_gfx.tscn" id="19_ius2d"]
+[ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="19_lpxfg"]
+[ext_resource type="Script" path="res://addons/dialogic/Modules/Style/node_style.gd" id="20_4xtyg"]
+[ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="20_g8d34"]
+[ext_resource type="Script" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="21_f53lt"]
+[ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="21_r13nn"]
+[ext_resource type="Resource" path="res://data/dialogic/character.dch" id="22_v66mn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_orie5"]
 resource_name = "Overlay"
@@ -31,6 +38,9 @@ sources/0 = SubResource("TileSetAtlasSource_orie5")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn0hs"]
 size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2lbg3"]
+radius = 4.0
 
 [node name="Gameboard" type="Node2D" node_paths=PackedStringArray("focused_game_piece")]
 scale = Vector2(5, 5)
@@ -152,6 +162,16 @@ metadata/_edit_group_ = true
 
 [node name="KnightGFX" parent="Objects/Gamepieces/Wizard" instance=ExtResource("19_ius2d")]
 
+[node name="Interaction" type="Area2D" parent="Objects/Gamepieces" node_paths=PackedStringArray("text_layout")]
+position = Vector2(246.8, 137)
+collision_layer = 16
+collision_mask = 8
+script = ExtResource("18_756tb")
+text_layout = NodePath("../../../UI/DialogueLayout")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Gamepieces/Interaction"]
+shape = SubResource("CircleShape2D_2lbg3")
+
 [node name="MapBoundaries" type="Node2D" parent="."]
 script = ExtResource("18_cqtg7")
 metadata/_edit_lock_ = true
@@ -160,3 +180,80 @@ metadata/_edit_lock_ = true
 scale = Vector2(0.2, 0.2)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="DialogueLayout" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("20_4xtyg")
+style_name = "Conversation"
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="BoxMargins" type="MarginContainer" parent="UI/DialogueLayout"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_right = 150
+
+[node name="BoxBack" type="ColorRect" parent="UI/DialogueLayout/BoxMargins"]
+layout_mode = 2
+color = Color(0.14902, 0.168627, 0.266667, 1)
+
+[node name="TextMargins" type="MarginContainer" parent="UI/DialogueLayout/BoxMargins"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="DialogueText" type="RichTextLabel" parent="UI/DialogueLayout/BoxMargins/TextMargins"]
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("21_r13nn")
+theme_override_font_sizes/normal_font_size = 96
+bbcode_enabled = true
+text = "The dialogue text.
+Witty, succinct and gripping.
+No more than three lines?"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+visible_characters_behavior = 1
+script = ExtResource("20_g8d34")
+
+[node name="Speaker" type="HBoxContainer" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText"]
+layout_mode = 1
+offset_top = -128.0
+offset_right = 380.0
+offset_bottom = -8.0
+
+[node name="Portrait" type="Control" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker"]
+modulate = Color(0.313726, 0.313726, 0.313726, 1)
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+script = ExtResource("21_f53lt")
+debug_character = ExtResource("22_v66mn")
+
+[node name="NameLabel" type="Label" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("21_r13nn")
+theme_override_font_sizes/font_size = 96
+text = "Character Name"
+vertical_alignment = 1
+script = ExtResource("19_lpxfg")

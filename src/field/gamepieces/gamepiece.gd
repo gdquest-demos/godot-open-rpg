@@ -9,9 +9,8 @@
 ## [br][br][b]Note:[/b] The [code]gameboard[/code] is considered to be the playable area on which a
 ## Gamepiece may be placed. The gameboard is made up of cells, each of which may be occupied by one
 ##  or more gamepieces.
-
-class_name Gamepiece
-extends Node2D
+@icon("res://assets/editor/icons/Gamepiece.svg")
+class_name Gamepiece extends Node2D
 
 ## Emitted when the gamepiece begins to travel towards a destination cell.
 signal travel_begun
@@ -69,10 +68,10 @@ signal direction_changed(new_direction: Vector2)
 var cell: = Vector2i.ZERO:
 	set = set_cell
 
-## The [code]direction[/code] is a vector that points where the gamepiece is facing.
+## The [code]direction[/code] is a unit vector that points where the gamepiece is 'looking'.
 ## In the event that the gamepiece is moving along a path, direction is updated automatically as
 ## long as the gamepiece continues to move.
-var direction: = Vector2.ZERO:
+var direction: = Vector2.DOWN:
 	set(value):
 		value = value.normalized()
 		if not direction.is_equal_approx(value):
@@ -220,6 +219,10 @@ func set_cell(value: Vector2i) -> void:
 	_follower.position = old_position
 	
 	cell_changed.emit(old_cell)
+
+
+func get_faced_cell() -> Vector2i:
+	return (Vector2(cell) + direction).round()
 
 
 func _on_travel_finished() -> void:

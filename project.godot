@@ -20,10 +20,36 @@ config/icon="res://icon.svg"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 FieldEvents="*res://src/common/globals/global_field_events.gd"
 
+[dialogic]
+
+settings/text_speed=0.01
+text/skippable=true
+text/skippable_delay=0.1
+text/autoadvance_delay=1.0
+text/hide_empty_textbox=true
+animations/join_default_length=0.5
+animations/leave_default_length=0.5
+animations/leave_default_wait=true
+animations/join_default_wait=true
+choices/autofocus_first=true
+choices/delay=0.2
+choices/reveal_delay=0
+choices/reveal_by_input=false
+save/autosave_delay=60.0
+text/autopauses={}
+glossary/default_case_sensitive=true
+layout/mode=2
+variables={
+"PlayerName": "Frank"
+}
+layout/end_behaviour=0
+
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/window_width_override=960
+window/size/window_height_override=540
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -66,7 +92,9 @@ interact={
 
 2d_physics/layer_1="Terrain"
 2d_physics/layer_2="Characters"
-2d_physics/layer_3="Events"
+2d_physics/layer_3="Player"
+2d_physics/layer_4="PlayerInteractionRange"
+2d_physics/layer_5="Interactions"
 
 [rendering]
 

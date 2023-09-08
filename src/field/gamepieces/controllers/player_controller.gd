@@ -1,8 +1,7 @@
-## A player controller that may be applied to any gamepiece.
+## Applied to any gamepiece to allow player control.
 ##
-## The controller responds to player input.
-class_name PlayerController
-extends GamepieceController
+## The controller responds to player input to handle movement and interaction.
+class_name PlayerController extends GamepieceController
 
 const GROUP_NAME: = "_PLAYER_CONTROLLER_GROUP"
 
@@ -24,6 +23,8 @@ var _target: Gamepiece = null
 var _waypoints: Array[Vector2i] = []
 var _current_waypoint: Vector2i
 
+@onready var _interaction_searcher: = $InteractionSearcher as Area2D
+
 
 func _ready() -> void:
 	super._ready()
@@ -31,6 +32,15 @@ func _ready() -> void:
 	add_to_group(GROUP_NAME)
 	
 	FieldEvents.cell_selected.connect(_on_cell_selected)
+	
+	_gamepiece.cell_changed.connect(
+		func(old_cell):
+			super._on_gamepiece_cell_changed(_gamepiece, old_cell)
+			_align_interaction_searcher_to_faced_cell()
+	)
+	_gamepiece.direction_changed.connect(
+		func(_direction): _align_interaction_searcher_to_faced_cell()
+	)
 	
 	_gamepiece.arriving.connect(_on_gamepiece_arriving)
 	_gamepiece.arrived.connect(_on_gamepiece_arrived)
@@ -41,6 +51,8 @@ func _ready() -> void:
 	set_process_unhandled_input(false)
 	
 	is_active = true
+	
+	_align_interaction_searcher_to_faced_cell()
 
 
 func _physics_process(_delta: float) -> void:
@@ -78,6 +90,11 @@ func _get_move_direction() -> Vector2:
 		Input.get_axis("ui_left", "ui_right"),
 		Input.get_axis("ui_up", "ui_down")
 	)
+
+
+func _align_interaction_searcher_to_faced_cell() -> void:
+	var cell_coordinates: = Vector2(_gameboard.cell_to_pixel(_gamepiece.get_faced_cell()))
+	_interaction_searcher.global_position = cell_coordinates*_gamepiece.global_scale
 
 
 # The controller's focus will finish travelling this frame unless it is extended.

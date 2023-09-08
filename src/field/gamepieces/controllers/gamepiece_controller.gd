@@ -12,8 +12,8 @@
 ## [member global_scale] when searching for paths/objects.
 ## [br][br][b]Note:[/b] The controller is an optional component. Only gamepieces requiring player 
 ## input or AI will be controlled.
-class_name GamepieceController
-extends Node2D
+@icon("res://assets/editor/icons/IconGamepieceController.svg")
+class_name GamepieceController extends Node2D
 
 # Colliding objects that have the following property set to true will block movement.
 const IS_BLOCKING_METHOD: = "blocks_movement"
