@@ -36,7 +36,6 @@ func _init() -> void:
 	set_default_color('Color8')
 	event_category = "Visuals"
 	event_sorting_index = 0
-	expand_by_default = false
 
 
 ################################################################################
@@ -61,14 +60,16 @@ func get_shortcode_parameters() -> Dictionary:
 ################################################################################
 
 func build_event_editor():
-	add_header_edit('argument', ValueType.FILE, 'Show', '', 
-			{'file_filter':'*.jpg, *.jpeg, *.png, *.webp, *.tga, *svg, *.bmp, *.dds, *.exr, *.hdr; Supported Image Files', 
+	add_header_edit('argument', ValueType.FILE, 
+			{'left_text' : 'Show',
+			'file_filter':'*.jpg, *.jpeg, *.png, *.webp, *.tga, *svg, *.bmp, *.dds, *.exr, *.hdr; Supported Image Files', 
 			'placeholder': "No background", 
 			'editor_icon':["Image", "EditorIcons"]}, 
 			'scene == ""')
-	add_header_edit('argument', ValueType.SINGLELINE_TEXT, 'Argument:', '', {}, 'scene != ""')
-	add_body_edit("fade", ValueType.FLOAT, "Fade Time: ")
-	add_body_edit("scene", ValueType.FILE, 'Scene:', '', 
-			{'file_filter':'*.tscn, *.scn; Scene Files',
+	add_header_edit('argument', ValueType.SINGLELINE_TEXT, {'left_text':'Argument:'}, 'scene != ""')
+	add_body_edit("fade", ValueType.FLOAT, {'left_text':'Fade Time:'})
+	add_body_edit("scene", ValueType.FILE,
+			{'left_text' :'Scene:',
+			'file_filter':'*.tscn, *.scn; Scene Files',
 			'placeholder': "Default scene", 
 			'editor_icon':["PackedScene", "EditorIcons"]})

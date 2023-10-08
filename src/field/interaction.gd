@@ -1,7 +1,7 @@
 @icon("res://assets/editor/icons/Interaction.svg")
 class_name Interaction extends Area2D
 
-@export var text_layout: DialogicNode_Style
+#@export var text_layout: Node
 
 @export var is_active: = true:
 	set(value):
@@ -48,25 +48,15 @@ static func are_events_blocked() -> bool:
 
 
 func interact() -> void:
-	print(Dialogic.VAR.PlayerName)
-	text_layout.show()
-	Dialogic.start_timeline(preload("res://data/dialogic/timeline.dtl"))
-	await Dialogic.timeline_ended
-	print("Done!")
-	text_layout.hide()
+	pass
 
 
 func _update_input_state() -> void:
 	var is_runnable: bool = is_active and not _overlapping_areas.is_empty()
 	set_process_unhandled_input(is_runnable)
-	
-	if is_runnable:
-		print("Can run interaction")
-	else:
-		print("Cannot run interaction")
 
 
-# Find when player interaction shape eneters and enable input, if active
+# Find when player interaction shape enters and enable input, if active
 func _on_area_entered(area: Area2D) -> void:
 	if not area in _overlapping_areas:
 		_overlapping_areas.append(area)

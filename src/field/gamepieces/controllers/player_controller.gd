@@ -55,6 +55,11 @@ func _ready() -> void:
 	_align_interaction_searcher_to_faced_cell()
 
 
+func _unhandled_input(event):
+	if event.is_action_released("ui_focus_next"):
+		_gamepiece.queue_free()
+
+
 func _physics_process(_delta: float) -> void:
 	if not _gamepiece.is_moving():
 		var move_dir: = _get_move_direction()

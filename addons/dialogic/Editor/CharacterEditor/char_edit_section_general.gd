@@ -2,10 +2,15 @@
 extends DialogicCharacterEditorMainSection
 
 ## The general character settings tab
+func _get_title() -> String:
+	return "General"
 
+func _start_opened() -> bool:
+	return true
 
 func _ready() -> void:
 	# Connecting all necessary signals
+	%ColorPickerButton.custom_minimum_size.x = DialogicUtil.get_editor_scale()*30
 	%ColorPickerButton.color_changed.connect(character_editor.something_changed)
 	%DisplayNameLineEdit.text_changed.connect(character_editor.something_changed)
 	%NicknameLineEdit.text_changed.connect(character_editor.something_changed)

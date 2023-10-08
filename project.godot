@@ -22,15 +22,14 @@ FieldEvents="*res://src/common/globals/global_field_events.gd"
 
 [dialogic]
 
-settings/text_speed=0.01
 text/skippable=true
-text/skippable_delay=0.1
+text/skippable_delay=0.05
 text/autoadvance_delay=1.0
 text/hide_empty_textbox=true
-animations/join_default_length=0.5
-animations/leave_default_length=0.5
-animations/leave_default_wait=true
-animations/join_default_wait=true
+animations/join_default_length=0.0
+animations/leave_default_length=0.0
+animations/leave_default_wait=false
+animations/join_default_wait=false
 choices/autofocus_first=true
 choices/delay=0.2
 choices/reveal_delay=0
@@ -43,6 +42,19 @@ variables={
 "PlayerName": "Frank"
 }
 layout/end_behaviour=0
+layout/styles={
+"Default": {
+"export_overrides": {},
+"inherits": "",
+"layout": "res://dialogue_layout.tscn"
+}
+}
+layout/default_style="Default"
+text/letter_speed=0.02
+animations/join_default="res://addons/dialogic/Modules/Character/DefaultAnimations/instant_in_or_out.gd"
+animations/leave_default="res://addons/dialogic/Modules/Character/DefaultAnimations/instant_in_or_out.gd"
+text/autocolor_names=true
+settings/text_speed=1.0
 
 [display]
 

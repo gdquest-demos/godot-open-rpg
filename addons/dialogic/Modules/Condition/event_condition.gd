@@ -57,7 +57,6 @@ func _init() -> void:
 	event_category = "Flow"
 	event_sorting_index = 1
 	can_contain_events = true
-	continue_at_end = true
 
 
 # return a control node that should show on the END BRANCH node
@@ -105,7 +104,7 @@ func is_valid_event(string:String) -> bool:
 ################################################################################
 
 func build_event_editor():
-	add_header_edit('condition_type', ValueType.FIXED_OPTION_SELECTOR, '', '', {
+	add_header_edit('condition_type', ValueType.FIXED_OPTION_SELECTOR, {
 		'selector_options': [
 			{
 				'label': 'IF',
@@ -120,7 +119,7 @@ func build_event_editor():
 				'value': ConditionTypes.ELSE,
 			}
 		], 'disabled':true})
-	add_header_edit('condition', ValueType.CONDITION, '', '', {}, 'condition_type != %s'%ConditionTypes.ELSE)
+	add_header_edit('condition', ValueType.CONDITION, {}, 'condition_type != %s'%ConditionTypes.ELSE)
 
 
 ####################### CODE COMPLETION ########################################

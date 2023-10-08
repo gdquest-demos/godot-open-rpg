@@ -37,8 +37,6 @@ var can_contain_events : bool = false
 var end_branch_event : DialogicEndBranchEvent = null
 ## If this is true this event expects a specific parent event.
 var needs_parent_event : bool = false
-## If true the next event will be played without awaiting input from the player
-var continue_at_end:bool = true
 
 
 ### Saving/Loading Properties ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,7 +62,7 @@ var display_name: bool = true
 ## If true the event will not have a button in the visual editor sidebar
 var disable_editor_button: bool = false
 ## If false the event will hide it's body by default. Recommended for most events
-var expand_by_default : bool = true
+var expand_by_default : bool = false
 ## The URL to open when right_click>Documentation is selected 
 var help_page_path : String = ""
 ## Is the event block created by a button?
@@ -270,12 +268,21 @@ func to_text() -> String:
 	for parameter in params.keys():
 		if (typeof(get(params[parameter].property)) != typeof(custom_defaults.get(params[parameter].property, params[parameter].default))) or \
 		(get(params[parameter].property) != custom_defaults.get(params[parameter].property, params[parameter].default)):
-			if typeof(get(params[parameter]["property"])) == TYPE_OBJECT:
-				result_string += " "+parameter+'="'+str(get(params[parameter]["property"]).resource_path)+'"'
-			elif typeof(get(params[parameter]["property"])) == TYPE_STRING:
-				result_string += " "+parameter+'="'+get(params[parameter]["property"]).replace('=', "\\=")+'"'
+			if typeof(get(params[parameter].property)) == TYPE_OBJECT:
+				result_string += " "+parameter+'="'+str(get(params[parameter].property).resource_path)+'"'
+			elif typeof(get(params[parameter].property)) == TYPE_STRING:
+				result_string += " "+parameter+'="'+get(params[parameter].property).replace('=', "\\=")+'"'
+			# if this is an enum with values provided, try to use a text alternative
+			elif typeof(get(params[parameter].property)) == TYPE_INT and params[parameter].has('suggestions'):
+				for option in params[parameter].suggestions.call().values():
+					if option.value == get(params[parameter].property):
+						if option.has('text_alt'):
+							result_string += " "+parameter+'="'+option.text_alt[0]+'"'
+						else:
+							result_string += " "+parameter+'="'+var_to_str(option.value).replace('=', "\\=")+'"'
+						break
 			else:
-				result_string += " "+parameter+'="'+var_to_str(get(params[parameter]["property"])).replace('=', "\\=")+'"'
+				result_string += " "+parameter+'="'+var_to_str(get(params[parameter].property)).replace('=', "\\=")+'"'
 	result_string += "]"
 	return result_string
 
@@ -289,16 +296,21 @@ func from_text(string:String) -> void:
 		if not parameter in data:
 			continue
 		
-		#if typeof(data[parameter]) == TYPE_STRING and (data[parameter].ends_with(".dtl") or data[parameter].ends_with(".dch")):
-		if typeof(data[parameter]) == TYPE_STRING and (data[parameter].ends_with(".dch")):
-			set(params[parameter]['property'], load(data[parameter]))
-		else:
-			var value :Variant 
-			if str_to_var(data[parameter].replace('\\=', '=')) != null:
-				value = str_to_var(data[parameter].replace('\\=', '=')) 
-			else:
+		var value :Variant 
+		match typeof(get(params[parameter].property)):
+			TYPE_STRING:
 				value = data[parameter].replace('\\=', '=')
-			set(params[parameter]['property'], value)
+			TYPE_INT:
+				if params[parameter].has('suggestions'):
+					for option in params[parameter].suggestions.call().values():
+						if option.has('text_alt') and data[parameter] in option.text_alt:
+							value = option.value
+							break
+				if !value:
+					value = float(data[parameter].replace('\\=', '='))
+			_:
+				value = str_to_var(data[parameter].replace('\\=', '='))
+		set(params[parameter].property, value)
 
 
 ## has to return true, if the given string can be interpreted as this event
@@ -405,7 +417,7 @@ func add_header_label(text:String, condition:String = "") -> void:
 		})
 
 
-func add_header_edit(variable:String, editor_type = ValueType.LABEL, left_text:String = "", right_text:String = "", extra_info:Dictionary = {}, condition:String = "") -> void:
+func add_header_edit(variable:String, editor_type = ValueType.LABEL, extra_info:Dictionary = {}, condition:String = "") -> void:
 	editor_list.append({
 		"name" 			: variable,
 		"type" 			: typeof(get(variable)),
@@ -413,8 +425,8 @@ func add_header_edit(variable:String, editor_type = ValueType.LABEL, left_text:S
 		"usage" 		: PROPERTY_USAGE_DEFAULT,
 		"dialogic_type" : editor_type,
 		"display_info" 	: extra_info,
-		"left_text" 	: left_text,
-		"right_text" 	: right_text,
+		"left_text" 	: extra_info.get('left_text', ''),
+		"right_text" 	: extra_info.get('right_text', ''),
 		"condition" 	: condition,
 		})
 
@@ -431,7 +443,7 @@ func add_header_button(text:String, callable:Callable, tooltip:String, icon: Var
 	})
 
 
-func add_body_edit(variable:String, editor_type = ValueType.LABEL, left_text:String= "", right_text:String="", extra_info:Dictionary = {}, condition:String = "") -> void:
+func add_body_edit(variable:String, editor_type = ValueType.LABEL, extra_info:Dictionary = {}, condition:String = "") -> void:
 	editor_list.append({
 		"name" 			: variable, 
 		"type" 			: typeof(get(variable)),
@@ -439,8 +451,8 @@ func add_body_edit(variable:String, editor_type = ValueType.LABEL, left_text:Str
 		"usage" 		: PROPERTY_USAGE_DEFAULT,
 		"dialogic_type" : editor_type,
 		"display_info" 	: extra_info,
-		"left_text" 	: left_text,
-		"right_text" 	: right_text,
+		"left_text" 	: extra_info.get('left_text', ''),
+		"right_text" 	: extra_info.get('right_text', ''),
 		"condition" 	: condition,
 		})
 

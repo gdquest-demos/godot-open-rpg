@@ -37,7 +37,6 @@ func _init() -> void:
 	set_default_color('Color7')
 	event_category = "Audio"
 	event_sorting_index = 2
-	expand_by_default = false
 
 
 func _get_icon() -> Resource:
@@ -68,14 +67,15 @@ func get_shortcode_parameters() -> Dictionary:
 ################################################################################
 
 func build_event_editor():
-	add_header_edit('file_path', ValueType.FILE, 'Play', '', 
-			{'file_filter' 	: "*.mp3, *.ogg, *.wav; Supported Audio Files", 
+	add_header_edit('file_path', ValueType.FILE, {
+			'left_text'		: 'Play',
+			'file_filter' 	: "*.mp3, *.ogg, *.wav; Supported Audio Files", 
 			'placeholder' 	: "No music", 
 			'editor_icon' 	: ["AudioStreamPlayer", "EditorIcons"]})
-	add_body_edit('fade_length', ValueType.FLOAT, 'Fade Time:')
-	add_body_edit('volume', ValueType.DECIBEL, 'Volume:', '', {}, '!file_path.is_empty()')
-	add_body_edit('audio_bus', ValueType.SINGLELINE_TEXT, 'Audio Bus:', '', {}, '!file_path.is_empty()')
-	add_body_edit('loop', ValueType.BOOL, 'Loop:', '', {}, '!file_path.is_empty()')
+	add_body_edit('fade_length', ValueType.FLOAT, {'left_text':'Fade Time:'})
+	add_body_edit('volume', ValueType.DECIBEL, {'left_text':'Volume:'}, '!file_path.is_empty()')
+	add_body_edit('audio_bus', ValueType.SINGLELINE_TEXT, {'left_text':'Audio Bus:'}, '!file_path.is_empty()')
+	add_body_edit('loop', ValueType.BOOL, {'left_text':'Loop:'}, '!file_path.is_empty()')
 
 
 func get_bus_suggestions() -> Dictionary:

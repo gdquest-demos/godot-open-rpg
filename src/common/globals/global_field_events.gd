@@ -10,6 +10,13 @@ signal cell_highlighted(cell: Vector2i)
 # Emitted when the player selects a cell on the field gameboard via the [FieldCursor].
 signal cell_selected(cell: Vector2i)
 
+## Emitted when a [Cutscene] begins, signalling that the player should yield control of their
+## character to the cutscene code.
+signal cutscene_began
+
+## Emitted when a [Cutscene] ends, restoring normal mode of play.
+signal cutscene_ended
+
 ## Gamepiece related signals, usually emitted by the the gamepieces themselves.
 signal gamepiece_cell_changed(gamepiece: Gamepiece, old_cell: Vector2i)
 

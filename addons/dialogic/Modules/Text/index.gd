@@ -23,17 +23,19 @@ func _get_character_editor_sections() -> Array:
 func _get_text_effects() -> Array[Dictionary]:
 	return [
 		{'command':'speed', 'subsystem':'Text', 'method':'effect_speed', 'arg':true},
+		{'command':'lspeed', 'subsystem':'Text', 'method':'effect_lspeed', 'arg':true},
 		{'command':'pause', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
 		{'command':'signal', 'subsystem':'Text', 'method':'effect_signal', 'arg':true},
 		{'command':'mood', 'subsystem':'Text', 'method':'effect_mood', 'arg':true},
 		{'command':'aa', 'subsystem':'Text', 'method':'effect_autoadvance'},
 		{'command':'ns', 'subsystem':'Text', 'method':'effect_noskip'},
+		{'command':'input', 'subsystem':'Text', 'method':'effect_input'},
 	]
 
 
 func _get_text_modifiers() -> Array[Dictionary]:
 	return [
 		{'subsystem':'Text', 'method':'modifier_autopauses'},
-		{'subsystem':'Text', 'method':'modifier_random_selection'},
-		{'subsystem':'Text', 'method':"modifier_break", 'command':'br'},
+		{'subsystem':'Text', 'method':'modifier_random_selection', 'mode':-1},
+		{'subsystem':'Text', 'method':"modifier_break", 'command':'br', 'mode':-1},
 	]

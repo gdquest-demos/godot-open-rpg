@@ -35,7 +35,6 @@ func _init() -> void:
 	set_default_color('Color7')
 	event_category = "Audio"
 	event_sorting_index = 3
-	expand_by_default = false
 	help_page_path = "https://dialogic.coppolaemilio.com"
 
 
@@ -66,12 +65,13 @@ func get_shortcode_parameters() -> Dictionary:
 ################################################################################
 
 func build_event_editor():
-	add_header_edit('file_path', ValueType.FILE, 'Play', '', 
-			{'file_filter' 	: '*.mp3, *.ogg, *.wav; Supported Audio Files', 
+	add_header_edit('file_path', ValueType.FILE, 
+			{'left_text'	: 'Play',
+			'file_filter' 	: '*.mp3, *.ogg, *.wav; Supported Audio Files', 
 			'placeholder' 	: "Select file", 
 			'editor_icon' 	: ["AudioStreamPlayer", "EditorIcons"]})
-	add_body_edit('volume', ValueType.DECIBEL, 'Volume:', '', {}, '!file_path.is_empty()')
-	add_body_edit('audio_bus', ValueType.SINGLELINE_TEXT, 'Audio Bus:', '', {}, '!file_path.is_empty()')
+	add_body_edit('volume', ValueType.DECIBEL, {'left_text':'Volume:'}, '!file_path.is_empty()')
+	add_body_edit('audio_bus', ValueType.SINGLELINE_TEXT, {'left_text':'Audio Bus:'}, '!file_path.is_empty()')
 
 func get_bus_suggestions() -> Dictionary:
 	var bus_name_list := {}

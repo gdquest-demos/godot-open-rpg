@@ -53,7 +53,6 @@ func _init() -> void:
 	set_default_color('Color4')
 	event_category = "Flow"
 	event_sorting_index = 4
-	expand_by_default = false
 
 
 func _get_icon() -> Resource:
@@ -75,7 +74,7 @@ func to_text() -> String:
 
 
 func from_text(string:String) -> void:
-	var result := RegEx.create_from_string('jump (?<timeline>\\w*\\/)?(?<label>\\w*)?').search(string.strip_edges())
+	var result := RegEx.create_from_string('jump (?<timeline>.*\\/)?(?<label>.*)?').search(string.strip_edges())
 	if result:
 		_timeline_file = result.get_string('timeline').trim_suffix('/')
 		label_name = result.get_string('label')
@@ -101,14 +100,14 @@ func get_shortcode_parameters() -> Dictionary:
 ################################################################################
 
 func build_event_editor():
-	add_header_edit('_timeline_file', ValueType.COMPLEX_PICKER, 'Jump to', '', {
+	add_header_edit('_timeline_file', ValueType.COMPLEX_PICKER, {'left_text':'Jump to',
 		'file_extension': '.dtl',
 		'suggestions_func': get_timeline_suggestions,
 		'editor_icon': ["TripleBar", "EditorIcons"],
 		'empty_text': '(this timeline)',
 		'autofocus':true
 	})
-	add_header_edit("label_name", ValueType.COMPLEX_PICKER, "at", '', {
+	add_header_edit("label_name", ValueType.COMPLEX_PICKER, {'left_text':"at", 
 		'empty_text':'the beginning',
 		'suggestions_func':get_label_suggestions,
 		'editor_icon':["ArrowRight", "EditorIcons"]})

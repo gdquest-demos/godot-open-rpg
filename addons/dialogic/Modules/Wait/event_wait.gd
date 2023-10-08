@@ -37,7 +37,6 @@ func _init() -> void:
 	set_default_color('Color5')
 	event_category = "Flow"
 	event_sorting_index = 11
-	expand_by_default = false
 
 
 ################################################################################
@@ -61,7 +60,7 @@ func get_shortcode_parameters() -> Dictionary:
 ################################################################################
 
 func build_event_editor():
-	add_header_edit('time', ValueType.FLOAT, 'Wait','', {'autofocus':true})
+	add_header_edit('time', ValueType.FLOAT, {'left_text':'Wait', 'autofocus':true})
 	add_header_label('seconds', 'time != 1')
 	add_header_label('second', 'time == 1')
-	add_body_edit('hide_text', ValueType.BOOL, 'Hide text box:')
+	add_body_edit('hide_text', ValueType.BOOL, {'left_text':'Hide text box:'})
