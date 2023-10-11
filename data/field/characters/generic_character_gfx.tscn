@@ -10,6 +10,8 @@ size = Vector2(16, 16)
 [node name="GenericCharacterAnimation" instance=ExtResource("1_pdtfs")]
 
 [node name="AnimationPlayer" parent="." index="0"]
+autoplay = "idle"
+speed_scale = 2.0
 libraries = {
 "": ExtResource("2_ljcdi")
 }
