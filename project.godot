@@ -39,6 +39,7 @@ text/autopauses={}
 glossary/default_case_sensitive=true
 layout/mode=2
 variables={
+"NumKeys": "0",
 "PlayerName": "Frank"
 }
 layout/end_behaviour=0

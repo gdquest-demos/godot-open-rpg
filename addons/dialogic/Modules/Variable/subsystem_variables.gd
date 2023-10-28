@@ -62,6 +62,7 @@ func parse_variables(text:String) -> String:
 
 
 func set_variable(variable_name: String, value: Variant) -> bool:
+	print("Set variable")
 	variable_name = variable_name.trim_prefix('{').trim_suffix('}')
 	
 	# Getting all the autoloads

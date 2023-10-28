@@ -24,6 +24,13 @@ func _ready() -> void:
 	
 #	$UI/DialogueLayout.hide()
 	place_camera_at_focused_game_piece()
+	
+	$UI/Inventory.add(UIInventory.ItemTypes.COIN)
+	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND)
+	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND)
+	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND)
+	$UI/Inventory.add(UIInventory.ItemTypes.BOMB)
+	$UI/Inventory.add(UIInventory.ItemTypes.BOMB)
 
 
 func place_camera_at_focused_game_piece() -> void:
