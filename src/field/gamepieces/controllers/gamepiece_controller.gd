@@ -33,11 +33,21 @@ var pathfinder: Pathfinder
 # Keep track of cells that need an update and do so as a batch before the next path search.
 var _cells_to_update: PackedVector2Array = []
 
+# The controller operates on its direct parent, which must be a gamepiece object.
 var _gamepiece: Gamepiece
+
+# Refer to _gamepiece's gameboard object to prevent repeatedly typing '_gamepiece.gameboard'.
 var _gameboard: Gameboard
 
+# Create two internal collision finders that will search for other objects using Godot's built-in
+# physics engine.
 var _gamepiece_searcher: CollisionFinder
 var _terrain_searcher: CollisionFinder
+
+# Keep track of a move path. The controller will check that the path is clear each time the 
+# gamepiece needs to continue on to the next cell.
+var _waypoints: Array[Vector2i] = []
+var _current_waypoint: Vector2i
 
 
 func _ready() -> void:
@@ -48,6 +58,9 @@ func _ready() -> void:
 		
 		_gameboard = _gamepiece.gameboard
 		assert(_gameboard, "%s error: invalid Gameboard object!" % name)
+		
+		_gamepiece.arriving.connect(_on_gamepiece_arriving)
+		_gamepiece.arrived.connect(_on_gamepiece_arrived)
 		
 		# The controller will be notified of any changes in the gameboard and respond accordingly.
 		FieldEvents.gamepiece_cell_changed.connect(_on_gamepiece_cell_changed)
@@ -76,6 +89,19 @@ func _get_configuration_warnings() -> PackedStringArray:
 			+ "Please only use GamepieceController as a child of a Gamepiece for correct animation.")
 	
 	return warnings
+
+
+func travel_to_cell(destination: Vector2i) -> void:
+	_update_changed_cells()
+	_waypoints = pathfinder.get_path_cells(_gamepiece.cell, destination)
+	
+	# Only follow a valid path with a length greater than 0 (more than one waypoint).
+	if _waypoints.size() > 1:
+		# The first waypoint is the focus' current cell and may be discarded.
+		_waypoints.remove_at(0)
+		_current_waypoint = _waypoints.pop_front()
+		
+		_gamepiece.travel_to_cell(_current_waypoint)
 
 
 ## Returns true if a given cell is occupied by something that has a collider matching 
@@ -157,6 +183,31 @@ func _update_changed_cells() -> void:
 			checked_coordinates[cell] = null
 	
 	_cells_to_update.clear()
+
+
+# The controller's focus will finish travelling this frame unless it is extended. When following a
+# path, the gamepiece will want to travel to the next waypoint.
+# excess_distance covers cases where the gamepiece will move past the current waypoint and prevents
+# stuttering for a single frame (or slower-than-expected movement for *very* fast gamepieces).
+func _on_gamepiece_arriving(excess_distance: float) -> void:
+	# If the gamepiece is currently following a path, continue moving along the path if it is still
+	# a valid movement path (since obstacles may shift while in transit).
+	if not _waypoints.is_empty():
+		while not _waypoints.is_empty() and excess_distance > 0:
+			if is_cell_blocked(_waypoints[0]) \
+					or FieldEvents.did_gp_move_to_cell_this_frame(_waypoints[0]):
+				return
+			
+			_current_waypoint = _waypoints.pop_front()
+			var distance_to_waypoint: = \
+				_gamepiece.position.distance_to(_gameboard.cell_to_pixel(_current_waypoint))
+			
+			_gamepiece.travel_to_cell(_current_waypoint)
+			excess_distance -= distance_to_waypoint
+
+
+func _on_gamepiece_arrived() -> void:
+	_waypoints.clear()
 
 
 # Whenever a gamepiece moves, flag its destination and origin as in need of an update.

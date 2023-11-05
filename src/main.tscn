@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=39 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -32,6 +32,7 @@
 [ext_resource type="Script" path="res://data/maps/town/fan_interaction.gd" id="24_u4cmv"]
 [ext_resource type="Resource" path="res://data/maps/town/fan_of_four.dtl" id="25_dmuyg"]
 [ext_resource type="PackedScene" uid="uid://c14b8ageu2otv" path="res://src/field/door.tscn" id="26_kf5ye"]
+[ext_resource type="Script" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
 [ext_resource type="Script" path="res://src/field/ui/ui)inventory.gd" id="28_ejvtn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_orie5"]
@@ -260,6 +261,10 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/AdoringFan/Interaction"]
 shape = SubResource("CircleShape2D_2lbg3")
 debug_color = Color(1, 0.929412, 0.631373, 0.419608)
+
+[node name="Controller" type="Node2D" parent="Terrain/Gamepieces/AdoringFan"]
+script = ExtResource("26_p8jrd")
+gamepiece_mask = 6
 
 [node name="Door" parent="Terrain/Gamepieces" instance=ExtResource("26_kf5ye")]
 position = Vector2(120, 168)

@@ -7,7 +7,6 @@ extends GamepieceController
 		move_path = value
 		update_configuration_warnings()
 
-var _waypoints: Array[Vector2i] = []
 var _current_waypoint_index: = 0
 
 @onready var _timer: Timer = $WaitTimer
@@ -24,9 +23,6 @@ func _ready() -> void:
 		_timer.one_shot = true
 		_timer.timeout.connect(_on_timer_timeout)
 		_timer.start()
-		
-		_gamepiece.arriving.connect(_on_gamepiece_arriving)
-		_gamepiece.arrived.connect(_on_gamepiece_arrived)
 
 
 func _get_configuration_warnings() -> PackedStringArray:

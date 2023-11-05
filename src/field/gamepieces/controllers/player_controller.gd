@@ -18,11 +18,6 @@ var is_active: = false:
 # It is reset on cancelling the move path or continuing movement via arrows/gamepad directions.
 var _target: Gamepiece = null
 
-# Keep track of a move path. The controller will check that the path is clear each time the 
-# gamepiece needs to continue on to the next cell.
-var _waypoints: Array[Vector2i] = []
-var _current_waypoint: Vector2i
-
 @onready var _interaction_searcher: = $InteractionSearcher as Area2D
 
 
@@ -33,6 +28,8 @@ func _ready() -> void:
 	
 	FieldEvents.cell_selected.connect(_on_cell_selected)
 	
+	# Connect to a few lambdas that change the cell at which the player searches for interactions.
+	# These come into play whenever the player's gamepiece moves to a new cell or changes direction.
 	_gamepiece.cell_changed.connect(
 		func(old_cell):
 			super._on_gamepiece_cell_changed(_gamepiece, old_cell)
@@ -42,28 +39,18 @@ func _ready() -> void:
 		func(_direction): _align_interaction_searcher_to_faced_cell()
 	)
 	
-	_gamepiece.arriving.connect(_on_gamepiece_arriving)
-	_gamepiece.arrived.connect(_on_gamepiece_arrived)
-	
 	set_process(false)
 	set_physics_process(false)
-	set_process_input(false)
-	set_process_unhandled_input(false)
 	
 	is_active = true
 	
 	_align_interaction_searcher_to_faced_cell()
 
 
-func _unhandled_input(event):
-	if event.is_action_released("ui_focus_next"):
-		_gamepiece.queue_free()
-
-
 func _physics_process(_delta: float) -> void:
-	if not _gamepiece.is_moving():
-		var move_dir: = _get_move_direction()
-		if move_dir:
+	var move_dir: = _get_move_direction()
+	if move_dir:
+		if not _gamepiece.is_moving():
 			var target_cell: = Vector2i.ZERO
 			
 			# Unless using 8-direction movement, one movement axis must be preferred. 
@@ -88,6 +75,10 @@ func _physics_process(_delta: float) -> void:
 				
 				else:
 					_gamepiece.travel_to_cell(target_cell)
+		
+		else:
+			_target = null
+			_waypoints.clear()
 
 
 func _get_move_direction() -> Vector2:
@@ -109,26 +100,14 @@ func _align_interaction_searcher_to_faced_cell() -> void:
 #		instance) so that the path can be checked for any changes *as the gamepiece travels*.
 #	b) A movement key/button is held down and the gamepiece should smoothly flow into the next cell.
 func _on_gamepiece_arriving(excess_distance: float) -> void:
+	# Handle moving to the next waypoint in the path.
+	super._on_gamepiece_arriving(excess_distance)
+	
+	# Allow movement keys/buttons to override path following.
 	var move_direction: = _get_move_direction()
-	
-	# If the gamepiece is currently following a path, continue moving along the path if it is still
-	# a valid movement path since obstacles may shift while in transit.
-	if not _waypoints.is_empty():
-		while not _waypoints.is_empty() and excess_distance > 0:
-			if is_cell_blocked(_waypoints[0]) \
-					or FieldEvents.did_gp_move_to_cell_this_frame(_waypoints[0]):
-				return
-			
-			_current_waypoint = _waypoints.pop_front()
-			var distance_to_waypoint: = \
-				_gamepiece.position.distance_to(_gameboard.cell_to_pixel(_current_waypoint))
-			
-			_gamepiece.travel_to_cell(_current_waypoint)
-			excess_distance -= distance_to_waypoint
-	
-	# There is no path to follow, so defer to movement keys or buttons that are currently held down.
-	elif move_direction:
+	if move_direction:
 		_target = null
+		_waypoints.clear()
 		
 		var next_cell: Vector2i
 		if not is_zero_approx(move_direction.x):
@@ -142,7 +121,7 @@ func _on_gamepiece_arriving(excess_distance: float) -> void:
 
 
 func _on_gamepiece_arrived() -> void:
-	_waypoints.clear()
+	super._on_gamepiece_arrived()
 	
 	if _target:
 		var distance_to_target: = _target.position - _gamepiece.position
@@ -164,15 +143,6 @@ func _on_cell_selected(cell: Vector2i) -> void:
 		# the cell.
 		
 		# If the cell beneath the cursor is empty the focus can follow a path to the cell.
-		_update_changed_cells()
-		_waypoints = pathfinder.get_path_cells(_gamepiece.cell, cell)
-		
-		# Only follow a valid path with a length greater than 0 (more than one waypoint).
-		if _waypoints.size() > 1:
+		travel_to_cell(cell)
+		if not _waypoints.is_empty():
 			FieldEvents.player_path_set.emit(_gamepiece, _waypoints.back())
-			
-			# The first waypoint is the focus' current cell and may be discarded.
-			_waypoints.remove_at(0)
-			_current_waypoint = _waypoints.pop_front()
-			
-			_gamepiece.travel_to_cell(_current_waypoint)

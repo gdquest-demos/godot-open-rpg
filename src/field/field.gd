@@ -22,7 +22,6 @@ const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/Playe
 func _ready() -> void:
 	randomize()
 	
-#	$UI/DialogueLayout.hide()
 	place_camera_at_focused_game_piece()
 	
 	$UI/Inventory.add(UIInventory.ItemTypes.COIN)

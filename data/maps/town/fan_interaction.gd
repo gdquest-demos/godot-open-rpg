@@ -1,6 +1,12 @@
 extends InteractionTemplateConversation
 
 @onready var _adoring_fan: = get_parent() as Gamepiece
+@onready var _controller: = get_parent().get_node("Controller") as GamepieceController
+
+
+func _ready() -> void:
+	assert(_adoring_fan, "Gamepiece was not found, check the node path!")
+	assert(_controller, "Controller was not found, check the node path!")
 
 
 func interact() -> void:
@@ -10,6 +16,6 @@ func interact() -> void:
 
 
 func _on_conversation_finished() -> void:
-	_adoring_fan.travel_to_cell(Vector2(23, 13))
+	_controller.travel_to_cell(Vector2(23, 13))
 	await _adoring_fan.arrived
 	print("Done")
