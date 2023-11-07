@@ -47,6 +47,10 @@ func _ready() -> void:
 			+ " Please only use GamepieceAnimation as a child of a Gamepiece for correct animation."
 			+ " Current parent is named %s." % get_parent().name)
 		
+		# Collisions will find the Area2D node as the collider. We'll point its owner reference to
+		# the gamepiece itself to allow easily identify colliding gamepieces.
+		$Area2D.owner = gamepiece
+		
 		gamepiece.blocks_movement_changed.connect( \
 			_on_gamepiece_blocks_movement_changed.bind(gamepiece))
 		_on_gamepiece_blocks_movement_changed(gamepiece)
@@ -117,13 +121,6 @@ func set_direction(value: Directions.Points) -> void:
 	
 	elif _anim.has_animation(current_sequence_id):
 		_swap_animation(current_sequence_id, true)
-
-
-## Returns true if the parent gamepiece should block other gamepieces.
-## Note that the collision shape's [member CollisionShape2D.disabled] property determines whether
-## or not the gamepiece will be picked up by the physics system.
-func blocks_movement() -> bool:
-	return not _collision_shape.disabled
 
 
 # Transition to the next animation sequence, accounting for the RESET track and current animation

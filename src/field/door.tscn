@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://c14b8ageu2otv"]
+[gd_scene load_steps=14 format=3 uid="uid://c14b8ageu2otv"]
 
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="1_goth7"]
+[ext_resource type="Script" path="res://src/field/gameboard/lockable_door.gd" id="1_u45hv"]
 [ext_resource type="AudioStream" uid="uid://c5mcvei7x3nyd" path="res://assets/sfx/doors/sfx_movement_dooropen4.wav" id="2_ufclx"]
 [ext_resource type="AudioStream" uid="uid://dqhhqeihtm1q6" path="res://assets/sfx/doors/sfx_movement_dooropen3.wav" id="3_oftid"]
 [ext_resource type="AudioStream" uid="uid://ddaucqxv3tf7m" path="res://assets/sfx/doors/sfx_movement_dooropen1.wav" id="4_orhec"]
 [ext_resource type="Script" path="res://src/field/interaction_template_locked_door.gd" id="5_61l11"]
+[ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="7_2e200"]
 
 [sub_resource type="Animation" id="Animation_hbjux"]
 resource_name = "RESET"
@@ -12,7 +14,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/path = NodePath("DoorTile:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -68,6 +70,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("LockedInteraction:collision_layer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
 }
 
 [sub_resource type="Animation" id="Animation_f8lsq"]
@@ -127,7 +141,19 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-34, -24), Vector2(-34, -32)]
+"values": [Vector2(-28, -24), Vector2(-28, -32)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LockedInteraction:collision_layer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
 }
 
 [sub_resource type="Animation" id="Animation_iyy44"]
@@ -152,7 +178,7 @@ tracks/0/use_blend = true
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/path = NodePath("DoorTile:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -173,6 +199,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LockedInteraction:collision_layer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [16]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3ff1q"]
 _data = {
@@ -185,10 +223,14 @@ _data = {
 size = Vector2(16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_mbu8d"]
+font_size = 80
 
 [node name="Door" type="Node2D"]
+script = ExtResource("1_u45hv")
+arrival_coordinates = Vector2i(0, 16)
+is_locked = null
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="DoorTile" type="Sprite2D" parent="."]
 texture = ExtResource("1_goth7")
 region_enabled = true
 region_rect = Rect2(17, 119, 16, 16)
@@ -199,6 +241,8 @@ region_rect = Rect2(17, 119, 16, 16)
 libraries = {
 "": SubResource("AnimationLibrary_3ff1q")
 }
+
+[node name="AreaTransitionTrigger" type="Node2D" parent="."]
 
 [node name="LockedInteraction" type="Area2D" parent="." node_paths=PackedStringArray("_anim")]
 collision_layer = 17
@@ -219,9 +263,15 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -34.0
 offset_top = -24.0
-offset_right = 34.0
+offset_right = 254.0
+offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.2, 0.2)
 text = "Locked"
 label_settings = SubResource("LabelSettings_mbu8d")
 horizontal_alignment = 1
+
+[node name="ArrivalCell" type="Sprite2D" parent="."]
+position = Vector2(0, 16)
+texture = ExtResource("7_2e200")

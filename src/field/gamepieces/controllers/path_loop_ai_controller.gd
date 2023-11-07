@@ -8,6 +8,7 @@ extends GamepieceController
 		update_configuration_warnings()
 
 var _current_waypoint_index: = 0
+var _path_origin: Vector2
 
 @onready var _timer: Timer = $WaitTimer
 
@@ -19,6 +20,7 @@ func _ready() -> void:
 	
 	if not Engine.is_editor_hint():
 		move_path.hide()
+		_path_origin = _gamepiece.position
 		
 		_timer.one_shot = true
 		_timer.timeout.connect(_on_timer_timeout)
@@ -29,8 +31,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
 	
 	# Node exports are currently broken.
-#	if not move_path:
-#		warnings.append("The path loop controller needs a valid Line2D to follow!")
+	if not move_path:
+		warnings.append("The path loop controller needs a valid Line2D to follow!")
 	
 	return warnings
 
@@ -56,13 +58,13 @@ func _find_waypoints_from_line2D() -> void:
 		return
 	
 	# Add the first cell to the path, since subsequent additions will have the first cell removed.
-	_waypoints.append(_gameboard.pixel_to_cell(move_path.get_point_position(0) + _gamepiece.position))
+	_waypoints.append(_gameboard.pixel_to_cell(move_path.get_point_position(0) + _path_origin))
 	
 	# Create a looping path from the points specified by move_path. Will fail if a path cannot be
 	# found between some of the move_path's points.
 	for i in range(1, move_path.get_point_count()):
-		var source: = _gameboard.pixel_to_cell(move_path.get_point_position(i-1) + _gamepiece.position)
-		var target: = _gameboard.pixel_to_cell(move_path.get_point_position(i) + _gamepiece.position)
+		var source: = _gameboard.pixel_to_cell(move_path.get_point_position(i-1) + _path_origin)
+		var target: = _gameboard.pixel_to_cell(move_path.get_point_position(i) + _path_origin)
 		
 		var path_subset: = pathfinder.get_path_cells(source, target)
 		if path_subset.is_empty():
@@ -74,9 +76,9 @@ func _find_waypoints_from_line2D() -> void:
 		_waypoints.append_array(path_subset.slice(1))
 	
 	# Finally, connect the ending and starting cells to complete the loop.
-	var last_pos: = move_path.get_point_position(move_path.get_point_count()-1) + _gamepiece.position
+	var last_pos: = move_path.get_point_position(move_path.get_point_count()-1) + _path_origin
 	var last_cell: = _gameboard.pixel_to_cell(last_pos)
-	var first_cell: = _gameboard.pixel_to_cell(move_path.get_point_position(0) + _gamepiece.position)
+	var first_cell: = _gameboard.pixel_to_cell(move_path.get_point_position(0) + _path_origin)
 	
 	# If we've made it this far there must be a path between the first and last cell.
 	_waypoints.append_array(pathfinder.get_path_cells(last_cell, first_cell).slice(1))

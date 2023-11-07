@@ -5,6 +5,7 @@ extends InteractionTemplateConversation
 
 
 func _ready() -> void:
+	super._ready()
 	assert(_adoring_fan, "Gamepiece was not found, check the node path!")
 	assert(_controller, "Controller was not found, check the node path!")
 

@@ -1,13 +1,14 @@
 ## A signal bus to connect distant scenes to various field-exclusive events.
 extends Node
 
-# We want the Field Event manager's _process method to run after all Gamepieces and Controllers.
+## Set this object's process priority to a very high number.
+## We want the Field Event manager's _process method to run after all Gamepieces and Controllers.
 const PROCESS_PRIORITY: = 99999999
 
 ## Emitted when the cursor moves to a new position on the field gameboard.
 signal cell_highlighted(cell: Vector2i)
 
-# Emitted when the player selects a cell on the field gameboard via the [FieldCursor].
+## Emitted when the player selects a cell on the field gameboard via the [FieldCursor].
 signal cell_selected(cell: Vector2i)
 
 ## Emitted when a [Cutscene] begins, signalling that the player should yield control of their

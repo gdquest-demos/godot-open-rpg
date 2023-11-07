@@ -113,8 +113,6 @@ func _build_cell_list(pathable_cells: Array[Vector2i]) -> void:
 	for cell in pathable_cells:
 		if not has_cell(cell) and _gameboard.boundaries.has_point(cell):
 			var cell_id: = _gameboard.cell_to_index(cell)
-			print(cell_id)
-			
 			if cell_id != Gameboard.INVALID_INDEX:
 				add_point(cell_id, cell)
 
