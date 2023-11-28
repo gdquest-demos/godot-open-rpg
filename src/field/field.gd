@@ -32,6 +32,11 @@ func _ready() -> void:
 	$UI/Inventory.add(UIInventory.ItemTypes.BOMB)
 
 
+#func _unhandled_input(event: InputEvent) -> void:
+#	if event.is_action_released("ui_down"):
+#		$Terrain/SecretPath/AnimationPlayer.play("dissapear") 
+
+
 func place_camera_at_focused_game_piece() -> void:
 	camera.reset_smoothing()
 

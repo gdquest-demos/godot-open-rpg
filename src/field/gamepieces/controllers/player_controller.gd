@@ -1,3 +1,4 @@
+@tool
 ## Applied to any gamepiece to allow player control.
 ##
 ## The controller responds to player input to handle movement and interaction.
@@ -19,32 +20,41 @@ var is_active: = false:
 var _target: Gamepiece = null
 
 @onready var _interaction_searcher: = $InteractionSearcher as Area2D
+@onready var _player_collision: = $PlayerCollision as Area2D
 
 
 func _ready() -> void:
 	super._ready()
 	
-	add_to_group(GROUP_NAME)
-	
-	FieldEvents.cell_selected.connect(_on_cell_selected)
-	
-	# Connect to a few lambdas that change the cell at which the player searches for interactions.
-	# These come into play whenever the player's gamepiece moves to a new cell or changes direction.
-	_gamepiece.cell_changed.connect(
-		func(old_cell):
-			super._on_gamepiece_cell_changed(_gamepiece, old_cell)
-			_align_interaction_searcher_to_faced_cell()
-	)
-	_gamepiece.direction_changed.connect(
-		func(_direction): _align_interaction_searcher_to_faced_cell()
-	)
-	
 	set_process(false)
 	set_physics_process(false)
 	
-	is_active = true
-	
-	_align_interaction_searcher_to_faced_cell()
+	if not Engine.is_editor_hint():
+		add_to_group(GROUP_NAME)
+		
+		# Refer the various player collision shapes to their gamepiece (parent of the controller).
+		# This will allow other objects/systems to quickly find which gamepiece they are working on
+		# via the collision "owners".
+		_interaction_searcher.owner = _gamepiece
+		_player_collision.owner = _gamepiece
+		
+		FieldEvents.cell_selected.connect(_on_cell_selected)
+		
+		# Connect to a few lambdas that change the cell at which the player searches for
+		# interactions. These come into play whenever the player's gamepiece moves to a new cell or
+		# changes direction.
+		_gamepiece.cell_changed.connect(
+			func(old_cell):
+				super._on_gamepiece_cell_changed(_gamepiece, old_cell)
+				_align_interaction_searcher_to_faced_cell()
+		)
+		_gamepiece.direction_changed.connect(
+			func(_direction): _align_interaction_searcher_to_faced_cell()
+		)
+		
+		is_active = true
+		
+		_align_interaction_searcher_to_faced_cell()
 
 
 func _physics_process(_delta: float) -> void:

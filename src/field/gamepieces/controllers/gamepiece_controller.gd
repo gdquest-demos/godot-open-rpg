@@ -52,6 +52,8 @@ var _current_waypoint: Vector2i
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
+		# A controller must operate on a gamepiece. Obtain the gamepiece reference and pull 
+		# necessary information from it.
 		_gamepiece = get_parent() as Gamepiece
 		assert(_gamepiece, "The GamepieceController must have a Gamepiece as a parent. "
 			+ "%s is not a gamepiece!" % get_parent().name)
@@ -73,6 +75,8 @@ func _ready() -> void:
 		_terrain_searcher = CollisionFinder.new(get_world_2d().direct_space_state, min_cell_axis,
 			terrain_mask)
 		
+		# Wait a frame for the gameboard and physics engine to be fully setup. Once the physics 
+		# engine is ready, its state may be queried to setup the pathfinder.
 		await get_tree().process_frame
 		_rebuild_pathfinder()
 
@@ -113,8 +117,13 @@ func is_cell_blocked(cell: Vector2i) -> bool:
 	# Take advantage of duck typing: any colliding object could block movement. Look at the owner
 	# of the collision shape for a blocking flag.
 	# Please see BLOCKING_PROPERTY for more information.
+	# Note that not all collisions will have this blocking flag. In those cases, assume that the
+	# collision is a blocking collision.
 	for collision in collisions:
-		var blocks_movement: bool = collision.collider.owner.get(BLOCKING_PROPERTY)
+		var blocks_movement = true
+		if collision.collider.owner.get(BLOCKING_PROPERTY):
+			blocks_movement = false
+		
 		if blocks_movement:
 			return true
 	
