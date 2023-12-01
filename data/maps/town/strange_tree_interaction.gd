@@ -7,6 +7,8 @@ var _conversation: = preload("res://data/maps/town/strange_tree.dtl")
 
 
 func _ready() -> void:
+	super._ready()
+	
 	# We want to open the secret path once the player has performed a specific action.
 	# The easiest method is to allow Dialogic to determine when this should happen. This could be
 	# done via the EmitSignal event, the Call event, or, as we've opted to do here, an in-dialogue

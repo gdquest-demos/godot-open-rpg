@@ -24,8 +24,8 @@ func _ready() -> void:
 	
 	place_camera_at_focused_game_piece()
 	
-	$UI/Inventory.add(UIInventory.ItemTypes.COIN)
-	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND)
+	$UI/Inventory.add(UIInventory.ItemTypes.COIN, 24)
+	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND, 3)
 	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND)
 	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND)
 	$UI/Inventory.add(UIInventory.ItemTypes.BOMB)

@@ -1,18 +1,13 @@
 @icon("res://assets/editor/icons/Contact.svg")
 class_name Trigger extends Area2D
 
-@export var _anim: AnimationPlayer
-
 
 func _ready() -> void:
-	assert(_anim, "%s error: animation player reference is not set!" % name)
-	
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
 
 
 func _on_area_entered(area: Area2D) -> void:
-	_anim.play("open")
 	print(area.owner.name, " entered")
 	var gamepiece: = area.owner as Gamepiece
 	if gamepiece:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=52 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -36,6 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://c14b8ageu2otv" path="res://src/field/door.tscn" id="26_kf5ye"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
 [ext_resource type="Script" path="res://src/field/ui/ui)inventory.gd" id="28_ejvtn"]
+[ext_resource type="PackedScene" uid="uid://ceefih4ls7dcn" path="res://src/field/key.tscn" id="29_gxq7u"]
 [ext_resource type="Script" path="res://data/maps/town/strange_tree_interaction.gd" id="30_lj1m5"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="31_6t021"]
 
@@ -202,6 +203,7 @@ script = ExtResource("5_3guor")
 gameboard = ExtResource("6_kd8tv")
 
 [node name="PlayerPathDestinationMarker" type="Sprite2D" parent="Terrain"]
+visible = false
 modulate = Color(0.909804, 0.270588, 0.215686, 0.705882)
 texture = ExtResource("13_osl4o")
 script = ExtResource("14_0j4ru")
@@ -382,9 +384,11 @@ gamepiece_mask = 6
 [node name="Door" parent="Terrain/Gamepieces" instance=ExtResource("26_kf5ye")]
 position = Vector2(120, 176)
 
+[node name="Key" parent="Terrain/Gamepieces" instance=ExtResource("29_gxq7u")]
+position = Vector2(40, 24)
+
 [node name="SignInteraction" type="Area2D" parent="Terrain"]
 position = Vector2(152, 168)
-scale = Vector2(1, 1)
 collision_layer = 16
 collision_mask = 8
 script = ExtResource("6_brlaa")
@@ -420,7 +424,7 @@ debug_color = Color(1, 0.929412, 0.631373, 0.419608)
 
 [node name="PathBlocker" type="Area2D" parent="Terrain/SecretPath"]
 position = Vector2(-16, 16)
-collision_mask = 6
+collision_mask = 0
 monitoring = false
 monitorable = false
 

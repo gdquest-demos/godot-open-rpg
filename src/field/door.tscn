@@ -193,11 +193,10 @@ texture = ExtResource("1_goth7")
 region_enabled = true
 region_rect = Rect2(17, 119, 16, 16)
 
-[node name="AreaTransitionTrigger" type="Area2D" parent="GFX" node_paths=PackedStringArray("_anim")]
+[node name="AreaTransitionTrigger" type="Area2D" parent="GFX"]
 collision_layer = 32
 collision_mask = 4
 script = ExtResource("6_ug53t")
-_anim = NodePath("../../AnimationPlayer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GFX/AreaTransitionTrigger"]
 shape = SubResource("CircleShape2D_ge4hl")

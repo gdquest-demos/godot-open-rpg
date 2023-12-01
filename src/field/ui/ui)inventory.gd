@@ -22,7 +22,7 @@ var _ITEM_SCENE: = preload("res://src/field/ui/UIInventoryItem.tscn")
 
 
 ## Increment the count of a given item by one, adding it to the inventory if it does not exist.
-func add(item_type: ItemTypes) -> void:
+func add(item_type: ItemTypes, amount: = 1) -> void:
 	var item: = _get_item(item_type)
 	if not item:
 		item = _ITEM_SCENE.instantiate()
@@ -31,16 +31,16 @@ func add(item_type: ItemTypes) -> void:
 		
 		add_child(item)
 	
-	item.count = item.count + 1
+	item.count = item.count + amount
 
 
 ## Decrement the count of a given item by one.
 ## The item will be removed entirely if there are none remaining. Removing an item that is not
 ## posessed will do nothing.
-func remove(item_type: ItemTypes) -> void:
+func remove(item_type: ItemTypes, amount: = 1) -> void:
 	var item: = _get_item(item_type)
 	if item:
-		item.count = item.count - 1
+		item.count = maxi(item.count - amount, 0)
 
 
 ## Returns the number of a certain item type posessed by the player.

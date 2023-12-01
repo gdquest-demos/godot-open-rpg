@@ -2,6 +2,6 @@ if {StrangeTreeExamined} > 0:
 	Wait, what if I went *around* the tree!?[signal=clear_secret_path]
 	[signal]
 else:
-	It's too bad this tree is in the way, or I could get at that treasure chest.
+	It's too bad this tree is in the way...
 	set {StrangeTreeExamined} = 1
 [end_timeline]
