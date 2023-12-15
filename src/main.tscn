@@ -35,10 +35,10 @@
 [ext_resource type="Resource" path="res://data/maps/town/fan_of_four.dtl" id="25_dmuyg"]
 [ext_resource type="PackedScene" uid="uid://c14b8ageu2otv" path="res://src/field/door.tscn" id="26_kf5ye"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
-[ext_resource type="Script" path="res://src/field/ui/ui)inventory.gd" id="28_ejvtn"]
 [ext_resource type="PackedScene" uid="uid://ceefih4ls7dcn" path="res://src/field/key.tscn" id="29_gxq7u"]
 [ext_resource type="Script" path="res://data/maps/town/strange_tree_interaction.gd" id="30_lj1m5"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="31_6t021"]
+[ext_resource type="Script" path="res://src/field/ui/ui_inventory.gd" id="34_tk01t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_orie5"]
 resource_name = "Overlay"
@@ -456,7 +456,7 @@ grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(5, 5)
 alignment = 1
-script = ExtResource("28_ejvtn")
+script = ExtResource("34_tk01t")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 

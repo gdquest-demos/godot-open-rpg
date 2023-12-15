@@ -3,7 +3,7 @@
 ## Please see UIInventory for additional information.
 class_name UIInventoryItem extends TextureRect
 
-var ID: = UIInventory.ItemTypes.KEY
+var ID: = Inventory.ItemTypes.KEY
 
 var count: = 0:
 	set = set_count

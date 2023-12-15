@@ -22,14 +22,11 @@ const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/Playe
 func _ready() -> void:
 	randomize()
 	
-	place_camera_at_focused_game_piece()
+	var inventory: = Inventory.restore()
+#	inventory.add(Inventory.ItemTypes.KEY, 4)
+	inventory.save()
 	
-	$UI/Inventory.add(UIInventory.ItemTypes.COIN, 24)
-	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND, 3)
-	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND)
-	$UI/Inventory.add(UIInventory.ItemTypes.BLUE_WAND)
-	$UI/Inventory.add(UIInventory.ItemTypes.BOMB)
-	$UI/Inventory.add(UIInventory.ItemTypes.BOMB)
+	place_camera_at_focused_game_piece()
 
 
 #func _unhandled_input(event: InputEvent) -> void:
