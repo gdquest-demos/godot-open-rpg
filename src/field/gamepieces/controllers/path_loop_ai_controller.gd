@@ -84,7 +84,16 @@ func _find_waypoints_from_line2D() -> void:
 	_waypoints.append_array(pathfinder.get_path_cells(last_cell, first_cell).slice(1))
 
 
+func _on_input_paused(paused: bool) -> void:
+	is_paused = paused
+	if not paused:
+		_timer.start()
+
+
 func _on_gamepiece_arriving(excess_distance: float) -> void:
+	if is_paused:
+		return
+	
 	# If the gamepiece is currently following a path, continue moving along the path if it is still
 	# a valid movement path since obstacles may shift while in transit.
 	while _current_waypoint_index >= 0 and _current_waypoint_index < _waypoints.size() - 1 \
@@ -103,7 +112,8 @@ func _on_gamepiece_arriving(excess_distance: float) -> void:
 
 
 func _on_gamepiece_arrived() -> void:
-	_timer.start()
+	if not is_paused:
+		_timer.start()
 
 
 func _on_timer_timeout() -> void:

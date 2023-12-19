@@ -26,11 +26,11 @@ func _ready() -> void:
 		_arrival_icon.queue_free()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_released("ui_down"):
-		is_locked = !is_locked
-		print("Locked? ", is_locked)
+#func _unhandled_input(event: InputEvent) -> void:
+#	if event.is_action_released("ui_down"):
+#		is_locked = !is_locked
+#		print("Locked? ", is_locked)
 		
-		await get_tree().physics_frame
-		await get_tree().physics_frame
-		FieldEvents.terrain_changed.emit()
+#		await get_tree().physics_frame
+#		await get_tree().physics_frame
+#		FieldEvents.terrain_changed.emit()

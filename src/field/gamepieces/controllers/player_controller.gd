@@ -103,6 +103,12 @@ func _align_interaction_searcher_to_faced_cell() -> void:
 	_interaction_searcher.global_position = cell_coordinates*_gamepiece.global_scale
 
 
+func _on_input_paused(paused: bool) -> void:
+	super._on_input_paused(paused)
+	set_process(!paused)
+	set_physics_process(!paused)
+
+
 # The controller's focus will finish travelling this frame unless it is extended.
 # There are a few cases where the controller will want to extend the path:
 #	a) The gamepiece is following a series of waypoints, and needs to know which cell is next. Note
@@ -115,7 +121,7 @@ func _on_gamepiece_arriving(excess_distance: float) -> void:
 	
 	# Allow movement keys/buttons to override path following.
 	var move_direction: = _get_move_direction()
-	if move_direction:
+	if move_direction and not is_paused:
 		_target = null
 		_waypoints.clear()
 		

@@ -34,8 +34,15 @@ var _overlapping_areas: = []
 func _ready():
 	set_process_unhandled_input(false)
 	
+	FieldEvents.input_paused.connect(_on_input_paused)
+	
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
+
+
+func _on_input_paused(is_paused: bool) -> void:
+	monitoring = !is_paused
+	monitorable = !is_paused
 
 
 func _unhandled_input(event: InputEvent) -> void:

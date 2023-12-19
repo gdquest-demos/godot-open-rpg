@@ -28,6 +28,10 @@ signal player_path_set(gamepiece: Gamepiece, destination_cell: Vector2i)
 ## Emitted whenever terrain passability changes. Pathfinders will need to be rebuilt.
 signal terrain_changed
 
+## Emitted whenever ALL input within the field state is to be paused or resumed.
+## Typically emitted by combat, dialogues, etc.
+signal input_paused(is_paused: bool)
+
 # The physics engine updates a frame after physics object move, which plays havoc with our
 # CollisionFinder class (objects are not there the same frame they move!).
 # This is an issue for moving gamepices. Multiple Gamepieces may decide to move onto the same cell

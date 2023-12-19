@@ -18,24 +18,28 @@ const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/Playe
 @export var is_active: = false:
 	set = set_is_active
 
+var val: = 0
+
 
 func _ready() -> void:
 	randomize()
 	
-	var inventory: = Inventory.restore()
-#	inventory.add(Inventory.ItemTypes.KEY, 4)
-	inventory.save()
-	
 	place_camera_at_focused_game_piece()
-
-
-#func _unhandled_input(event: InputEvent) -> void:
-#	if event.is_action_released("ui_down"):
-#		$Terrain/SecretPath/AnimationPlayer.play("dissapear") 
 
 
 func place_camera_at_focused_game_piece() -> void:
 	camera.reset_smoothing()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("ui_focus_next"):
+		val += 1
+		if val % 2:
+			print("PAuse")
+			FieldEvents.input_paused.emit(true)
+		else:
+			print("Unpause")
+			FieldEvents.input_paused.emit(false)
 
 
 func set_focused_game_piece(value: Gamepiece) -> void:

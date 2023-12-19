@@ -14,3 +14,4 @@ func add_key() -> void:
 
 func _on_gamepiece_arrived(_distance: float, _gamepiece: Gamepiece) -> void:
 	_anim.play("obtain")
+	Inventory.restore().add(Inventory.ItemTypes.KEY, 1)

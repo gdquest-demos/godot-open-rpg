@@ -44,6 +44,8 @@ var _gameboard: Gameboard
 var _gamepiece_searcher: CollisionFinder
 var _terrain_searcher: CollisionFinder
 
+var is_paused: = false
+
 # Keep track of a move path. The controller will check that the path is clear each time the 
 # gamepiece needs to continue on to the next cell.
 var _waypoints: Array[Vector2i] = []
@@ -60,6 +62,8 @@ func _ready() -> void:
 		
 		_gameboard = _gamepiece.gameboard
 		assert(_gameboard, "%s error: invalid Gameboard object!" % name)
+		
+		FieldEvents.input_paused.connect(_on_input_paused)
 		
 		_gamepiece.arriving.connect(_on_gamepiece_arriving)
 		_gamepiece.arrived.connect(_on_gamepiece_arrived)
@@ -194,6 +198,13 @@ func _update_changed_cells() -> void:
 	_cells_to_update.clear()
 
 
+func _on_input_paused(paused: bool) -> void:
+	is_paused = paused
+	if not _waypoints.is_empty():
+		_current_waypoint = _waypoints.pop_front()
+		_gamepiece.travel_to_cell(_current_waypoint)
+
+
 # The controller's focus will finish travelling this frame unless it is extended. When following a
 # path, the gamepiece will want to travel to the next waypoint.
 # excess_distance covers cases where the gamepiece will move past the current waypoint and prevents
@@ -201,7 +212,7 @@ func _update_changed_cells() -> void:
 func _on_gamepiece_arriving(excess_distance: float) -> void:
 	# If the gamepiece is currently following a path, continue moving along the path if it is still
 	# a valid movement path (since obstacles may shift while in transit).
-	if not _waypoints.is_empty():
+	if not _waypoints.is_empty() and not is_paused:
 		while not _waypoints.is_empty() and excess_distance > 0:
 			if is_cell_blocked(_waypoints[0]) \
 					or FieldEvents.did_gp_move_to_cell_this_frame(_waypoints[0]):

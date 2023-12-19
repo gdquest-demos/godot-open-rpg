@@ -32,6 +32,8 @@ var focus: = Gameboard.INVALID_CELL:
 
 func _ready() -> void:
 	assert(gameboard, "\n%s::initialize error - Invalid Gameboard reference!" % name)
+	
+	FieldEvents.input_paused.connect(_on_input_paused)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -94,3 +96,10 @@ func _get_cell_under_mouse() -> Vector2i:
 # A wrapper for cell validity criteria.
 func _is_cell_invalid(cell: Vector2i) -> bool:
 	return not valid_cells.is_empty() and not cell in valid_cells
+
+
+func _on_input_paused(is_paused: bool) -> void:
+	set_process_unhandled_input(!is_paused)
+	
+	if is_paused:
+		set_focus(Gameboard.INVALID_CELL)
