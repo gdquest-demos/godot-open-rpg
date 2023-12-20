@@ -1,7 +1,5 @@
 @icon("res://assets/editor/icons/Interaction.svg")
-class_name Interaction extends Area2D
-
-#@export var text_layout: Node
+class_name Interaction extends Cutscene
 
 @export var is_active: = true:
 	set(value):
@@ -22,8 +20,6 @@ class_name Interaction extends Area2D
 		for node in find_children("*", "CollisionPolygon2D"):
 			(node as CollisionPolygon2D).disabled = !is_active
 
-# 
-static var _running_event_is_blocking: = false
 
 # Track overlapping areas. Determining whether or not to run an event is not as simple as the
 # presence of overlapping areas, since factors such as gamestate and the existence of another
@@ -47,15 +43,7 @@ func _on_input_paused(is_paused: bool) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("interact"):
-		interact()
-
-
-static func are_events_blocked() -> bool:
-	return _running_event_is_blocking
-
-
-func interact() -> void:
-	pass
+		run()
 
 
 func _update_input_state() -> void:

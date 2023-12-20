@@ -10,7 +10,7 @@ func _ready():
 	Dialogic.VAR.variable_changed.connect(_on_var_changed)
 
 
-func interact() -> void:
+func _execute() -> void:
 	print("Door keys:" ,Dialogic.VAR.NumKeys)
 #	Dialogic.VAR.NumKeys = 3
 	if not _anim.is_playing():

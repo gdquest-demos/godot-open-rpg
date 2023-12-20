@@ -28,5 +28,5 @@ func _ready() -> void:
 	)
 
 
-func interact() -> void:
+func _execute() -> void:
 	Dialogic.start_timeline(_conversation)

@@ -10,10 +10,10 @@ func _ready() -> void:
 	assert(_controller, "Controller was not found, check the node path!")
 
 
-func interact() -> void:
+func _execute() -> void:
 	Dialogic.timeline_ended.connect(_on_conversation_finished, CONNECT_ONE_SHOT)
 	
-	super.interact()
+	super._execute()
 
 
 func _on_conversation_finished() -> void:

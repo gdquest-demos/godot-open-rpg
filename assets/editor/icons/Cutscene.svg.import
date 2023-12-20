@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c14vk7vgg5ji8"
-path="res://.godot/imported/Trigger.svg-78248e04586ff108d644f862094ff584.ctex"
+path="res://.godot/imported/Cutscene.svg-3963c8d0e788b7a54eb4060733026cde.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/editor/icons/Trigger.svg"
-dest_files=["res://.godot/imported/Trigger.svg-78248e04586ff108d644f862094ff584.ctex"]
+source_file="res://assets/editor/icons/Cutscene.svg"
+dest_files=["res://.godot/imported/Cutscene.svg-3963c8d0e788b7a54eb4060733026cde.ctex"]
 
 [params]
 
