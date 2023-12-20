@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 FieldEvents="*res://src/common/globals/global_field_events.gd"
+Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 
 [dialogic]
 
@@ -57,6 +57,31 @@ animations/join_default="res://addons/dialogic/Modules/Character/DefaultAnimatio
 animations/leave_default="res://addons/dialogic/Modules/Character/DefaultAnimations/instant_in_or_out.gd"
 text/autocolor_names=true
 settings/text_speed=1.0
+directories/dch_directory={
+"fan_of_four": "res://data/maps/town/fan_of_four.dch",
+"monk": "res://data/maps/town/monk.dch",
+"runner": "res://data/maps/town/runner.dch",
+"smith": "res://data/maps/town/smith.dch",
+"thief": "res://data/maps/town/thief.dch",
+"warrior": "res://data/maps/town/warrior.dch",
+"wizard": "res://data/maps/town/wizard.dch"
+}
+directories/dtl_directory={
+"fan_of_four": "res://data/maps/town/fan_of_four.dtl",
+"monk": "res://data/maps/town/monk.dtl",
+"runner": "res://data/maps/town/runner.dtl",
+"sign": "res://data/maps/town/sign.dtl",
+"smith": "res://data/maps/town/smith.dtl",
+"strange_tree": "res://data/maps/town/strange_tree.dtl",
+"thief": "res://data/maps/town/thief.dtl",
+"warrior": "res://data/maps/town/warrior.dtl",
+"wizard": "res://data/maps/town/wizard.dtl"
+}
+text/initial_text_reveal_skippable=true
+text/text_reveal_skip_delay=0.05
+text/autoadvance_per_character_delay=0.1
+text/autoadvance_ignored_characters_enabled=true
+save/encryption_on_exports_only=true
 
 [display]
 

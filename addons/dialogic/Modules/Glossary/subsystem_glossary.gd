@@ -7,12 +7,15 @@ var glossaries := []
 ## If false, no parsing will be done.
 var enabled := true
 
+## Any key in this dictionary will overwrite the color for any item with that name.
+var color_overrides := {}
+
 
 ####################################################################################################
 ##					STATE
 ####################################################################################################
 
-func clear_game_state(clear_flag:=Dialogic.ClearFlags.FULL_CLEAR) -> void:
+func clear_game_state(clear_flag:=DialogicGameHandler.ClearFlags.FULL_CLEAR) -> void:
 	glossaries = []
 	for path in ProjectSettings.get_setting('dialogic/glossary/glossary_files', []):
 		add_glossary(path)
@@ -38,9 +41,14 @@ func parse_glossary(text:String) -> String:
 				regex.compile(pattern)
 			else:
 				regex.compile('(?i)'+pattern)
+
+			var color: String = glossary.entries[entry].get('color', def_color).to_html()
+			if entry in color_overrides:
+				color = color_overrides[entry].to_html()
+
 			text = regex.sub(text,
 				'[url=' + entry + ']' +
-				'[color=' + glossary.entries[entry].get('color', def_color).to_html() + ']${word}[/color]' +
+				'[color=' + color + ']${word}[/color]' +
 				'[/url]', true
 				)
 	return text
@@ -64,10 +72,10 @@ func get_entry(name:String, parse_variables:bool = true) -> Dictionary:
 	for glossary in glossaries:
 		if name in glossary.entries:
 			var info:Dictionary = glossary.entries[name].duplicate()
-			if parse_variables and Dialogic.has_subsystem('VAR'):
+			if parse_variables and dialogic.has_subsystem('VAR'):
 				for key in info.keys():
 					if typeof(info[key]) == TYPE_STRING:
-						info[key] = Dialogic.VAR.parse_variables(info[key])
+						info[key] = dialogic.VAR.parse_variables(info[key])
 			return info
 	return {}
 

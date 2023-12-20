@@ -1,7 +1,7 @@
 class_name DialogicNode_DialogText
 extends RichTextLabel
 
-## Dialogic node that can reveal text at a given (changeable speed). 
+## Dialogic node that can reveal text at a given (changeable speed).
 
 signal started_revealing_text()
 signal continued_revealing_text(new_character)
@@ -22,7 +22,6 @@ var lspeed:float = 0.01
 var speed_counter:float = 0
 
 
-
 func _set(property, what):
 	if property == 'text' and typeof(what) == TYPE_STRING:
 		text = what
@@ -34,8 +33,11 @@ func _set(property, what):
 func _ready() -> void:
 	# add to necessary
 	add_to_group('dialogic_dialog_text')
-	
+
 	bbcode_enabled = true
+	if textbox_root == null:
+		textbox_root = self
+
 	if start_hidden:
 		textbox_root.hide()
 	text = ""
@@ -46,10 +48,11 @@ func reveal_text(_text:String, keep_previous:=false) -> void:
 	if !enabled:
 		return
 	show()
-	
+
 	if !keep_previous:
 		text = _text
 		base_visible_characters = 0
+
 		if alignment == Alignment.CENTER:
 			text = '[center]'+text
 		elif alignment == Alignment.RIGHT:
@@ -59,7 +62,13 @@ func reveal_text(_text:String, keep_previous:=false) -> void:
 		base_visible_characters = len(text)
 		visible_characters = len(text)
 		text = text+_text
-	
+
+		# If Auto-Skip is enabled and we append the text (keep_previous),
+		# we can skip revealing the text and just show it all at once.
+		if DialogicUtil.autoload().Input.auto_skip.enabled:
+			visible_characters = 1
+			return
+
 	revealing = true
 	speed_counter = 0
 	started_revealing_text.emit()
@@ -69,35 +78,41 @@ func reveal_text(_text:String, keep_previous:=false) -> void:
 func continue_reveal() -> void:
 	if visible_characters <= get_total_character_count():
 		revealing = false
-		await Dialogic.Text.execute_effects(visible_characters-base_visible_characters, self, false)
+		await DialogicUtil.autoload().Text.execute_effects(visible_characters-base_visible_characters, self, false)
+
 		if visible_characters == -1:
 			return
 		revealing = true
 		visible_characters += 1
+
 		if visible_characters > -1 and visible_characters <= len(get_parsed_text()):
 			continued_revealing_text.emit(get_parsed_text()[visible_characters-1])
 	else:
 		finish_text()
 		# if the text finished organically, add a small input block
 		# this prevents accidental skipping when you expected the text to be longer
-		Dialogic.Text.input_handler.block_input(0.3)
+		# TODO! Make this configurable in the settings!
+		DialogicUtil.autoload().Input.block_input(0.3)
 
 
 # shows all the text imidiatly
 # called by this thing itself or the DialogicGameHandler
 func finish_text() -> void:
 	visible_ratio = 1
-	Dialogic.Text.execute_effects(-1, self, true)
+	DialogicUtil.autoload().Text.execute_effects(-1, self, true)
 	revealing = false
-	Dialogic.current_state = Dialogic.States.IDLE
-	emit_signal("finished_revealing_text")
+	DialogicUtil.autoload().current_state = DialogicGameHandler.States.IDLE
+
+	finished_revealing_text.emit()
 
 
 # Calls continue_reveal. Used instead of a timer to allow multiple reveals per frame.
 func _process(delta:float) -> void:
-	if !revealing or Dialogic.paused:
+	if !revealing or DialogicUtil.autoload().paused:
 		return
+
 	speed_counter += delta
-	while speed_counter > lspeed and revealing and !Dialogic.paused:
+
+	while speed_counter > lspeed and revealing and !DialogicUtil.autoload().paused:
 		speed_counter -= lspeed
 		continue_reveal()

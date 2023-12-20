@@ -1,87 +1,147 @@
 extends DialogicSubsystem
 
-## Subsystem for managing backgrounds. 
+## Subsystem for managing backgrounds.
 
 signal background_changed(info:Dictionary)
 
+var _tween: Tween
+var _tween_callbacks: Array[Callable]
 
-var default_background_scene :PackedScene = load(get_script().resource_path.get_base_dir().path_join('default_background.tscn'))
+var default_background_scene: PackedScene = load(get_script().resource_path.get_base_dir().path_join('DefaultBackgroundScene/default_background.tscn'))
+var default_transition: String = get_script().resource_path.get_base_dir().path_join("Transitions/Defaults/simple_fade.gd")
+
 ####################################################################################################
 ##					STATE
 ####################################################################################################
 
-func clear_game_state(clear_flag:=Dialogic.ClearFlags.FULL_CLEAR):
+func clear_game_state(clear_flag:=DialogicGameHandler.ClearFlags.FULL_CLEAR):
 	update_background()
 
 
-func load_game_state():
-	update_background(dialogic.current_state_info.get('background_scene', ''), dialogic.current_state_info.get('background_argument', ''))
+func load_game_state(load_flag:=LoadFlags.FULL_LOAD):
+	update_background(dialogic.current_state_info.get('background_scene', ''), dialogic.current_state_info.get('background_argument', ''), 0.0, default_transition, true)
 
 
 ####################################################################################################
 ##					MAIN METHODS
 ####################################################################################################
 
-## Method that adds a given scene as child of the DialogicNode_BackgroundHolder. 
+## Method that adds a given scene as child of the DialogicNode_BackgroundHolder.
 ## It will call [_update_background()] on that scene with the given argument [argument].
 ## It will call [_fade_in()] on that scene with the given fade time.
 ## Will call fade_out on previous backgrounds scene.
 ##
-## If the scene is the same as the last background you can bypass another instantiating 
+## If the scene is the same as the last background you can bypass another instantiating
 ## and use the same scene.
 ## To do so implement [_should_do_background_update()] on the custom background scene.
 ## Then  [_update_background()] will be called directly on that previous scene.
-func update_background(scene:String = '', argument:String = '', fade_time:float = 0.0) -> void:
+func update_background(scene:String = '', argument:String = '', fade_time:float = 0.0, transition_path:=default_transition, force:bool = false) -> void:
+	var background_holder: DialogicNode_BackgroundHolder
+	if dialogic.has_subsystem('Styles'):
+		background_holder = Dialogic.Styles.get_first_node_in_layout('dialogic_background_holders')
+	else:
+		background_holder = get_tree().get_first_node_in_group('dialogic_background_holders')
+	if background_holder == null:
+		return
+
 	var info := {'scene':scene, 'argument':argument, 'fade_time':fade_time, 'same_scene':false}
-	for node in get_tree().get_nodes_in_group('dialogic_background_holders'):
-		if node.visible:
-			var bg_set: bool = false
-			if scene == dialogic.current_state_info['background_scene']:
-				for old_bg in node.get_children():
-					if old_bg.has_method("_should_do_background_update") and old_bg._should_do_background_update(argument):
-						if old_bg.has_method('_update_background'):
-							old_bg._update_background(argument, fade_time)
-							bg_set = true
-							info['same_scene'] = true
-			if !bg_set:
-				# remove previous backgrounds
-				for old_bg in node.get_children():
-					
-					if !old_bg._fade_out(fade_time) and "modulate" in old_bg:
-						var tween := old_bg.create_tween()
-						tween.tween_property(old_bg, "modulate", Color.TRANSPARENT, fade_time)
-						tween.tween_callback(old_bg.queue_free)
-					else:
-						old_bg.queue_free()
-				
-				var new_node:Node
-				if scene.ends_with('.tscn'):
-					new_node = load(scene).instantiate()
-					if !new_node is DialogicBackground:
-						printerr("[Dialogic] Tried using custom backgrounds that doesn't extend DialogicBackground class!")
-						new_node.queue_free()
-						new_node  = null
-				elif argument:
-					new_node = default_background_scene.instantiate() 
-				else:
-					new_node = null
-				
-				if new_node:
-					node.add_child(new_node)
-					
-					if new_node.has_method('_update_background'):
-						new_node._update_background(argument, fade_time)
-					
-					if !new_node._fade_in(fade_time) and "modulate" in new_node:
-						new_node.modulate = Color.TRANSPARENT
-						var tween := new_node.create_tween()
-						tween.tween_property(new_node, "modulate", Color.WHITE, fade_time)
-	
+
+	var bg_set := false
+
+	# First try just updating the existing scene.
+	if scene == dialogic.current_state_info.get('background_scene', ''):
+
+		if not force and argument == dialogic.current_state_info.get('background_argument', ''):
+			return
+
+		for old_bg in background_holder.get_children():
+			if !old_bg.has_meta('node') or not old_bg.get_meta('node') is DialogicBackground:
+				continue
+
+			var prev_bg_node: DialogicBackground = old_bg.get_meta('node')
+			if prev_bg_node._should_do_background_update(argument):
+				prev_bg_node._update_background(argument, fade_time)
+				bg_set = true
+				info['same_scene'] = true
+
 	dialogic.current_state_info['background_scene'] = scene
 	dialogic.current_state_info['background_argument'] = argument
+
+	if bg_set:
+		background_changed.emit(info)
+		return
+
+	var old_viewport: SubViewportContainer = null
+	if background_holder.has_meta('current_viewport'):
+		old_viewport = background_holder.get_meta('current_viewport', null)
+
+	var new_viewport: SubViewportContainer
+	if scene.ends_with('.tscn') and ResourceLoader.exists(scene):
+		new_viewport = add_background_node(load(scene), background_holder)
+	elif argument:
+		new_viewport = add_background_node(default_background_scene, background_holder)
+	else:
+		new_viewport = null
+
+	var trans_script :Script = load(DialogicResourceUtil.guess_special_resource("BackgroundTransition", transition_path, default_transition))
+	var trans_node := Node.new()
+	trans_node.set_script(trans_script)
+	trans_node = (trans_node as DialogicBackgroundTransition)
+	trans_node.bg_holder = background_holder
+	trans_node.time = fade_time
+
+	if old_viewport:
+		trans_node.prev_scene = old_viewport.get_meta('node', null)
+		trans_node.prev_texture = old_viewport.get_child(0).get_texture()
+		old_viewport.get_meta('node')._custom_fade_out(fade_time)
+		trans_node.transition_finished.connect(old_viewport.queue_free)
+	if new_viewport:
+		trans_node.next_scene = new_viewport.get_meta('node', null)
+		trans_node.next_texture = new_viewport.get_child(0).get_texture()
+		new_viewport.get_meta('node')._update_background(argument, fade_time)
+		new_viewport.get_meta('node')._custom_fade_in(fade_time)
+	else:
+		background_holder.remove_meta('current_viewport')
+
+	add_child(trans_node)
+	trans_node._fade()
+	trans_node.transition_finished.connect(trans_node.queue_free)
+
 	background_changed.emit(info)
+
+
+func add_background_node(scene:PackedScene, parent:DialogicNode_BackgroundHolder) -> SubViewportContainer:
+	var v_con := SubViewportContainer.new()
+	var viewport := SubViewport.new()
+	var b_scene := scene.instantiate()
+	if not b_scene is DialogicBackground:
+		printerr("[Dialogic] Given background scene was not of type DialogicBackground! Make sure the scene has a script that extends DialogicBackground.")
+		v_con.queue_free()
+		viewport.queue_free()
+		b_scene.queue_free()
+		return null
+
+	parent.add_child(v_con)
+	v_con.visible = false
+	v_con.stretch = true
+	v_con.size = parent.size
+	v_con.set_anchors_preset(Control.PRESET_FULL_RECT)
+
+	v_con.add_child(viewport)
+	viewport.transparent_bg = true
+	viewport.disable_3d = true
+
+	viewport.add_child(b_scene)
+	b_scene.viewport = viewport
+	b_scene.viewport_container = v_con
+
+	parent.set_meta('current_viewport', v_con)
+	v_con.set_meta('node', b_scene)
+
+	return v_con
 
 
 func has_background() -> bool:
 	return !dialogic.current_state_info['background_scene'].is_empty() or !dialogic.current_state_info['background_argument'].is_empty()
+
 

@@ -1,5 +1,5 @@
 class_name DialogicNode_BackgroundHolder
-extends CanvasLayer
+extends ColorRect
 
 
 func _ready():

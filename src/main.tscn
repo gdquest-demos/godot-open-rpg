@@ -467,7 +467,6 @@ metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="DialogueLayout" type="Control" parent="UI"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -525,7 +524,7 @@ offset_bottom = -8.0
 theme_override_constants/separation = 32
 
 [node name="Portrait" type="Control" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker"]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 script = ExtResource("21_f53lt")
 position_index = 1

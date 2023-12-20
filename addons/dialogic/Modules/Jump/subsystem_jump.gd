@@ -10,11 +10,11 @@ signal returned_from_jump(info:Dictionary)
 ##					STATE
 ####################################################################################################
 
-func clear_game_state(clear_flag:=Dialogic.ClearFlags.FULL_CLEAR):
+func clear_game_state(clear_flag:=DialogicGameHandler.ClearFlags.FULL_CLEAR):
 	dialogic.current_state_info['jump_stack'] = []
 
 
-func load_game_state():
+func load_game_state(load_flag:=LoadFlags.FULL_LOAD):
 	if not 'jump_stack' in dialogic.current_state_info:
 		dialogic.current_state_info['jump_stack'] = []
 
@@ -49,7 +49,7 @@ func resume_from_last_jump() -> void:
 	var stack_info :Dictionary = dialogic.current_state_info['jump_stack'].pop_back()
 	dialogic.start_timeline(stack_info.timeline, stack_info.index+1)
 	returned_from_jump.emit({'sub_timeline':sub_timeline, 'label':stack_info.label})
-	
+
 
 
 func is_jump_stack_empty():

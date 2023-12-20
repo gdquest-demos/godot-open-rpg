@@ -12,11 +12,13 @@ var base_sound_player := AudioStreamPlayer.new()
 ##					STATE
 ####################################################################################################
 
-func clear_game_state(clear_flag:=Dialogic.ClearFlags.FULL_CLEAR):
+func clear_game_state(clear_flag:=DialogicGameHandler.ClearFlags.FULL_CLEAR):
 	update_music()
 	stop_all_sounds()
 
-func load_game_state():
+func load_game_state(load_flag:=LoadFlags.FULL_LOAD):
+	if load_flag == LoadFlags.ONLY_DNODES:
+		return
 	var info = dialogic.current_state_info.get('music')
 	if info == null or info.path.is_empty():
 		update_music()
@@ -38,7 +40,7 @@ func resume() -> void:
 func _ready() -> void:
 	base_music_player.name = "Music"
 	add_child(base_music_player)
-	
+
 	base_sound_player.name = "Sound"
 	add_child(base_sound_player)
 
@@ -61,16 +63,17 @@ func update_music(path:String = '', volume:float = 0.0, audio_bus:String = "Mast
 		base_music_player.stream = load(path)
 		base_music_player.volume_db = volume
 		base_music_player.bus = audio_bus
-		if "loop" in base_music_player.stream:
-			base_music_player.stream.loop = loop
-		elif "loop_mode" in base_music_player.stream:
-			if loop:
-				base_music_player.stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
-			else:
-				base_music_player.stream.loop_mode = AudioStreamWAV.LOOP_DISABLED
+		if not base_music_player.stream is AudioStreamWAV:
+			if "loop" in base_music_player.stream:
+				base_music_player.stream.loop = loop
+			elif "loop_mode" in base_music_player.stream:
+				if loop:
+					base_music_player.stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+				else:
+					base_music_player.stream.loop_mode = AudioStreamWAV.LOOP_DISABLED
 
-		base_music_player.play()
-		fader.parallel().tween_method(interpolate_volume_linearly.bind(base_music_player), 0.0,db_to_linear(volume),fade_time)
+		base_music_player.play(0)
+		fader.parallel().tween_method(interpolate_volume_linearly.bind(base_music_player), 0.0, db_to_linear(volume),fade_time)
 	else:
 		base_music_player.stop()
 	if prev_node:
