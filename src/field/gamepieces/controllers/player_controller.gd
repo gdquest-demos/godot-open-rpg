@@ -57,6 +57,13 @@ func _ready() -> void:
 		_align_interaction_searcher_to_faced_cell()
 
 
+func set_is_paused(paused: bool) -> void:
+	super.set_is_paused(paused)
+	set_process(!paused)
+	set_physics_process(!paused)
+	
+
+
 func _physics_process(_delta: float) -> void:
 	var move_dir: = _get_move_direction()
 	if move_dir:
@@ -101,12 +108,6 @@ func _get_move_direction() -> Vector2:
 func _align_interaction_searcher_to_faced_cell() -> void:
 	var cell_coordinates: = Vector2(_gameboard.cell_to_pixel(_gamepiece.get_faced_cell()))
 	_interaction_searcher.global_position = cell_coordinates*_gamepiece.global_scale
-
-
-func _on_input_paused(paused: bool) -> void:
-	super._on_input_paused(paused)
-	set_process(!paused)
-	set_physics_process(!paused)
 
 
 # The controller's focus will finish travelling this frame unless it is extended.

@@ -27,6 +27,20 @@ func _ready() -> void:
 		_timer.start()
 
 
+func set_is_paused(paused: bool) -> void:
+	is_paused = paused
+	
+	# Pause/unpause the wait timer to match the controller's 'paused state'. This is only really
+	# relevant if the controller is currently waiting to run the next loop.
+	_timer.paused = is_paused
+	
+	# Otherwise, if the gamepiece is in transit, pick up where it had left off.
+	if not paused:
+		if _current_waypoint_index > 0 and _current_waypoint_index < _waypoints.size() - 1:
+			_current_waypoint_index += 1
+			_gamepiece.travel_to_cell(_waypoints[_current_waypoint_index])
+
+
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
 	
@@ -84,12 +98,6 @@ func _find_waypoints_from_line2D() -> void:
 	_waypoints.append_array(pathfinder.get_path_cells(last_cell, first_cell).slice(1))
 
 
-func _on_input_paused(paused: bool) -> void:
-	is_paused = paused
-	if not paused:
-		_timer.start()
-
-
 func _on_gamepiece_arriving(excess_distance: float) -> void:
 	if is_paused:
 		return
@@ -112,8 +120,7 @@ func _on_gamepiece_arriving(excess_distance: float) -> void:
 
 
 func _on_gamepiece_arrived() -> void:
-	if not is_paused:
-		_timer.start()
+	_timer.start()
 
 
 func _on_timer_timeout() -> void:

@@ -278,7 +278,7 @@ move_path = NodePath("MovePath")
 gamepiece_mask = 2
 
 [node name="WaitTimer" type="Timer" parent="Terrain/Gamepieces/Runner/LoopAI"]
-wait_time = 0.001
+wait_time = 1.5
 one_shot = true
 
 [node name="MovePath" type="Line2D" parent="Terrain/Gamepieces/Runner/LoopAI"]

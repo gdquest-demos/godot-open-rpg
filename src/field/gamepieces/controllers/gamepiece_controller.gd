@@ -44,7 +44,9 @@ var _gameboard: Gameboard
 var _gamepiece_searcher: CollisionFinder
 var _terrain_searcher: CollisionFinder
 
-var is_paused: = false
+var is_paused: = false:
+	set = set_is_paused
+
 
 # Keep track of a move path. The controller will check that the path is clear each time the 
 # gamepiece needs to continue on to the next cell.
@@ -143,6 +145,15 @@ func get_collisions(cell: Vector2i) -> Array:
 	return _gamepiece_searcher.search(search_coordinates)
 
 
+func set_is_paused(paused: bool) -> void:
+	print("Running setter")
+	is_paused = paused
+		
+	if is_inside_tree() and not _waypoints.is_empty():
+		_current_waypoint = _waypoints.pop_front()
+		_gamepiece.travel_to_cell(_current_waypoint)
+
+
 # Completely rebuild the pathfinder, searching for all empty terrain within the gameboard 
 # boundaries.
 # Empty terrain is considered a cell that is NOT occupied by a collider with a terrain_mask.
@@ -200,9 +211,6 @@ func _update_changed_cells() -> void:
 
 func _on_input_paused(paused: bool) -> void:
 	is_paused = paused
-	if not _waypoints.is_empty():
-		_current_waypoint = _waypoints.pop_front()
-		_gamepiece.travel_to_cell(_current_waypoint)
 
 
 # The controller's focus will finish travelling this frame unless it is extended. When following a
