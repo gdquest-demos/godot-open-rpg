@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://src/field/gameboard/lockable_door.gd" id="1_u45hv"]
 [ext_resource type="AudioStream" uid="uid://c5mcvei7x3nyd" path="res://assets/sfx/doors/sfx_movement_dooropen4.wav" id="2_ufclx"]
 [ext_resource type="AudioStream" uid="uid://dqhhqeihtm1q6" path="res://assets/sfx/doors/sfx_movement_dooropen3.wav" id="3_oftid"]
-[ext_resource type="Script" path="res://src/field/area_transition_trigger.gd" id="3_us5pu"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/doors/area_transition_trigger.gd" id="3_us5pu"]
 [ext_resource type="AudioStream" uid="uid://ddaucqxv3tf7m" path="res://assets/sfx/doors/sfx_movement_dooropen1.wav" id="4_orhec"]
-[ext_resource type="Script" path="res://src/field/interaction_template_locked_door.gd" id="5_61l11"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/doors/interaction_template_locked_door.gd" id="5_61l11"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="7_2e200"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ge4hl"]

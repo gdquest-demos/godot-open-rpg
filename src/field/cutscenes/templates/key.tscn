@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ceefih4ls7dcn"]
 
-[ext_resource type="Script" path="res://src/field/key_trigger.gd" id="1_x3um1"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/key_trigger.gd" id="1_x3um1"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="2_anxc4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f4ats"]

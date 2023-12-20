@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://ber3qsogrcx52" path="res://assets/characters/apothecary.atlastex" id="13_tekkh"]
 [ext_resource type="Script" path="res://src/field/player_path_destination_marker.gd" id="14_0j4ru"]
 [ext_resource type="PackedScene" uid="uid://se1wnxu5svgj" path="res://data/field/characters/knight_gfx.tscn" id="14_av6f5"]
-[ext_resource type="Script" path="res://src/field/interaction_template_conversation.gd" id="15_rfx1g"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/interaction_template_conversation.gd" id="14_b3y71"]
 [ext_resource type="Script" path="res://data/maps/town/thief_interaction.gd" id="16_5r5nu"]
 [ext_resource type="Resource" path="res://data/maps/town/runner.dtl" id="16_ybo02"]
 [ext_resource type="Script" path="res://data/maps/town/monk_interaction.gd" id="17_bift3"]
@@ -33,9 +33,9 @@
 [ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="21_r13nn"]
 [ext_resource type="Script" path="res://data/maps/town/fan_interaction.gd" id="24_u4cmv"]
 [ext_resource type="Resource" path="res://data/maps/town/fan_of_four.dtl" id="25_dmuyg"]
-[ext_resource type="PackedScene" uid="uid://c14b8ageu2otv" path="res://src/field/door.tscn" id="26_kf5ye"]
+[ext_resource type="PackedScene" uid="uid://c14b8ageu2otv" path="res://src/field/cutscenes/templates/doors/door.tscn" id="26_kf5ye"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
-[ext_resource type="PackedScene" uid="uid://ceefih4ls7dcn" path="res://src/field/key.tscn" id="29_gxq7u"]
+[ext_resource type="PackedScene" uid="uid://ceefih4ls7dcn" path="res://src/field/cutscenes/templates/key.tscn" id="29_gxq7u"]
 [ext_resource type="Script" path="res://data/maps/town/strange_tree_interaction.gd" id="30_lj1m5"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="31_6t021"]
 [ext_resource type="Script" path="res://src/field/ui/ui_inventory.gd" id="34_tk01t"]
@@ -265,7 +265,7 @@ metadata/_edit_group_ = true
 [node name="Interaction" type="Area2D" parent="Terrain/Gamepieces/Runner"]
 collision_layer = 16
 collision_mask = 8
-script = ExtResource("15_rfx1g")
+script = ExtResource("14_b3y71")
 timeline = ExtResource("16_ybo02")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/Runner/Interaction"]
