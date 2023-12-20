@@ -131,9 +131,9 @@ region_enabled = true
 region_rect = Rect2(153, 153, 16, 16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "default"
 libraries = {
 "": SubResource("AnimationLibrary_dm7dx")
 }
+autoplay = "default"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
