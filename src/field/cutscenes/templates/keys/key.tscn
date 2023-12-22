@@ -1,10 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://ceefih4ls7dcn"]
 
-[ext_resource type="Script" path="res://src/field/cutscenes/templates/key_trigger.gd" id="1_x3um1"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/keys/key.gd" id="1_3ccf8"]
+[ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/Trigger.tscn" id="1_wydyv"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="2_anxc4"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f4ats"]
-size = Vector2(16, 16)
 
 [sub_resource type="Animation" id="Animation_u4cto"]
 length = 0.001
@@ -90,20 +88,6 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Area2D")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"add_key"
-}]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dm7dx"]
 _data = {
@@ -113,17 +97,10 @@ _data = {
 }
 
 [node name="Key" type="Node2D"]
+script = ExtResource("1_3ccf8")
 metadata/_edit_group_ = true
 
-[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("_anim")]
-collision_layer = 32
-collision_mask = 4
-script = ExtResource("1_x3um1")
-_anim = NodePath("../AnimationPlayer")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_f4ats")
-debug_color = Color(1, 0.55, 0.8, 0.42)
+[node name="PickupTrigger" parent="." instance=ExtResource("1_wydyv")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_anxc4")
@@ -137,3 +114,5 @@ libraries = {
 autoplay = "default"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="triggered" from="PickupTrigger" to="." method="_on_pickup_triggered"]

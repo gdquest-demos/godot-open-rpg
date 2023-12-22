@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpopnsfpfdasl"]
+
+[ext_resource type="Script" path="res://src/field/cutscenes/trigger.gd" id="1_htew5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dru4t"]
+size = Vector2(14, 14)
+
+[node name="Trigger" type="Node2D"]
+script = ExtResource("1_htew5")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_dru4t")
+debug_color = Color(1, 0.55, 0.8, 0.42)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_exited"]

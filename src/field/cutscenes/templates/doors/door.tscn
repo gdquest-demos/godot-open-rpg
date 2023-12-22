@@ -1,10 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://c14b8ageu2otv"]
+[gd_scene load_steps=15 format=3 uid="uid://c14b8ageu2otv"]
 
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="1_goth7"]
 [ext_resource type="Script" path="res://src/field/gameboard/lockable_door.gd" id="1_u45hv"]
 [ext_resource type="AudioStream" uid="uid://c5mcvei7x3nyd" path="res://assets/sfx/doors/sfx_movement_dooropen4.wav" id="2_ufclx"]
 [ext_resource type="AudioStream" uid="uid://dqhhqeihtm1q6" path="res://assets/sfx/doors/sfx_movement_dooropen3.wav" id="3_oftid"]
-[ext_resource type="Script" path="res://src/field/cutscenes/templates/doors/area_transition_trigger.gd" id="3_us5pu"]
 [ext_resource type="AudioStream" uid="uid://ddaucqxv3tf7m" path="res://assets/sfx/doors/sfx_movement_dooropen1.wav" id="4_orhec"]
 [ext_resource type="Script" path="res://src/field/cutscenes/templates/doors/interaction_template_locked_door.gd" id="5_61l11"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="7_2e200"]
@@ -196,17 +195,19 @@ region_rect = Rect2(17, 119, 16, 16)
 [node name="AreaTransitionTrigger" type="Area2D" parent="GFX"]
 collision_layer = 32
 collision_mask = 4
-script = ExtResource("3_us5pu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GFX/AreaTransitionTrigger"]
 shape = SubResource("CircleShape2D_ge4hl")
 
-[node name="LockedInteraction" type="Area2D" parent="GFX" node_paths=PackedStringArray("_anim")]
+[node name="LockedInteraction" type="Area2D" parent="GFX"]
 collision_layer = 18
 collision_mask = 8
 script = ExtResource("5_61l11")
-_anim = NodePath("../../AnimationPlayer")
 is_active = false
+_anim = Object(AnimationPlayer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","active":true,"deterministic":false,"reset_on_save":true,"root_node":NodePath(".."),"root_motion_track":NodePath(""),"audio_max_polyphony":32,"callback_mode_process":1,"callback_mode_method":0,"libraries":{
+"": SubResource("AnimationLibrary_3ff1q")
+},"autoplay":"","playback_default_blend_time":0.0,"speed_scale":1.0,"movie_quit_on_finish":false,"blend_times":[],"script":null)
+
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GFX/LockedInteraction"]
 shape = SubResource("RectangleShape2D_mbh1i")

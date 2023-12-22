@@ -27,19 +27,20 @@ func _ready() -> void:
 	place_camera_at_focused_game_piece()
 
 
-func place_camera_at_focused_game_piece() -> void:
-	camera.reset_smoothing()
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("ui_focus_next"):
 		val += 1
 		if val % 2:
-			print("PAuse")
+			print("pause")
 			FieldEvents.input_paused.emit(true)
+		
 		else:
-			print("Unpause")
+			print("unpause")
 			FieldEvents.input_paused.emit(false)
+
+
+func place_camera_at_focused_game_piece() -> void:
+	camera.reset_smoothing()
 
 
 func set_focused_game_piece(value: Gamepiece) -> void:

@@ -24,7 +24,7 @@
 ## the player interaction with them via a keypress or touch. Several derived temlpates (for example,
 ## open-able doors) are included in res://field/cutscenes/templates.
 @icon("res://assets/editor/icons/Cutscene.svg")
-class_name Cutscene extends Area2D
+class_name Cutscene extends Node2D
 
 # Indicates if a cutscene is currently running. [b]This member should not be set externally[/b].
 static var _is_cutscene_in_progress: = false:
@@ -41,7 +41,7 @@ static func is_cutscene_in_progress() -> bool:
 
 
 ## Execute the cutscene, if possible. Everything happening on the field gamestate will be
-## paused and unpaused as the cutscene starts and finished, respectively.
+## paused and unpaused as the cutscene starts and finishes, respectively.
 func run() -> void:
 	if not _is_cutscene_in_progress:
 		_is_cutscene_in_progress = true

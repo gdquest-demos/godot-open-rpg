@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=39 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -11,33 +11,27 @@
 [ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://data/field/characters/gobot_gfx.tscn" id="12_oablq"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="13_osl4o"]
 [ext_resource type="Texture2D" uid="uid://ber3qsogrcx52" path="res://assets/characters/apothecary.atlastex" id="13_tekkh"]
-[ext_resource type="Resource" path="res://data/maps/town/warrior.dtl" id="13_yxfrf"]
 [ext_resource type="Script" path="res://src/field/player_path_destination_marker.gd" id="14_0j4ru"]
 [ext_resource type="PackedScene" uid="uid://se1wnxu5svgj" path="res://data/field/characters/knight_gfx.tscn" id="14_av6f5"]
-[ext_resource type="Script" path="res://src/field/cutscenes/templates/interaction_template_conversation.gd" id="14_b3y71"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/conversations/conversation_template.gd" id="14_b3y71"]
 [ext_resource type="Resource" path="res://data/maps/town/runner.dtl" id="16_ybo02"]
 [ext_resource type="PackedScene" uid="uid://dqdk6eehxsrmn" path="res://data/field/characters/monk_gfx.tscn" id="17_qgtho"]
 [ext_resource type="PackedScene" uid="uid://kiwma43jc3n6" path="res://data/field/characters/lady_gfx.tscn" id="17_sieyv"]
 [ext_resource type="PackedScene" uid="uid://bvtk5qllej4b8" path="res://data/field/characters/smith_gfx.tscn" id="18_2msel"]
 [ext_resource type="Script" path="res://src/field/gameboard/debug_map_boundaries.gd" id="18_cqtg7"]
-[ext_resource type="Resource" path="res://data/maps/town/thief.dtl" id="18_prsnj"]
 [ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://data/field/characters/wizard_gfx.tscn" id="19_ius2d"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="19_lpxfg"]
+[ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="19_sa6jd"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="20_g8d34"]
 [ext_resource type="Script" path="res://src/field/ui/dialogue_window.gd" id="20_lk3dv"]
-[ext_resource type="Resource" path="res://data/maps/town/monk.dtl" id="20_lligu"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="21_f53lt"]
 [ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="21_r13nn"]
 [ext_resource type="Resource" path="res://data/maps/town/smith.dtl" id="22_dko83"]
-[ext_resource type="Resource" path="res://data/maps/town/wizard.dtl" id="24_evxk7"]
 [ext_resource type="Script" path="res://data/maps/town/fan_interaction.gd" id="24_u4cmv"]
 [ext_resource type="Resource" path="res://data/maps/town/fan_of_four.dtl" id="25_dmuyg"]
 [ext_resource type="PackedScene" uid="uid://c14b8ageu2otv" path="res://src/field/cutscenes/templates/doors/door.tscn" id="26_kf5ye"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
-[ext_resource type="PackedScene" uid="uid://ceefih4ls7dcn" path="res://src/field/cutscenes/templates/key.tscn" id="29_gxq7u"]
-[ext_resource type="Script" path="res://data/maps/town/strange_tree_interaction.gd" id="30_lj1m5"]
-[ext_resource type="Resource" path="res://data/maps/town/sign.dtl" id="30_watcy"]
-[ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="31_6t021"]
+[ext_resource type="PackedScene" uid="uid://ceefih4ls7dcn" path="res://src/field/cutscenes/templates/keys/key.tscn" id="29_gxq7u"]
 [ext_resource type="Script" path="res://src/field/ui/ui_inventory.gd" id="34_tk01t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_orie5"]
@@ -53,118 +47,11 @@ sources/0 = SubResource("TileSetAtlasSource_orie5")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn0hs"]
 size = Vector2(16, 16)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2lbg3"]
-radius = 4.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_02nj2"]
 radius = 4.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_haji2"]
-texture = ExtResource("31_6t021")
-separation = Vector2i(1, 1)
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-8:1/0 = 0
-8:2/0 = 0
-7:2/0 = 0
-6:1/0 = 0
-7:1/0 = 0
-6:2/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_q85hy"]
-sources/0 = SubResource("TileSetAtlasSource_haji2")
-
-[sub_resource type="Animation" id="Animation_na64j"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TreeOverlay:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PathBlocker/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:is_active")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_em6cg"]
-resource_name = "disappear"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TreeOverlay:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PathBlocker/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:is_active")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_once4"]
-_data = {
-"RESET": SubResource("Animation_na64j"),
-"disappear": SubResource("Animation_em6cg")
-}
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_t030y"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_2lbg3"]
 radius = 4.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rskjt"]
-size = Vector2(14, 14)
 
 [node name="Gameboard" type="Node2D" node_paths=PackedStringArray("focused_game_piece")]
 scale = Vector2(5, 5)
@@ -236,17 +123,6 @@ metadata/_edit_group_ = true
 
 [node name="KnightGFX" parent="Terrain/Gamepieces/MoodyHero" instance=ExtResource("14_av6f5")]
 
-[node name="Interaction" type="Area2D" parent="Terrain/Gamepieces/MoodyHero"]
-collision_layer = 16
-collision_mask = 8
-script = ExtResource("14_b3y71")
-timeline = ExtResource("13_yxfrf")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/MoodyHero/Interaction"]
-shape = SubResource("CircleShape2D_2lbg3")
-debug_color = Color(1, 0.929412, 0.631373, 0.419608)
-
 [node name="Runner" parent="Terrain/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(296, 184)
 gameboard = ExtResource("6_kd8tv")
@@ -286,17 +162,6 @@ metadata/_edit_group_ = true
 
 [node name="ThiefGFX" parent="Terrain/Gamepieces/Thief" instance=ExtResource("17_sieyv")]
 
-[node name="Interaction" type="Area2D" parent="Terrain/Gamepieces/Thief"]
-collision_layer = 16
-collision_mask = 8
-script = ExtResource("14_b3y71")
-timeline = ExtResource("18_prsnj")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/Thief/Interaction"]
-shape = SubResource("CircleShape2D_2lbg3")
-debug_color = Color(1, 0.929412, 0.631373, 0.419608)
-
 [node name="Monk" parent="Terrain/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(344, 8)
 gameboard = ExtResource("6_kd8tv")
@@ -304,17 +169,6 @@ blocks_movement = true
 metadata/_edit_group_ = true
 
 [node name="MonkGFX" parent="Terrain/Gamepieces/Monk" instance=ExtResource("17_qgtho")]
-
-[node name="Interaction" type="Area2D" parent="Terrain/Gamepieces/Monk"]
-collision_layer = 16
-collision_mask = 8
-script = ExtResource("14_b3y71")
-timeline = ExtResource("20_lligu")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/Monk/Interaction"]
-shape = SubResource("CircleShape2D_2lbg3")
-debug_color = Color(1, 0.929412, 0.631373, 0.419608)
 
 [node name="Smith" parent="Terrain/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(136, 88)
@@ -324,16 +178,9 @@ metadata/_edit_group_ = true
 
 [node name="KnightGFX" parent="Terrain/Gamepieces/Smith" instance=ExtResource("18_2msel")]
 
-[node name="Interaction" type="Area2D" parent="Terrain/Gamepieces/Smith"]
-collision_layer = 16
-collision_mask = 8
+[node name="Interaction" parent="Terrain/Gamepieces/Smith" instance=ExtResource("19_sa6jd")]
 script = ExtResource("14_b3y71")
 timeline = ExtResource("22_dko83")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/Smith/Interaction"]
-shape = SubResource("CircleShape2D_2lbg3")
-debug_color = Color(1, 0.929412, 0.631373, 0.419608)
 
 [node name="Wizard" parent="Terrain/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(344, 72)
@@ -342,17 +189,6 @@ blocks_movement = true
 metadata/_edit_group_ = true
 
 [node name="WizardGFX" parent="Terrain/Gamepieces/Wizard" instance=ExtResource("19_ius2d")]
-
-[node name="Interaction" type="Area2D" parent="Terrain/Gamepieces/Wizard"]
-collision_layer = 16
-collision_mask = 8
-script = ExtResource("14_b3y71")
-timeline = ExtResource("24_evxk7")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/Wizard/Interaction"]
-shape = SubResource("CircleShape2D_2lbg3")
-debug_color = Color(1, 0.929412, 0.631373, 0.419608)
 
 [node name="AdoringFan" parent="Terrain/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(280, 104)
@@ -383,51 +219,6 @@ position = Vector2(120, 176)
 
 [node name="Key" parent="Terrain/Gamepieces" instance=ExtResource("29_gxq7u")]
 position = Vector2(40, 24)
-
-[node name="SignInteraction" type="Area2D" parent="Terrain"]
-position = Vector2(152, 168)
-collision_layer = 16
-collision_mask = 8
-script = ExtResource("14_b3y71")
-timeline = ExtResource("30_watcy")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/SignInteraction"]
-shape = SubResource("CircleShape2D_2lbg3")
-debug_color = Color(1, 0.929412, 0.631373, 0.419608)
-
-[node name="SecretPath" type="Area2D" parent="Terrain"]
-z_index = 1
-position = Vector2(56, 72)
-collision_layer = 16
-collision_mask = 8
-script = ExtResource("30_lj1m5")
-metadata/_edit_group_ = true
-
-[node name="TreeOverlay" type="TileMap" parent="Terrain/SecretPath"]
-position = Vector2(8, 8)
-tile_set = SubResource("TileSet_q85hy")
-format = 2
-layer_0/tile_data = PackedInt32Array(65533, 458752, 1, -2, 524288, 2, -3, 458752, 1, 65532, 458752, 1, -4, 458752, 1, -65538, 458752, 1, -65537, 524288, 1, -131074, 524288, 0, -196611, 524288, 0, -131075, 458752, 1, -65539, 458752, 1, -65540, 458752, 1, -131076, 458752, 1, 65534, 524288, 0, 131069, 458752, 1, 131070, 524288, 2, 131068, 458752, 1, 196604, 458752, 1)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Terrain/SecretPath"]
-libraries = {
-"": SubResource("AnimationLibrary_once4")
-}
-autoplay = "RESET"
-
-[node name="InteractionShape" type="CollisionShape2D" parent="Terrain/SecretPath"]
-shape = SubResource("CircleShape2D_t030y")
-debug_color = Color(1, 0.929412, 0.631373, 0.419608)
-
-[node name="PathBlocker" type="Area2D" parent="Terrain/SecretPath"]
-position = Vector2(-16, 16)
-collision_mask = 0
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/SecretPath/PathBlocker"]
-shape = SubResource("RectangleShape2D_rskjt")
 
 [node name="MapBoundaries" type="Node2D" parent="."]
 script = ExtResource("18_cqtg7")
