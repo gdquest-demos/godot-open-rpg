@@ -1,7 +1,5 @@
 # Opens up a secret path once the 'Strange Tree' has been interacted with twice.
-extends Interaction
-
-var _conversation: = preload("res://data/maps/town/strange_tree.dtl")
+extends InteractionTemplateConversation
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
 
@@ -26,7 +24,3 @@ func _ready() -> void:
 					CONNECT_ONE_SHOT
 				)
 	)
-
-
-func _execute() -> void:
-	Dialogic.start_timeline(_conversation)

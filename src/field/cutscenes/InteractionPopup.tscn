@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cubp81mykng3h"]
+
+[ext_resource type="PackedScene" uid="uid://dnd03as5e37he" path="res://src/field/ui/popups/UIPopup.tscn" id="1_582ge"]
+[ext_resource type="Script" path="res://src/field/cutscenes/interaction_popup.gd" id="2_2fot7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cbdy6"]
+radius = 32.0
+
+[node name="InteractionPopup" instance=ExtResource("1_582ge")]
+script = ExtResource("2_2fot7")
+radius = 32
+
+[node name="Sprite2D" parent="." index="0"]
+offset = Vector2(0, -16)
+
+[node name="Area2D" type="Area2D" parent="." index="2"]
+show_behind_parent = true
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("CircleShape2D_cbdy6")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_exited"]
