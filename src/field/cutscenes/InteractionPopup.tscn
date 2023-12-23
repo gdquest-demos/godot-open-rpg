@@ -11,7 +11,7 @@ script = ExtResource("2_2fot7")
 radius = 32
 
 [node name="Sprite2D" parent="." index="0"]
-offset = Vector2(0, -16)
+position = Vector2(0, -12)
 
 [node name="Area2D" type="Area2D" parent="." index="2"]
 show_behind_parent = true
@@ -21,6 +21,7 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 shape = SubResource("CircleShape2D_cbdy6")
+debug_color = Color(0.78, 1, 0.929, 0.4)
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_exited"]

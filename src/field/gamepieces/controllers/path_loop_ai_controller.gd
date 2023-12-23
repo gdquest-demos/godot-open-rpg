@@ -16,8 +16,6 @@ var _path_origin: Vector2
 func _ready() -> void:
 	super._ready()
 	
-	set_physics_process(false)
-	
 	if not Engine.is_editor_hint():
 		move_path.hide()
 		_path_origin = _gamepiece.position

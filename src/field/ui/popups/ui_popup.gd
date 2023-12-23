@@ -28,9 +28,27 @@ const Emotes: = {
 var _is_shown: = false:
 	set(value):
 		_is_shown = value
+		
+		if not is_inside_tree():
+			await ready
+		
 		if _is_shown and _state == States.HIDDEN:
 			_anim.play("appear")
 			_state = States.SHOWING
+		
+		# A fully shown, idling popup bounces slightly to draw the player's eye. Note that there is
+		# a small wait time between bounces so that the popup doesn't look overly energetic.
+		# Unfortunately, this creates an edge case for smooth animation (see _on_bounce_finished). 
+		#
+		# Basically, if the bounce animation isn't playing, but the popup is waiting for the next 
+		# 'bounce', we want to be able to hide the popup immediately, rather than wait for 'wait'
+		# a fraction of a second for the animation to finish playing, which looks 'off'.
+		#
+		# So, we check here to see if the popup is sitting in this 'wait' window, where it can be
+		# immediately hidden and still look smooth as butter.
+		elif not _is_shown and _anim.current_animation == "bounce_wait":
+			_anim.play("disappear")
+			_state = States.HIDING
 
 # Track what is currently happening to the popup.
 var _state: = States.HIDDEN
@@ -45,9 +63,21 @@ func _ready() -> void:
 		_anim.animation_finished.connect(_on_animation_finished)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_released("ui_focus_next"):
-		_is_shown = !_is_shown
+# Please see the note attached embedded in _is_shown's setter.
+# A peculiarity of the bounce animation is that there is a wait time afterwards before the next
+# bounce. However, it doesn't look 'right' to wait to hide the popup until the animation has 
+# finished when the bounce and wait are baked together into a single animation. Ideally, we should 
+# be able to hide the popup whenever it's not growing or shrinking (or bouncing).
+#
+# Therefore, the bounce animation will check, via the following method, for whether or not the wait
+# portion of the animation should be played or if the popup should disappear beforehand.
+func _on_bounce_finished() -> void:
+	if _is_shown:
+		_anim.play("bounce_wait")
+		
+	else:
+		_anim.play("disappear")
+		_state = States.HIDING
 
 
 # An animation has finished, so we may want to change the popup's behaviour depending on whether or

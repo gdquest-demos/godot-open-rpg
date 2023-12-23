@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://c14b8ageu2otv"]
 
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="1_goth7"]
-[ext_resource type="Script" path="res://src/field/gameboard/lockable_door.gd" id="1_u45hv"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/doors/lockable_door.gd" id="1_u45hv"]
 [ext_resource type="AudioStream" uid="uid://c5mcvei7x3nyd" path="res://assets/sfx/doors/sfx_movement_dooropen4.wav" id="2_ufclx"]
 [ext_resource type="AudioStream" uid="uid://dqhhqeihtm1q6" path="res://assets/sfx/doors/sfx_movement_dooropen3.wav" id="3_oftid"]
 [ext_resource type="AudioStream" uid="uid://ddaucqxv3tf7m" path="res://assets/sfx/doors/sfx_movement_dooropen1.wav" id="4_orhec"]

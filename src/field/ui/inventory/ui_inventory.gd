@@ -16,7 +16,7 @@ const ICONS: = {
 }
 
 # Keep track of the inventory item packed scene to easily instantiate new items.
-var _ITEM_SCENE: = preload("res://src/field/ui/UIInventoryItem.tscn")
+var _ITEM_SCENE: = preload("res://src/field/ui/inventory/UIInventoryItem.tscn")
 
 
 func _ready() -> void:
