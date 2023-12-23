@@ -128,7 +128,7 @@ func is_cell_blocked(cell: Vector2i) -> bool:
 	for collision in collisions:
 		var blocks_movement = true
 		if collision.collider.owner.get(BLOCKING_PROPERTY):
-			blocks_movement = false
+			blocks_movement = collision.collider.owner.get(BLOCKING_PROPERTY) as bool
 		
 		if blocks_movement:
 			return true
@@ -146,7 +146,6 @@ func get_collisions(cell: Vector2i) -> Array:
 
 
 func set_is_paused(paused: bool) -> void:
-	print("Running setter")
 	is_paused = paused
 		
 	if is_inside_tree() and not _waypoints.is_empty():

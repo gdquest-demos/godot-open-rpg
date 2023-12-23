@@ -123,6 +123,10 @@ func set_direction(value: Directions.Points) -> void:
 		_swap_animation(current_sequence_id, true)
 
 
+func get_gfx_position() -> Vector2:
+	return _gfx.position
+
+
 # Transition to the next animation sequence, accounting for the RESET track and current animation
 # elapsed time.
 func _swap_animation(next_sequence: String, keep_position: bool) -> void:

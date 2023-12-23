@@ -1,5 +1,5 @@
 @tool
-extends UIPopup
+class_name InteractionPopup extends UIPopup
 
 @export var radius: = 32:
 	set(value):

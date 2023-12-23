@@ -34,8 +34,8 @@ func set_is_paused(paused: bool) -> void:
 	
 	# Otherwise, if the gamepiece is in transit, pick up where it had left off.
 	if not paused:
-		if _current_waypoint_index > 0 and _current_waypoint_index < _waypoints.size() - 1:
-			_current_waypoint_index += 1
+		if _current_waypoint_index > 0 and _current_waypoint_index < _waypoints.size() - 1 and \
+				not is_cell_blocked(_waypoints[_current_waypoint_index]):
 			_gamepiece.travel_to_cell(_waypoints[_current_waypoint_index])
 
 

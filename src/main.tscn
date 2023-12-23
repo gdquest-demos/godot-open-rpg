@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=54 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dqdk6eehxsrmn" path="res://data/field/characters/monk_gfx.tscn" id="17_qgtho"]
 [ext_resource type="PackedScene" uid="uid://kiwma43jc3n6" path="res://data/field/characters/lady_gfx.tscn" id="17_sieyv"]
 [ext_resource type="PackedScene" uid="uid://bvtk5qllej4b8" path="res://data/field/characters/smith_gfx.tscn" id="18_2msel"]
+[ext_resource type="Script" path="res://src/field/cutscenes/popups/moving_interaction_popup.gd" id="18_8igsj"]
 [ext_resource type="Script" path="res://src/field/gameboard/debug_map_boundaries.gd" id="18_cqtg7"]
 [ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://data/field/characters/wizard_gfx.tscn" id="19_ius2d"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="19_lpxfg"]
@@ -39,7 +40,7 @@
 [ext_resource type="Script" path="res://data/maps/town/strange_tree_interaction.gd" id="31_y2el4"]
 [ext_resource type="Resource" path="res://data/maps/town/strange_tree.dtl" id="32_m0jee"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="33_ofo2l"]
-[ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/InteractionPopup.tscn" id="34_qs25x"]
+[ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/InteractionPopup.tscn" id="34_qs25x"]
 [ext_resource type="Script" path="res://src/field/ui/inventory/ui_inventory.gd" id="34_tk01t"]
 [ext_resource type="Resource" path="res://data/maps/town/sign.dtl" id="35_gv62s"]
 
@@ -223,6 +224,7 @@ metadata/_edit_group_ = true
 [node name="GenericCharacterAnimation" parent="Terrain/Gamepieces/Runner" instance=ExtResource("12_n5rm1")]
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Runner/GenericCharacterAnimation" instance=ExtResource("34_qs25x")]
+script = ExtResource("18_8igsj")
 
 [node name="Interaction" parent="Terrain/Gamepieces/Runner" instance=ExtResource("19_sa6jd")]
 script = ExtResource("14_b3y71")
