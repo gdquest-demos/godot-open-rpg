@@ -178,7 +178,7 @@ gameboard = ExtResource("6_kd8tv")
 y_sort_enabled = true
 
 [node name="Player" parent="Terrain/Gamepieces" instance=ExtResource("11_yntrj")]
-position = Vector2(136, 184)
+position = Vector2(200, 120)
 gameboard = ExtResource("6_kd8tv")
 blocks_movement = true
 move_speed = 96.0
@@ -323,6 +323,7 @@ gamepiece_mask = 6
 
 [node name="Door" parent="Terrain/Gamepieces" instance=ExtResource("26_kf5ye")]
 position = Vector2(120, 176)
+metadata/_edit_group_ = true
 
 [node name="Key" parent="Terrain/Gamepieces" instance=ExtResource("29_gxq7u")]
 position = Vector2(40, 24)
@@ -331,6 +332,7 @@ position = Vector2(40, 24)
 position = Vector2(56, 72)
 script = ExtResource("31_y2el4")
 timeline = ExtResource("32_m0jee")
+metadata/_edit_group_ = true
 
 [node name="PathBlocker" type="Area2D" parent="Terrain/StrangeTreeInteraction"]
 collision_layer = 2
@@ -358,6 +360,7 @@ emote = 2
 position = Vector2(152, 168)
 script = ExtResource("14_b3y71")
 timeline = ExtResource("35_gv62s")
+metadata/_edit_group_ = true
 
 [node name="InteractionPopup" parent="Terrain/SignInteraction" instance=ExtResource("34_qs25x")]
 emote = 1
