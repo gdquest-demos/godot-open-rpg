@@ -26,6 +26,7 @@ func _ready() -> void:
 
 
 func place_camera_at_focused_game_piece() -> void:
+	camera.position = focused_game_piece.position
 	camera.reset_smoothing()
 
 
@@ -46,7 +47,8 @@ func set_focused_game_piece(value: Gamepiece) -> void:
 		controller.queue_free()
 	
 	if focused_game_piece:
-		focused_game_piece.camera_anchor.remote_path = focused_game_piece.camera_anchor.get_path_to(camera)
+		focused_game_piece.camera_anchor.remote_path \
+			= focused_game_piece.camera_anchor.get_path_to(camera)
 		
 		var new_controller = PLAYER_CONTROLLER.instantiate()
 		new_controller.gamepiece_mask = gamepiece_mask

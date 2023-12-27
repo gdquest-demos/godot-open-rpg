@@ -182,6 +182,11 @@ func travel_to_cell(destination_cell: Vector2i) -> void:
 	var old_position: = position
 	cell = destination_cell
 	
+	# Setting the cell (the above line) snaps the gamepiece to its new cell, but we want to animate
+	# its movement. Therefore, the follower must lag behind, 'travelling' to the next cell.
+	# Reset the follower's position here so that there is no jitter when moving.
+	_follower.position = old_position
+	
 	# If the gamepiece is not yet moving, we'll setup a new path.
 	if not _path.curve:
 		_path.curve = Curve2D.new()
@@ -214,10 +219,7 @@ func set_cell(value: Vector2i) -> void:
 	if not is_inside_tree():
 		await ready
 	
-	var old_position: = position
 	position = gameboard.cell_to_pixel(cell)
-	_follower.position = old_position
-	
 	cell_changed.emit(old_cell)
 
 

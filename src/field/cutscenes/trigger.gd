@@ -37,6 +37,11 @@ signal triggered(gamepiece: Gamepiece)
 						for node in connected_area.find_children("*", "CollisionPolygon2D"):
 							(node as CollisionPolygon2D).disabled = !is_active
 
+## If true, the [code]Trigger[/code] will be [method Cutscene.run] as soon as a colliding gamepiece
+## begins movement towards a cell containing the Trigger. If false, the Trigger will be run once the
+## gamepiece arrives at a cell containing the Trigger.
+@export var run_on_enter: bool
+
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -75,13 +80,18 @@ func _on_input_paused(is_paused: bool) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	var gamepiece: = area.owner as Gamepiece
 	if gamepiece:
+		gamepiece_entered.emit(gamepiece)
+		
 		# Check to make sure that the gamepiece is moving before connecting to its 'arriving'
 		# signal. This catches edge cases where the Trigger is unpaused while a colliding object
 		# is standing on top of it (which would mean that _on_gamepiece_arrived would trigger once
 		# the gamepiece moves OFF of it. Which is bad.).
 		if gamepiece.is_moving():
-			gamepiece.arriving.connect(_on_gamepiece_arrived.bind(gamepiece), CONNECT_ONE_SHOT)
-		gamepiece_entered.emit(gamepiece)
+			if run_on_enter:
+				_on_gamepiece_arrived(0.0, gamepiece)
+				
+			else:
+				gamepiece.arriving.connect(_on_gamepiece_arrived.bind(gamepiece), CONNECT_ONE_SHOT)
 
 
 func _on_area_exited(area: Area2D) -> void:
@@ -92,3 +102,4 @@ func _on_area_exited(area: Area2D) -> void:
 
 func _on_gamepiece_arrived(_distance: float, gamepiece: Gamepiece) -> void:
 	triggered.emit(gamepiece)
+	run()
