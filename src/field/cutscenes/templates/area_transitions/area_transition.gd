@@ -13,6 +13,10 @@ class_name AreaTransition extends Trigger
 			var target = $Destination as Sprite2D
 			target.position = arrival_coordinates - position + target.texture.get_size()/2
 
+# The blackout timer is used to wait between fade-out and fade-in. No delay looks odd.
+@onready var _blackout_timer: = $BlackoutTimer as Timer
+@onready var _transition: = $CanvasLayer/ScreenTransition as ScreenTransition
+
 
 func _ready() -> void:
 	super._ready()
@@ -22,21 +26,33 @@ func _ready() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	# Pausing the field immediately will deactivate physics objects, which are in the middle of
+	# processing (hence _on_area_entered). We need to wait a frame before pausing anything.
 	await get_tree().process_frame
+	
+	# Pause the field gamestate to prevent the player from wandering off mid-transition.
 	_is_cutscene_in_progress = true
 	
-	$CanvasLayer/ScreenTransition.cover(0.25)
-	await $CanvasLayer/ScreenTransition.finished
+	# Cover the screen to hide the area transition.
+	_transition.cover(0.25)
+	await _transition.finished
 	
+	# Move the gamepiece to it's new position and update the camera immediately.
 	var gamepiece: = area.owner as Gamepiece
 	if gamepiece:
 		gamepiece.cell = gamepiece.gameboard.pixel_to_cell(arrival_coordinates)
-		gamepiece._on_travel_finished()
+		gamepiece.reset_travel()
 		
 		Camera.reset_position()
 	
-	await  get_tree().create_timer(0.20).timeout
-	$CanvasLayer/ScreenTransition.reveal(0.10)
-	await $CanvasLayer/ScreenTransition.finished
+	# Let the screen rest in darkness for a little while. Revealing the screen immediately with no
+	# delay looks 'off'.
+	_blackout_timer.start()
+	await _blackout_timer.timeout
 	
+	# Reveal the screen and unpause the field gamestate.
+	_transition.reveal(0.10)
+	await _transition.finished
+	
+	# Finally, unpause the field gameplay, allowing the player to move again.
 	_is_cutscene_in_progress = false

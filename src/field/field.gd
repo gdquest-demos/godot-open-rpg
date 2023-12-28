@@ -17,13 +17,12 @@ const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/Playe
 
 
 func _ready() -> void:
+	assert(gameboard)
 	randomize()
 	
-	assert(gameboard)
 	Camera.scale = scale
 	Camera.gameboard = gameboard
 	Camera.make_current()
-	
 	Camera.reset_position()
 
 

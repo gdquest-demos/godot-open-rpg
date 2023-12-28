@@ -165,7 +165,7 @@ func _physics_process(delta: float) -> void:
 	
 	# If we've reached the end of the path, either travel to the next waypoint or wrap up movement.
 	if has_arrived:
-		_on_travel_finished()
+		reset_travel()
 
 
 ## Begin travelling towards the specified cell.
@@ -204,6 +204,15 @@ func travel_to_cell(destination_cell: Vector2i) -> void:
 	travel_begun.emit()
 
 
+## Stop the gamepiece from travelling and set it at its cell.
+func reset_travel() -> void:
+	_path.curve = null
+	_follower.progress = 0
+		
+	set_physics_process(false)
+	arrived.emit()
+
+
 ## Returns [code]true[/code] if the gamepiece is currently traversing a path.
 func is_moving() -> bool:
 	return is_physics_processing()
@@ -225,11 +234,3 @@ func set_cell(value: Vector2i) -> void:
 
 func get_faced_cell() -> Vector2i:
 	return (Vector2(cell) + direction).round()
-
-
-func _on_travel_finished() -> void:
-	_path.curve = null
-	_follower.progress = 0
-		
-	set_physics_process(false)
-	arrived.emit()

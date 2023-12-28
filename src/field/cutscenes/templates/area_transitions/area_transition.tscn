@@ -16,6 +16,7 @@ texture = ExtResource("3_retee")
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
 
 [node name="ScreenTransition" type="ColorRect" parent="CanvasLayer" index="0"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -23,3 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("4_sgvmu")
+
+[node name="BlackoutTimer" type="Timer" parent="." index="3"]
+wait_time = 0.25
+one_shot = true
