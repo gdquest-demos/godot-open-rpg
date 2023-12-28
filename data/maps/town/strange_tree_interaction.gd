@@ -20,7 +20,9 @@ func _ready() -> void:
 				# terrain_chagned signal below.
 				_anim.play("disappear")
 				_anim.animation_finished.connect(
-					func(_anim_name): FieldEvents.terrain_changed.emit(),
+					func(_anim_name): 
+						FieldEvents.terrain_changed.emit(),
+						
 					CONNECT_ONE_SHOT
 				)
 	)

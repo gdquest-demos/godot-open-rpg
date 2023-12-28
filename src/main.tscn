@@ -146,7 +146,7 @@ script = ExtResource("2_bkxev")
 gamepiece_mask = 2
 terrain_mask = 1
 focused_game_piece = NodePath("Terrain/Gamepieces/Player")
-is_active = true
+gameboard = ExtResource("6_kd8tv")
 
 [node name="Terrain" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -371,17 +371,10 @@ emote = 1
 [node name="AreaTransition" parent="Terrain" instance=ExtResource("37_6xxks")]
 position = Vector2(200, 248)
 arrival_coordinates = Vector2(224, 128)
-run_on_enter = true
 
 [node name="MapBoundaries" type="Node2D" parent="."]
 script = ExtResource("18_cqtg7")
 gameboard = ExtResource("6_kd8tv")
-metadata/_edit_lock_ = true
-
-[node name="Camera2D" type="Camera2D" parent="."]
-scale = Vector2(0.2, 0.2)
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
 metadata/_edit_lock_ = true
 
 [node name="UI" type="CanvasLayer" parent="."]
