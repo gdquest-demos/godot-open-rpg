@@ -45,6 +45,8 @@ func _on_area_entered(area: Area2D) -> void:
 		
 		Camera.reset_position()
 	
+	Music.play(load("res://assets/music/Insect Factory.mp3"), 0.0, 0.15)
+	
 	# Let the screen rest in darkness for a little while. Revealing the screen immediately with no
 	# delay looks 'off'.
 	_blackout_timer.start()

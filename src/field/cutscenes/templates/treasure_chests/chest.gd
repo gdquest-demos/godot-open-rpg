@@ -27,8 +27,7 @@ func _execute() -> void:
 		await _anim.animation_finished
 		
 		if not _item_received:
-			var inventory: = Inventory.restore()
-			inventory.add(item_type, amount)
+			Inventory.restore().add(item_type, amount)
 			_item_received = true
 		
 		_is_open = true

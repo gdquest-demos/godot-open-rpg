@@ -43,14 +43,13 @@ static func is_cutscene_in_progress() -> bool:
 ## Execute the cutscene, if possible. Everything happening on the field gamestate will be
 ## paused and unpaused as the cutscene starts and finishes, respectively.
 func run() -> void:
-	if not _is_cutscene_in_progress:
-		_is_cutscene_in_progress = true
-		
-		# The _execute method may or may not be a coroutine, depending on the particular cutscene.
-		@warning_ignore("redundant_await")
-		await _execute()
-		
-		_is_cutscene_in_progress = false
+	_is_cutscene_in_progress = true
+	
+	# The _execute method may or may not be a coroutine, depending on the particular cutscene.
+	@warning_ignore("redundant_await")
+	await _execute()
+	
+	_is_cutscene_in_progress = false
 
 
 ## Play out the specific events of the cutscene.

@@ -1,134 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://ceefih4ls7dcn"]
+[gd_scene load_steps=5 format=3 uid="uid://chgku8dii7mu8"]
 
 [ext_resource type="Script" path="res://src/field/cutscenes/templates/pickups/pickup.gd" id="1_3ccf8"]
-[ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/Trigger.tscn" id="1_wydyv"]
-[ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="2_anxc4"]
-[ext_resource type="AudioStream" uid="uid://8liw1h2g4xsm" path="res://assets/sfx/coin2.ogg" id="4_cbxjc"]
+[ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/trigger.tscn" id="1_wydyv"]
+[ext_resource type="Texture2D" uid="uid://cum1x0regjjyv" path="res://assets/items/key.atlastex" id="3_1fedx"]
+[ext_resource type="AnimationLibrary" uid="uid://d2tw0lf45u3gh" path="res://src/field/cutscenes/templates/pickups/pickup_animations.res" id="4_eruca"]
 
-[sub_resource type="Animation" id="Animation_u4cto"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_aswu1"]
-resource_name = "default"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -6)]
-}
-
-[sub_resource type="Animation" id="Animation_yvqqw"]
-resource_name = "obtain"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(2),
-"update": 2,
-"values": [Vector2(0, -16)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"queue_free"
-}]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.2, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/3/type = "audio"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AudioStreamPlayer")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("4_cbxjc")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/3/use_blend = true
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_dm7dx"]
-_data = {
-"RESET": SubResource("Animation_u4cto"),
-"default": SubResource("Animation_aswu1"),
-"obtain": SubResource("Animation_yvqqw")
-}
-
-[node name="Pickup" type="Node2D"]
+[node name="Pickup" instance=ExtResource("1_wydyv")]
 script = ExtResource("1_3ccf8")
-metadata/_edit_group_ = true
+item_type = 0
+amount = 1
 
-[node name="PickupTrigger" parent="." instance=ExtResource("1_wydyv")]
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+texture = ExtResource("3_1fedx")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_anxc4")
-region_enabled = true
-region_rect = Rect2(153, 153, 16, 16)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_dm7dx")
+"PickupAnimations": ExtResource("4_eruca")
 }
-autoplay = "default"
+autoplay = "PickupAnimations/default"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-
-[connection signal="triggered" from="PickupTrigger" to="." method="_on_pickup_triggered"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="3"]

@@ -79,10 +79,16 @@ func _on_area_entered(area: Area2D) -> void:
 		
 		# Check to make sure that the gamepiece is moving before connecting to its 'arriving'
 		# signal. This catches edge cases where the Trigger is unpaused while a colliding object
-		# is standing on top of it (which would mean that _on_gamepiece_arrived would trigger once
+		# is standing on top of it (which would mean that _on_gamepiece_arriving would trigger once
 		# the gamepiece moves OFF of it. Which is bad.).
 		if gamepiece.is_moving():
-			gamepiece.arriving.connect(_on_gamepiece_arrived.bind(gamepiece), CONNECT_ONE_SHOT)
+			gamepiece.arriving.connect(_on_gamepiece_arriving.bind(gamepiece), CONNECT_ONE_SHOT)
+		
+		# Triggers need to block input a early. If waiting until the gamepiece is arriving, there's
+		# a chance that the player's controller may received the gamepiece.arriving signal first
+		# and continue moving the gamepiece.
+		await get_tree().process_frame
+		_is_cutscene_in_progress = true
 
 
 func _on_area_exited(area: Area2D) -> void:
@@ -91,6 +97,6 @@ func _on_area_exited(area: Area2D) -> void:
 		gamepiece_exited.emit(gamepiece)
 
 
-func _on_gamepiece_arrived(_distance: float, gamepiece: Gamepiece) -> void:
+func _on_gamepiece_arriving(_distance: float, gamepiece: Gamepiece) -> void:
 	triggered.emit(gamepiece)
 	run()

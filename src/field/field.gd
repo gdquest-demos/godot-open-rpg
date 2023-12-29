@@ -1,6 +1,6 @@
 extends Node2D
 
-const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/PlayerController.tscn")
+const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/player_controller.tscn")
 
 ## The physics layers which will be used to search for gamepiece objects.
 ## Please see the project properties for the specific physics layers. [b]All[/b] collision shapes
@@ -24,6 +24,8 @@ func _ready() -> void:
 	Camera.gameboard = gameboard
 	Camera.make_current()
 	Camera.reset_position()
+	
+	Music.play(load("res://assets/music/Apple Cider.mp3"))
 
 
 func set_focused_game_piece(value: Gamepiece) -> void:

@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://c8jtuge5yaqxa"]
 
-[ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="1_pr2rt"]
+[ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/interaction.tscn" id="1_pr2rt"]
 [ext_resource type="Script" path="res://src/field/cutscenes/templates/treasure_chests/chest.gd" id="2_55lx5"]
 [ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://assets/terrain/dungeon_tilemap.png" id="3_gr80q"]
 [ext_resource type="AudioStream" uid="uid://cwpbiytveaon0" path="res://assets/sfx/doorOpen_2.ogg" id="4_6verl"]
 [ext_resource type="AudioStream" uid="uid://d0fqunqsgssgd" path="res://assets/sfx/doorClose_4.ogg" id="5_fwhp7"]
-[ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/InteractionPopup.tscn" id="6_hmx7o"]
+[ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/interaction_popup.tscn" id="6_hmx7o"]
 
 [sub_resource type="Animation" id="Animation_a1cbh"]
 resource_name = "open"

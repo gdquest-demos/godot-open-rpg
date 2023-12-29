@@ -6,6 +6,10 @@
 ## a variety of RPG events.
 class_name UIInventory extends HBoxContainer
 
+#TODO: have central item definitions somehwere that can be read by tool scripts. Will come with
+# inventory update. Probably shouldn't be hardcoded as constants, to allow definitions of new items
+# on the fly.
+# See also Pickup.ICONS.
 const ICONS: = {
 	Inventory.ItemTypes.KEY: preload("res://assets/items/key.atlastex"),
 	Inventory.ItemTypes.COIN: preload("res://assets/items/coin.atlastex"),
@@ -16,7 +20,7 @@ const ICONS: = {
 }
 
 # Keep track of the inventory item packed scene to easily instantiate new items.
-var _ITEM_SCENE: = preload("res://src/field/ui/inventory/UIInventoryItem.tscn")
+var _ITEM_SCENE: = preload("res://src/field/ui/inventory/ui_inventory_item.tscn")
 
 
 func _ready() -> void:

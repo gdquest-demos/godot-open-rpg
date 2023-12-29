@@ -1,5 +1,10 @@
 # Credits for external assets. 
 
+Apple Cider
+Author: Zane Little Music
+URL: https://ko-fi.com/s/da7750d2a9 (accessed 2023-12-29)
+License: [CC0](https://creativecommons.org/publicdomain/zero/1.0/) 
+
 Insect Factory
 Author: Zane Little Music
 URL: https://opengameart.org/content/insect-factory-wii-style-music (accessed 2023-06-06)
