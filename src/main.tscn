@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=56 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -36,9 +36,10 @@
 [ext_resource type="Resource" path="res://data/maps/town/fan_of_four.dtl" id="25_dmuyg"]
 [ext_resource type="PackedScene" uid="uid://c14b8ageu2otv" path="res://src/field/cutscenes/templates/doors/door.tscn" id="26_kf5ye"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
-[ext_resource type="PackedScene" uid="uid://ceefih4ls7dcn" path="res://src/field/cutscenes/templates/keys/key.tscn" id="29_gxq7u"]
+[ext_resource type="PackedScene" uid="uid://ceefih4ls7dcn" path="res://src/field/cutscenes/templates/pickups/pickup.tscn" id="29_gxq7u"]
 [ext_resource type="Script" path="res://data/maps/town/strange_tree_interaction.gd" id="31_y2el4"]
 [ext_resource type="Resource" path="res://data/maps/town/strange_tree.dtl" id="32_m0jee"]
+[ext_resource type="PackedScene" uid="uid://c8jtuge5yaqxa" path="res://src/field/cutscenes/templates/treasure_chests/chest.tscn" id="33_7djdg"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="33_ofo2l"]
 [ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/InteractionPopup.tscn" id="34_qs25x"]
 [ext_resource type="Script" path="res://src/field/ui/inventory/ui_inventory.gd" id="34_tk01t"]
@@ -328,6 +329,11 @@ metadata/_edit_group_ = true
 
 [node name="Key" parent="Terrain/Gamepieces" instance=ExtResource("29_gxq7u")]
 position = Vector2(40, 24)
+
+[node name="Chest" parent="Terrain/Gamepieces" instance=ExtResource("33_7djdg")]
+position = Vector2(216, 168)
+item_type = 3
+amount = 4
 
 [node name="StrangeTreeInteraction" parent="Terrain" instance=ExtResource("19_sa6jd")]
 position = Vector2(56, 72)

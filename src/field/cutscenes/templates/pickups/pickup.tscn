@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://ceefih4ls7dcn"]
+[gd_scene load_steps=9 format=3 uid="uid://ceefih4ls7dcn"]
 
-[ext_resource type="Script" path="res://src/field/cutscenes/templates/keys/key.gd" id="1_3ccf8"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/pickups/pickup.gd" id="1_3ccf8"]
 [ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/Trigger.tscn" id="1_wydyv"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="2_anxc4"]
+[ext_resource type="AudioStream" uid="uid://8liw1h2g4xsm" path="res://assets/sfx/coin2.ogg" id="4_cbxjc"]
 
 [sub_resource type="Animation" id="Animation_u4cto"]
 length = 0.001
@@ -88,6 +89,21 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_cbxjc")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dm7dx"]
 _data = {
@@ -96,7 +112,7 @@ _data = {
 "obtain": SubResource("Animation_yvqqw")
 }
 
-[node name="Key" type="Node2D"]
+[node name="Pickup" type="Node2D"]
 script = ExtResource("1_3ccf8")
 metadata/_edit_group_ = true
 
