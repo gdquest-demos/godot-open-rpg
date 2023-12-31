@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=58 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -34,15 +34,17 @@
 [ext_resource type="Script" path="res://data/maps/town/fan_interaction.gd" id="24_u4cmv"]
 [ext_resource type="Resource" path="res://data/maps/town/wizard.dtl" id="25_8uprj"]
 [ext_resource type="Resource" path="res://data/maps/town/fan_of_four.dtl" id="25_dmuyg"]
-[ext_resource type="PackedScene" uid="uid://c14b8ageu2otv" path="res://src/field/cutscenes/templates/doors/door.tscn" id="26_kf5ye"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
 [ext_resource type="PackedScene" uid="uid://chgku8dii7mu8" path="res://src/field/cutscenes/templates/pickups/pickup.tscn" id="29_gxq7u"]
 [ext_resource type="Script" path="res://data/maps/town/strange_tree_interaction.gd" id="31_y2el4"]
 [ext_resource type="Resource" path="res://data/maps/town/strange_tree.dtl" id="32_m0jee"]
 [ext_resource type="PackedScene" uid="uid://c8jtuge5yaqxa" path="res://src/field/cutscenes/templates/treasure_chests/chest.tscn" id="33_7djdg"]
+[ext_resource type="PackedScene" uid="uid://p0e4b0txynkd" path="res://src/field/cutscenes/templates/doors/door.tscn" id="33_lbtsh"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="33_ofo2l"]
 [ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/interaction_popup.tscn" id="34_qs25x"]
 [ext_resource type="Script" path="res://src/field/ui/inventory/ui_inventory.gd" id="34_tk01t"]
+[ext_resource type="AudioStream" uid="uid://duwauer3vwtne" path="res://assets/music/Insect Factory.mp3" id="34_xbc6u"]
+[ext_resource type="Script" path="res://data/maps/town/door_unlock_interaction.gd" id="34_xtrml"]
 [ext_resource type="Resource" path="res://data/maps/town/sign.dtl" id="35_gv62s"]
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="37_6xxks"]
 
@@ -323,17 +325,26 @@ debug_color = Color(1, 0.929412, 0.631373, 0.419608)
 script = ExtResource("26_p8jrd")
 gamepiece_mask = 6
 
-[node name="Door" parent="Terrain/Gamepieces" instance=ExtResource("26_kf5ye")]
-position = Vector2(120, 176)
-metadata/_edit_group_ = true
-
 [node name="Chest" parent="Terrain/Gamepieces" instance=ExtResource("33_7djdg")]
 position = Vector2(216, 168)
-item_type = 3
 amount = 4
 
 [node name="KeyPickup" parent="Terrain/Gamepieces" instance=ExtResource("29_gxq7u")]
 position = Vector2(40, 24)
+
+[node name="Door" parent="Terrain/Gamepieces" instance=ExtResource("33_lbtsh")]
+position = Vector2(120, 176)
+is_locked = true
+arrival_coordinates = Vector2(128, 224)
+new_music = ExtResource("34_xbc6u")
+metadata/_edit_group_ = true
+
+[node name="Interaction" parent="Terrain/Gamepieces/Door" instance=ExtResource("19_sa6jd")]
+script = ExtResource("34_xtrml")
+
+[node name="InteractionPopup" parent="Terrain/Gamepieces/Door/Interaction" instance=ExtResource("34_qs25x")]
+z_index = 100
+emote = 1
 
 [node name="StrangeTreeInteraction" parent="Terrain" instance=ExtResource("19_sa6jd")]
 position = Vector2(56, 72)
@@ -372,7 +383,6 @@ metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="InteractionPopup" parent="Terrain/SignInteraction" instance=ExtResource("34_qs25x")]
-emote = 1
 
 [node name="AreaTransition" parent="Terrain" instance=ExtResource("37_6xxks")]
 position = Vector2(200, 248)

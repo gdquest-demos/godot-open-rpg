@@ -1,6 +1,8 @@
 @tool
 class_name UIPopup extends Node2D
 
+signal disappeared
+
 enum IconTypes { EMPTY, EXCLAMATION, QUESTION}
 
 # The current state of a popup.
@@ -46,6 +48,7 @@ var _is_shown: = false:
 		#
 		# So, we check here to see if the popup is sitting in this 'wait' window, where it can be
 		# immediately hidden and still look smooth as butter.
+		
 		elif not _is_shown and _anim.current_animation == "bounce_wait":
 			_anim.play("disappear")
 			_state = States.HIDING
@@ -61,6 +64,15 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		_sprite.scale = Vector2.ZERO
 		_anim.animation_finished.connect(_on_animation_finished)
+
+
+## Wait for the popup to disappear cleanly before freeing. If the popup is already hidden, it may be
+## freed immediately.
+func hide_and_free() -> void:
+	if _state != States.HIDDEN:
+		_is_shown = false
+		await disappeared
+	queue_free()
 
 
 # Please see the note attached embedded in _is_shown's setter.
@@ -83,6 +95,9 @@ func _on_bounce_finished() -> void:
 # An animation has finished, so we may want to change the popup's behaviour depending on whether or
 # not it has been flagged for a state change through _is_shown.
 func _on_animation_finished(_anim_name: String) -> void:
+	if _state == States.HIDING:
+		disappeared.emit()
+	
 	# The popup has should be shown. If the popup is hiding or is hidden, go ahead and have it
 	# appear. Otherwise, the popup can play a default bouncy animation to draw the player's eye.
 	if _is_shown:

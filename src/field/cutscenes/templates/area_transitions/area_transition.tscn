@@ -8,6 +8,7 @@
 [node name="AreaTransition" instance=ExtResource("1_hjt58")]
 script = ExtResource("2_l3ptr")
 arrival_coordinates = Vector2(0, 0)
+new_music = null
 
 [node name="Destination" type="Sprite2D" parent="." index="1"]
 position = Vector2(8, 8)

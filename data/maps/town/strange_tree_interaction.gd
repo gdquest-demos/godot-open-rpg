@@ -2,6 +2,7 @@
 extends InteractionTemplateConversation
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
+@onready var _popup: = $InteractionPopup as InteractionPopup
 
 
 func _ready() -> void:
@@ -15,6 +16,11 @@ func _ready() -> void:
 	Dialogic.text_signal.connect(
 		func(argument: String):
 			if argument == "clear_secret_path":
+				# Once the secret path is cleared, we'll want to deactivate the interaction to
+				# prevent the user from running it again.
+				is_active = false
+				_popup.hide_and_free()
+				
 				# Clearing the secret path is controlled exclusively by the animation player.
 				# Once the animation has finished, pathfinders will need to be updated via the
 				# terrain_chagned signal below.
@@ -22,7 +28,6 @@ func _ready() -> void:
 				_anim.animation_finished.connect(
 					func(_anim_name): 
 						FieldEvents.terrain_changed.emit(),
-						
 					CONNECT_ONE_SHOT
 				)
 	)

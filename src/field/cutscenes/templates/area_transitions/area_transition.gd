@@ -13,6 +13,10 @@ class_name AreaTransition extends Trigger
 			var target = $Destination as Sprite2D
 			target.position = arrival_coordinates - position + target.texture.get_size()/2
 
+
+#TODO: this will become a property of a given area once proper gameplay areas have been implemented.
+@export var new_music: AudioStream
+
 # The blackout timer is used to wait between fade-out and fade-in. No delay looks odd.
 @onready var _blackout_timer: = $BlackoutTimer as Timer
 @onready var _transition: = $CanvasLayer/ScreenTransition as ScreenTransition
@@ -25,6 +29,12 @@ func _ready() -> void:
 		$Destination.queue_free()
 
 
+# Area transitions are given several opportunities to "do something" at various stages, such as
+# before the camera fades away, after it has faded, and immediately after it re-appears in the new
+# area. 
+# This could include all manner of shenanigans, such as dropping in the on the Big Baddie's 
+# monologue, showing the player's stalker after the player has left the scene, or playing out an
+# event that the player then walks into the middle of.
 func _on_area_entered(area: Area2D) -> void:
 	# Pausing the field immediately will deactivate physics objects, which are in the middle of
 	# processing (hence _on_area_entered). We need to wait a frame before pausing anything.
@@ -45,12 +55,15 @@ func _on_area_entered(area: Area2D) -> void:
 		
 		Camera.reset_position()
 	
-	Music.play(load("res://assets/music/Insect Factory.mp3"), 0.0, 0.15)
-	
 	# Let the screen rest in darkness for a little while. Revealing the screen immediately with no
 	# delay looks 'off'.
 	_blackout_timer.start()
 	await _blackout_timer.timeout
+	
+	# All kinds of shenanigans could happen once the screen blacks out. It may be asynchronous, so
+	# give the opportunity for the designer to run a lengthy event.
+	@warning_ignore("redundant_await")
+	await _on_blackout()
 	
 	# Reveal the screen and unpause the field gamestate.
 	_transition.reveal(0.10)
@@ -58,3 +71,7 @@ func _on_area_entered(area: Area2D) -> void:
 	
 	# Finally, unpause the field gameplay, allowing the player to move again.
 	_is_cutscene_in_progress = false
+
+
+func _on_blackout() -> void:
+	Music.play(new_music, 0.0, 0.15)

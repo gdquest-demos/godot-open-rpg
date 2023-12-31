@@ -10,6 +10,18 @@ class_name InteractionPopup extends UIPopup
 		
 		_collision_shape.shape.radius = radius
 
+
+@export var is_active: = true:
+	set(value):
+		is_active = value
+		
+		if not Engine.is_editor_hint():
+			if not is_inside_tree():
+				await ready
+			
+			_area.monitoring = is_active
+			_collision_shape.disabled = !is_active
+
 @onready var _area: = $Area2D as Area2D
 @onready var _collision_shape: = $Area2D/CollisionShape2D as CollisionShape2D
 

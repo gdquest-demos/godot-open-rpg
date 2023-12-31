@@ -12,11 +12,14 @@ amount = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_1fedx")
+offset = Vector2(0, -16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 libraries = {
 "PickupAnimations": ExtResource("4_eruca")
 }
 autoplay = "PickupAnimations/default"
+blend_times = [&"PickupAnimations/default", &"PickupAnimations/obtain", 0.4]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="3"]
+bus = &"SFX"

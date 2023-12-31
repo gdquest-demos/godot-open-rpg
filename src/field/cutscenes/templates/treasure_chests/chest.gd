@@ -8,7 +8,7 @@ var _item_received: = false:
 	set(value):
 		_item_received = value
 		if _item_received:
-			_popup.queue_free()
+			_popup.hide_and_free()
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
 @onready var _popup: = $InteractionPopup
