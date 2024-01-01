@@ -11,7 +11,7 @@ class_name AreaTransition extends Trigger
 				await ready
 			
 			var target = $Destination as Sprite2D
-			target.position = arrival_coordinates - position + target.texture.get_size()/2
+			target.position = arrival_coordinates - position
 
 
 #TODO: this will become a property of a given area once proper gameplay areas have been implemented.

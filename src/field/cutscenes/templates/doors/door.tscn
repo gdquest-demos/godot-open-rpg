@@ -191,6 +191,9 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D/ClosedDoor/BlockingArea" index="0"]
 shape = SubResource("RectangleShape2D_xgpwx")
 
+[node name="Destination" parent="." index="1"]
+position = Vector2(0, 0)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 libraries = {
 "": SubResource("AnimationLibrary_k2tlp")

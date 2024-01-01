@@ -41,8 +41,9 @@ text/autopauses={}
 glossary/default_case_sensitive=true
 layout/mode=2
 variables={
-"NumKeys": "0",
-"PlayerName": "Frank",
+"BlueWandCount": "0",
+"GreenWandCount": "0",
+"RedWandCount": "0",
 "StrangeTreeExamined": "0"
 }
 layout/end_behaviour=0
@@ -76,6 +77,7 @@ directories/dtl_directory={
 "smith": "res://data/maps/town/smith.dtl",
 "strange_tree": "res://data/maps/town/strange_tree.dtl",
 "thief": "res://data/maps/town/thief.dtl",
+"wand_pedestal": "res://maps/house/wand_pedestal.dtl",
 "warrior": "res://data/maps/town/warrior.dtl",
 "wizard": "res://data/maps/town/wizard.dtl"
 }
@@ -145,3 +147,4 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 textures/default_filters/anisotropic_filtering_level=0
+environment/defaults/default_clear_color=Color(0.462745, 0.231373, 0.211765, 1)

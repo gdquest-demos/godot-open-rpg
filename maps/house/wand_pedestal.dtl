@@ -1,0 +1,8 @@
+if {RedWandCount} > 0:
+	The pedestal is empty.
+	- Place red wand [if {RedWandCount} > 0][else="hide"]
+	- Place blue wand [if {BlueWandCount} > 0][else="hide"]
+	- Place green wand [if {GreenWandCount} > 0][else="hide"]
+else:
+	The pedestal is empty and you can't do anything about it.
+[end_timeline]
