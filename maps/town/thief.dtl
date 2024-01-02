@@ -1,0 +1,10 @@
+join thief 1
+thief: We defeated the Horrible Thing at the Centre of the Universe and all I got was a stupid badge.
+thief: What's in the chest? Well, what I stole is another matter! Heh[pause=0.2!] heh[pause=0.2!] heh[pause=0.2!]...
+if {HasThiefToken} == 0:
+	thief: You want [b]what[/b]? An autograph? Do you know what parchment costs these days?
+	thief: Take this trinket instead. Don't say I never did anything for you.
+	[signal arg="coin_received"]
+	set {HasThiefToken} = 1
+	set {TokenCount} += 1
+[end_timeline]

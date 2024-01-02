@@ -1,0 +1,12 @@
+join warrior 1
+warrior: You may ask, why am I so popular with the ladies?
+warrior: Is it because I'm super edgy? My angelic appearance? My poor social skills?
+warrior: Why, it's my unfathomably large sword, of course!
+if {HasWarriorToken} == 0:
+	warrior: Of course you would want [i]my[/i] autograph!
+	warrior: Here's the awkward part, I can't write. Really.
+	warrior: Have this coin instead. If you squint real hard, you can pretend it has my face on it! Aren't I generous?
+	[signal arg="coin_received"]
+	set {HasWarriorToken} = 1
+	set {TokenCount} += 1
+[end_timeline]

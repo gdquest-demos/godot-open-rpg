@@ -1,0 +1,10 @@
+join wizard 1
+wizard: FUS RO DOH!
+wizard: .[pause=0.5].[pause=0.5].[pause=0.5]No wait, that's not right.
+if {HasWizardToken} == 0:
+	wizard: You want my autograph? Bah, I do not have time for small tin people.
+	wizard: Here, take this meager handout and begone.
+	[signal arg="coin_received"]
+	set {HasWizardToken} = 1
+	set {TokenCount} += 1
+[end_timeline]

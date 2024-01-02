@@ -67,25 +67,27 @@ text/autocolor_names=true
 settings/text_speed=1.0
 directories/dch_directory={
 "fan_of_four": "res://maps/town/fan_of_four.dch",
-"monk": "res://data/maps/town/monk.dch",
+"monk": "res://maps/town/monk.dch",
 "runner": "res://data/maps/town/runner.dch",
 "smith": "res://data/maps/town/smith.dch",
-"thief": "res://data/maps/town/thief.dch",
-"warrior": "res://data/maps/town/warrior.dch",
-"wizard": "res://data/maps/town/wizard.dch"
+"thief": "res://maps/town/thief.dch",
+"warrior": "res://maps/town/warrior.dch",
+"wizard": "res://maps/town/wizard.dch"
 }
 directories/dtl_directory={
 "fan_of_four": "res://maps/town/fan_of_four.dtl",
-"monk": "res://data/maps/town/monk.dtl",
+"fan_of_four_finished": "res://maps/town/fan_of_four_finished.dtl",
+"fan_of_four_tokens": "res://maps/town/fan_of_four_tokens.dtl",
+"monk": "res://maps/town/monk.dtl",
 "runner": "res://data/maps/town/runner.dtl",
 "sign": "res://data/maps/town/sign.dtl",
 "smith": "res://data/maps/town/smith.dtl",
 "strange_tree": "res://data/maps/town/strange_tree.dtl",
-"thief": "res://data/maps/town/thief.dtl",
+"thief": "res://maps/town/thief.dtl",
 "wand_pedestal": "res://maps/house/wand_pedestal.dtl",
 "wand_pedestal_occupied": "res://maps/house/wand_pedestal_occupied.dtl",
-"warrior": "res://data/maps/town/warrior.dtl",
-"wizard": "res://data/maps/town/wizard.dtl"
+"warrior": "res://maps/town/warrior.dtl",
+"wizard": "res://maps/town/wizard.dtl"
 }
 text/initial_text_reveal_skippable=true
 text/text_reveal_skip_delay=0.05

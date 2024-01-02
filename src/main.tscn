@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=74 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -9,10 +9,11 @@
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/path_loop_ai_controller.gd" id="12_glwd5"]
 [ext_resource type="PackedScene" uid="uid://cdkha7cc72h35" path="res://data/field/characters/generic_character_gfx.tscn" id="12_n5rm1"]
 [ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://data/field/characters/gobot_gfx.tscn" id="12_oablq"]
+[ext_resource type="Script" path="res://maps/town/gang_of_four_conversation.gd" id="13_0rh60"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="13_osl4o"]
 [ext_resource type="Texture2D" uid="uid://ber3qsogrcx52" path="res://assets/characters/apothecary.atlastex" id="13_tekkh"]
 [ext_resource type="Script" path="res://src/field/player_path_destination_marker.gd" id="14_0j4ru"]
-[ext_resource type="Resource" path="res://data/maps/town/warrior.dtl" id="14_32khq"]
+[ext_resource type="Resource" path="res://maps/town/warrior.dtl" id="14_68y0v"]
 [ext_resource type="PackedScene" uid="uid://se1wnxu5svgj" path="res://data/field/characters/knight_gfx.tscn" id="14_av6f5"]
 [ext_resource type="Script" path="res://src/field/cutscenes/templates/conversations/conversation_template.gd" id="14_b3y71"]
 [ext_resource type="Resource" path="res://data/maps/town/runner.dtl" id="16_ybo02"]
@@ -23,16 +24,16 @@
 [ext_resource type="Script" path="res://src/field/gameboard/debug_map_boundaries.gd" id="18_cqtg7"]
 [ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://data/field/characters/wizard_gfx.tscn" id="19_ius2d"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="19_lpxfg"]
-[ext_resource type="Resource" path="res://data/maps/town/thief.dtl" id="19_s5udr"]
 [ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/interaction.tscn" id="19_sa6jd"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="20_g8d34"]
 [ext_resource type="Script" path="res://src/field/ui/dialogue_window.gd" id="20_lk3dv"]
-[ext_resource type="Resource" path="res://data/maps/town/monk.dtl" id="21_ap4qa"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="21_f53lt"]
 [ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="21_r13nn"]
 [ext_resource type="Resource" path="res://data/maps/town/smith.dtl" id="22_dko83"]
-[ext_resource type="Resource" path="res://data/maps/town/wizard.dtl" id="25_8uprj"]
+[ext_resource type="Resource" path="res://maps/town/thief.dtl" id="22_rd6oa"]
+[ext_resource type="Resource" path="res://maps/town/monk.dtl" id="24_grnqa"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
+[ext_resource type="Resource" path="res://maps/town/wizard.dtl" id="28_ll4xp"]
 [ext_resource type="Script" path="res://maps/town/fan_interaction.gd" id="29_at3vc"]
 [ext_resource type="PackedScene" uid="uid://chgku8dii7mu8" path="res://src/field/cutscenes/templates/pickups/pickup.tscn" id="29_gxq7u"]
 [ext_resource type="Resource" path="res://maps/town/fan_of_four.dtl" id="30_n17q5"]
@@ -268,8 +269,8 @@ metadata/_edit_group_ = true
 [node name="KnightGFX" parent="Terrain/Gamepieces/Town/MoodyHero" instance=ExtResource("14_av6f5")]
 
 [node name="Interaction" parent="Terrain/Gamepieces/Town/MoodyHero" instance=ExtResource("19_sa6jd")]
-script = ExtResource("14_b3y71")
-timeline = ExtResource("14_32khq")
+script = ExtResource("13_0rh60")
+timeline = ExtResource("14_68y0v")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/MoodyHero/Interaction" instance=ExtResource("34_qs25x")]
 
@@ -292,7 +293,6 @@ timeline = ExtResource("16_ybo02")
 script = ExtResource("12_glwd5")
 move_path = NodePath("MovePath")
 gamepiece_mask = 2
-run_during_cutscenes = null
 
 [node name="WaitTimer" type="Timer" parent="Terrain/Gamepieces/Town/Runner/LoopAI"]
 wait_time = 1.5
@@ -311,8 +311,8 @@ metadata/_edit_group_ = true
 [node name="ThiefGFX" parent="Terrain/Gamepieces/Town/Thief" instance=ExtResource("17_sieyv")]
 
 [node name="Interaction" parent="Terrain/Gamepieces/Town/Thief" instance=ExtResource("19_sa6jd")]
-script = ExtResource("14_b3y71")
-timeline = ExtResource("19_s5udr")
+script = ExtResource("13_0rh60")
+timeline = ExtResource("22_rd6oa")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/Thief/Interaction" instance=ExtResource("34_qs25x")]
 
@@ -325,8 +325,8 @@ metadata/_edit_group_ = true
 [node name="MonkGFX" parent="Terrain/Gamepieces/Town/Monk" instance=ExtResource("17_qgtho")]
 
 [node name="Interaction" parent="Terrain/Gamepieces/Town/Monk" instance=ExtResource("19_sa6jd")]
-script = ExtResource("14_b3y71")
-timeline = ExtResource("21_ap4qa")
+script = ExtResource("13_0rh60")
+timeline = ExtResource("24_grnqa")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/Monk/Interaction" instance=ExtResource("34_qs25x")]
 
@@ -353,8 +353,8 @@ metadata/_edit_group_ = true
 [node name="WizardGFX" parent="Terrain/Gamepieces/Town/Wizard" instance=ExtResource("19_ius2d")]
 
 [node name="Interaction" parent="Terrain/Gamepieces/Town/Wizard" instance=ExtResource("19_sa6jd")]
-script = ExtResource("14_b3y71")
-timeline = ExtResource("25_8uprj")
+script = ExtResource("13_0rh60")
+timeline = ExtResource("28_ll4xp")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/Wizard/Interaction" instance=ExtResource("34_qs25x")]
 
@@ -386,8 +386,8 @@ item_type = 4
 amount = 4
 
 [node name="Chest3" parent="Terrain/Gamepieces/Town" instance=ExtResource("33_7djdg")]
-position = Vector2(840, 40)
-item_type = 5
+position = Vector2(328, 232)
+item_type = 1
 amount = 4
 
 [node name="KeyPickup" parent="Terrain/Gamepieces/Town" instance=ExtResource("29_gxq7u")]
