@@ -78,6 +78,7 @@ directories/dtl_directory={
 "strange_tree": "res://data/maps/town/strange_tree.dtl",
 "thief": "res://data/maps/town/thief.dtl",
 "wand_pedestal": "res://maps/house/wand_pedestal.dtl",
+"wand_pedestal_occupied": "res://maps/house/wand_pedestal_occupied.dtl",
 "warrior": "res://data/maps/town/warrior.dtl",
 "wizard": "res://data/maps/town/wizard.dtl"
 }

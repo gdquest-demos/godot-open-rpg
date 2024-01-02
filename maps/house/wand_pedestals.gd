@@ -1,21 +1,43 @@
 extends Node2D
 
+@onready var _blue: = $BluePedestal as WandPedestalInteraction
+@onready var _green: = $GreenPedestal as WandPedestalInteraction
+@onready var _red: = $RedPedestal as WandPedestalInteraction
+
+@onready var _audio: = $SpikesClick
+@onready var _spikes: = $PathBlocker
+
 
 func _ready() -> void:
 	var inventory: = Inventory.restore()
 	inventory.item_changed.connect(_on_inventory_item_changed.bind(inventory))
+	
+	_blue.colour_changed.connect(_on_wand_placed)
+	_green.colour_changed.connect(_on_wand_placed)
+	_red.colour_changed.connect(_on_wand_placed)
+
+
+func _on_wand_placed() -> void:
+	if _blue.colour == "blue" and _green.colour == "green" and _red.colour == "red":
+		_blue.is_active = false
+		_green.is_active = false
+		_red.is_active = false
+		
+		_audio.play()
+		
+		_spikes.queue_free()
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		FieldEvents.terrain_changed.emit()
 
 
 func _on_inventory_item_changed(item_type: Inventory.ItemTypes, inventory: Inventory) -> void:
 	match item_type:
 		Inventory.ItemTypes.RED_WAND:
 			Dialogic.VAR.set_variable("RedWandCount", inventory.get_item_count(item_type))
-			print("Now have %d green wands!" % Dialogic.VAR.get_variable("RedWandCount"))
 		
 		Inventory.ItemTypes.BLUE_WAND:
 			Dialogic.VAR.set_variable("BlueWandCount", inventory.get_item_count(item_type))
-			print("Now have %d blue wands!" % Dialogic.VAR.get_variable("BlueWandCount"))
 			
 		Inventory.ItemTypes.GREEN_WAND:
 			Dialogic.VAR.set_variable("GreenWandCount", inventory.get_item_count(item_type))
-			print("Now have %d green wands!" % Dialogic.VAR.get_variable("GreenWandCount"))

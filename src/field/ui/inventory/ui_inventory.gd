@@ -58,5 +58,4 @@ func _update_item(item_id: Inventory.ItemTypes, inventory: Inventory) -> void:
 
 
 func _on_inventory_item_changed(item_type: Inventory.ItemTypes, inventory: Inventory) -> void:
-	print("Item changed!")
 	_update_item(item_type, inventory)
