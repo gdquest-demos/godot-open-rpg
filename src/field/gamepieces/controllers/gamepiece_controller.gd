@@ -26,6 +26,21 @@ const BLOCKING_PROPERTY: = "blocks_movement"
 ## gamepieces.
 @export_flags_2d_physics var gamepiece_mask: = 0
 
+# Some controllers may be needed during cutscenes. In this case, they will not be paused.
+@export var run_during_cutscenes: = false:
+	set(value):
+		run_during_cutscenes = value
+		
+		if not Engine.is_editor_hint():
+			if not is_inside_tree():
+				await ready
+			
+			if value and Cutscene.is_cutscene_in_progress():
+				is_paused = false
+			
+			elif not value and Cutscene.is_cutscene_in_progress():
+				is_paused = true
+
 ## A pathfinder will be built from and respond to the physics state. This will be used to determine
 ## movement for the parent [Gamepiece].
 var pathfinder: Pathfinder
@@ -44,6 +59,9 @@ var _gameboard: Gameboard
 var _gamepiece_searcher: CollisionFinder
 var _terrain_searcher: CollisionFinder
 
+# Controllers are paused on a few conditions:
+# a) The gamestate changes to something other than the field, where controllers should not run.
+# b) A cutscene is run, pausing most input.
 var is_paused: = false:
 	set = set_is_paused
 
@@ -209,6 +227,9 @@ func _update_changed_cells() -> void:
 
 
 func _on_input_paused(paused: bool) -> void:
+	if paused and run_during_cutscenes and Cutscene.is_cutscene_in_progress():
+		return
+	
 	is_paused = paused
 
 

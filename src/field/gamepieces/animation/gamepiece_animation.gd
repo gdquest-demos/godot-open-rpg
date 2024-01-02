@@ -26,7 +26,7 @@ var current_sequence_id: = "":
 ## The direction faced by the gamepiece.
 ## [br][br]Animations may optionally be direction-based. Setting the direction will use directional 
 ## animations if they are available; otherwise non-directional animations will be used.
-var direction: = Directions.Points.N:
+var direction: = Directions.Points.S:
 	set = set_direction
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer

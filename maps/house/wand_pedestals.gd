@@ -25,6 +25,10 @@ func _on_wand_placed() -> void:
 		
 		_audio.play()
 		
+		# The physics engine will take a few frames to account for the missing spikes, so we need
+		# to wait to update the pathfinder until then.
+		# The first frame waits until the "spikes" blocking area has been freed. The second frame
+		# waits until the physics engine has registered the change in collision objects.
 		_spikes.queue_free()
 		await get_tree().physics_frame
 		await get_tree().physics_frame

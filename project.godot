@@ -43,8 +43,13 @@ layout/mode=2
 variables={
 "BlueWandCount": "0",
 "GreenWandCount": "0",
+"HasMonkToken": "0",
+"HasThiefToken": "0",
+"HasWarriorToken": "0",
+"HasWizardToken": "0",
 "RedWandCount": "0",
-"StrangeTreeExamined": "0"
+"StrangeTreeExamined": "0",
+"TokenCount": "0"
 }
 layout/end_behaviour=0
 layout/styles={
@@ -61,7 +66,7 @@ animations/leave_default="res://addons/dialogic/Modules/Character/DefaultAnimati
 text/autocolor_names=true
 settings/text_speed=1.0
 directories/dch_directory={
-"fan_of_four": "res://data/maps/town/fan_of_four.dch",
+"fan_of_four": "res://maps/town/fan_of_four.dch",
 "monk": "res://data/maps/town/monk.dch",
 "runner": "res://data/maps/town/runner.dch",
 "smith": "res://data/maps/town/smith.dch",
@@ -70,7 +75,7 @@ directories/dch_directory={
 "wizard": "res://data/maps/town/wizard.dch"
 }
 directories/dtl_directory={
-"fan_of_four": "res://data/maps/town/fan_of_four.dtl",
+"fan_of_four": "res://maps/town/fan_of_four.dtl",
 "monk": "res://data/maps/town/monk.dtl",
 "runner": "res://data/maps/town/runner.dtl",
 "sign": "res://data/maps/town/sign.dtl",

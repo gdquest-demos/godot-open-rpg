@@ -11,9 +11,8 @@ func _ready() -> void:
 
 
 func _execute() -> void:
-	Dialogic.timeline_ended.connect(_on_conversation_finished, CONNECT_ONE_SHOT)
-	
-	super._execute()
+	await super._execute()
+	await _on_conversation_finished()
 
 
 func _on_conversation_finished() -> void:

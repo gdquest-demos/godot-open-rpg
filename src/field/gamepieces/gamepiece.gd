@@ -157,11 +157,7 @@ func _physics_process(delta: float) -> void:
 	if has_arrived:
 		move_distance = _path.curve.get_baked_length() - _follower.progress
 	
-	var old_follower_position: = _follower.position
 	_follower.progress += move_distance
-	
-	# This breaks down at very high speeds. At that point the cell path determines direction.
-	direction = (_follower.position - old_follower_position).normalized()
 	
 	# If we've reached the end of the path, either travel to the next waypoint or wrap up movement.
 	if has_arrived:
@@ -177,10 +173,13 @@ func _physics_process(delta: float) -> void:
 ## [br][br][b]Note:[/b] Calling travel_to_cell on a moving gamepiece will update it's position to 
 ## that indicated by the cell coordinates and add the cell to the movement path.
 func travel_to_cell(destination_cell: Vector2i) -> void:
+	set_physics_process(true)
+	
 	# Note that updating the gamepiece's cell will snap it to its new grid position. This will
 	# be accounted for below when calculating the waypoint's pixel coordinates.
 	var old_position: = position
 	cell = destination_cell
+	direction = (position - old_position).normalized()
 	
 	# Setting the cell (the above line) snaps the gamepiece to its new cell, but we want to animate
 	# its movement. Therefore, the follower must lag behind, 'travelling' to the next cell.
@@ -195,8 +194,6 @@ func travel_to_cell(destination_cell: Vector2i) -> void:
 		# will travel from the gamepiece's old position.
 		_path.curve.add_point(old_position)
 		_follower.progress = 0
-		
-		set_physics_process(true)
 	
 	# The gamepiece serves as the waypoint's frame of reference.
 	_path.curve.add_point(gameboard.cell_to_pixel(destination_cell))
