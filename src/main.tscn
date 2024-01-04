@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=81 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://data/field/characters/gobot_gfx.tscn" id="12_oablq"]
 [ext_resource type="Script" path="res://maps/town/gang_of_four_conversation.gd" id="13_0rh60"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="13_osl4o"]
-[ext_resource type="Texture2D" uid="uid://ber3qsogrcx52" path="res://assets/characters/apothecary.atlastex" id="13_tekkh"]
 [ext_resource type="Script" path="res://src/field/player_path_destination_marker.gd" id="14_0j4ru"]
 [ext_resource type="Resource" path="res://maps/town/warrior.dtl" id="14_68y0v"]
 [ext_resource type="PackedScene" uid="uid://se1wnxu5svgj" path="res://data/field/characters/knight_gfx.tscn" id="14_av6f5"]
@@ -78,8 +77,84 @@ separation = Vector2i(1, 1)
 [sub_resource type="TileSet" id="TileSet_uvju2"]
 sources/0 = SubResource("TileSetAtlasSource_orie5")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nn0hs"]
-size = Vector2(16, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ughy"]
+size = Vector2(15, 15)
+
+[sub_resource type="Animation" id="Animation_y8463"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TileMap:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathBlocker/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_0kxfj"]
+resource_name = "disappear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TileMap:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2.37841, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathBlocker/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_37hna"]
+_data = {
+"RESET": SubResource("Animation_y8463"),
+"disappear": SubResource("Animation_0kxfj")
+}
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s5jqb"]
+texture = ExtResource("33_ofo2l")
+separation = Vector2i(1, 1)
+8:0/0 = 0
+7:0/0 = 0
+6:0/0 = 0
+6:1/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+8:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_tinid"]
+sources/0 = SubResource("TileSetAtlasSource_s5jqb")
 
 [sub_resource type="Animation" id="Animation_bwvqs"]
 length = 0.001
@@ -193,85 +268,6 @@ size = Vector2(14, 23)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_44b32"]
 size = Vector2(15, 15)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ughy"]
-size = Vector2(15, 15)
-
-[sub_resource type="Animation" id="Animation_y8463"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TileMap:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PathBlocker/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_0kxfj"]
-resource_name = "disappear"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TileMap:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(2.37841, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PathBlocker/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_37hna"]
-_data = {
-"RESET": SubResource("Animation_y8463"),
-"disappear": SubResource("Animation_0kxfj")
-}
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s5jqb"]
-texture = ExtResource("33_ofo2l")
-separation = Vector2i(1, 1)
-8:0/0 = 0
-7:0/0 = 0
-6:0/0 = 0
-6:1/0 = 0
-6:2/0 = 0
-7:2/0 = 0
-7:1/0 = 0
-8:1/0 = 0
-8:2/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_tinid"]
-sources/0 = SubResource("TileSetAtlasSource_s5jqb")
-
 [node name="Gameboard" type="Node2D" node_paths=PackedStringArray("focused_game_piece")]
 scale = Vector2(5, 5)
 script = ExtResource("2_bkxev")
@@ -311,7 +307,7 @@ gameboard = ExtResource("6_kd8tv")
 y_sort_enabled = true
 
 [node name="Player" parent="Terrain/Gamepieces" instance=ExtResource("11_yntrj")]
-position = Vector2(936, 440)
+position = Vector2(24, 200)
 gameboard = ExtResource("6_kd8tv")
 blocks_movement = true
 move_speed = 96.0
@@ -322,21 +318,6 @@ metadata/_edit_group_ = true
 [node name="Town" type="Node2D" parent="Terrain/Gamepieces"]
 y_sort_enabled = true
 metadata/_edit_lock_ = true
-
-[node name="Apothecary" type="Node2D" parent="Terrain/Gamepieces/Town"]
-position = Vector2(184, 216)
-metadata/_edit_group_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Terrain/Gamepieces/Town/Apothecary"]
-texture = ExtResource("13_tekkh")
-offset = Vector2(0, -6)
-
-[node name="Area2D" type="Area2D" parent="Terrain/Gamepieces/Town/Apothecary"]
-collision_layer = 3
-collision_mask = 7
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/Town/Apothecary/Area2D"]
-shape = SubResource("RectangleShape2D_nn0hs")
 
 [node name="MoodyHero" parent="Terrain/Gamepieces/Town" instance=ExtResource("11_yntrj")]
 position = Vector2(296, 24)
@@ -454,19 +435,7 @@ run_during_cutscenes = true
 script = ExtResource("29_at3vc")
 timeline = ExtResource("30_n17q5")
 
-[node name="Chest" parent="Terrain/Gamepieces/Town" instance=ExtResource("33_7djdg")]
-position = Vector2(840, 120)
-item_type = 3
-
-[node name="Chest2" parent="Terrain/Gamepieces/Town" instance=ExtResource("33_7djdg")]
-position = Vector2(904, 56)
-item_type = 4
-amount = 4
-
-[node name="Chest3" parent="Terrain/Gamepieces/Town" instance=ExtResource("33_7djdg")]
-position = Vector2(328, 232)
-item_type = 1
-amount = 4
+[node name="InteractionPopup" parent="Terrain/Gamepieces/Town/AdoringFan/Interaction" instance=ExtResource("34_qs25x")]
 
 [node name="KeyPickup" parent="Terrain/Gamepieces/Town" instance=ExtResource("29_gxq7u")]
 position = Vector2(40, 24)
@@ -487,6 +456,53 @@ script = ExtResource("34_xtrml")
 z_index = 100
 emote = 1
 
+[node name="StrangeTreeInteraction" parent="Terrain/Gamepieces/Town" instance=ExtResource("19_sa6jd")]
+position = Vector2(56, 72)
+scale = Vector2(1, 1)
+script = ExtResource("31_y2el4")
+timeline = ExtResource("32_m0jee")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="PathBlocker" type="Area2D" parent="Terrain/Gamepieces/Town/StrangeTreeInteraction"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/Town/StrangeTreeInteraction/PathBlocker"]
+position = Vector2(-16, 16)
+shape = SubResource("RectangleShape2D_0ughy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Terrain/Gamepieces/Town/StrangeTreeInteraction"]
+libraries = {
+"": SubResource("AnimationLibrary_37hna")
+}
+
+[node name="TileMap" type="TileMap" parent="Terrain/Gamepieces/Town/StrangeTreeInteraction"]
+position = Vector2(-8, -8)
+tile_set = SubResource("TileSet_tinid")
+format = 2
+layer_0/tile_data = PackedInt32Array(65532, 458752, 1, 65533, 458752, 1, -3, 458752, 1, -65539, 458752, 1, -4, 458752, 1, -65540, 458752, 1, 131069, 458752, 1, -2, 458752, 1, 65534, 458752, 1, 131070, 458752, 1, 196606, 524288, 2, 131071, 524288, 2, 65535, 524288, 0, -1, 524288, 1, -65538, 524288, 0)
+
+[node name="InteractionPopup" parent="Terrain/Gamepieces/Town/StrangeTreeInteraction" instance=ExtResource("34_qs25x")]
+emote = 2
+
+[node name="SignInteraction" parent="Terrain/Gamepieces/Town" instance=ExtResource("19_sa6jd")]
+position = Vector2(152, 168)
+scale = Vector2(1, 1)
+script = ExtResource("14_b3y71")
+timeline = ExtResource("35_gv62s")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="InteractionPopup" parent="Terrain/Gamepieces/Town/SignInteraction" instance=ExtResource("34_qs25x")]
+
+[node name="TownToGrove" parent="Terrain/Gamepieces/Town" instance=ExtResource("37_6xxks")]
+position = Vector2(200, 280)
+scale = Vector2(1, 1)
+arrival_coordinates = Vector2(632, 424)
+new_music = ExtResource("41_uxhyb")
+metadata/_edit_lock_ = true
+
 [node name="Grove" type="Node2D" parent="Terrain/Gamepieces"]
 y_sort_enabled = true
 metadata/_edit_lock_ = true
@@ -506,6 +522,7 @@ libraries = {
 [node name="CanvasLayer" type="CanvasLayer" parent="Terrain/Gamepieces/Grove/Ghost/AnimationPlayer"]
 
 [node name="ScreenTransition" type="ColorRect" parent="Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/CanvasLayer"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -569,6 +586,20 @@ debug_color = Color(1, 0.55, 0.8, 0.42)
 wait_time = 0.25
 one_shot = true
 
+[node name="GroveToHouse" parent="Terrain/Gamepieces/Grove" instance=ExtResource("37_6xxks")]
+position = Vector2(952, 440)
+scale = Vector2(1, 1)
+arrival_coordinates = Vector2(936, 24)
+new_music = ExtResource("34_xbc6u")
+metadata/_edit_lock_ = true
+
+[node name="GroveToTown" parent="Terrain/Gamepieces/Grove" instance=ExtResource("37_6xxks")]
+position = Vector2(632, 408)
+scale = Vector2(1, 1)
+arrival_coordinates = Vector2(200, 264)
+new_music = ExtResource("41_uxhyb")
+metadata/_edit_lock_ = true
+
 [node name="House" type="Node2D" parent="Terrain/Gamepieces"]
 y_sort_enabled = true
 metadata/_edit_lock_ = true
@@ -606,73 +637,24 @@ shape = SubResource("RectangleShape2D_44b32")
 stream = ExtResource("39_02ti3")
 bus = &"SFX"
 
-[node name="StrangeTreeInteraction" parent="Terrain" instance=ExtResource("19_sa6jd")]
-position = Vector2(56, 72)
-script = ExtResource("31_y2el4")
-timeline = ExtResource("32_m0jee")
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
-
-[node name="PathBlocker" type="Area2D" parent="Terrain/StrangeTreeInteraction"]
-collision_layer = 2
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/StrangeTreeInteraction/PathBlocker"]
-position = Vector2(-16, 16)
-shape = SubResource("RectangleShape2D_0ughy")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Terrain/StrangeTreeInteraction"]
-libraries = {
-"": SubResource("AnimationLibrary_37hna")
-}
-
-[node name="TileMap" type="TileMap" parent="Terrain/StrangeTreeInteraction"]
-position = Vector2(-8, -8)
-tile_set = SubResource("TileSet_tinid")
-format = 2
-layer_0/tile_data = PackedInt32Array(65532, 458752, 1, 65533, 458752, 1, -3, 458752, 1, -65539, 458752, 1, -4, 458752, 1, -65540, 458752, 1, 131069, 458752, 1, -2, 458752, 1, 65534, 458752, 1, 131070, 458752, 1, 196606, 524288, 2, 131071, 524288, 2, 65535, 524288, 0, -1, 524288, 1, -65538, 524288, 0)
-
-[node name="InteractionPopup" parent="Terrain/StrangeTreeInteraction" instance=ExtResource("34_qs25x")]
-emote = 2
-
-[node name="SignInteraction" parent="Terrain" instance=ExtResource("19_sa6jd")]
-position = Vector2(152, 168)
-script = ExtResource("14_b3y71")
-timeline = ExtResource("35_gv62s")
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
-
-[node name="InteractionPopup" parent="Terrain/SignInteraction" instance=ExtResource("34_qs25x")]
-
-[node name="HouseToTown" parent="Terrain" instance=ExtResource("37_6xxks")]
+[node name="HouseToTown" parent="Terrain/Gamepieces/House" instance=ExtResource("37_6xxks")]
 position = Vector2(824, 24)
+scale = Vector2(1, 1)
 arrival_coordinates = Vector2(120, 184)
 new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
 
-[node name="HouseToGrove" parent="Terrain" instance=ExtResource("37_6xxks")]
+[node name="HouseToGrove" parent="Terrain/Gamepieces/House" instance=ExtResource("37_6xxks")]
 position = Vector2(936, 8)
+scale = Vector2(1, 1)
 arrival_coordinates = Vector2(936, 440)
 new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
 
-[node name="TownToGrove" parent="Terrain" instance=ExtResource("37_6xxks")]
-position = Vector2(200, 280)
-arrival_coordinates = Vector2(632, 424)
-new_music = ExtResource("41_uxhyb")
-metadata/_edit_lock_ = true
-
-[node name="GroveToHouse" parent="Terrain" instance=ExtResource("37_6xxks")]
-position = Vector2(952, 440)
-arrival_coordinates = Vector2(936, 24)
-new_music = ExtResource("34_xbc6u")
-metadata/_edit_lock_ = true
-
-[node name="GroveToTown" parent="Terrain" instance=ExtResource("37_6xxks")]
-position = Vector2(632, 408)
-arrival_coordinates = Vector2(200, 264)
-new_music = ExtResource("41_uxhyb")
-metadata/_edit_lock_ = true
+[node name="Chest" parent="Terrain/Gamepieces/House" instance=ExtResource("33_7djdg")]
+position = Vector2(840, 120)
+scale = Vector2(1, 1)
+item_type = 3
 
 [node name="MapBoundaries" type="Node2D" parent="."]
 script = ExtResource("18_cqtg7")
