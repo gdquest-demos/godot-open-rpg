@@ -1,6 +1,6 @@
 class_name TextureScreenTransition extends ScreenTransition
 
-const TRANSITION_SHADER: = preload("res://src/field/ui/screen_transitions/texture_fade.gdshader")
+const TRANSITION_SHADER: = preload("res://src/common/screen_transitions/texture_fade.gdshader")
 
 @export var overlay_texture: Texture:
 	set(value):

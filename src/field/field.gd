@@ -10,6 +10,8 @@ const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/playe
 ## The physics layers which will be used to search for terrain obejcts.
 @export_flags_2d_physics var terrain_mask: = 0
 
+@export var opening_cutscene: Cutscene
+
 @export var focused_game_piece: Gamepiece = null:
 	set = set_focused_game_piece
 
@@ -25,7 +27,7 @@ func _ready() -> void:
 	Camera.make_current()
 	Camera.reset_position()
 	
-	Music.play(load("res://assets/music/Apple Cider.mp3"))
+	opening_cutscene.run.call_deferred()
 
 
 func set_focused_game_piece(value: Gamepiece) -> void:

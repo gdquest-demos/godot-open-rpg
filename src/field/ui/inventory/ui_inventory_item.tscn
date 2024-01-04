@@ -5,6 +5,8 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_2w568"]
 font_size = 48
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Icon" type="TextureRect"]
 custom_minimum_size = Vector2(16, 16)

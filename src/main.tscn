@@ -1,34 +1,34 @@
-[gd_scene load_steps=81 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=84 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
-[ext_resource type="Resource" uid="uid://cbnicto2l2ur2" path="res://data/default_gameboard.tres" id="6_kd8tv"]
+[ext_resource type="Resource" uid="uid://cbnicto2l2ur2" path="res://maps/default_gameboard.tres" id="6_kd8tv"]
 [ext_resource type="TileSet" uid="uid://biq84075xlypd" path="res://assets/terrain/tilesets/kenney_obstacles.tres" id="7_po5fq"]
 [ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://assets/terrain/dungeon_tilemap.png" id="9_woa3f"]
 [ext_resource type="PackedScene" uid="uid://b626e0bngfvjj" path="res://src/field/gamepieces/gamepiece.tscn" id="11_yntrj"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/path_loop_ai_controller.gd" id="12_glwd5"]
-[ext_resource type="PackedScene" uid="uid://cdkha7cc72h35" path="res://data/field/characters/generic_character_gfx.tscn" id="12_n5rm1"]
-[ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://data/field/characters/gobot_gfx.tscn" id="12_oablq"]
+[ext_resource type="PackedScene" uid="uid://cdkha7cc72h35" path="res://assets/characters/generic_character_gfx.tscn" id="12_n5rm1"]
+[ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://assets/characters/gobot_gfx.tscn" id="12_oablq"]
 [ext_resource type="Script" path="res://maps/town/gang_of_four_conversation.gd" id="13_0rh60"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="13_osl4o"]
 [ext_resource type="Script" path="res://src/field/player_path_destination_marker.gd" id="14_0j4ru"]
 [ext_resource type="Resource" path="res://maps/town/warrior.dtl" id="14_68y0v"]
-[ext_resource type="PackedScene" uid="uid://se1wnxu5svgj" path="res://data/field/characters/knight_gfx.tscn" id="14_av6f5"]
+[ext_resource type="PackedScene" uid="uid://se1wnxu5svgj" path="res://assets/characters/knight_gfx.tscn" id="14_av6f5"]
 [ext_resource type="Script" path="res://src/field/cutscenes/templates/conversations/conversation_template.gd" id="14_b3y71"]
-[ext_resource type="Resource" path="res://data/maps/town/runner.dtl" id="16_ybo02"]
-[ext_resource type="PackedScene" uid="uid://dqdk6eehxsrmn" path="res://data/field/characters/monk_gfx.tscn" id="17_qgtho"]
-[ext_resource type="PackedScene" uid="uid://kiwma43jc3n6" path="res://data/field/characters/lady_gfx.tscn" id="17_sieyv"]
-[ext_resource type="PackedScene" uid="uid://bvtk5qllej4b8" path="res://data/field/characters/smith_gfx.tscn" id="18_2msel"]
+[ext_resource type="Resource" path="res://maps/town/runner.dtl" id="16_ybo02"]
+[ext_resource type="PackedScene" uid="uid://dqdk6eehxsrmn" path="res://assets/characters/monk_gfx.tscn" id="17_qgtho"]
+[ext_resource type="PackedScene" uid="uid://kiwma43jc3n6" path="res://assets/characters/lady_gfx.tscn" id="17_sieyv"]
+[ext_resource type="PackedScene" uid="uid://bvtk5qllej4b8" path="res://assets/characters/smith_gfx.tscn" id="18_2msel"]
 [ext_resource type="Script" path="res://src/field/cutscenes/popups/moving_interaction_popup.gd" id="18_8igsj"]
 [ext_resource type="Script" path="res://src/field/gameboard/debug_map_boundaries.gd" id="18_cqtg7"]
-[ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://data/field/characters/wizard_gfx.tscn" id="19_ius2d"]
+[ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://assets/characters/wizard_gfx.tscn" id="19_ius2d"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="19_lpxfg"]
 [ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/interaction.tscn" id="19_sa6jd"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="20_g8d34"]
 [ext_resource type="Script" path="res://src/field/ui/dialogue_window.gd" id="20_lk3dv"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="21_f53lt"]
 [ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="21_r13nn"]
-[ext_resource type="Resource" path="res://data/maps/town/smith.dtl" id="22_dko83"]
+[ext_resource type="Resource" path="res://maps/town/smith.dtl" id="22_dko83"]
 [ext_resource type="Resource" path="res://maps/town/thief.dtl" id="22_rd6oa"]
 [ext_resource type="Resource" path="res://maps/town/monk.dtl" id="24_grnqa"]
 [ext_resource type="Script" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
@@ -36,17 +36,17 @@
 [ext_resource type="Script" path="res://maps/town/fan_interaction.gd" id="29_at3vc"]
 [ext_resource type="PackedScene" uid="uid://chgku8dii7mu8" path="res://src/field/cutscenes/templates/pickups/pickup.tscn" id="29_gxq7u"]
 [ext_resource type="Resource" path="res://maps/town/fan_of_four.dtl" id="30_n17q5"]
-[ext_resource type="Script" path="res://data/maps/town/strange_tree_interaction.gd" id="31_y2el4"]
-[ext_resource type="Resource" path="res://data/maps/town/strange_tree.dtl" id="32_m0jee"]
+[ext_resource type="Script" path="res://maps/town/strange_tree_interaction.gd" id="31_y2el4"]
+[ext_resource type="Resource" path="res://maps/town/strange_tree.dtl" id="32_m0jee"]
 [ext_resource type="PackedScene" uid="uid://c8jtuge5yaqxa" path="res://src/field/cutscenes/templates/treasure_chests/chest.tscn" id="33_7djdg"]
 [ext_resource type="PackedScene" uid="uid://p0e4b0txynkd" path="res://src/field/cutscenes/templates/doors/door.tscn" id="33_lbtsh"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="33_ofo2l"]
 [ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/interaction_popup.tscn" id="34_qs25x"]
 [ext_resource type="Script" path="res://src/field/ui/inventory/ui_inventory.gd" id="34_tk01t"]
 [ext_resource type="AudioStream" uid="uid://duwauer3vwtne" path="res://assets/music/Insect Factory.mp3" id="34_xbc6u"]
-[ext_resource type="Script" path="res://data/maps/town/door_unlock_interaction.gd" id="34_xtrml"]
-[ext_resource type="Resource" path="res://data/maps/town/sign.dtl" id="35_gv62s"]
-[ext_resource type="PackedScene" uid="uid://cgwailb13nkcd" path="res://assets/characters/enemy_gfx.tscn" id="36_7n3c5"]
+[ext_resource type="Script" path="res://maps/town/door_unlock_interaction.gd" id="34_xtrml"]
+[ext_resource type="Resource" path="res://maps/town/sign.dtl" id="35_gv62s"]
+[ext_resource type="PackedScene" uid="uid://cgwailb13nkcd" path="res://assets/characters/ghost_gfx.tscn" id="36_7n3c5"]
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="37_6xxks"]
 [ext_resource type="Script" path="res://maps/house/wand_pedestals.gd" id="37_bp2qp"]
 [ext_resource type="Resource" path="res://maps/grove/ghost.dtl" id="37_uncgg"]
@@ -57,15 +57,18 @@
 [ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/trigger.tscn" id="39_p2lth"]
 [ext_resource type="Script" path="res://maps/grove/game_end_trigger.gd" id="40_lduow"]
 [ext_resource type="AudioStream" uid="uid://ctnn0hqkx67k7" path="res://assets/music/Apple Cider.mp3" id="41_uxhyb"]
-[ext_resource type="Script" path="res://src/field/ui/screen_transitions/shader_screen_transition.gd" id="43_plblh"]
+[ext_resource type="Script" path="res://src/common/screen_transitions/shader_screen_transition.gd" id="43_plblh"]
 [ext_resource type="Texture2D" uid="uid://cwi5ahlt8vmpy" path="res://assets/gui/screen_transitions/wipe_horizontal.png" id="44_glejo"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_type_sound.gd" id="53_atrmf"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Choice/node_choice_button.gd" id="53_w1dgf"]
 [ext_resource type="AudioStream" uid="uid://b6c1p14bc20p1" path="res://addons/dialogic/Example Assets/sound-effects/typing1.wav" id="54_fh5dy"]
 [ext_resource type="AudioStream" uid="uid://c3uw4nft0de13" path="res://addons/dialogic/Example Assets/sound-effects/typing2.wav" id="55_8lvao"]
+[ext_resource type="Script" path="res://maps/opening_cutscene.gd" id="55_vsmkr"]
+[ext_resource type="Script" path="res://src/common/screen_transitions/screen_transition.gd" id="56_cx0l3"]
 [ext_resource type="AudioStream" uid="uid://dnboblpkf0fqi" path="res://addons/dialogic/Example Assets/sound-effects/typing3.wav" id="56_prbwr"]
 [ext_resource type="AudioStream" uid="uid://c2viukvbub6v6" path="res://addons/dialogic/Example Assets/sound-effects/typing4.wav" id="57_tomnb"]
 [ext_resource type="AudioStream" uid="uid://dwcre3fjf3cj8" path="res://addons/dialogic/Example Assets/sound-effects/typing5.wav" id="58_br2ni"]
+[ext_resource type="Resource" path="res://maps/opening_cutscene.dtl" id="68_jcriq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_orie5"]
 resource_name = "Overlay"
@@ -268,11 +271,12 @@ size = Vector2(14, 23)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_44b32"]
 size = Vector2(15, 15)
 
-[node name="Gameboard" type="Node2D" node_paths=PackedStringArray("focused_game_piece")]
+[node name="Gameboard" type="Node2D" node_paths=PackedStringArray("opening_cutscene", "focused_game_piece")]
 scale = Vector2(5, 5)
 script = ExtResource("2_bkxev")
 gamepiece_mask = 2
 terrain_mask = 1
+opening_cutscene = NodePath("OpeningCutscene")
 focused_game_piece = NodePath("Terrain/Gamepieces/Player")
 gameboard = ExtResource("6_kd8tv")
 
@@ -431,8 +435,9 @@ script = ExtResource("26_p8jrd")
 gamepiece_mask = 6
 run_during_cutscenes = true
 
-[node name="Interaction" parent="Terrain/Gamepieces/Town/AdoringFan" instance=ExtResource("19_sa6jd")]
+[node name="Interaction" parent="Terrain/Gamepieces/Town/AdoringFan" node_paths=PackedStringArray("controller") instance=ExtResource("19_sa6jd")]
 script = ExtResource("29_at3vc")
+controller = NodePath("../Controller")
 timeline = ExtResource("30_n17q5")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/AdoringFan/Interaction" instance=ExtResource("34_qs25x")]
@@ -458,7 +463,6 @@ emote = 1
 
 [node name="StrangeTreeInteraction" parent="Terrain/Gamepieces/Town" instance=ExtResource("19_sa6jd")]
 position = Vector2(56, 72)
-scale = Vector2(1, 1)
 script = ExtResource("31_y2el4")
 timeline = ExtResource("32_m0jee")
 metadata/_edit_group_ = true
@@ -488,7 +492,6 @@ emote = 2
 
 [node name="SignInteraction" parent="Terrain/Gamepieces/Town" instance=ExtResource("19_sa6jd")]
 position = Vector2(152, 168)
-scale = Vector2(1, 1)
 script = ExtResource("14_b3y71")
 timeline = ExtResource("35_gv62s")
 metadata/_edit_group_ = true
@@ -498,7 +501,6 @@ metadata/_edit_lock_ = true
 
 [node name="TownToGrove" parent="Terrain/Gamepieces/Town" instance=ExtResource("37_6xxks")]
 position = Vector2(200, 280)
-scale = Vector2(1, 1)
 arrival_coordinates = Vector2(632, 424)
 new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
@@ -588,14 +590,12 @@ one_shot = true
 
 [node name="GroveToHouse" parent="Terrain/Gamepieces/Grove" instance=ExtResource("37_6xxks")]
 position = Vector2(952, 440)
-scale = Vector2(1, 1)
 arrival_coordinates = Vector2(936, 24)
 new_music = ExtResource("34_xbc6u")
 metadata/_edit_lock_ = true
 
 [node name="GroveToTown" parent="Terrain/Gamepieces/Grove" instance=ExtResource("37_6xxks")]
 position = Vector2(632, 408)
-scale = Vector2(1, 1)
 arrival_coordinates = Vector2(200, 264)
 new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
@@ -639,21 +639,18 @@ bus = &"SFX"
 
 [node name="HouseToTown" parent="Terrain/Gamepieces/House" instance=ExtResource("37_6xxks")]
 position = Vector2(824, 24)
-scale = Vector2(1, 1)
 arrival_coordinates = Vector2(120, 184)
 new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
 
 [node name="HouseToGrove" parent="Terrain/Gamepieces/House" instance=ExtResource("37_6xxks")]
 position = Vector2(936, 8)
-scale = Vector2(1, 1)
 arrival_coordinates = Vector2(936, 440)
 new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
 
 [node name="Chest" parent="Terrain/Gamepieces/House" instance=ExtResource("33_7djdg")]
 position = Vector2(840, 120)
-scale = Vector2(1, 1)
 item_type = 3
 
 [node name="MapBoundaries" type="Node2D" parent="."]
@@ -787,5 +784,21 @@ layout_mode = 2
 text = "Choice4"
 script = ExtResource("53_w1dgf")
 choice_index = 4
+
+[node name="OpeningCutscene" type="Node2D" parent="."]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("55_vsmkr")
+timeline = ExtResource("68_jcriq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="OpeningCutscene"]
+
+[node name="ScreenTransition" type="ColorRect" parent="OpeningCutscene/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("56_cx0l3")
 
 [connection signal="area_entered" from="Terrain/Gamepieces/Grove/GameEndTrigger/Area2D2" to="Terrain/Gamepieces/Grove/GameEndTrigger" method="_on_area_entered"]
