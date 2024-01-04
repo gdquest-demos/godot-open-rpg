@@ -17,7 +17,7 @@
 "portraits": {
 "Default": {
 "export_overrides": {
-"image": "\"res://assets/characters/enemy.atlastex\""
+"image": "\"res://assets/characters/ghost.atlastex\""
 },
 "mirror": false,
 "offset": Vector2(0, 0),

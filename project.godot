@@ -47,6 +47,7 @@ variables={
 "HasThiefToken": "0",
 "HasWarriorToken": "0",
 "HasWizardToken": "0",
+"Hint": "0",
 "RedWandCount": "0",
 "StrangeTreeExamined": "0",
 "TokenCount": "0"
