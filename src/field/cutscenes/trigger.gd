@@ -74,16 +74,15 @@ func _on_input_paused(is_paused: bool) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	var gamepiece: = area.owner as Gamepiece
-	if gamepiece:
+	
+	# Check to make sure that the gamepiece is moving before connecting to its 'arriving'
+	# signal. This catches edge cases where the Trigger is unpaused while a colliding object
+	# is standing on top of it (which would mean that _on_gamepiece_arriving would trigger once
+	# the gamepiece moves OFF of it. Which is bad.).
+	if gamepiece and gamepiece.is_moving():
 		gamepiece_entered.emit(gamepiece)
-		
-		# Check to make sure that the gamepiece is moving before connecting to its 'arriving'
-		# signal. This catches edge cases where the Trigger is unpaused while a colliding object
-		# is standing on top of it (which would mean that _on_gamepiece_arriving would trigger once
-		# the gamepiece moves OFF of it. Which is bad.).
-		if gamepiece.is_moving():
-			gamepiece.arriving.connect(_on_gamepiece_arriving.bind(gamepiece), CONNECT_ONE_SHOT)
-		
+		gamepiece.arriving.connect(_on_gamepiece_arriving.bind(gamepiece), CONNECT_ONE_SHOT)
+	
 		# Triggers need to block input a early. If waiting until the gamepiece is arriving, there's
 		# a chance that the player's controller may received the gamepiece.arriving signal first
 		# and continue moving the gamepiece.

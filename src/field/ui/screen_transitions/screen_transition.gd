@@ -2,8 +2,8 @@ class_name ScreenTransition extends ColorRect
 
 signal finished
 
-const CLEAR: = Color(0, 0, 0, 0)
-const COVERED: = Color.BLACK
+const CLEAR: = Color(1, 1, 1, 0)
+const COVERED: = Color.WHITE
 
 var _tween: Tween
 

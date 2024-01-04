@@ -67,6 +67,7 @@ text/autocolor_names=true
 settings/text_speed=1.0
 directories/dch_directory={
 "fan_of_four": "res://maps/town/fan_of_four.dch",
+"ghost": "res://maps/grove/ghost.dch",
 "monk": "res://maps/town/monk.dch",
 "runner": "res://data/maps/town/runner.dch",
 "smith": "res://data/maps/town/smith.dch",
@@ -78,6 +79,7 @@ directories/dtl_directory={
 "fan_of_four": "res://maps/town/fan_of_four.dtl",
 "fan_of_four_finished": "res://maps/town/fan_of_four_finished.dtl",
 "fan_of_four_tokens": "res://maps/town/fan_of_four_tokens.dtl",
+"ghost": "res://maps/grove/ghost.dtl",
 "monk": "res://maps/town/monk.dtl",
 "runner": "res://data/maps/town/runner.dtl",
 "sign": "res://data/maps/town/sign.dtl",
