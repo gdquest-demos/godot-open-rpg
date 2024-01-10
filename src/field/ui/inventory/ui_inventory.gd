@@ -6,19 +6,6 @@
 ## a variety of RPG events.
 class_name UIInventory extends HBoxContainer
 
-#TODO: have central item definitions somehwere that can be read by tool scripts. Will come with
-# inventory update. Probably shouldn't be hardcoded as constants, to allow definitions of new items
-# on the fly.
-# See also Pickup.ICONS.
-const ICONS: = {
-	Inventory.ItemTypes.KEY: preload("res://assets/items/key.atlastex"),
-	Inventory.ItemTypes.COIN: preload("res://assets/items/coin.atlastex"),
-	Inventory.ItemTypes.BOMB: preload("res://assets/items/bomb.atlastex"),
-	Inventory.ItemTypes.RED_WAND: preload("res://assets/items/wand_red.atlastex"),
-	Inventory.ItemTypes.BLUE_WAND: preload("res://assets/items/wand_blue.atlastex"),
-	Inventory.ItemTypes.GREEN_WAND: preload("res://assets/items/wand_green.atlastex"),
-}
-
 # Keep track of the inventory item packed scene to easily instantiate new items.
 var _ITEM_SCENE: = preload("res://src/field/ui/inventory/ui_inventory_item.tscn")
 
@@ -47,7 +34,7 @@ func _update_item(item_id: Inventory.ItemTypes, inventory: Inventory) -> void:
 		if not item:
 			item = _ITEM_SCENE.instantiate() as UIInventoryItem
 			item.ID = item_id
-			item.texture = ICONS.get(item_id)
+			item.texture = Inventory.get_item_icon(item_id)
 			add_child(item)
 		
 		item.count = amount

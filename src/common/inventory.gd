@@ -1,6 +1,19 @@
+@tool
 class_name Inventory extends Resource
 
 enum ItemTypes { KEY, COIN, BOMB, RED_WAND, BLUE_WAND, GREEN_WAND }
+
+#TODO: I expect we'll want to have a proper inventory definition somewhere. Some folks advocate for
+# spreadsheets, but whatever it is should probably integrate with the editor so that level designers
+# can easily pick from items from a dropdown list, or something similar.
+const ICONS: = {
+	ItemTypes.KEY: preload("res://assets/items/key.atlastex"),
+	ItemTypes.COIN: preload("res://assets/items/coin.atlastex"),
+	ItemTypes.BOMB: preload("res://assets/items/bomb.atlastex"),
+	ItemTypes.RED_WAND: preload("res://assets/items/wand_red.atlastex"),
+	ItemTypes.BLUE_WAND: preload("res://assets/items/wand_blue.atlastex"),
+	ItemTypes.GREEN_WAND: preload("res://assets/items/wand_green.atlastex"),
+}
 
 signal item_changed(type: ItemTypes)
 
@@ -22,6 +35,9 @@ static func get_profile_path() -> String:
 ## Load the [Inventory] from file or create a new resource, if it was missing. Godot caches calls, 
 ## so this can be used every time needed.
 static func restore() -> Inventory:
+	if Engine.is_editor_hint():
+		return null
+	
 	if FileAccess.file_exists(Inventory.get_profile_path()):
 		var inventory = ResourceLoader.load(Inventory.get_profile_path()) as Inventory
 		if inventory:
@@ -53,7 +69,13 @@ func remove(item_type: ItemTypes, amount: = 1) -> void:
 
 ## Returns the number of a certain item type posessed by the player.
 func get_item_count(item_type: ItemTypes) -> int:
+	print("Duplicate?")
+	print(item_type, " Have any? ", _items.get(item_type, 0))
 	return _items.get(item_type, 0)
+
+
+static func get_item_icon(item_type: ItemTypes) -> Texture:
+	return ICONS.get(item_type, null)
 
 
 func save() -> void:

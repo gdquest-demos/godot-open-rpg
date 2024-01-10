@@ -3,25 +3,25 @@ class_name UIPopup extends Node2D
 
 signal disappeared
 
-enum IconTypes { EMPTY, EXCLAMATION, QUESTION}
+enum EmoteTypes { EMPTY, EXCLAMATION, QUESTION}
 
 # The current state of a popup.
 enum States { HIDDEN, SHOWN, HIDING, SHOWING}
 
 const Emotes: = {
-	IconTypes.EMPTY: preload("res://assets/gui/emotes/emote__.png"),
-	IconTypes.EXCLAMATION: preload("res://assets/gui/emotes/emote_exclamations.png"),
-	IconTypes.QUESTION: preload("res://assets/gui/emotes/emote_question.png"),
+	EmoteTypes.EMPTY: preload("res://assets/gui/emotes/emote__.png"),
+	EmoteTypes.EXCLAMATION: preload("res://assets/gui/emotes/emote_exclamations.png"),
+	EmoteTypes.QUESTION: preload("res://assets/gui/emotes/emote_question.png"),
 }
 
-@export var emote: IconTypes:
+@export var emote: EmoteTypes:
 	set(value):
 		emote = value
 		
 		if not is_inside_tree():
 			await ready
 		
-		_sprite.texture = Emotes.get(emote, Emotes[IconTypes.EMPTY])
+		_sprite.texture = Emotes.get(emote, Emotes[EmoteTypes.EMPTY])
 
 # The target state of the popup. Setting it to true or false will cause a change in behaviour.
 # True if the popup should be shown or false if the popup should be hidden.

@@ -12,9 +12,9 @@ func _ready() -> void:
 	var inventory: = Inventory.restore()
 	inventory.item_changed.connect(_on_inventory_item_changed.bind(inventory))
 	
-	_blue.colour_changed.connect(_on_wand_placed)
-	_green.colour_changed.connect(_on_wand_placed)
-	_red.colour_changed.connect(_on_wand_placed)
+	#_blue.colour_changed.connect(_on_wand_placed)
+	#_green.colour_changed.connect(_on_wand_placed)
+	#_red.colour_changed.connect(_on_wand_placed)
 
 
 func _on_wand_placed() -> void:

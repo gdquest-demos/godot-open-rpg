@@ -27,7 +27,8 @@ func _ready() -> void:
 	Camera.make_current()
 	Camera.reset_position()
 	
-	opening_cutscene.run.call_deferred()
+	if opening_cutscene:
+		opening_cutscene.run.call_deferred()
 
 
 func set_focused_game_piece(value: Gamepiece) -> void:
