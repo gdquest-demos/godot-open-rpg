@@ -69,8 +69,6 @@ func remove(item_type: ItemTypes, amount: = 1) -> void:
 
 ## Returns the number of a certain item type posessed by the player.
 func get_item_count(item_type: ItemTypes) -> int:
-	print("Duplicate?")
-	print(item_type, " Have any? ", _items.get(item_type, 0))
 	return _items.get(item_type, 0)
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=85 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -48,7 +48,6 @@
 [ext_resource type="Resource" path="res://maps/town/sign.dtl" id="35_gv62s"]
 [ext_resource type="PackedScene" uid="uid://cgwailb13nkcd" path="res://assets/characters/ghost_gfx.tscn" id="36_7n3c5"]
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="37_6xxks"]
-[ext_resource type="Script" path="res://maps/house/wand_pedestals.gd" id="37_bp2qp"]
 [ext_resource type="Resource" path="res://maps/grove/ghost.dtl" id="37_uncgg"]
 [ext_resource type="PackedScene" uid="uid://ctuol1ff8u5e2" path="res://maps/house/wand_pedestal_interaction.tscn" id="38_n1c7a"]
 [ext_resource type="AudioStream" uid="uid://xualafnxuikl" path="res://assets/sfx/jump5.ogg" id="38_t83n8"]
@@ -267,6 +266,44 @@ font_size = 128
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_giaot"]
 size = Vector2(14, 23)
+
+[sub_resource type="Animation" id="Animation_orjmt"]
+resource_name = "clear"
+length = 0.25
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spikes/SpikesClick")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("39_02ti3")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spikes/SpikesArea")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jktnn"]
+_data = {
+"clear": SubResource("Animation_orjmt")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_44b32"]
 size = Vector2(15, 15)
@@ -566,6 +603,10 @@ bus = &"SFX"
 position = Vector2(840, 56)
 item_type = 5
 
+[node name="Pickup2" parent="Terrain/Gamepieces/Grove" instance=ExtResource("29_gxq7u")]
+position = Vector2(824, 56)
+item_type = 4
+
 [node name="GameEndTrigger" parent="Terrain/Gamepieces/Grove" node_paths=PackedStringArray("ghost_animation_player") instance=ExtResource("39_p2lth")]
 position = Vector2(888, 472)
 script = ExtResource("40_lduow")
@@ -603,37 +644,47 @@ metadata/_edit_lock_ = true
 y_sort_enabled = true
 metadata/_edit_lock_ = true
 
-[node name="WandPedestals" type="Node2D" parent="Terrain/Gamepieces/House"]
+[node name="PedestalPuzzle" type="Node2D" parent="Terrain/Gamepieces/House"]
 y_sort_enabled = true
-script = ExtResource("37_bp2qp")
 metadata/_edit_lock_ = true
 
-[node name="GreenPedestal" parent="Terrain/Gamepieces/House/WandPedestals" instance=ExtResource("38_n1c7a")]
+[node name="GreenPedestal" parent="Terrain/Gamepieces/House/PedestalPuzzle" node_paths=PackedStringArray("spikes_animation") instance=ExtResource("38_n1c7a")]
 position = Vector2(856, 40)
+spikes_animation = NodePath("../Spikes")
+pedestal_requirement = "Green"
 
-[node name="BluePedestal" parent="Terrain/Gamepieces/House/WandPedestals" instance=ExtResource("38_n1c7a")]
+[node name="BluePedestal" parent="Terrain/Gamepieces/House/PedestalPuzzle" node_paths=PackedStringArray("spikes_animation") instance=ExtResource("38_n1c7a")]
 position = Vector2(872, 40)
+spikes_animation = NodePath("../Spikes")
+pedestal_requirement = "Blue"
 
-[node name="RedPedestal" parent="Terrain/Gamepieces/House/WandPedestals" instance=ExtResource("38_n1c7a")]
+[node name="RedPedestal" parent="Terrain/Gamepieces/House/PedestalPuzzle" node_paths=PackedStringArray("spikes_animation") instance=ExtResource("38_n1c7a")]
 position = Vector2(888, 40)
+spikes_animation = NodePath("../Spikes")
+pedestal_requirement = "Red"
 
-[node name="PathBlocker" type="Area2D" parent="Terrain/Gamepieces/House/WandPedestals"]
-position = Vector2(936, 72)
+[node name="Spikes" type="AnimationPlayer" parent="Terrain/Gamepieces/House/PedestalPuzzle"]
+libraries = {
+"": SubResource("AnimationLibrary_jktnn")
+}
+
+[node name="SpikesArea" type="Area2D" parent="Terrain/Gamepieces/House/PedestalPuzzle/Spikes"]
+position = Vector2(4680, 360)
+scale = Vector2(5, 5)
 collision_layer = 2
 collision_mask = 0
 monitoring = false
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Terrain/Gamepieces/House/WandPedestals/PathBlocker"]
+[node name="Sprite2D" type="Sprite2D" parent="Terrain/Gamepieces/House/PedestalPuzzle/Spikes/SpikesArea"]
 texture = ExtResource("9_woa3f")
 region_enabled = true
 region_rect = Rect2(85, 51, 16, 16)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/House/WandPedestals/PathBlocker"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Gamepieces/House/PedestalPuzzle/Spikes/SpikesArea"]
 shape = SubResource("RectangleShape2D_44b32")
 
-[node name="SpikesClick" type="AudioStreamPlayer" parent="Terrain/Gamepieces/House/WandPedestals"]
-stream = ExtResource("39_02ti3")
+[node name="SpikesClick" type="AudioStreamPlayer" parent="Terrain/Gamepieces/House/PedestalPuzzle/Spikes"]
 bus = &"SFX"
 
 [node name="HouseToTown" parent="Terrain/Gamepieces/House" instance=ExtResource("37_6xxks")]
