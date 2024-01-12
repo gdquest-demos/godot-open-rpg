@@ -18,6 +18,8 @@ const ICONS: = {
 	ItemTypes.GREEN_WAND: preload("res://assets/items/wand_green.atlastex"),
 }
 
+const INVENTORY_PATH: = "user://inventory.tres"
+
 ## Emitted when the count of a given item type changes.
 signal item_changed(type: ItemTypes)
 
@@ -36,8 +38,8 @@ static func restore() -> Inventory:
 	if Engine.is_editor_hint():
 		return null
 	
-	if FileAccess.file_exists("user://"):
-		var inventory = ResourceLoader.load("user://") as Inventory
+	if FileAccess.file_exists(INVENTORY_PATH):
+		var inventory = ResourceLoader.load(INVENTORY_PATH) as Inventory
 		if inventory:
 			return inventory
 	
@@ -50,7 +52,7 @@ static func restore() -> Inventory:
 
 ## Increment the count of a given item by one, adding it to the inventory if it does not exist.
 func add(item_type: ItemTypes, amount: = 1) -> void:
-	# Note that adding negative numbers is possible. Prevent having negative items.
+	# Note that adding negative numbers is possible. Prevent having a total of negative items.
 	# NPC: "You cannot have negative potatoes."
 	var old_amount: = _items.get(item_type, 0) as int
 	_items[item_type] = maxi(old_amount+amount, 0)
@@ -77,4 +79,4 @@ static func get_item_icon(item_type: ItemTypes) -> Texture:
 
 ## Write the inventory contents to the disk.
 func save() -> void:
-	ResourceSaver.save(self, "user://")
+	ResourceSaver.save(self, INVENTORY_PATH)
