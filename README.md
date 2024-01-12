@@ -4,7 +4,7 @@
 
 OpenRPG is a tool and a demo to create Role Playing Games with turn-based combat.
 
-➡ Follow us on [Twitter](https://twitter.com/NathanGDQuest) and [YouTube](https://www.youtube.com/c/gdquest/) for free game creation tutorials, tips, and news! Get one of our [Godot game creation courses](https://gdquest.mavenseed.com/courses) to support our work on Free Software.
+➡ Follow us on [Twitter](https://twitter.com/NathanGDQuest) and [YouTube](https://www.youtube.com/c/gdquest/) for free game creation tutorials, tips, and news! Get one of our [Godot game creation courses](https://www.gdquest.com/product/) to support our work on Free Software.
 
 ## Project Goal
 
