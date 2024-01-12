@@ -62,9 +62,7 @@ func _execute() -> void:
 	# There's a chance that we won't receive the signal (i.e. if the user opts to do nothing),
 	# therefore we'll explicitly connect and disconnect this signal each time the interaction is
 	# run. This will prevent overlap between multiple pedestals.
-	Dialogic.signal_event.connect(_on_dialogic_signal_event)
 	await super._execute()
-	Dialogic.signal_event.disconnect(_on_dialogic_signal_event)
 	
 	# Check to see if the puzzle has been solved, waiting for its resolution (screen shake and
 	# grating noises, for example) before finishing.

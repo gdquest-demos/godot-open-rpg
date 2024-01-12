@@ -23,10 +23,7 @@ func _execute() -> void:
 		1: timeline = TOKEN_CHECK_TIMELINE
 		2: timeline = FINISHED_QUEST_TIMELINE
 	
-	# Check to see if we get a specific signal during the conversation.
-	Dialogic.signal_event.connect(_on_signal_event_received)
 	await super._execute()
-	Dialogic.signal_event.disconnect(_on_signal_event_received)
 	
 	if _quest_state == 0:
 		await _on_initial_conversation_finished()
@@ -38,7 +35,7 @@ func _on_initial_conversation_finished() -> void:
 	await _adoring_fan.arrived
 
 
-func _on_signal_event_received(argument: String) -> void:
+func _on_dialogic_signal_event(argument: String) -> void:
 	if argument == "receive_wand":
 		_quest_state = 2
 		_popop.is_active = false
