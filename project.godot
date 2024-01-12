@@ -50,7 +50,8 @@ variables={
 "Hint": "0",
 "RedWandCount": "0",
 "StrangeTreeExamined": "0",
-"TokenCount": "0"
+"TokenCount": "0",
+"TokenQuestStatus": "0"
 }
 layout/end_behaviour=0
 layout/styles={
@@ -78,8 +79,6 @@ directories/dch_directory={
 }
 directories/dtl_directory={
 "fan_of_four": "res://maps/town/fan_of_four.dtl",
-"fan_of_four_finished": "res://maps/town/fan_of_four_finished.dtl",
-"fan_of_four_tokens": "res://maps/town/fan_of_four_tokens.dtl",
 "ghost": "res://maps/grove/ghost.dtl",
 "monk": "res://maps/town/monk.dtl",
 "opening_cutscene": "res://maps/opening_cutscene.dtl",
