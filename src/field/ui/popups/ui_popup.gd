@@ -1,27 +1,13 @@
 @tool
+## An animated pop-up graphic. These are often found, for example, in dialogue bubbles to
+## demonstrate the need for player input.
 class_name UIPopup extends Node2D
 
+## Emitted when the popup has completely disappeared.
 signal disappeared
 
-enum EmoteTypes { EMPTY, EXCLAMATION, QUESTION}
-
-# The current state of a popup.
+## The states in which a popup may exist.
 enum States { HIDDEN, SHOWN, HIDING, SHOWING}
-
-const Emotes: = {
-	EmoteTypes.EMPTY: preload("res://assets/gui/emotes/emote__.png"),
-	EmoteTypes.EXCLAMATION: preload("res://assets/gui/emotes/emote_exclamations.png"),
-	EmoteTypes.QUESTION: preload("res://assets/gui/emotes/emote_question.png"),
-}
-
-@export var emote: EmoteTypes:
-	set(value):
-		emote = value
-		
-		if not is_inside_tree():
-			await ready
-		
-		_sprite.texture = Emotes.get(emote, Emotes[EmoteTypes.EMPTY])
 
 # The target state of the popup. Setting it to true or false will cause a change in behaviour.
 # True if the popup should be shown or false if the popup should be hidden.
@@ -48,7 +34,6 @@ var _is_shown: = false:
 		#
 		# So, we check here to see if the popup is sitting in this 'wait' window, where it can be
 		# immediately hidden and still look smooth as butter.
-		
 		elif not _is_shown and _anim.current_animation == "bounce_wait":
 			_anim.play("disappear")
 			_state = States.HIDING
@@ -68,6 +53,7 @@ func _ready() -> void:
 
 ## Wait for the popup to disappear cleanly before freeing. If the popup is already hidden, it may be
 ## freed immediately.
+## This is useful for smoothly removing a poup from an external object.
 func hide_and_free() -> void:
 	if _state != States.HIDDEN:
 		_is_shown = false

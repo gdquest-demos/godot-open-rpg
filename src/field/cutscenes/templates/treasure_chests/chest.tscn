@@ -120,5 +120,4 @@ monitoring = false
 shape = SubResource("RectangleShape2D_11osp")
 
 [node name="InteractionPopup" parent="." index="5" instance=ExtResource("6_hmx7o")]
-is_active = true
 emote = 1

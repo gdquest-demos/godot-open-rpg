@@ -1,6 +1,31 @@
 @tool
+## A [UIPopup] used specifically to mark [Interaction]s and other points of interest for the player.
+##
+## InteractionPopups may be added as children to a variety of objects. They respond to the player's
+## physics layer and show up as an emote bubble when the player is nearby.
 class_name InteractionPopup extends UIPopup
 
+## The different emote types that may be selected.
+enum EmoteTypes { EMPTY, EXCLAMATION, QUESTION}
+
+## The emote textures that may appear over a point of interest.
+const EMOTES: = {
+	EmoteTypes.EMPTY: preload("res://assets/gui/emotes/emote__.png"),
+	EmoteTypes.EXCLAMATION: preload("res://assets/gui/emotes/emote_exclamations.png"),
+	EmoteTypes.QUESTION: preload("res://assets/gui/emotes/emote_question.png"),
+}
+
+## The emote bubble that will be displayed when the character is nearby.
+@export var emote: EmoteTypes:
+	set(value):
+		emote = value
+		
+		if not is_inside_tree():
+			await ready
+		
+		_sprite.texture = EMOTES.get(emote, EMOTES[EmoteTypes.EMPTY])
+
+## How close the player must be to the emote before it will display.
 @export var radius: = 32:
 	set(value):
 		radius = value
@@ -10,7 +35,8 @@ class_name InteractionPopup extends UIPopup
 		
 		_collision_shape.shape.radius = radius
 
-
+## Is true if the InteractionPopup should respond to the player's presence. Otherwise, the popup
+## will not be triggered.
 @export var is_active: = true:
 	set(value):
 		is_active = value

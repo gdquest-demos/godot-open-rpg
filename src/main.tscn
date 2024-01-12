@@ -372,6 +372,7 @@ script = ExtResource("13_0rh60")
 timeline = ExtResource("14_68y0v")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/MoodyHero/Interaction" instance=ExtResource("34_qs25x")]
+emote = 0
 
 [node name="Runner" parent="Terrain/Gamepieces/Town" instance=ExtResource("11_yntrj")]
 position = Vector2(296, 184)
@@ -383,6 +384,7 @@ metadata/_edit_group_ = true
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/Runner/GenericCharacterAnimation" instance=ExtResource("34_qs25x")]
 script = ExtResource("18_8igsj")
+emote = 0
 
 [node name="Interaction" parent="Terrain/Gamepieces/Town/Runner" instance=ExtResource("19_sa6jd")]
 script = ExtResource("14_b3y71")
@@ -414,6 +416,7 @@ script = ExtResource("13_0rh60")
 timeline = ExtResource("22_rd6oa")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/Thief/Interaction" instance=ExtResource("34_qs25x")]
+emote = 0
 
 [node name="Monk" parent="Terrain/Gamepieces/Town" instance=ExtResource("11_yntrj")]
 position = Vector2(344, 8)
@@ -428,6 +431,7 @@ script = ExtResource("13_0rh60")
 timeline = ExtResource("24_grnqa")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/Monk/Interaction" instance=ExtResource("34_qs25x")]
+emote = 0
 
 [node name="Smith" parent="Terrain/Gamepieces/Town" instance=ExtResource("11_yntrj")]
 position = Vector2(136, 88)
@@ -442,6 +446,7 @@ script = ExtResource("14_b3y71")
 timeline = ExtResource("22_dko83")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/Smith/Interaction" instance=ExtResource("34_qs25x")]
+emote = 0
 
 [node name="Wizard" parent="Terrain/Gamepieces/Town" instance=ExtResource("11_yntrj")]
 position = Vector2(344, 72)
@@ -456,6 +461,7 @@ script = ExtResource("13_0rh60")
 timeline = ExtResource("28_ll4xp")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/Wizard/Interaction" instance=ExtResource("34_qs25x")]
+emote = 0
 
 [node name="AdoringFan" parent="Terrain/Gamepieces/Town" instance=ExtResource("11_yntrj")]
 position = Vector2(280, 104)
@@ -477,6 +483,7 @@ controller = NodePath("../Controller")
 timeline = ExtResource("30_n17q5")
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/AdoringFan/Interaction" instance=ExtResource("34_qs25x")]
+emote = 0
 
 [node name="KeyPickup" parent="Terrain/Gamepieces/Town" instance=ExtResource("29_gxq7u")]
 position = Vector2(40, 24)
@@ -534,6 +541,7 @@ metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="InteractionPopup" parent="Terrain/Gamepieces/Town/SignInteraction" instance=ExtResource("34_qs25x")]
+emote = 0
 
 [node name="TownToGrove" parent="Terrain/Gamepieces/Town" instance=ExtResource("37_6xxks")]
 position = Vector2(200, 280)
