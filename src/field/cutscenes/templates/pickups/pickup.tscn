@@ -12,6 +12,7 @@ amount = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_1fedx")
+offset = Vector2(0, -16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 libraries = {

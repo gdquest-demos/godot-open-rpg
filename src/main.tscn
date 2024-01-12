@@ -50,13 +50,13 @@
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="37_6xxks"]
 [ext_resource type="Resource" path="res://maps/grove/ghost.dtl" id="37_uncgg"]
 [ext_resource type="PackedScene" uid="uid://ctuol1ff8u5e2" path="res://maps/house/wand_pedestal_interaction.tscn" id="38_n1c7a"]
-[ext_resource type="AudioStream" uid="uid://xualafnxuikl" path="res://assets/sfx/jump5.ogg" id="38_t83n8"]
-[ext_resource type="AudioStream" uid="uid://6re6kl1y8aew" path="res://assets/sfx/gameover4.ogg" id="39_1f6nj"]
 [ext_resource type="AudioStream" uid="uid://ohgp0pb24my4" path="res://assets/sfx/chop.ogg" id="39_02ti3"]
 [ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/trigger.tscn" id="39_p2lth"]
 [ext_resource type="Script" path="res://maps/grove/game_end_trigger.gd" id="40_lduow"]
 [ext_resource type="AudioStream" uid="uid://ctnn0hqkx67k7" path="res://assets/music/Apple Cider.mp3" id="41_uxhyb"]
+[ext_resource type="AudioStream" uid="uid://c5w0ripyqfl68" path="res://assets/sfx/drop_002.ogg" id="42_bc1t5"]
 [ext_resource type="Script" path="res://src/common/screen_transitions/shader_screen_transition.gd" id="43_plblh"]
+[ext_resource type="AudioStream" uid="uid://dhr63rdgg3dn2" path="res://assets/sfx/error_006.ogg" id="43_qeoai"]
 [ext_resource type="Texture2D" uid="uid://cwi5ahlt8vmpy" path="res://assets/gui/screen_transitions/wipe_horizontal.png" id="44_glejo"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_type_sound.gd" id="53_atrmf"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Choice/node_choice_button.gd" id="53_w1dgf"]
@@ -211,19 +211,19 @@ tracks/1/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("38_t83n8")
+"stream": ExtResource("42_bc1t5")
 }, {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("38_t83n8")
+"stream": ExtResource("42_bc1t5")
 }, {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("38_t83n8")
+"stream": ExtResource("42_bc1t5")
 }, {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("39_1f6nj")
+"stream": ExtResource("43_qeoai")
 }],
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.9)
 }
