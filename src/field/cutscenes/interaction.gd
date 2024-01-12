@@ -7,7 +7,7 @@
 ## NPC conversations, opening treasure chests, activating a save point, etc.
 ##
 ##[br][br]
-## Conversations handle player input directly and are activated according to the presence of the
+## Interactions handle player input directly and are activated according to the presence of the
 ## player's interaction collision shape, which occupies the cell faced by the player's character.
 @icon("res://assets/editor/icons/Interaction.svg")
 class_name Interaction extends Cutscene

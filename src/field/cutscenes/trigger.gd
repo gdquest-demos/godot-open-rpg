@@ -1,5 +1,10 @@
 @tool
 
+## A [Cutscene] that triggers on collision with a [Gamepiece]'s collision shapes.
+##
+## A Gamepiece with collision shapes on a layer monitored by the Trigger may activate the Trigger.
+## Triggers typically wait for [signal Gamepiece.arriving] before being run, but that behaviour may
+## be overridden in derived Triggers by modifying [method _on_area_entered].
 @icon("res://assets/editor/icons/Contact.svg")
 class_name Trigger extends Cutscene
 
@@ -72,6 +77,7 @@ func _on_input_paused(is_paused: bool) -> void:
 				connected_area.monitorable = !is_paused
 
 
+# Register the colliding gamepiece and wait for it to finish moving before running the trigger.
 func _on_area_entered(area: Area2D) -> void:
 	var gamepiece: = area.owner as Gamepiece
 	
@@ -83,9 +89,9 @@ func _on_area_entered(area: Area2D) -> void:
 		gamepiece_entered.emit(gamepiece)
 		gamepiece.arriving.connect(_on_gamepiece_arriving.bind(gamepiece), CONNECT_ONE_SHOT)
 	
-		# Triggers need to block input a early. If waiting until the gamepiece is arriving, there's
-		# a chance that the player's controller may received the gamepiece.arriving signal first
-		# and continue moving the gamepiece.
+		# Triggers need to block input early. Otherwise, if waiting until the gamepiece is arriving,
+		# there's a chance that the player's controller may have received the gamepiece.arriving
+		# signal first and continue moving the gamepiece.
 		await get_tree().process_frame
 		_is_cutscene_in_progress = true
 

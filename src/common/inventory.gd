@@ -1,11 +1,14 @@
 @tool
+## A simple inventory implementation that includes all item types and data within the class.
 class_name Inventory extends Resource
 
+## All item types available to add or remove from the inventory.
 enum ItemTypes { KEY, COIN, BOMB, RED_WAND, BLUE_WAND, GREEN_WAND }
 
 #TODO: I expect we'll want to have a proper inventory definition somewhere. Some folks advocate for
 # spreadsheets, but whatever it is should probably integrate with the editor so that level designers
 # can easily pick from items from a dropdown list, or something similar.
+## Icons associated with the [member ItemTypes].
 const ICONS: = {
 	ItemTypes.KEY: preload("res://assets/items/key.atlastex"),
 	ItemTypes.COIN: preload("res://assets/items/coin.atlastex"),
@@ -15,9 +18,8 @@ const ICONS: = {
 	ItemTypes.GREEN_WAND: preload("res://assets/items/wand_green.atlastex"),
 }
 
+## Emitted when the count of a given item type changes.
 signal item_changed(type: ItemTypes)
-
-static var PROFILE_NAME: = "DefaultProfile"
 
 # Keep track of what is in the inventory. Dictionary keys are an ItemType, values are the amount.
 @export var _items: = {}
@@ -28,18 +30,14 @@ func _init() -> void:
 		_items[ItemTypes[item_name]] = 0
 
 
-static func get_profile_path() -> String:
-	return "user://profile-%s.tres" % PROFILE_NAME
-
-
 ## Load the [Inventory] from file or create a new resource, if it was missing. Godot caches calls, 
 ## so this can be used every time needed.
 static func restore() -> Inventory:
 	if Engine.is_editor_hint():
 		return null
 	
-	if FileAccess.file_exists(Inventory.get_profile_path()):
-		var inventory = ResourceLoader.load(Inventory.get_profile_path()) as Inventory
+	if FileAccess.file_exists("user://"):
+		var inventory = ResourceLoader.load("user://") as Inventory
 		if inventory:
 			return inventory
 	
@@ -72,9 +70,11 @@ func get_item_count(item_type: ItemTypes) -> int:
 	return _items.get(item_type, 0)
 
 
+## Returns the icon associated with a given item type.
 static func get_item_icon(item_type: ItemTypes) -> Texture:
 	return ICONS.get(item_type, null)
 
 
+## Write the inventory contents to the disk.
 func save() -> void:
-	ResourceSaver.save(self, Inventory.get_profile_path())
+	ResourceSaver.save(self, "user://")

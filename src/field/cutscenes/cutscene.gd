@@ -54,6 +54,6 @@ func run() -> void:
 
 ## Play out the specific events of the cutscene.
 ## This method is intended to be overridden by derived cutscene types.
-## [br][br]_execute() may or may not be asynchrnous.
+## [br][br]May or may not be asynchronous.
 func _execute() -> void:
 	pass
