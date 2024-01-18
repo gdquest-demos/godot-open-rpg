@@ -10,6 +10,7 @@ radius = 6.0
 
 [node name="PlayerController" type="Node2D"]
 script = ExtResource("1_i2bab")
+gamepiece_mask = 18
 
 [node name="PlayerCollision" type="Area2D" parent="."]
 collision_layer = 4

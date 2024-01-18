@@ -184,7 +184,6 @@ region_enabled = true
 region_rect = Rect2(17, 119, 16, 16)
 
 [node name="BlockingArea" type="Area2D" parent="Area2D/ClosedDoor" index="0"]
-collision_layer = 2
 collision_mask = 0
 monitoring = false
 

@@ -2,14 +2,6 @@ extends Node2D
 
 const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/player_controller.tscn")
 
-## The physics layers which will be used to search for gamepiece objects.
-## Please see the project properties for the specific physics layers. [b]All[/b] collision shapes
-## matching the mask will be checked regardless of position in the scene tree.
-@export_flags_2d_physics var gamepiece_mask: = 0
-
-## The physics layers which will be used to search for terrain obejcts.
-@export_flags_2d_physics var terrain_mask: = 0
-
 @export var opening_cutscene: Cutscene
 
 @export var focused_game_piece: Gamepiece = null:
@@ -48,8 +40,6 @@ func set_focused_game_piece(value: Gamepiece) -> void:
 	
 	if focused_game_piece:
 		var new_controller = PLAYER_CONTROLLER.instantiate()
-		new_controller.gamepiece_mask = gamepiece_mask
-		new_controller.terrain_mask = terrain_mask
 		
 		focused_game_piece.add_child(new_controller)
 		new_controller.is_active = true

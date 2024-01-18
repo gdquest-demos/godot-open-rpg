@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 
 Camera="*res://src/field/field_camera.gd"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
-FieldEvents="*res://src/common/globals/global_field_events.gd"
+FieldEvents="*res://src/common/field_events.gd"
 Music="*res://src/common/music/music_player.tscn"
 
 [dialogic]

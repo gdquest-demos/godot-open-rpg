@@ -15,9 +15,9 @@ var is_active: = false:
 		set_process_input(is_active)
 		set_process_unhandled_input(is_active)
 
-# Keep track of the target of a path. Used to face/interact with the object at a path's end.
+# Keep track of a targeted interaction. Used to face & interact with the object at a path's end.
 # It is reset on cancelling the move path or continuing movement via arrows/gamepad directions.
-var _target: Gamepiece = null
+var _target: Interaction = null
 
 @onready var _interaction_searcher: = $InteractionSearcher as Area2D
 @onready var _player_collision: = $PlayerCollision as Area2D
@@ -67,6 +67,8 @@ func set_is_paused(paused: bool) -> void:
 func _physics_process(_delta: float) -> void:
 	var move_dir: = _get_move_direction()
 	if move_dir:
+		_target = null
+		
 		if not _gamepiece.is_moving():
 			var target_cell: = Vector2i.ZERO
 			
@@ -141,25 +143,37 @@ func _on_gamepiece_arrived() -> void:
 	super._on_gamepiece_arrived()
 	
 	if _target:
-		var distance_to_target: = _target.position - _gamepiece.position
+		var distance_to_target: = _target.global_position/_target.global_scale - _gamepiece.position
 		_gamepiece.direction = distance_to_target
 		
-		# TODO: Interactions go here.
-		
+		_target.run()
 		_target = null
 
 
 func _on_cell_selected(cell: Vector2i) -> void:
-	if not _gamepiece.is_moving():
+	if is_active and not _gamepiece.is_moving():
 		# Don't move to the cell the focus is standing on. May want to open inventory.
 		if cell == _gamepiece.cell:
 			return
 			
 		# We'll want different behaviour depending on what's underneath the cursor.
-		# If there is an interactable, blocking object beneath the cursor, we'll walk *next* to 
-		# the cell.
+		var collisions: = get_collisions(cell)
 		
-		# If the cell beneath the cursor is empty the focus can follow a path to the cell.
-		travel_to_cell(cell)
+		# If there is an interaction underneath the cursor the player's gamepiece should flag the
+		# target and move to an adjacent cell.
+		if not collisions.is_empty():
+			for collision: Dictionary in collisions:
+				if collision.collider.owner is Interaction:
+					_target = collision.collider.owner
+					break
+		
+		# The following method will move to an empty cell OR adjacent to a blocked cell that has
+		# an interaction located on it.
+		travel_to_cell(cell, _target != null)
 		if not _waypoints.is_empty():
 			FieldEvents.player_path_set.emit(_gamepiece, _waypoints.back())
+		
+		# There is no path but there is a target, which means that the player is standing right next
+		# to the target interaction.
+		elif _target:
+			_on_gamepiece_arrived()

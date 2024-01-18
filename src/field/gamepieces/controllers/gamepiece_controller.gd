@@ -22,8 +22,9 @@ const BLOCKING_PROPERTY: = "blocks_movement"
 ## containing any terrain collider will not be included for pathfinding.
 @export_flags_2d_physics var terrain_mask: = 0x1
 
-## Colliders matching the following mask will be used to determine which cells are blocked by other
-## gamepieces.
+## The physics layers which will be used to search for gamepiece-related objects.
+## Please see the project properties for the specific physics layers. [b]All[/b] collision shapes
+## matching the mask will be checked regardless of position in the scene tree.
 @export_flags_2d_physics var gamepiece_mask: = 0
 
 # Some controllers may be needed during cutscenes. In this case, they will not be paused.
@@ -119,9 +120,12 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return warnings
 
 
-func travel_to_cell(destination: Vector2i) -> void:
+func travel_to_cell(destination: Vector2i, allow_adjacent_cells: = false) -> void:
 	_update_changed_cells()
 	_waypoints = pathfinder.get_path_cells(_gamepiece.cell, destination)
+	# No path could be found to the destination. If allowed, search for a path to an adjacent cell.
+	if _waypoints.size() <= 1 and allow_adjacent_cells:
+		_waypoints = pathfinder.get_path_cells_to_adjacent_cell(_gamepiece.cell, destination)
 	
 	# Only follow a valid path with a length greater than 0 (more than one waypoint).
 	if _waypoints.size() > 1:
@@ -130,6 +134,9 @@ func travel_to_cell(destination: Vector2i) -> void:
 		_current_waypoint = _waypoints.pop_front()
 		
 		_gamepiece.travel_to_cell(_current_waypoint)
+	
+	else:
+		_waypoints.clear()
 
 
 ## Returns true if a given cell is occupied by something that has a collider matching 
