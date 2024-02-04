@@ -2,31 +2,32 @@
 
 ![Godot Open RPG banner](media/Open-RPG.png)
 
-OpenRPG is a tool and a demo to create Role Playing Games with turn-based combat.
+OpenRPG is a a demo showing how to create a 2D traditional RPG in Godot 4. It's currently a work-in-progress. If you want to help
 
 ➡ Follow us on [Twitter](https://twitter.com/NathanGDQuest) and [YouTube](https://www.youtube.com/c/gdquest/) for free game creation tutorials, tips, and news! Get one of our [Godot game creation courses](https://www.gdquest.com/product/) to support our work on Free Software.
 
 ## Project Goal
 
-The goal of this project is to provide the gamedev community with a demo that shows how game systems work together in a complete 2D Godot game demo.
+The goal of this project is to provide the gamedev community with a demo that shows one solid way to create and structure the code for a 2D RPG in Godot 4. You can reuse the code in your own projects, and also learn from the project's codebase.
 
-The demo draws inspiration from RPG Maker and older JRPGs like Final Fantasy or Dragon Quest as well as the Godot 3 OpenRPG.
+As we're teachers, our focus is on providing a learning resource that is both practical and educational. We're not trying to build a framework.
 
-Throughout the project, heavy emphasis is to be placed on code that is...
+We're putting heavy emphasis on code that:
 
-- Updated to take advantage of what GDScript 4 has to offer.
-- Simple, to best serve as a starting point for those diving into the project.
-- Made to conform to GDQuest's [GDScript guidelines](https://gdquest.gitbook.io/gdquests-guidelines/godot-gdscript-guidelines).
+- Is updated to take advantage of what GDScript 4 has to offer.
+- Is accessible to users with solid code foundations. It should be a good starting point and reference for those diving into an RPG project.
+- Follows our [GDScript guidelines](https://gdquest.gitbook.io/gdquests-guidelines/godot-gdscript-guidelines).
 
 ## Our Mission
 
-Together, we're creating a codebase and tools to show you some of the best practices to create:
+Together, we're creating a codebase and tools to show you some good Godot practices to create:
 
-- Turn-based games
-- A combat system
-- An inventory system
-- Character progression
-- User interface with multiple menus
+- Turn-based games.
+- A combat system.
+- An inventory system.
+- Character progression.
+- Maps with transitions, dialogues, grid-based movement, and more.
+- User interface with multiple menus.
 
 And more! Do you want to contribute and improve your programming skills with Godot? Check out the open issues, suggest improvements and report bugs by opening new ones, and be sure to check the contributing guidelines below.
 
