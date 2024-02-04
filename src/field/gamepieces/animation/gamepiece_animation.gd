@@ -4,8 +4,8 @@
 ## Allows [method play]ing animations that automatically adapt to the parent [Gamepiece]'s state.
 ## Transitions between animations are handled automatically, including changes to direction.
 ## [br][br][b]Note:[/b] Requires a [Gamepiece] as parent.
-class_name GamepieceAnimation
-extends Marker2D
+@icon("res://assets/editor/icons/GamepieceAnimation.svg")
+class_name GamepieceAnimation extends Marker2D
 
 ## Name of the animation sequence used to reset animation properties to default. Note that this
 ## animation is only played for a single frame during animation transitions.
@@ -26,7 +26,7 @@ var current_sequence_id: = "":
 ## The direction faced by the gamepiece.
 ## [br][br]Animations may optionally be direction-based. Setting the direction will use directional 
 ## animations if they are available; otherwise non-directional animations will be used.
-var direction: = Directions.Points.N:
+var direction: = Directions.Points.S:
 	set = set_direction
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
@@ -46,6 +46,10 @@ func _ready() -> void:
 		assert(gamepiece, "GamepieceAnimation expects gamepiece information exposed via signals."
 			+ " Please only use GamepieceAnimation as a child of a Gamepiece for correct animation."
 			+ " Current parent is named %s." % get_parent().name)
+		
+		# Collisions will find the Area2D node as the collider. We'll point its owner reference to
+		# the gamepiece itself to allow easily identify colliding gamepieces.
+		$Area2D.owner = gamepiece
 		
 		gamepiece.blocks_movement_changed.connect( \
 			_on_gamepiece_blocks_movement_changed.bind(gamepiece))
@@ -119,11 +123,8 @@ func set_direction(value: Directions.Points) -> void:
 		_swap_animation(current_sequence_id, true)
 
 
-## Returns true if the parent gamepiece should block other gamepieces.
-## Note that the collision shape's [member CollisionShape2D.disabled] property determines whether
-## or not the gamepiece will be picked up by the physics system.
-func blocks_movement() -> bool:
-	return not _collision_shape.disabled
+func get_gfx_position() -> Vector2:
+	return _gfx.position
 
 
 # Transition to the next animation sequence, accounting for the RESET track and current animation

@@ -1,68 +1,45 @@
-extends Node
+extends Node2D
 
-@onready var camera: = $Camera2D as Camera2D
+const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/player_controller.tscn")
 
-## The physics layers which will be used to search for gamepiece objects.
-## Please see the project properties for the specific physics layers. [b]All[/b] collision shapes
-## matching the mask will be checked regardless of position in the scene tree.
-@export_flags_2d_physics var gamepiece_mask: = 0
-
-## The physics layers which will be used to search for terrain obejcts.
-@export_flags_2d_physics var terrain_mask: = 0
+@export var opening_cutscene: Cutscene
 
 @export var focused_game_piece: Gamepiece = null:
 	set = set_focused_game_piece
 
-@export var is_active: = false:
-	set = set_is_active
+@export var gameboard: Gameboard
 
 
 func _ready() -> void:
+	assert(gameboard)
 	randomize()
-	place_camera_at_focused_game_piece()
-
-
-func place_camera_at_focused_game_piece() -> void:
-	camera.reset_smoothing()
+	
+	Camera.scale = scale
+	Camera.gameboard = gameboard
+	Camera.make_current()
+	Camera.reset_position()
+	
+	if opening_cutscene:
+		opening_cutscene.run.call_deferred()
 
 
 func set_focused_game_piece(value: Gamepiece) -> void:
 	if value == focused_game_piece:
 		return
-	
-	if focused_game_piece:
-		focused_game_piece.camera_anchor.remote_path = ""
-	
+
 	focused_game_piece = value
 	
 	if not is_inside_tree():
 		await ready
+	
+	Camera.gamepiece = focused_game_piece
 	
 	# Free up any lingering controller(s).
 	for controller in get_tree().get_nodes_in_group(PlayerController.GROUP_NAME):
 		controller.queue_free()
 	
 	if focused_game_piece:
-		focused_game_piece.camera_anchor.remote_path = focused_game_piece.camera_anchor.get_path_to(camera)
-		
-		var new_controller = PlayerController.new()
-		new_controller.gamepiece_mask = gamepiece_mask
-		new_controller.terrain_mask = terrain_mask
+		var new_controller = PLAYER_CONTROLLER.instantiate()
 		
 		focused_game_piece.add_child(new_controller)
 		new_controller.is_active = true
-
-
-func set_is_active(value: bool) -> void:
-	if not focused_game_piece:
-		value = false
-	if value == is_active:
-		return
-	
-	is_active = value
-	
-	if not is_inside_tree():
-		await ready
-	
-	for controller in get_tree().get_nodes_in_group(PlayerController.GROUP_NAME):
-		(controller as PlayerController).is_active = is_active

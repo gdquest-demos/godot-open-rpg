@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://chgku8dii7mu8"]
+
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/pickups/pickup.gd" id="1_3ccf8"]
+[ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/trigger.tscn" id="1_wydyv"]
+[ext_resource type="Texture2D" uid="uid://cum1x0regjjyv" path="res://assets/items/key.atlastex" id="3_1fedx"]
+[ext_resource type="AnimationLibrary" uid="uid://d2tw0lf45u3gh" path="res://src/field/cutscenes/templates/pickups/pickup_animations.res" id="4_eruca"]
+
+[node name="Pickup" instance=ExtResource("1_wydyv")]
+script = ExtResource("1_3ccf8")
+item_type = 0
+amount = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+texture = ExtResource("3_1fedx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+"PickupAnimations": ExtResource("4_eruca")
+}
+autoplay = "PickupAnimations/default"
+blend_times = [&"PickupAnimations/default", &"PickupAnimations/obtain", 0.4]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="3"]
+bus = &"SFX"

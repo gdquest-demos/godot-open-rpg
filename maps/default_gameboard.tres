@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Gameboard" load_steps=2 format=3 uid="uid://cbnicto2l2ur2"]
+
+[ext_resource type="Script" path="res://src/field/gameboard/gameboard.gd" id="1_jnxdl"]
+
+[resource]
+script = ExtResource("1_jnxdl")
+boundaries = Rect2i(0, 0, 60, 35)
+cell_size = Vector2i(16, 16)

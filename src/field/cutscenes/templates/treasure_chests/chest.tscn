@@ -1,0 +1,123 @@
+[gd_scene load_steps=12 format=3 uid="uid://c8jtuge5yaqxa"]
+
+[ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/interaction.tscn" id="1_pr2rt"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/treasure_chests/chest.gd" id="2_55lx5"]
+[ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://assets/terrain/dungeon_tilemap.png" id="3_gr80q"]
+[ext_resource type="AudioStream" uid="uid://cwpbiytveaon0" path="res://assets/sfx/doorOpen_2.ogg" id="4_6verl"]
+[ext_resource type="AudioStream" uid="uid://d0fqunqsgssgd" path="res://assets/sfx/doorClose_4.ogg" id="5_fwhp7"]
+[ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/interaction_popup.tscn" id="6_hmx7o"]
+
+[sub_resource type="Animation" id="Animation_upvuf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(85, 119, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_7v12p"]
+resource_name = "close"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(119, 119, 16, 16), Rect2(102, 119, 16, 16), Rect2(85, 119, 16, 16)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OpenAudio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_fwhp7")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_a1cbh"]
+resource_name = "open"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(85, 119, 16, 16), Rect2(102, 119, 16, 16), Rect2(119, 119, 16, 16)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OpenAudio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_6verl")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_novt7"]
+_data = {
+"RESET": SubResource("Animation_upvuf"),
+"close": SubResource("Animation_7v12p"),
+"open": SubResource("Animation_a1cbh")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_11osp"]
+size = Vector2(15, 15)
+
+[node name="Chest" instance=ExtResource("1_pr2rt")]
+script = ExtResource("2_55lx5")
+item_type = 0
+amount = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+texture = ExtResource("3_gr80q")
+region_enabled = true
+region_rect = Rect2(85, 119, 16, 16)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_novt7")
+}
+
+[node name="OpenAudio" type="AudioStreamPlayer" parent="." index="3"]
+bus = &"SFX"
+
+[node name="MovementBlock" type="Area2D" parent="." index="4"]
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MovementBlock" index="0"]
+shape = SubResource("RectangleShape2D_11osp")
+
+[node name="InteractionPopup" parent="." index="5" instance=ExtResource("6_hmx7o")]
+emote = 1

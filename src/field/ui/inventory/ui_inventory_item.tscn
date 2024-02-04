@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://ifunxevg2v40"]
+
+[ext_resource type="Texture2D" uid="uid://d3x4kmshfvtta" path="res://assets/items/coin.atlastex" id="1_wtayx"]
+[ext_resource type="Script" path="res://src/field/ui/inventory/ui_inventory_item.gd" id="2_xqtx2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2w568"]
+font_size = 48
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Icon" type="TextureRect"]
+custom_minimum_size = Vector2(16, 16)
+texture = ExtResource("1_wtayx")
+script = ExtResource("2_xqtx2")
+
+[node name="Count" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = 95.0
+offset_bottom = 71.0
+scale = Vector2(0.2, 0.2)
+text = "9"
+label_settings = SubResource("LabelSettings_2w568")

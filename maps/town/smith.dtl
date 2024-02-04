@@ -1,0 +1,3 @@
+join smith 1 [animation="Instant In Or Out" length="0"]
+smith (Default): You wouldn't walk into someone's house unannounced, [pause=0.5][speed=3.3]would you?[speed=1.0]
+[end_timeline]

@@ -68,7 +68,7 @@ func get_path_cells_to_adjacent_cell(source_cell: Vector2i,
 ## no longer pathable due to changes in terrain should be removed from the pathfinder entirely.
 func block_cell(cell: Vector2i, value: = true) -> void:
 	var cell_id: = _gameboard.cell_to_index(cell)
-	if cell_id != Gameboard.INVALID_INDEX:
+	if has_point(cell_id) and cell_id != Gameboard.INVALID_INDEX:
 		set_point_disabled(cell_id, value)
 
 
@@ -113,7 +113,6 @@ func _build_cell_list(pathable_cells: Array[Vector2i]) -> void:
 	for cell in pathable_cells:
 		if not has_cell(cell) and _gameboard.boundaries.has_point(cell):
 			var cell_id: = _gameboard.cell_to_index(cell)
-			
 			if cell_id != Gameboard.INVALID_INDEX:
 				add_point(cell_id, cell)
 

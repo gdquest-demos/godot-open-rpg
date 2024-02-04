@@ -1,0 +1,7 @@
+if {StrangeTreeExamined} > 0:
+	Wait, what if I went *around* the tree!?
+	[signal arg="ClearPath"]
+else:
+	It's too bad this tree is in the way...
+	set {StrangeTreeExamined} = 1
+[end_timeline]

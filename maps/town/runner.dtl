@@ -1,0 +1,10 @@
+join runner 1
+if {Hint} == 0:
+	runner (Default): Does your mom tell you to stop and look carefully at things?
+	runner (Default): *My* mom always tells me I never notice anything unless I look twice!
+	set {Hint} = 1
+else:
+	runner: What did that crazy lady say again?
+	runner: "Green, blue, red?"
+	set {Hint} = 0
+[end_timeline]

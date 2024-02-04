@@ -1,0 +1,9 @@
+The pedestal is empty.
+- Place red wand [if {RedWandCount} > 0][else="hide"]
+	[signal arg="RED_WAND"]
+- Place blue wand [if {BlueWandCount} > 0][else="hide"]
+	[signal arg="BLUE_WAND"]
+- Place green wand [if {GreenWandCount} > 0][else="hide"]
+	[signal arg="GREEN_WAND"]
+- Do nothing
+[end_timeline]

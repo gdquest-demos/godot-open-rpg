@@ -1,0 +1,215 @@
+[gd_scene load_steps=14 format=3 uid="uid://p0e4b0txynkd"]
+
+[ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="1_0tk0k"]
+[ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="2_4mdkx"]
+[ext_resource type="Script" path="res://src/field/cutscenes/templates/doors/door.gd" id="2_13rnv"]
+[ext_resource type="AudioStream" uid="uid://c6o0qv4eig4q" path="res://assets/sfx/doorClose_1.ogg" id="4_d3ljg"]
+[ext_resource type="AudioStream" uid="uid://bww5xt1qrtltu" path="res://assets/sfx/impactWood_light_003.ogg" id="5_b854r"]
+[ext_resource type="AudioStream" uid="uid://bt1obi05x1xda" path="res://assets/sfx/impactWood_light_002.ogg" id="6_ui4yk"]
+[ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="7_er0br"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xgpwx"]
+size = Vector2(15, 15)
+
+[sub_resource type="Animation" id="Animation_8loys"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D/ClosedDoor:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LockedLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LockedLabel:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LockedLabel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-17, -29)]
+}
+
+[sub_resource type="Animation" id="Animation_6dbqx"]
+resource_name = "locked"
+length = 0.8
+step = 0.05
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.02962,
+"start_offset": 0.0,
+"stream": ExtResource("5_b854r")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_ui4yk")
+}],
+"times": PackedFloat32Array(0, 0.1)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LockedLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LockedLabel:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LockedLabel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-17, -29), Vector2(-17, -48)]
+}
+
+[sub_resource type="Animation" id="Animation_7l84c"]
+resource_name = "open"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D/ClosedDoor:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_d3ljg")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k2tlp"]
+_data = {
+"RESET": SubResource("Animation_8loys"),
+"locked": SubResource("Animation_6dbqx"),
+"open": SubResource("Animation_7l84c")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_0glfv"]
+font = ExtResource("7_er0br")
+font_size = 80
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Door" instance=ExtResource("1_0tk0k")]
+script = ExtResource("2_13rnv")
+is_locked = false
+
+[node name="Area2D" parent="." index="0"]
+position = Vector2(0, -8)
+
+[node name="OpenDoor" type="Sprite2D" parent="Area2D" index="1"]
+texture = ExtResource("2_4mdkx")
+region_enabled = true
+region_rect = Rect2(34, 102, 16, 16)
+
+[node name="ClosedDoor" type="Sprite2D" parent="Area2D" index="2"]
+texture = ExtResource("2_4mdkx")
+region_enabled = true
+region_rect = Rect2(17, 119, 16, 16)
+
+[node name="BlockingArea" type="Area2D" parent="Area2D/ClosedDoor" index="0"]
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D/ClosedDoor/BlockingArea" index="0"]
+shape = SubResource("RectangleShape2D_xgpwx")
+
+[node name="Destination" parent="." index="1"]
+position = Vector2(0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+libraries = {
+"": SubResource("AnimationLibrary_k2tlp")
+}
+autoplay = "RESET"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="5"]
+bus = &"SFX"
+
+[node name="LockedLabel" type="Label" parent="." index="6"]
+visible = false
+z_index = 101
+offset_left = -17.0
+offset_top = -29.0
+offset_right = 158.0
+offset_bottom = 72.0
+scale = Vector2(0.2, 0.2)
+text = "LOCKED"
+label_settings = SubResource("LabelSettings_0glfv")
+horizontal_alignment = 1

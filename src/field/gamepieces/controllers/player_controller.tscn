@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2lj4blu56fte"]
+
+[ext_resource type="Script" path="res://src/field/gamepieces/controllers/player_controller.gd" id="1_i2bab"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3ejyl"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rydhw"]
+radius = 6.0
+
+[node name="PlayerController" type="Node2D"]
+script = ExtResource("1_i2bab")
+gamepiece_mask = 18
+
+[node name="PlayerCollision" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollision"]
+shape = SubResource("CircleShape2D_3ejyl")
+
+[node name="InteractionSearcher" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionSearcher"]
+z_index = 4096
+shape = SubResource("CircleShape2D_rydhw")
+debug_color = Color(0.588235, 0, 0.596078, 0.419608)

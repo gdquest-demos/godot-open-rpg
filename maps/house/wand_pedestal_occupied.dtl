@@ -1,0 +1,5 @@
+A wand rests on the pedestal.
+- Remove wand
+	[signal arg="empty"]
+- Do nothing
+[end_timeline]

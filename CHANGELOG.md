@@ -1,6 +1,34 @@
 # Changelog
 
-## v0.1.0 Project Demo 🏃 2023-05-19
+## v0.2.0 Cutscene Demo 💬
+
+### New
+
+The demo scene has been reworked to include cutscenes, the videogame equivalent of a short scene in a film. For example, dialogue may be displayed, the scene may switch to show key NPCs performing an event, or the inventory may be altered. Gameplay on the field is **stopped** until the cutscene concludes, though this may span a combat scenario (e.g. epic bossfight).
+
+The demo introduces:
+- 3 main classes: Custcenes, Interactions, and Triggers
+- 5 template Cutscenes
+	- Tresasure chests (that can be closed!)
+	- Lock-able doors
+	- Item pickups
+	- Simple area transitions (all within the same scene, for now)
+	- conversations, implemented via Dialogic 2
+- 3 simple areas to explore
+- Music and sound effects sprinkled throughout the demo
+- A simple inventory implementation
+- Screen transitions, both fade and texture-based
+
+### Changes
+
+- Reworked the demo scenario, adding a handful of areas to explore, a (fetch) quest to fulfill, and a simple puzzle to solve. If you're stuck, try talking to the energetic child...
+- Rearranged the folder structure.
+- Included the Dialogic 2 Alpha addon. ***Note that input has been modified to respond to the input events being released, rather than pressed.***
+- Miscellaneous fixes throughout the demo.
+
+***
+
+## v0.1.0 Project Demo 🏃
 
 ### New
 

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://oot0x5n44b2r"]
+
+[ext_resource type="Script" path="res://src/field/cutscenes/interaction.gd" id="1_86ylf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jn5tq"]
+radius = 4.0
+
+[node name="Interaction" type="Node2D"]
+script = ExtResource("1_86ylf")
+
+[node name="InteractionArea2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea2D"]
+shape = SubResource("CircleShape2D_jn5tq")
+debug_color = Color(1, 0.929412, 0.631373, 0.419608)
+
+[connection signal="area_entered" from="InteractionArea2D" to="." method="_on_area_entered"]
+[connection signal="area_exited" from="InteractionArea2D" to="." method="_on_area_exited"]
