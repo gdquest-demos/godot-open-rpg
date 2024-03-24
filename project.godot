@@ -158,4 +158,4 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 textures/default_filters/anisotropic_filtering_level=0
-environment/defaults/default_clear_color=Color(0.462745, 0.231373, 0.211765, 1)
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=88 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -71,7 +71,6 @@
 [ext_resource type="Script" path="res://src/combat/combat.gd" id="69_meyff"]
 [ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://assets/arenas/steppes.png" id="70_gcr1m"]
 [ext_resource type="Texture2D" uid="uid://pkp6t20skjpe" path="res://assets/battlers/bear.png" id="71_sundp"]
-[ext_resource type="Script" path="res://src/combat/battlers/battler.gd" id="72_4wk5u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_orie5"]
 resource_name = "Overlay"
@@ -863,7 +862,6 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("56_cx0l3")
 
 [node name="Combat" type="CanvasLayer" parent="."]
-visible = false
 script = ExtResource("69_meyff")
 
 [node name="CenterContainer" type="CenterContainer" parent="Combat"]
@@ -878,11 +876,10 @@ size_flags_horizontal = 4
 layout_mode = 2
 texture = ExtResource("70_gcr1m")
 
-[node name="Sprite2D" type="Sprite2D" parent="Combat/CenterContainer/Arena"]
+[node name="Battlers" type="Node2D" parent="Combat/CenterContainer/Arena"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Combat/CenterContainer/Arena/Battlers"]
 position = Vector2(533, 675)
 texture = ExtResource("71_sundp")
-
-[node name="Node2D" type="Node2D" parent="Combat/CenterContainer/Arena"]
-script = ExtResource("72_4wk5u")
 
 [connection signal="area_entered" from="Field/Terrain/Gamepieces/Grove/GameEndTrigger/Area2D2" to="Field/Terrain/Gamepieces/Grove/GameEndTrigger" method="_on_area_entered"]
