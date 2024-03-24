@@ -11,7 +11,6 @@ arrival_coordinates = Vector2(0, 0)
 new_music = null
 
 [node name="Destination" type="Sprite2D" parent="." index="1"]
-position = Vector2(8, 8)
 texture = ExtResource("3_retee")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]

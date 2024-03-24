@@ -6,17 +6,18 @@
 class_name InteractionPopup extends UIPopup
 
 ## The different emote types that may be selected.
-enum EmoteTypes { EMPTY, EXCLAMATION, QUESTION}
+enum EmoteTypes { COMBAT, EMPTY, EXCLAMATION, QUESTION}
 
 ## The emote textures that may appear over a point of interest.
 const EMOTES: = {
+	EmoteTypes.COMBAT: preload("res://assets/gui/emotes/emote_combat.png"),
 	EmoteTypes.EMPTY: preload("res://assets/gui/emotes/emote__.png"),
 	EmoteTypes.EXCLAMATION: preload("res://assets/gui/emotes/emote_exclamations.png"),
 	EmoteTypes.QUESTION: preload("res://assets/gui/emotes/emote_question.png"),
 }
 
 ## The emote bubble that will be displayed when the character is nearby.
-@export var emote: EmoteTypes:
+@export var emote: = EmoteTypes.EMPTY:
 	set(value):
 		emote = value
 		

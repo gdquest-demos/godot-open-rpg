@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Camera="*res://src/field/field_camera.gd"
+CombatEvents="*res://src/common/combat_events.gd"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 FieldEvents="*res://src/common/field_events.gd"
 Music="*res://src/common/music/music_player.tscn"
@@ -158,4 +159,3 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 textures/default_filters/anisotropic_filtering_level=0
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
