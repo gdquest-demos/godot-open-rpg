@@ -22,6 +22,7 @@ CombatEvents="*res://src/common/combat_events.gd"
 Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 FieldEvents="*res://src/common/field_events.gd"
 Music="*res://src/common/music/music_player.tscn"
+Transition="*res://src/common/screen_transitions/ScreenTransition.tscn"
 
 [dialogic]
 

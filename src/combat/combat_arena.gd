@@ -8,8 +8,6 @@ class_name CombatArena extends Control
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("back"):
 		CombatEvents.combat_lost.emit()
-		CombatEvents.combat_finished.emit()
 	
 	elif event.is_action_released("interact"):
 		CombatEvents.combat_won.emit()
-		CombatEvents.combat_finished.emit()

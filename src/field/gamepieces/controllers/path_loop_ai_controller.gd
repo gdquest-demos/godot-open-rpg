@@ -80,7 +80,7 @@ func _find_waypoints_from_line2D() -> void:
 		
 		var path_subset: = pathfinder.get_path_cells(source, target)
 		if path_subset.is_empty():
-			print("'%s' PathLoopAiController::_find_waypoints_from_line2D() error - " % name +
+			push_error("'%s' PathLoopAiController::_find_waypoints_from_line2D() error - " % name +
 				"Failed to find a path between cells %s and %s." % [source, target])
 			return
 		
