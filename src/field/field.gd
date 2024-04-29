@@ -14,6 +14,12 @@ func _ready() -> void:
 	assert(gameboard)
 	randomize()
 	
+	# The field state must pause/unpause with combat accordingly.
+	# Note that pausing/unpausing input is already wrapped up in triggers, which are what will
+	# initiate combat.
+	CombatEvents.combat_initiated.connect(func(_arena): hide())
+	CombatEvents.combat_finished.connect(func(): show())
+	
 	Camera.scale = scale
 	Camera.gameboard = gameboard
 	Camera.make_current()

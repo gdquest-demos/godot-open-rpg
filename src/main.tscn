@@ -492,7 +492,6 @@ emote = 1
 
 [node name="Combat1" type="Node2D" parent="Field/Terrain/Gamepieces/Town"]
 position = Vector2(56, 216)
-scale = Vector2(1, 1)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Field/Terrain/Gamepieces/Town/Combat1"]
@@ -507,7 +506,6 @@ emote = 0
 
 [node name="Combat2" type="Node2D" parent="Field/Terrain/Gamepieces/Town"]
 position = Vector2(70.4, 184)
-scale = Vector2(1, 1)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Field/Terrain/Gamepieces/Town/Combat2"]

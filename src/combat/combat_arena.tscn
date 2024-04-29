@@ -24,3 +24,12 @@ y_sort_enabled = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="InstructionsLabel" type="Label" parent="Foreground"]
+layout_mode = 0
+offset_left = 890.0
+offset_top = 823.0
+offset_right = 1808.0
+offset_bottom = 970.0
+text = "Press 'ESCAPE' to lose combat.
+Press 'SPACE' to win combat."
