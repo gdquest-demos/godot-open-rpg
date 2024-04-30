@@ -10,7 +10,7 @@ enum UpdateCheckResult {UPDATE_AVAILABLE, UP_TO_DATE, NO_ACCESS}
 enum DownloadResult {SUCCESS, FAILURE}
 enum ReleaseState {ALPHA, BETA, STABLE}
 
-const REMOTE_RELEASES_URL := "https://api.github.com/repos/coppolaemilio/dialogic/releases"
+const REMOTE_RELEASES_URL := "https://api.github.com/repos/dialogic-godot/dialogic/releases"
 const TEMP_FILE_NAME = "user://temp.zip"
 
 var current_version : String = ""
@@ -55,7 +55,7 @@ func _on_UpdateCheck_request_completed(result:int, response_code:int, headers:Pa
 		update_info = versions[0]
 		update_check_completed.emit(UpdateCheckResult.UPDATE_AVAILABLE)
 	else:
-		update_info = {}
+		update_info = current_info
 		update_check_completed.emit(UpdateCheckResult.UP_TO_DATE)
 
 
@@ -70,12 +70,15 @@ func compare_versions(release, current_release_info:Dictionary) -> bool:
 
 	if checked_release_info.state < current_release_info.state:
 		return false
+
 	elif checked_release_info.state == current_release_info.state:
 		if checked_release_info.state_version < current_release_info.state_version:
 			return false
+
 		if checked_release_info.state_version == current_release_info.state_version:
 			current_info = release
 			return false
+
 		if checked_release_info.state == ReleaseState.STABLE:
 			if checked_release_info.minor == current_release_info.minor:
 				current_info = release

@@ -70,6 +70,9 @@ func finish() -> void:
 	_active_arena.queue_free()
 	_active_arena = null
 	
+	Music.play(_previous_music_track)
+	_previous_music_track = null
+	
 	# Signal that the combat has been finished and all combat objects have been dealt with
 	# accordingly. The field game 'state' will now be in focus.
 	# Note that whatever object started the combat will now be responsible for flow of the game. In

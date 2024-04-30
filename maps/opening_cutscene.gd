@@ -4,13 +4,15 @@ extends Cutscene
 
 
 func _execute() -> void:
-	Transition.cover()
+	$Background/ColorRect.show()
 	
 	Dialogic.start_timeline(timeline)
 	await Dialogic.timeline_ended
 	
+	await Transition.cover()
+	$Background/ColorRect.hide()
+	
 	Music.play(load("res://assets/music/Apple Cider.mp3"))
-	Transition.clear(2.0)
-	await Transition.finished
+	await Transition.clear(2.0)
 	
 	queue_free.call_deferred()

@@ -19,10 +19,10 @@ config/icon="res://icon.svg"
 
 Camera="*res://src/field/field_camera.gd"
 CombatEvents="*res://src/common/combat_events.gd"
-Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 FieldEvents="*res://src/common/field_events.gd"
 Music="*res://src/common/music/music_player.tscn"
 Transition="*res://src/common/screen_transitions/ScreenTransition.tscn"
+Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
 
@@ -43,17 +43,17 @@ text/autopauses={}
 glossary/default_case_sensitive=true
 layout/mode=2
 variables={
-"BlueWandCount": "0",
-"GreenWandCount": "0",
-"HasMonkToken": "0",
-"HasThiefToken": "0",
-"HasWarriorToken": "0",
-"HasWizardToken": "0",
-"Hint": "0",
-"RedWandCount": "0",
-"StrangeTreeExamined": "0",
-"TokenCount": "0",
-"TokenQuestStatus": "0"
+"BlueWandCount": 0,
+"GreenWandCount": 0,
+"HasMonkToken": 0,
+"HasThiefToken": 0,
+"HasWarriorToken": 0,
+"HasWizardToken": 0,
+"Hint": 0,
+"RedWandCount": 0,
+"StrangeTreeExamined": 0,
+"TokenCount": 0,
+"TokenQuestStatus": 0
 }
 layout/end_behaviour=0
 layout/styles={
@@ -70,6 +70,7 @@ animations/leave_default="res://addons/dialogic/Modules/Character/DefaultAnimati
 text/autocolor_names=true
 settings/text_speed=1.0
 directories/dch_directory={
+"enemy_ghost": "res://maps/town/enemy_ghost.dch",
 "fan_of_four": "res://maps/town/fan_of_four.dch",
 "ghost": "res://maps/grove/ghost.dch",
 "monk": "res://maps/town/monk.dch",
@@ -102,6 +103,9 @@ text/text_reveal_skip_delay=0.05
 text/autoadvance_per_character_delay=0.1
 text/autoadvance_ignored_characters_enabled=true
 save/encryption_on_exports_only=true
+text/advance_delay=0.1
+portraits/default_portrait=""
+layout/style_list=[]
 
 [display]
 

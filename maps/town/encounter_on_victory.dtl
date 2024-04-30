@@ -1,4 +1,3 @@
-join ghost 1
-ghost: Ow...
-ghost: Tis but a scratch!
+enemy_ghost: Ow...
+enemy_ghost: Tis but a scratch!
 [end_timeline]

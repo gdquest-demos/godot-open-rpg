@@ -19,13 +19,13 @@ func _ready() -> void:
 		get_tree().quit()
 	DialogicUtil.autoload().start(current_timeline)
 	DialogicUtil.autoload().timeline_ended.connect(get_tree().quit)
-	DialogicUtil.autoload().signal_event.connect(recieve_event_signal)
-	DialogicUtil.autoload().text_signal.connect(recieve_text_signal)
+	DialogicUtil.autoload().signal_event.connect(receive_event_signal)
+	DialogicUtil.autoload().text_signal.connect(receive_text_signal)
 
-func recieve_event_signal(argument:String) -> void:
+func receive_event_signal(argument:String) -> void:
 	print("[Dialogic] Encountered a signal event: ", argument)
 
-func recieve_text_signal(argument:String) -> void:
+func receive_text_signal(argument:String) -> void:
 	print("[Dialogic] Encountered a signal in text: ", argument)
 
 func _input(event:InputEvent) -> void:
@@ -36,7 +36,7 @@ func _input(event:InputEvent) -> void:
 	if (event is InputEventMouseButton
 	and event.is_pressed()
 	and event.button_index == MOUSE_BUTTON_MIDDLE):
-		var auto_skip: DialogicAutoSkip = DialogicUtil.autoload().Input.auto_skip
+		var auto_skip: DialogicAutoSkip = DialogicUtil.autoload().Inputs.auto_skip
 		var is_auto_skip_enabled := auto_skip.enabled
 
 		auto_skip.disable_on_unread_text = false

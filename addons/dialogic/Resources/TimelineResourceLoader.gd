@@ -15,7 +15,7 @@ func _get_resource_type(path: String) -> String:
 	var ext = path.get_extension().to_lower()
 	if ext == "dtl":
 		return "Resource"
-	
+
 	return ""
 
 
@@ -26,10 +26,10 @@ func _handles_type(typename: StringName) -> bool:
 
 # parse the file and return a resource
 func _load(path: String, original_path: String, use_sub_threads: bool, cache_mode: int):
-	if FileAccess.file_exists(path):
+	if ResourceLoader.exists(path):
 		var file := FileAccess.open(path, FileAccess.READ)
-		
+
 		var tml := DialogicTimeline.new()
 		tml.from_text(file.get_as_text())
-		
+
 		return tml
