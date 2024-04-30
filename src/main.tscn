@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=91 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -36,12 +36,10 @@
 [ext_resource type="Script" path="res://maps/town/fan_interaction.gd" id="29_at3vc"]
 [ext_resource type="PackedScene" uid="uid://chgku8dii7mu8" path="res://src/field/cutscenes/templates/pickups/pickup.tscn" id="29_gxq7u"]
 [ext_resource type="Resource" path="res://maps/town/fan_of_four.dtl" id="30_n17q5"]
-[ext_resource type="Texture2D" uid="uid://ber3qsogrcx52" path="res://assets/characters/ghost.atlastex" id="31_iryov"]
 [ext_resource type="Script" path="res://maps/town/strange_tree_interaction.gd" id="31_y2el4"]
 [ext_resource type="Resource" path="res://maps/town/strange_tree.dtl" id="32_m0jee"]
 [ext_resource type="Script" path="res://src/field/cutscenes/templates/combat/roaming_combat_trigger.gd" id="33_0gswb"]
 [ext_resource type="PackedScene" uid="uid://c8jtuge5yaqxa" path="res://src/field/cutscenes/templates/treasure_chests/chest.tscn" id="33_7djdg"]
-[ext_resource type="Script" path="res://src/field/cutscenes/templates/combat/combat_trigger.gd" id="33_30q4j"]
 [ext_resource type="PackedScene" uid="uid://p0e4b0txynkd" path="res://src/field/cutscenes/templates/doors/door.tscn" id="33_lbtsh"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="33_ofo2l"]
 [ext_resource type="PackedScene" uid="uid://wivtmf75ic3f" path="res://maps/test_combat_arena.tscn" id="34_moieg"]
@@ -50,10 +48,14 @@
 [ext_resource type="AudioStream" uid="uid://duwauer3vwtne" path="res://assets/music/Insect Factory.mp3" id="34_xbc6u"]
 [ext_resource type="Script" path="res://maps/town/door_unlock_interaction.gd" id="34_xtrml"]
 [ext_resource type="Resource" path="res://maps/town/sign.dtl" id="35_gv62s"]
+[ext_resource type="Script" path="res://maps/town/conversation_encounter.gd" id="35_i66wm"]
 [ext_resource type="PackedScene" uid="uid://bq6b26pctmol4" path="res://maps/test_combat_arena2.tscn" id="35_x5y1m"]
 [ext_resource type="PackedScene" uid="uid://cgwailb13nkcd" path="res://assets/characters/ghost_gfx.tscn" id="36_7n3c5"]
+[ext_resource type="Resource" path="res://maps/town/encounter_before_combat.dtl" id="36_fu3a1"]
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="37_6xxks"]
+[ext_resource type="Resource" path="res://maps/town/encounter_on_victory.dtl" id="37_8j2gh"]
 [ext_resource type="Resource" path="res://maps/grove/ghost.dtl" id="37_uncgg"]
+[ext_resource type="Resource" path="res://maps/town/encounter_on_loss.dtl" id="38_f1335"]
 [ext_resource type="PackedScene" uid="uid://ctuol1ff8u5e2" path="res://maps/house/wand_pedestal_interaction.tscn" id="38_n1c7a"]
 [ext_resource type="AudioStream" uid="uid://ohgp0pb24my4" path="res://assets/sfx/chop.ogg" id="39_02ti3"]
 [ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/trigger.tscn" id="39_p2lth"]
@@ -490,16 +492,14 @@ timeline = ExtResource("30_n17q5")
 emote = 1
 
 [node name="RoamingEncounter" parent="Field/Terrain/Gamepieces/Town" instance=ExtResource("11_yntrj")]
-position = Vector2(697.6, 492.8)
+position = Vector2(134.4, 236.8)
 gameboard = ExtResource("6_kd8tv")
 move_speed = 235.0
 metadata/_edit_group_ = true
 
 [node name="GhostGFX" parent="Field/Terrain/Gamepieces/Town/RoamingEncounter" instance=ExtResource("36_7n3c5")]
-scale = Vector2(1, 1)
 
 [node name="CombatStartTrigger" parent="Field/Terrain/Gamepieces/Town/RoamingEncounter" instance=ExtResource("39_p2lth")]
-scale = Vector2(1, 1)
 script = ExtResource("33_0gswb")
 combat_arena = ExtResource("34_moieg")
 
@@ -507,18 +507,22 @@ combat_arena = ExtResource("34_moieg")
 emote = 0
 radius = 64
 
-[node name="Combat2" type="Node2D" parent="Field/Terrain/Gamepieces/Town"]
-position = Vector2(70.4, 184)
+[node name="ConversationEncounter" parent="Field/Terrain/Gamepieces/Town" instance=ExtResource("11_yntrj")]
+position = Vector2(83.2, 6.39999)
+gameboard = ExtResource("6_kd8tv")
+blocks_movement = true
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Field/Terrain/Gamepieces/Town/Combat2"]
-texture = ExtResource("31_iryov")
+[node name="GhostGFX" parent="Field/Terrain/Gamepieces/Town/ConversationEncounter" instance=ExtResource("36_7n3c5")]
 
-[node name="CombatStartTrigger" parent="Field/Terrain/Gamepieces/Town/Combat2" instance=ExtResource("39_p2lth")]
-script = ExtResource("33_30q4j")
+[node name="Interaction" parent="Field/Terrain/Gamepieces/Town/ConversationEncounter" instance=ExtResource("19_sa6jd")]
+script = ExtResource("35_i66wm")
+pre_combat_timeline = ExtResource("36_fu3a1")
+victory_timeline = ExtResource("37_8j2gh")
+loss_timeline = ExtResource("38_f1335")
 combat_arena = ExtResource("35_x5y1m")
 
-[node name="InteractionPopup" parent="Field/Terrain/Gamepieces/Town/Combat2/CombatStartTrigger" instance=ExtResource("34_qs25x")]
+[node name="InteractionPopup" parent="Field/Terrain/Gamepieces/Town/ConversationEncounter/Interaction" instance=ExtResource("34_qs25x")]
 emote = 0
 
 [node name="KeyPickup" parent="Field/Terrain/Gamepieces/Town" instance=ExtResource("29_gxq7u")]

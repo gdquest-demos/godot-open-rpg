@@ -80,6 +80,9 @@ directories/dch_directory={
 "wizard": "res://maps/town/wizard.dch"
 }
 directories/dtl_directory={
+"encounter_before_combat": "res://maps/town/encounter_before_combat.dtl",
+"encounter_on_loss": "res://maps/town/encounter_on_loss.dtl",
+"encounter_on_victory": "res://maps/town/encounter_on_victory.dtl",
 "fan_of_four": "res://maps/town/fan_of_four.dtl",
 "ghost": "res://maps/grove/ghost.dtl",
 "monk": "res://maps/town/monk.dtl",

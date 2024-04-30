@@ -40,7 +40,12 @@ func stop(time_out: = 0.0) -> void:
 	await _anim.animation_finished
 	
 	_track.stop()
+	_track.stream = null
 
 
 func is_playing() -> bool:
 	return _track.playing
+
+
+func get_playing_track() -> AudioStream:
+	return _track.stream

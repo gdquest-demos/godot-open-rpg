@@ -64,9 +64,11 @@ func clear(duration: = 0.0) -> void:
 ## This method is a coroutine that will finish once the screen has been covered.
 func cover(duration: = 0.0) -> void:
 	if _tween:
+		if _tween.is_running():
+			finished.emit()
 		_tween.kill()
 		_tween = null
-		finished.emit()
+		
 
 	if is_equal_approx(duration, 0.0) or _color_rect.modulate.is_equal_approx(COVERED):
 		_color_rect.modulate = COVERED
@@ -82,4 +84,4 @@ func cover(duration: = 0.0) -> void:
 func _tween_transition(duration: float, target_colour: Color) -> void:
 	_tween = create_tween()
 	_tween.tween_property(_color_rect, "modulate", target_colour, duration)
-	_tween.tween_callback(func(): finished.emit())
+	_tween.tween_callback(func(): emit_signal.call_deferred("finished"))
