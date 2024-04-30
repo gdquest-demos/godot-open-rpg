@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=90 format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="Script" path="res://src/field/field_cursor.gd" id="5_3guor"]
@@ -68,7 +68,6 @@
 [ext_resource type="AudioStream" uid="uid://b6c1p14bc20p1" path="res://addons/dialogic/Example Assets/sound-effects/typing1.wav" id="54_fh5dy"]
 [ext_resource type="AudioStream" uid="uid://c3uw4nft0de13" path="res://addons/dialogic/Example Assets/sound-effects/typing2.wav" id="55_8lvao"]
 [ext_resource type="Script" path="res://maps/opening_cutscene.gd" id="55_vsmkr"]
-[ext_resource type="Script" path="res://src/common/screen_transitions/screen_transition.gd" id="56_cx0l3"]
 [ext_resource type="AudioStream" uid="uid://dnboblpkf0fqi" path="res://addons/dialogic/Example Assets/sound-effects/typing3.wav" id="56_prbwr"]
 [ext_resource type="AudioStream" uid="uid://c2viukvbub6v6" path="res://addons/dialogic/Example Assets/sound-effects/typing4.wav" id="57_tomnb"]
 [ext_resource type="AudioStream" uid="uid://dwcre3fjf3cj8" path="res://addons/dialogic/Example Assets/sound-effects/typing5.wav" id="58_br2ni"]
@@ -181,10 +180,34 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimationPlayer/ScreenTransition/ColorRect/VBoxContainer/VBoxContainer:modulate")
+tracks/1/path = NodePath("AnimationPlayer/WinScreen/ColorRect/VBoxContainer/VBoxContainer:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer/WinScreen/ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimationPlayer/WinScreen/ColorRect:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -237,7 +260,7 @@ tracks/1/use_blend = true
 tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimationPlayer/ScreenTransition")
+tracks/2/path = NodePath("AnimationPlayer/WinScreen")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -251,11 +274,35 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimationPlayer/ScreenTransition/ColorRect/VBoxContainer/VBoxContainer:modulate")
+tracks/3/path = NodePath("AnimationPlayer/WinScreen/ColorRect/VBoxContainer/VBoxContainer:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(1.8, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimationPlayer/WinScreen/ColorRect:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimationPlayer/WinScreen/ColorRect:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.1, 1.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -608,11 +655,11 @@ libraries = {
 "": SubResource("AnimationLibrary_d6ycm")
 }
 
-[node name="ScreenTransition" type="CanvasLayer" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer"]
-script = ExtResource("56_cx0l3")
+[node name="WinScreen" type="CanvasLayer" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer"]
 
-[node name="ColorRect" type="ColorRect" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/ScreenTransition"]
+[node name="ColorRect" type="ColorRect" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/WinScreen"]
 visible = false
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -621,7 +668,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="VBoxContainer" type="CenterContainer" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/ScreenTransition/ColorRect"]
+[node name="VBoxContainer" type="CenterContainer" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/WinScreen/ColorRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -629,16 +676,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/ScreenTransition/ColorRect/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/WinScreen/ColorRect/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/ScreenTransition/ColorRect/VBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/WinScreen/ColorRect/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "THANK YOU FOR PLAYING!"
 label_settings = SubResource("LabelSettings_dkg5i")
 
-[node name="Label2" type="Label" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/ScreenTransition/ColorRect/VBoxContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="Field/Terrain/Gamepieces/Grove/Ghost/AnimationPlayer/WinScreen/ColorRect/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 text = "Find more info or ways to help out at
