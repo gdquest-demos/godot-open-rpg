@@ -13,6 +13,7 @@ func _ready() -> void:
 	# Connecting all necessary signals
 	%DefaultPortraitPicker.value_changed.connect(default_portrait_changed)
 	%MainScale.value_changed.connect(main_portrait_settings_update)
+	%MainOffset._load_display_info({'step':1})
 	%MainOffset.value_changed.connect(main_portrait_settings_update)
 	%MainMirror.toggled.connect(main_portrait_settings_update)
 
@@ -35,6 +36,11 @@ func main_portrait_settings_update(_something=null, _value=null) -> void:
 func default_portrait_changed(property:String, value:String) -> void:
 	character_editor.current_resource.default_portrait = value
 	character_editor.update_default_portrait_star(value)
+
+
+func set_default_portrait(portrait_name:String) -> void:
+	%DefaultPortraitPicker.set_value(portrait_name)
+	default_portrait_changed("", portrait_name)
 
 
 func _load_character(resource:DialogicCharacter) -> void:

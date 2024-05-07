@@ -1,11 +1,16 @@
 extends DialogicSubsystem
-
-## Subsystem that handles input, autoadvance & skipping.
+## Subsystem that handles input, Auto-Advance, and skipping.
+##
+## This subsystem can be accessed via GDScript: `Dialogic.Inputs`.
 
 
 signal dialogic_action_priority
 signal dialogic_action
+
+## Whenever the Auto-Skip timer finishes, this signal is emitted.
+## Configure Auto-Skip settings via [member auto_skip].
 signal autoskip_timer_finished
+
 
 var input_block_timer := Timer.new()
 var _auto_skip_timer_left: float = 0.0
@@ -13,15 +18,18 @@ var action_was_consumed := false
 
 var auto_skip: DialogicAutoSkip = null
 var auto_advance : DialogicAutoAdvance = null
+var manual_advance: DialogicManualAdvance = null
 
-####### SUBSYSTEM METHODS ######################################################
+
 #region SUBSYSTEM METHODS
-func clear_game_state(clear_flag:=DialogicGameHandler.ClearFlags.FULL_CLEAR) -> void:
+################################################################################
+
+func clear_game_state(_clear_flag := DialogicGameHandler.ClearFlags.FULL_CLEAR) -> void:
 	if not is_node_ready():
 		await ready
 
-
-	set_manualadvance(true)
+	manual_advance.disabled_until_next_event = false
+	manual_advance.system_enabled = true
 
 
 func pause() -> void:
@@ -36,20 +44,29 @@ func resume() -> void:
 	var is_autoskip_timer_done := _auto_skip_timer_left > 0.0
 	set_process(!is_autoskip_timer_done)
 
+
+func post_install() -> void:
+	dialogic.Settings.connect_to_change('autoadvance_delay_modifier', auto_advance._update_autoadvance_delay_modifier)
+	auto_skip.toggled.connect(_on_autoskip_toggled)
+	add_child(input_block_timer)
+	input_block_timer.one_shot = true
+
+
 #endregion
 
-####### MAIN METHODS ###########################################################
-#region MAIN METHODS
 
-func handle_input():
+#region MAIN METHODS
+################################################################################
+
+func handle_input() -> void:
 	if dialogic.paused or is_input_blocked():
 		return
 
-	if !action_was_consumed:
+	if not action_was_consumed:
 		# We want to stop auto-advancing that cancels on user inputs.
 		if (auto_advance.is_enabled()
 			and auto_advance.enabled_until_user_input):
-			auto_advance.enabled_until_next_event = false
+			auto_advance.enabled_until_user_input = false
 			action_was_consumed = true
 
 		# We want to stop auto-skipping if it's enabled, we are listening
@@ -71,8 +88,7 @@ func handle_input():
 
 ## Unhandled Input is used for all NON-Mouse based inputs.
 func _unhandled_input(event:InputEvent) -> void:
-	#if Input.is_action_pressed(ProjectSettings.get_setting('dialogic/text/input_action', 'dialogic_default_action')):
-	if event.is_action_released(ProjectSettings.get_setting('dialogic/text/input_action', 'dialogic_default_action')):
+	if Input.is_action_just_released(ProjectSettings.get_setting('dialogic/text/input_action', 'dialogic_default_action')):
 		if event is InputEventMouse:
 			return
 		handle_input()
@@ -81,10 +97,19 @@ func _unhandled_input(event:InputEvent) -> void:
 ## Input is used for all mouse based inputs.
 ## If any DialogicInputNode is present this won't do anything (because that node handles MouseInput then).
 func _input(event:InputEvent) -> void:
-	if Input.is_action_pressed(ProjectSettings.get_setting('dialogic/text/input_action', 'dialogic_default_action')):
+	if Input.is_action_just_released(ProjectSettings.get_setting('dialogic/text/input_action', 'dialogic_default_action')):
+
 		if not event is InputEventMouse or get_tree().get_nodes_in_group('dialogic_input').any(func(node):return node.is_visible_in_tree()):
 			return
+
 		handle_input()
+
+
+## This is called from the gui_input of the InputCatcher and DialogText nodes
+func handle_node_gui_input(event:InputEvent) -> void:
+	if Input.is_action_just_released(ProjectSettings.get_setting('dialogic/text/input_action', 'dialogic_default_action')):
+		if event is InputEventMouseButton and event.pressed:
+			DialogicUtil.autoload().Inputs.handle_input()
 
 
 func is_input_blocked() -> bool:
@@ -100,26 +125,23 @@ func block_input(time:=0.1) -> void:
 func _ready() -> void:
 	auto_skip = DialogicAutoSkip.new()
 	auto_advance = DialogicAutoAdvance.new()
+	manual_advance = DialogicManualAdvance.new()
 
 	# We use the process method to count down the auto-start_autoskip_timer timer.
 	set_process(false)
 
-func post_install() -> void:
-	dialogic.Settings.connect_to_change('autoadvance_delay_modifier', auto_advance._update_autoadvance_delay_modifier)
-	auto_skip.toggled.connect(_on_autoskip_toggled)
-	add_child(input_block_timer)
-	input_block_timer.one_shot = true
 
-
-func stop() -> void:
+func stop_timers() -> void:
 	auto_advance.autoadvance_timer.stop()
 	input_block_timer.stop()
 	_auto_skip_timer_left = 0.0
 
 #endregion
 
-####### AUTO-SKIP ##############################################################
+
 #region AUTO-SKIP
+################################################################################
+
 ## This method will advance the timeline based on Auto-Skip settings.
 ## The state, whether Auto-Skip is enabled, is ignored.
 func start_autoskip_timer() -> void:
@@ -133,10 +155,11 @@ func _on_autoskip_toggled(enabled: bool) -> void:
 	if not enabled:
 		_auto_skip_timer_left = 0.0
 
+
 ## Handles fine-grained Auto-Skip logic.
 ## The [method _process] method allows for a more precise timer than the
 ## [Timer] class.
-func _process(delta):
+func _process(delta: float) -> void:
 	if _auto_skip_timer_left > 0:
 		_auto_skip_timer_left -= delta
 
@@ -146,40 +169,25 @@ func _process(delta):
 	else:
 		autoskip_timer_finished.emit()
 		set_process(false)
-#endregion
-
-####### MANUAL ADVANCE #########################################################
-#region MANUAL ADVANCE
-
-func set_manualadvance(enabled:=true, temp:= false) -> void:
-	if !dialogic.current_state_info.has('manual_advance'):
-		dialogic.current_state_info['manual_advance'] = {'enabled':false, 'temp_enabled':false}
-	if temp:
-		dialogic.current_state_info['manual_advance']['temp_enabled'] = enabled
-	else:
-		dialogic.current_state_info['manual_advance']['enabled'] = enabled
-
-
-func is_manualadvance_enabled() -> bool:
-	return dialogic.current_state_info['manual_advance']['enabled'] and dialogic.current_state_info['manual_advance'].get('temp_enabled', true)
 
 #endregion
 
-####### TEXT EFFECTS ###########################################################
 #region TEXT EFFECTS
+################################################################################
+
 
 func effect_input(text_node:Control, skipped:bool, argument:String) -> void:
 	if skipped:
 		return
 	dialogic.Text.show_next_indicators()
-	await dialogic.Input.dialogic_action_priority
+	await dialogic.Inputs.dialogic_action_priority
 	dialogic.Text.hide_next_indicators()
-	dialogic.Input.action_was_consumed = true
+	dialogic.Inputs.action_was_consumed = true
 
 
 func effect_noskip(text_node:Control, skipped:bool, argument:String) -> void:
 	dialogic.Text.set_text_reveal_skippable(false, true)
-	set_manualadvance(false, true)
+	manual_advance.disabled_until_next_event = true
 	effect_autoadvance(text_node, skipped, argument)
 
 
@@ -191,4 +199,5 @@ func effect_autoadvance(text_node: Control, skipped:bool, argument:String) -> vo
 
 	if argument.is_valid_float():
 		auto_advance.override_delay_for_current_event = float(argument)
+
 #endregion

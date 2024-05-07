@@ -37,6 +37,13 @@ func _ready():
 	$VBox/Margin.set("theme_override_constants/margin_left", 4 * editor_scale)
 	$VBox/Margin.set("theme_override_constants/margin_bottom", 4 * editor_scale)
 
+	## RIGHT CLICK MENU
+	%RightClickMenu.clear()
+	%RightClickMenu.add_icon_item(get_theme_icon("Remove", "EditorIcons"), "Remove From List", 1)
+	%RightClickMenu.add_separator()
+	%RightClickMenu.add_icon_item(get_theme_icon("Filesystem", "EditorIcons"), "Show in FileSystem", 2)
+	%RightClickMenu.add_icon_item(get_theme_icon("ExternalLink", "EditorIcons"), "Open in External Program", 3)
+
 
 ################################################################################
 ## 						RESOURCE LIST
@@ -52,7 +59,7 @@ func _on_editors_editor_changed(previous:DialogicEditor, current:DialogicEditor)
 
 
 func clean_resource_list(resources_list:Array = []) -> PackedStringArray:
-	return PackedStringArray(resources_list.filter(func(x): return FileAccess.file_exists(x)))
+	return PackedStringArray(resources_list.filter(func(x): return ResourceLoader.exists(x)))
 
 
 func update_resource_list(resources_list:PackedStringArray = []) -> void:
@@ -112,13 +119,11 @@ func _on_resources_list_item_selected(index:int) -> void:
 
 func _on_resources_list_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	# If clicked with the middle mouse button, remove the item from the list
-	if mouse_button_index == 3:
-		var new_list := []
-		for entry in DialogicUtil.get_editor_setting('last_resources', []):
-			if entry != %ResourcesList.get_item_metadata(index):
-				new_list.append(entry)
-		DialogicUtil.set_editor_setting('last_resources', new_list)
-		%ResourcesList.remove_item(index)
+	if mouse_button_index == MOUSE_BUTTON_MIDDLE:
+		remove_item_from_list(index)
+	if mouse_button_index == MOUSE_BUTTON_RIGHT:
+		%RightClickMenu.popup_on_parent(Rect2(get_global_mouse_position(), Vector2()))
+		%RightClickMenu.set_meta('item_index', index)
 
 
 func _on_search_text_changed(new_text:String) -> void:
@@ -157,8 +162,27 @@ func update_content_list(list:PackedStringArray) -> void:
 	var label_directory := DialogicResourceUtil.get_label_cache()
 	if current_resource != null:
 		for i in timeline_directory:
-			if timeline_directory[i] ==  current_resource.resource_path:
+			if timeline_directory[i] == current_resource.resource_path:
 				label_directory[i] = list
+
+	# also always store the current timelines labels for easy access
+	label_directory[""] = list
 
 	DialogicResourceUtil.set_label_cache(label_directory)
 
+func remove_item_from_list(index) -> void:
+	var new_list := []
+	for entry in DialogicUtil.get_editor_setting('last_resources', []):
+		if entry != %ResourcesList.get_item_metadata(index):
+			new_list.append(entry)
+	DialogicUtil.set_editor_setting('last_resources', new_list)
+	%ResourcesList.remove_item(index)
+
+func _on_right_click_menu_id_pressed(id:int) -> void:
+	match id:
+		1: # REMOVE ITEM FROM LIST
+			remove_item_from_list(%RightClickMenu.get_meta("item_index"))
+		2: # OPEN IN FILESYSTEM
+			EditorInterface.get_file_system_dock().navigate_to_path(%ResourcesList.get_item_metadata(%RightClickMenu.get_meta("item_index")))
+		3: # OPEN IN EXTERNAL EDITOR
+			OS.shell_open(ProjectSettings.globalize_path(%ResourcesList.get_item_metadata(%RightClickMenu.get_meta("item_index"))))

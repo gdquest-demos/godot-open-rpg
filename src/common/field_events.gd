@@ -11,6 +11,10 @@ signal cell_highlighted(cell: Vector2i)
 ## Emitted when the player selects a cell on the field gameboard via the [FieldCursor].
 signal cell_selected(cell: Vector2i)
 
+## Emitted whenever a combat is triggered. This will lead to a transition from the field 'state' to
+## a combat 'state'.
+signal combat_triggered(arena: PackedScene)
+
 ## Emitted when a [Cutscene] begins, signalling that the player should yield control of their
 ## character to the cutscene code.
 signal cutscene_began

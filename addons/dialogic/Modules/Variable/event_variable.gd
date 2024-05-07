@@ -6,30 +6,66 @@ extends DialogicEvent
 
 
 enum Operations {SET, ADD, SUBSTRACT, MULTIPLY, DIVIDE}
+enum VarValueType {
+	STRING = 0,
+	NUMBER = 1,
+	VARIABLE = 2,
+	BOOL = 3,
+	EXPRESSION = 4,
+	RANDOM_NUMBER = 5,
+}
 
 ## Settings
 
 ## Name/Path of the variable that should be changed.
-var name: String = ""
+var name: String = "":
+	set(_value):
+		name = _value
+		if Engine.is_editor_hint() and not value:
+			match DialogicUtil.get_variable_type(name):
+				DialogicUtil.VarTypes.ANY, DialogicUtil.VarTypes.STRING:
+					_value_type = VarValueType.STRING
+				DialogicUtil.VarTypes.FLOAT, DialogicUtil.VarTypes.INT:
+					_value_type = VarValueType.NUMBER
+				DialogicUtil.VarTypes.BOOL:
+					_value_type = VarValueType.BOOL
+			ui_update_needed.emit()
+		update_editor_warning()
+
 ## The operation to perform.
 var operation: int = Operations.SET:
 	set(value):
 		operation = value
-		if operation != Operations.SET and _value_type == 0:
-			_value_type = 1
+		if operation != Operations.SET and _value_type == VarValueType.STRING:
+			_value_type = VarValueType.NUMBER
 			ui_update_needed.emit()
 		update_editor_warning()
 
 ## The value that is used. Can be a variable as well.
 var value: Variant = ""
-var _value_type := 0 :# helper for the ui 0 = string, 1= float, 2= variable 3= expression, 4= random int (a special expression)
-	set(value):
-		_value_type = value
+var _value_type := 0 :
+	set(_value):
+		_value_type = _value
+		if not _suppress_default_value:
+			match _value_type:
+				VarValueType.STRING, VarValueType.VARIABLE, VarValueType.EXPRESSION:
+					value = ""
+				VarValueType.NUMBER:
+					value = 0
+				VarValueType.BOOL:
+					value = false
+				VarValueType.RANDOM_NUMBER:
+					value = null
+			ui_update_needed.emit()
 		update_editor_warning()
 
 ## If true, a random number between [random_min] and [random_max] is used instead of [value].
 var random_min: int = 0
 var random_max: int = 100
+
+## Used to suppress _value_type from overwriting value with a default value when the type changes
+## This is only used when initializing the event_variable.
+var _suppress_default_value: bool = false
 
 
 ################################################################################
@@ -38,14 +74,17 @@ var random_max: int = 100
 
 func _execute() -> void:
 	if name:
-		var orig :Variant= dialogic.VAR.get_variable(name)
-		if value and orig != null:
-			var the_value :Variant
+		var orig: Variant = dialogic.VAR.get_variable(name, null, operation == Operations.SET and "[" in name)
+		if value != null and (orig != null or (operation == Operations.SET and "[" in name)):
+			var the_value: Variant
 			match _value_type:
-				0: the_value = dialogic.VAR.get_variable('"'+value+'"')
-				2: the_value = dialogic.VAR.get_variable('{'+value+'}')
-				1,3,4: the_value = dialogic.VAR.get_variable(value)
-			
+				VarValueType.STRING:
+					the_value = dialogic.VAR.get_variable('"'+value+'"')
+				VarValueType.VARIABLE:
+					the_value = dialogic.VAR.get_variable('{'+value+'}')
+				VarValueType.NUMBER,VarValueType.BOOL,VarValueType.EXPRESSION,VarValueType.RANDOM_NUMBER:
+					the_value = dialogic.VAR.get_variable(str(value))
+
 			if operation != Operations.SET and str(orig).is_valid_float() and str(the_value).is_valid_float():
 				orig = float(orig)
 				the_value = float(the_value)
@@ -66,7 +105,7 @@ func _execute() -> void:
 				printerr("Dialogic: Set Variable event failed because one value wasn't a float! [", orig, ", ",the_value,"]")
 		else:
 			printerr("Dialogic: Set Variable event failed because one value wasn't set!")
-			
+
 	finish()
 
 
@@ -79,6 +118,7 @@ func _init() -> void:
 	set_default_color('Color6')
 	event_category = "Logic"
 	event_sorting_index = 0
+	help_page_path = "https://docs.dialogic.pro/variables.html#23-set-variable-event"
 
 
 ################################################################################
@@ -88,7 +128,7 @@ func _init() -> void:
 func to_text() -> String:
 	var string := "set "
 	if name:
-		string += "{" + name + "}"
+		string += "{" + name.trim_prefix('{').trim_suffix('}') + "}"
 		match operation:
 			Operations.SET:
 				string+= " = "
@@ -100,18 +140,18 @@ func to_text() -> String:
 				string+= " *= "
 			Operations.DIVIDE:
 				string+= " /= "
-		
+
 		value = str(value)
 		match _value_type:
-			0: # String
+			VarValueType.STRING: # String
 				string += '"'+value.replace('"', '\\"')+'"'
-			1,3: # Float or Expression
+			VarValueType.NUMBER,VarValueType.BOOL,VarValueType.EXPRESSION: # Float Bool, or Expression
 				string += str(value)
-			2: # Variable
+			VarValueType.VARIABLE: # Variable
 				string += '{'+value+'}'
-			4:
+			VarValueType.RANDOM_NUMBER:
 				string += 'range('+str(random_min)+','+str(random_max)+').pick_random()'
-	
+
 	return string
 
 
@@ -133,27 +173,33 @@ func from_text(string:String) -> void:
 			operation = Operations.MULTIPLY
 		'/=':
 			operation = Operations.DIVIDE
-	
-	if result.get_string('value'):
-		value = result.get_string('value').strip_edges()
+
+	_suppress_default_value = true
+	value = result.get_string('value').strip_edges()
+	if not value.is_empty():
 		if value.begins_with('"') and value.ends_with('"') and value.count('"')-value.count('\\"') == 2:
 			value = result.get_string('value').strip_edges().replace('"', '')
-			_value_type = 0
+			_value_type = VarValueType.STRING
 		elif value.begins_with('{') and value.ends_with('}') and value.count('{') == 1:
 			value = result.get_string('value').strip_edges().trim_suffix('}').trim_prefix('{')
-			_value_type = 2
+			_value_type = VarValueType.VARIABLE
+		elif value in ["true", "false"]:
+			value = value == "true"
+			_value_type = VarValueType.BOOL
 		elif value.begins_with('range(') and value.ends_with(').pick_random()'):
-			_value_type = 4
+			_value_type = VarValueType.RANDOM_NUMBER
 			var randinf := str(value).trim_prefix('range(').trim_suffix(').pick_random()').split(',')
 			random_min = int(randinf[0])
 			random_max = int(randinf[1])
 		else:
 			value = result.get_string('value').strip_edges()
 			if value.is_valid_float():
-				_value_type = 1
+				_value_type = VarValueType.NUMBER
 			else:
-				_value_type = 3
-
+				_value_type = VarValueType.EXPRESSION
+	else:
+		value = null
+	_suppress_default_value = false
 
 
 func is_valid_event(string:String) -> bool:
@@ -165,14 +211,14 @@ func is_valid_event(string:String) -> bool:
 ################################################################################
 
 func build_event_editor():
-	add_header_edit('name', ValueType.COMPLEX_PICKER, {
-			'left_text'		: 'Set',  
-			'suggestions_func' 	: get_var_suggestions, 
+	add_header_edit('name', ValueType.DYNAMIC_OPTIONS, {
+			'left_text'		: 'Set',
+			'suggestions_func' 	: get_var_suggestions,
 			'icon' 					: load("res://addons/dialogic/Editor/Images/Pieces/variable.svg"),
 			'placeholder'			:'Select Variable'}
 			)
-	add_header_edit('operation', ValueType.FIXED_OPTION_SELECTOR, {
-		'selector_options': [
+	add_header_edit('operation', ValueType.FIXED_OPTIONS, {
+		'options': [
 			{
 				'label': 'to be',
 				'icon': load("res://addons/dialogic/Editor/Images/Dropdown/set.svg"),
@@ -196,58 +242,60 @@ func build_event_editor():
 			}
 		]
 	}, '!name.is_empty()')
-	add_header_edit('_value_type', ValueType.FIXED_OPTION_SELECTOR, {
-		'selector_options': [
+	add_header_edit('_value_type', ValueType.FIXED_OPTIONS, {
+		'options': [
 			{
 				'label': 'String',
 				'icon': ["String", "EditorIcons"],
-				'value': 0
+				'value': VarValueType.STRING
 			},{
 				'label': 'Number',
 				'icon': ["float", "EditorIcons"],
-				'value': 1
+				'value': VarValueType.NUMBER
 			},{
 				'label': 'Variable',
 				'icon': load("res://addons/dialogic/Editor/Images/Pieces/variable.svg"),
-				'value': 2
+				'value': VarValueType.VARIABLE
+			},{
+				'label': 'Bool',
+				'icon': ["bool", "EditorIcons"],
+				'value': VarValueType.BOOL
 			},{
 				'label': 'Expression',
 				'icon': ["Variant", "EditorIcons"],
-				'value': 3
+				'value': VarValueType.EXPRESSION
 			},{
 				'label': 'Random Number',
 				'icon': ["RandomNumberGenerator", "EditorIcons"],
-				'value': 4
+				'value': VarValueType.RANDOM_NUMBER
 			}],
-		'symbol_only':true}, 
+		'symbol_only':true},
 		'!name.is_empty()')
-	add_header_edit('value', ValueType.SINGLELINE_TEXT, {}, '!name.is_empty() and (_value_type == 0 or _value_type == 3) ')
-	add_header_edit('value', ValueType.FLOAT, {}, '!name.is_empty()  and _value_type == 1')
-	add_header_edit('value', ValueType.COMPLEX_PICKER, 
-			{'suggestions_func' : get_value_suggestions, 'placeholder':'Select Variable'}, 
-			'!name.is_empty() and _value_type == 2')
-	add_header_label('a number between', '_value_type == 4')
-	add_header_edit('random_min', ValueType.INTEGER, {'right_text':'and'}, '!name.is_empty() and  _value_type == 4')
-	add_header_edit('random_max', ValueType.INTEGER, {}, '!name.is_empty() and _value_type == 4')
+	add_header_edit('value', ValueType.SINGLELINE_TEXT, {}, '!name.is_empty() and (_value_type == VarValueType.STRING or _value_type == VarValueType.EXPRESSION) ')
+	add_header_edit('value', ValueType.BOOL, {}, '!name.is_empty() and (_value_type == VarValueType.BOOL) ')
+	add_header_edit('value', ValueType.NUMBER, {}, '!name.is_empty()  and _value_type == VarValueType.NUMBER')
+	add_header_edit('value', ValueType.DYNAMIC_OPTIONS,
+			{'suggestions_func' : get_value_suggestions, 'placeholder':'Select Variable'},
+			'!name.is_empty() and _value_type == VarValueType.VARIABLE')
+	add_header_label('a number between', '_value_type == VarValueType.RANDOM_NUMBER')
+	add_header_edit('random_min', ValueType.NUMBER, {'right_text':'and', 'mode':1}, '!name.is_empty() and  _value_type == VarValueType.RANDOM_NUMBER')
+	add_header_edit('random_max', ValueType.NUMBER, {'mode':1}, '!name.is_empty() and _value_type == VarValueType.RANDOM_NUMBER')
 	add_header_button('', _on_variable_editor_pressed, 'Variable Editor', ["ExternalLink", "EditorIcons"])
 
 
 func get_var_suggestions(filter:String) -> Dictionary:
 	var suggestions := {}
-	
 	if filter:
 		suggestions[filter] = {'value':filter, 'editor_icon':["GuiScrollArrowRight", "EditorIcons"]}
-	var vars: Dictionary = ProjectSettings.get_setting('dialogic/variables', {})
-	for var_path in DialogicUtil.list_variables(vars):
+	for var_path in DialogicUtil.list_variables(DialogicUtil.get_default_variables()):
 		suggestions[var_path] = {'value':var_path, 'icon':load("res://addons/dialogic/Editor/Images/Pieces/variable.svg")}
 	return suggestions
 
 
 func get_value_suggestions(filter:String) -> Dictionary:
 	var suggestions := {}
-	
-	var vars: Dictionary = ProjectSettings.get_setting('dialogic/variables', {})
-	for var_path in DialogicUtil.list_variables(vars):
+
+	for var_path in DialogicUtil.list_variables(DialogicUtil.get_default_variables()):
 		suggestions[var_path] = {'value':var_path, 'icon':load("res://addons/dialogic/Editor/Images/Pieces/variable.svg")}
 	return suggestions
 
@@ -259,8 +307,14 @@ func _on_variable_editor_pressed():
 
 
 func update_editor_warning() -> void:
-	if _value_type == 0 and operation != Operations.SET:
+	if _value_type == VarValueType.STRING and operation != Operations.SET:
 		ui_update_warning.emit('You cannot do this operation with a string!')
+	elif operation != Operations.SET:
+		var type := DialogicUtil.get_variable_type(name)
+		if not type in [DialogicUtil.VarTypes.INT, DialogicUtil.VarTypes.FLOAT, DialogicUtil.VarTypes.ANY]:
+			ui_update_warning.emit('The selected variable is not a number!')
+		else:
+			ui_update_warning.emit('')
 	else:
 		ui_update_warning.emit('')
 
@@ -278,7 +332,7 @@ func _get_code_completion(CodeCompletionHelper:Node, TextNode:TextEdit, line:Str
 
 func _get_start_code_completion(CodeCompletionHelper:Node, TextNode:TextEdit) -> void:
 	TextNode.add_code_completion_option(CodeEdit.KIND_PLAIN_TEXT, 'set', 'set ', event_color.lerp(TextNode.syntax_highlighter.normal_color, 0.5))
-	
+
 
 #################### SYNTAX HIGHLIGHTING #######################################
 ################################################################################

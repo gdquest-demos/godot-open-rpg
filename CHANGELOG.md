@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.3.0 Combat Demo ⚔️
+
+### New
+
+The demo scene has been reworked to include combat.
+
+The demo introduces:
+- A Main scene separated into two main gameplay objects, the Field and Combat.
+- 1 additional template Cutscene:
+	- Combat Trigger, that runs when colliding with the player. This is designed to be used with roaming encounters that may pounce on the player in the field. Winning removes the encounter from the Field, whereas losing will lead to a game-over.
+- An example combat that is run from a conversation. Winning or losing leads to different dialogue options.
+- Combat-related music.
+- Smooth transitions to and from combat.
+
+### Changes
+- Added a handful of combat events that allow objects to hook into changes in a given combat.
+- Refactored ScreenTransition into an autoload, since only one should ever be active at a given moment anyways.
+- Updated Dialogic 2 to the most recent build. ***Note that input has been modified to respond to the input events being released, rather than pressed.***
+- Miscellaneous fixes to the demo.
+
 ## v0.2.0 Cutscene Demo 💬
 
 ### New

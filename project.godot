@@ -18,9 +18,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 Camera="*res://src/field/field_camera.gd"
-Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
+CombatEvents="*res://src/common/combat_events.gd"
 FieldEvents="*res://src/common/field_events.gd"
 Music="*res://src/common/music/music_player.tscn"
+Transition="*res://src/common/screen_transitions/ScreenTransition.tscn"
+Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
 
@@ -41,17 +43,17 @@ text/autopauses={}
 glossary/default_case_sensitive=true
 layout/mode=2
 variables={
-"BlueWandCount": "0",
-"GreenWandCount": "0",
-"HasMonkToken": "0",
-"HasThiefToken": "0",
-"HasWarriorToken": "0",
-"HasWizardToken": "0",
-"Hint": "0",
-"RedWandCount": "0",
-"StrangeTreeExamined": "0",
-"TokenCount": "0",
-"TokenQuestStatus": "0"
+"BlueWandCount": 0,
+"GreenWandCount": 0,
+"HasMonkToken": 0,
+"HasThiefToken": 0,
+"HasWarriorToken": 0,
+"HasWizardToken": 0,
+"Hint": 0,
+"RedWandCount": 0,
+"StrangeTreeExamined": 0,
+"TokenCount": 0,
+"TokenQuestStatus": 0
 }
 layout/end_behaviour=0
 layout/styles={
@@ -68,6 +70,7 @@ animations/leave_default="res://addons/dialogic/Modules/Character/DefaultAnimati
 text/autocolor_names=true
 settings/text_speed=1.0
 directories/dch_directory={
+"enemy_ghost": "res://maps/town/enemy_ghost.dch",
 "fan_of_four": "res://maps/town/fan_of_four.dch",
 "ghost": "res://maps/grove/ghost.dch",
 "monk": "res://maps/town/monk.dch",
@@ -78,6 +81,9 @@ directories/dch_directory={
 "wizard": "res://maps/town/wizard.dch"
 }
 directories/dtl_directory={
+"encounter_before_combat": "res://maps/town/encounter_before_combat.dtl",
+"encounter_on_loss": "res://maps/town/encounter_on_loss.dtl",
+"encounter_on_victory": "res://maps/town/encounter_on_victory.dtl",
 "fan_of_four": "res://maps/town/fan_of_four.dtl",
 "ghost": "res://maps/grove/ghost.dtl",
 "monk": "res://maps/town/monk.dtl",
@@ -97,6 +103,9 @@ text/text_reveal_skip_delay=0.05
 text/autoadvance_per_character_delay=0.1
 text/autoadvance_ignored_characters_enabled=true
 save/encryption_on_exports_only=true
+text/advance_delay=0.1
+portraits/default_portrait=""
+layout/style_list=[]
 
 [display]
 
@@ -141,6 +150,11 @@ interact={
 "events": [null, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
+back={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"echo":false,"script":null)
+]
+}
 
 [layer_names]
 
@@ -158,4 +172,3 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 textures/default_filters/anisotropic_filtering_level=0
-environment/defaults/default_clear_color=Color(0.462745, 0.231373, 0.211765, 1)

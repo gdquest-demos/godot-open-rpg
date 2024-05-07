@@ -12,7 +12,7 @@ class_name DialogicStyle
 			return "Unkown Style"
 		return name
 
-@export var inherits : DialogicStyle = null
+@export var inherits: DialogicStyle = null
 
 @export var base_scene: PackedScene = null
 @export var base_overrides := {}
@@ -86,10 +86,7 @@ func move_layer(from_index:int, to_index:int) -> void:
 	if not has_layer(from_index) or not has_layer(to_index-1):
 		return
 
-	if from_index < to_index:
-		to_index -1
-
-	var info := layers.pop_at(from_index)
+	var info: Resource = layers.pop_at(from_index)
 	layers.insert(to_index, info)
 	changed.emit()
 
@@ -152,7 +149,7 @@ func get_inheritance_root() -> DialogicStyle:
 	if inherits == null:
 		return self
 
-	var style : DialogicStyle = self
+	var style: DialogicStyle = self
 	while style.inherits != null:
 		style = style.inherits
 
@@ -166,7 +163,7 @@ func realize_inheritance() -> void:
 	var _layers: Array[DialogicStyleLayer] = []
 	for i in range(get_layer_count()):
 		var info := get_layer_inherited_info(i)
-		_layers.append(DialogicStyleLayer.new(info.path, info.overrides))
+		_layers.append(DialogicStyleLayer.new(info.get("path", ""), info.get("overrides", {})))
 
 	layers = _layers
 	inherits = null
@@ -177,7 +174,7 @@ func clone() -> DialogicStyle:
 	var style := DialogicStyle.new()
 	style.name = name
 	if base_scene != null:
-		style.base_scene = base_scene.duplicate()
+		style.base_scene = base_scene
 	style.inherits = inherits
 	style.base_overrides = base_overrides
 	for layer_idx in range(get_layer_count()):

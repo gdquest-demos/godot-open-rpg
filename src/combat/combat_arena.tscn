@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3ciqydkjnkkx"]
+
+[ext_resource type="Script" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
+
+[node name="CombatArena" type="Control"]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iqdn5")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Battlers" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Foreground" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InstructionsLabel" type="Label" parent="Foreground"]
+layout_mode = 0
+offset_left = 890.0
+offset_top = 823.0
+offset_right = 1808.0
+offset_bottom = 970.0
+text = "Press 'ESCAPE' to lose combat.
+Press 'SPACE' to win combat."

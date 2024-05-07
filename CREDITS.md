@@ -10,6 +10,11 @@ Author: Kenney
 URL: https://kenney.nl/assets/emotes-pack (accessed 2023-06-02)
 License: [CC0](https://creativecommons.org/publicdomain/zero/1.0/)
 
+Fun Run, The
+Author: Zane Little Music
+URL: https://opengameart.org/content/the-fun-run-day-3 (accessed 2024-04-30)
+License: [CC0](https://creativecommons.org/publicdomain/zero/1.0/) 
+
 Impact Sounds
 Author: Kenney
 URL: https://kenney.nl/assets/impact-sounds (accessed 2023-12-20)
@@ -28,6 +33,11 @@ License: [CC0](https://creativecommons.org/publicdomain/zero/1.0/)
 RPG Audio
 Author: Kenney
 URL: https://kenney.nl/assets/rpg-audio (accessed 2023-12-20)
+License: [CC0](https://creativecommons.org/publicdomain/zero/1.0/)
+
+Squashin' Bugs
+Author: Zane Little Music
+URL: https://opengameart.org/content/squashin-bugs-day-15 (accessed 2023-06-06)
 License: [CC0](https://creativecommons.org/publicdomain/zero/1.0/)
 
 Tiny Series (Tiny Town & Tiny Dungeon)  

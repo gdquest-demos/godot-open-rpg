@@ -19,7 +19,6 @@ class_name AreaTransition extends Trigger
 
 # The blackout timer is used to wait between fade-out and fade-in. No delay looks odd.
 @onready var _blackout_timer: = $BlackoutTimer as Timer
-@onready var _transition: = $CanvasLayer/ScreenTransition as ScreenTransition
 
 
 func _ready() -> void:
@@ -44,8 +43,8 @@ func _on_area_entered(area: Area2D) -> void:
 	_is_cutscene_in_progress = true
 	
 	# Cover the screen to hide the area transition.
-	_transition.cover(0.25)
-	await _transition.finished
+	Transition.cover(0.25)
+	await Transition.finished
 	
 	# Move the gamepiece to it's new position and update the camera immediately.
 	var gamepiece: = area.owner as Gamepiece
@@ -66,8 +65,8 @@ func _on_area_entered(area: Area2D) -> void:
 	await _on_blackout()
 	
 	# Reveal the screen and unpause the field gamestate.
-	_transition.reveal(0.10)
-	await _transition.finished
+	Transition.clear(0.10)
+	await Transition.finished
 	
 	# Finally, unpause the field gameplay, allowing the player to move again.
 	_is_cutscene_in_progress = false

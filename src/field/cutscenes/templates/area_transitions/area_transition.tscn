@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bd624fi8r2avm"]
+[gd_scene load_steps=4 format=3 uid="uid://bd624fi8r2avm"]
 
 [ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/trigger.tscn" id="1_hjt58"]
 [ext_resource type="Script" path="res://src/field/cutscenes/templates/area_transitions/area_transition.gd" id="2_l3ptr"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="3_retee"]
-[ext_resource type="Script" path="res://src/common/screen_transitions/screen_transition.gd" id="4_sgvmu"]
 
 [node name="AreaTransition" instance=ExtResource("1_hjt58")]
 script = ExtResource("2_l3ptr")
@@ -11,21 +10,8 @@ arrival_coordinates = Vector2(0, 0)
 new_music = null
 
 [node name="Destination" type="Sprite2D" parent="." index="1"]
-position = Vector2(8, 8)
 texture = ExtResource("3_retee")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
-
-[node name="ScreenTransition" type="ColorRect" parent="CanvasLayer" index="0"]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-script = ExtResource("4_sgvmu")
-
-[node name="BlackoutTimer" type="Timer" parent="." index="3"]
+[node name="BlackoutTimer" type="Timer" parent="." index="2"]
 wait_time = 0.25
 one_shot = true

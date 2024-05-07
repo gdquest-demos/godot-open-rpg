@@ -6,7 +6,7 @@
 ## animation before transitioning (see [method reveal]) to gameplay.
 ##
 ## [br][br]ScreenTransitions cover or reveal the screen uniformly as a fade animation.
-class_name ScreenTransition extends ColorRect
+class_name ScreenTransition extends CanvasLayer
 
 ## Emitted when the screen has finished the current animation, whether that is to [method cover] the
 ## screen or [method reveal] the screen.
@@ -23,47 +23,65 @@ const COVERED: = Color.WHITE
 
 var _tween: Tween
 
+@onready var _color_rect: = $ColorRect as ColorRect
+
 
 func _ready() -> void:
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# The screen transitions need to run over the gameplay, which is instantiated below all
+	# autoloads (including this class). Therefore, we want to move the ScreenTransition object to
+	# the very bottom of the SceneTree's child list.
+	# We cannot do so during ready, in which this node's parents are not yet ready. Therefore the
+	# call to move_child must be deferred a frame.
+	get_parent().move_child.call_deferred(self, get_parent().get_child_count()-1)
+	
+	# Allow the mouse through the transition GUI elements.
+	_color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	# By default, do NOT have the ColorRect covering the screen.
 	show()
-	reveal()
+	clear()
 
 
 ## Hide the ColorRect instantly, unless the duration argument is non-zero.
-func reveal(duration: = 0.0) -> void:
+## This method is a coroutine that will finish once the screen has been cleared.
+func clear(duration: = 0.0) -> void:
 	if _tween:
 		_tween.kill()
 		_tween = null
 		finished.emit()
 	
-	if is_equal_approx(duration, 0.0):
-		modulate = CLEAR
+	if is_equal_approx(duration, 0.0) or _color_rect.modulate.is_equal_approx(CLEAR):
+		_color_rect.modulate = CLEAR
 		call_deferred("emit_signal", "finished")
 		
 	else:
 		_tween_transition(duration, CLEAR)
+	
+	await finished
 
 
 ## Cover the screen instantly, unless the duration argument is non-zero.
+## This method is a coroutine that will finish once the screen has been covered.
 func cover(duration: = 0.0) -> void:
 	if _tween:
+		if _tween.is_running():
+			finished.emit()
 		_tween.kill()
 		_tween = null
-		finished.emit()
+		
 
-	if is_equal_approx(duration, 0.0):
-		modulate = COVERED
+	if is_equal_approx(duration, 0.0) or _color_rect.modulate.is_equal_approx(COVERED):
+		_color_rect.modulate = COVERED
 		call_deferred("emit_signal", "finished")
 	
 	else:
 		_tween_transition(duration, COVERED)
+	
+	await finished
 
 
 # Relegate the tween creation to a method so that derived classes can easily change transition type.
 func _tween_transition(duration: float, target_colour: Color) -> void:
 	_tween = create_tween()
-	_tween.tween_property(self, "modulate", target_colour, duration)
-	_tween.tween_callback(func(): finished.emit())
+	_tween.tween_property(_color_rect, "modulate", target_colour, duration)
+	_tween.tween_callback(func(): emit_signal.call_deferred("finished"))

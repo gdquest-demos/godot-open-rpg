@@ -1,4 +1,3 @@
-join thief 1
 thief: We defeated the Horrible Thing at the Centre of the Universe and all I got was a stupid badge.
 thief: What's in the chest? Well, what I stole is another matter! Heh[pause=0.2!] heh[pause=0.2!] heh[pause=0.2!]...
 if {HasThiefToken} == 0:

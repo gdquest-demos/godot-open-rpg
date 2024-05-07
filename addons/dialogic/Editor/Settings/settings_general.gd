@@ -41,7 +41,7 @@ func _refresh() -> void:
 	%SectionList.create_item()
 	var cached_events := DialogicResourceUtil.get_event_cache()
 	var sections := []
-	var section_order :Array = DialogicUtil.get_editor_setting('event_section_order', ['Main', 'Logic', 'Timeline', 'Audio', 'Godot','Other', 'Helper'])
+	var section_order :Array = DialogicUtil.get_editor_setting('event_section_order', ['Main', 'Logic', 'Flow', 'Audio', 'Visuals','Other', 'Helper'])
 	for ev in cached_events:
 		if !ev.event_category in sections:
 			sections.append(ev.event_category)
@@ -154,6 +154,8 @@ func _on_submit_extension_button_pressed() -> void:
 	return [this_folder.path_join('event_"""+%NameEdit.text.to_snake_case()+""".gd')]\n\n"""
 		file = FileAccess.open(extensions_folder.path_join('event_'+%NameEdit.text.to_snake_case()+'.gd'), FileAccess.WRITE)
 		file.store_string(
+
+#region EXTENDED EVENT SCRIPT
 """@tool
 extends DialogicEvent
 class_name Dialogic"""+%NameEdit.text.to_pascal_case()+"""Event
@@ -165,64 +167,71 @@ func _execute() -> void:
 	finish() # called to continue with the next event
 
 
+#region INITIALIZE
 ################################################################################
-## 						INITIALIZE
-################################################################################
-
 # Set fixed settings of this event
 func _init() -> void:
 	event_name = \""""+%NameEdit.text.capitalize()+"""\"
 	event_category = "Other"
 
 \n
-################################################################################
-## 						SAVING/LOADING
+#endregion
+
+#region SAVING/LOADING
 ################################################################################
 func get_shortcode() -> String:
 	return \""""+%NameEdit.text.to_snake_case()+"""\"
 
 func get_shortcode_parameters() -> Dictionary:
 	return {
-		#param_name 	: property_info
+		#param_name 		: property_info
 		#"my_parameter"		: {"property": "property", "default": "Default"},
 	}
 
 # You can alternatively overwrite these 3 functions: to_text(), from_text(), is_valid_event()
+#endregion
 
-################################################################################
-## 						EDITOR REPRESENTATION
+
+#region EDITOR REPRESENTATION
 ################################################################################
 
 func build_event_editor() -> void:
-	pass""")
+	pass
 
+#endregion
+""")
+
+#endregion
 	if mode != 0: # don't add subsystem in event only mode
 		indexer_content += """func _get_subsystems() -> Array:
 	return [{'name':'"""+%NameEdit.text.to_pascal_case()+"""', 'script':this_folder.path_join('subsystem_"""+%NameEdit.text.to_snake_case()+""".gd')}]"""
 		file = FileAccess.open(extensions_folder.path_join('subsystem_'+%NameEdit.text.to_snake_case()+'.gd'), FileAccess.WRITE)
 		file.store_string(
+
+# region EXTENDED SUBSYSTEM SCRIPT
 """extends DialogicSubsystem
 
 ## Describe the subsystems purpose here.
 
 
-####################################################################################################
-##					STATE
+#region STATE
 ####################################################################################################
 
-func clear_game_state(clear_flag:=Dialogic.ClearFlags.FULL_CLEAR):
+func clear_game_state(clear_flag:=Dialogic.ClearFlags.FULL_CLEAR) -> void:
 	pass
 
 func load_game_state(load_flag:=LoadFlags.FULL_LOAD) -> void:
 	pass
 
+#endregion
 
-####################################################################################################
-##					MAIN METHODS
+
+#region MAIN METHODS
 ####################################################################################################
 
 # Add some useful methods here.
 
+#endregion
 """)
 	file = FileAccess.open(extensions_folder.path_join('index.gd'), FileAccess.WRITE)
 	file.store_string(indexer_content)
@@ -233,3 +242,7 @@ func load_game_state(load_flag:=LoadFlags.FULL_LOAD) -> void:
 	find_parent('EditorView').plugin_reference.get_editor_interface().get_resource_filesystem().scan_sources()
 	force_event_button_list_reload()
 
+
+
+func _on_reload_pressed() -> void:
+	DialogicUtil._update_autoload_subsystem_access()
