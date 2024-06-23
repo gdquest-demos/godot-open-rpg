@@ -6,20 +6,25 @@ extends Node
 const PROCESS_PRIORITY: = 99999999
 
 ## Emitted when the cursor moves to a new position on the field gameboard.
+@warning_ignore("unused_signal")
 signal cell_highlighted(cell: Vector2i)
 
 ## Emitted when the player selects a cell on the field gameboard via the [FieldCursor].
+@warning_ignore("unused_signal")
 signal cell_selected(cell: Vector2i)
 
 ## Emitted whenever a combat is triggered. This will lead to a transition from the field 'state' to
 ## a combat 'state'.
+@warning_ignore("unused_signal")
 signal combat_triggered(arena: PackedScene)
 
 ## Emitted when a [Cutscene] begins, signalling that the player should yield control of their
 ## character to the cutscene code.
+@warning_ignore("unused_signal")
 signal cutscene_began
 
 ## Emitted when a [Cutscene] ends, restoring normal mode of play.
+@warning_ignore("unused_signal")
 signal cutscene_ended
 
 ## Gamepiece related signals, usually emitted by the the gamepieces themselves.
@@ -27,13 +32,16 @@ signal gamepiece_cell_changed(gamepiece: Gamepiece, old_cell: Vector2i)
 
 ## Emitted when the player sets a movement path for their focused gamepiece.
 ## The destination is the last cell in the path.
+@warning_ignore("unused_signal")
 signal player_path_set(gamepiece: Gamepiece, destination_cell: Vector2i)
 
 ## Emitted whenever terrain passability changes. Pathfinders will need to be rebuilt.
+@warning_ignore("unused_signal")
 signal terrain_changed
 
 ## Emitted whenever ALL input within the field state is to be paused or resumed.
 ## Typically emitted by combat, dialogues, etc.
+@warning_ignore("unused_signal")
 signal input_paused(is_paused: bool)
 
 # The physics engine updates a frame after physics object move, which plays havoc with our
