@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3ciqydkjnkkx"]
+[gd_scene load_steps=3 format=3 uid="uid://b3ciqydkjnkkx"]
 
 [ext_resource type="Script" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
+[ext_resource type="Script" path="res://src/combat/active_turn_queue.gd" id="2_ll0ok"]
 
 [node name="CombatArena" type="Control"]
 custom_minimum_size = Vector2(1920, 1080)
@@ -19,6 +20,7 @@ offset_bottom = 40.0
 
 [node name="Battlers" type="Node2D" parent="."]
 y_sort_enabled = true
+script = ExtResource("2_ll0ok")
 
 [node name="Foreground" type="Control" parent="."]
 anchors_preset = 0
