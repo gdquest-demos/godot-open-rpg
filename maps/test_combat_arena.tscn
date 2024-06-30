@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://wivtmf75ic3f"]
+[gd_scene load_steps=7 format=3 uid="uid://wivtmf75ic3f"]
 
 [ext_resource type="PackedScene" uid="uid://b3ciqydkjnkkx" path="res://src/combat/combat_arena.tscn" id="1_etpkf"]
 [ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://assets/arenas/steppes.png" id="2_i30nm"]
 [ext_resource type="AudioStream" uid="uid://dagiejnj8dwqb" path="res://assets/music/squashin_bugs_fixed.mp3" id="2_vo8mp"]
 [ext_resource type="Texture2D" uid="uid://e4b6flk7roy3" path="res://assets/battlers/bugcat.png" id="3_rfyrg"]
+[ext_resource type="Script" path="res://src/combat/battlers/battler.gd" id="4_6ngh4"]
+[ext_resource type="Resource" uid="uid://bn4nqbuhq4ih8" path="res://maps/test_battler_stats.tres" id="5_id2tu"]
 
 [node name="TestCombatArena" instance=ExtResource("1_etpkf")]
 music = ExtResource("2_vo8mp")
@@ -11,10 +13,20 @@ music = ExtResource("2_vo8mp")
 [node name="Background" parent="." index="0"]
 texture = ExtResource("2_i30nm")
 
-[node name="Sprite2D" type="Sprite2D" parent="Battlers" index="0"]
-position = Vector2(538, 550)
+[node name="Battler" type="Node2D" parent="Battlers" index="0"]
+position = Vector2(486, 558)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_id2tu")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Battlers/Battler" index="0"]
 texture = ExtResource("3_rfyrg")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Battlers" index="1"]
-position = Vector2(362, 702)
+[node name="Battler2" type="Node2D" parent="Battlers" index="1"]
+position = Vector2(327, 703)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_id2tu")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Battlers/Battler2" index="0"]
 texture = ExtResource("3_rfyrg")

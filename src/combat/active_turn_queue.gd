@@ -74,8 +74,9 @@ func _play_turn(battler: Battler) -> void:
 	
 	else:
 		# Allow the AI to take a turn.
-		action_data = battler.actions[0]
-		targets = [potential_targets[0]]
+		if battler.actions.size():
+			action_data = battler.actions[0]
+			targets = [potential_targets[0]]
 
 
 func _player_select_action_async(battler: Battler) -> ActionData:

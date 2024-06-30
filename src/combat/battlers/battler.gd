@@ -59,6 +59,8 @@ var _readiness := 0.0:
 
 
 func _ready() -> void:
+	assert(stats, "Battler %s does not have stats assigned!" % name)
+	
 	# Resources are NOT unique, so treat the currently assigned BattlerStats as a prototype.
 	# That is, copy what it is now and use the copy, so that the original remains unaltered.
 	stats = stats.duplicate()
@@ -67,8 +69,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	_readiness += 1.0 * delta * time_scale
-	#_readiness += stats.speed * delta * time_scale
+	_readiness += stats.speed * delta * time_scale
 
 
 # Returns `true` if the battler is controlled by the player.

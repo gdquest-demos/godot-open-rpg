@@ -129,12 +129,13 @@ func remove_multiplier(stat_name: String, id: int) -> void:
 # Calculates the final value of a single stat. That is, its based value with all modifiers applied.
 # We reference a stat property name using a string here and update it with the `set()` method.
 func _recalculate_and_update(prop_name: String) -> void:
-	assert(get(prop_name), "Cannot update battler stat '%s'! Stat name is invalid!" % prop_name)
+	assert(prop_name in self, "Cannot update battler stat '%s'! Stat name is invalid!" % prop_name)
 	
 	# All our property names follow a pattern: the base stat has the same identifier as the final 
 	# stat with the "base_" prefix.
-	var value: = get("base_" + prop_name) as float
-	assert(value, "Cannot update battler stat %s! Stat does not have base value!" % prop_name)
+	var base_prop_id: = "base_" + prop_name
+	assert(base_prop_id in self, "Cannot update battler stat %s! Stat does not have base value!" % prop_name)
+	var value: = get(base_prop_id) as float
 	
 	# Multipliers apply to the stat multiplicatively.
 	# They are first summed, with the sole restriction that they may not go below zero.
