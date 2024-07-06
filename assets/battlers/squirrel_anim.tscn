@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cch8nxgex1edr"]
+
+[ext_resource type="PackedScene" uid="uid://badexg85lctrq" path="res://src/combat/battlers/battler_anim.tscn" id="1_d3f8c"]
+[ext_resource type="Texture2D" uid="uid://cbgfjvlm8kx4k" path="res://assets/battlers/squirrel.png" id="2_0aqb7"]
+
+[node name="SquirrelAnim" instance=ExtResource("1_d3f8c")]
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot" index="1"]
+texture = ExtResource("2_0aqb7")
+offset = Vector2(0, -145)

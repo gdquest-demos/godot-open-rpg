@@ -6,8 +6,9 @@ signal readiness_changed(new_value)
 # Emitted when the battler is ready to take a turn.
 signal ready_to_act
 
-# Emitted when modifying `is_selected`. The user interface will react to this for player-controlled battlers.
-signal selection_toggled(value)
+# Emitted when modifying `is_selected`. The user interface will react to this for
+# player-controlled battlers.
+signal selection_toggled(value: bool)
 
 @export var stats: BattlerStats = null
 

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ugsq7u4cue4w"]
+
+[ext_resource type="PackedScene" uid="uid://badexg85lctrq" path="res://src/combat/battlers/battler_anim.tscn" id="1_ws2uh"]
+[ext_resource type="Texture2D" uid="uid://e4b6flk7roy3" path="res://assets/battlers/bugcat.png" id="2_jiam4"]
+
+[node name="BugcatAnim" instance=ExtResource("1_ws2uh")]
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot" index="1"]
+texture = ExtResource("2_jiam4")
+offset = Vector2(0, -163)

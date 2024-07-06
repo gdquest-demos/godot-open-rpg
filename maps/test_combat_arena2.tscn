@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://b3ciqydkjnkkx" path="res://src/combat/combat_arena.tscn" id="1_tqh6v"]
 [ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://assets/arenas/steppes.png" id="2_5pnp5"]
 [ext_resource type="AudioStream" uid="uid://dj7yf3u7fdxdu" path="res://assets/music/the_fun_run.mp3" id="2_gvpi1"]
-[ext_resource type="Texture2D" uid="uid://dr8cs6liv45hd" path="res://assets/battlers/wolf.png" id="3_d5gu6"]
-[ext_resource type="Texture2D" uid="uid://cbgfjvlm8kx4k" path="res://assets/battlers/squirrel.png" id="4_kpf44"]
+[ext_resource type="PackedScene" uid="uid://8f7e4yxs3poj" path="res://assets/battlers/wolf_anim.tscn" id="5_2jmm4"]
+[ext_resource type="PackedScene" uid="uid://cch8nxgex1edr" path="res://assets/battlers/squirrel_anim.tscn" id="6_758fa"]
 [ext_resource type="Script" path="res://src/combat/battlers/battler.gd" id="6_q0bkx"]
 
 [node name="TestCombatArena" instance=ExtResource("1_tqh6v")]
@@ -14,25 +14,22 @@ music = ExtResource("2_gvpi1")
 texture = ExtResource("2_5pnp5")
 
 [node name="Battler" type="Node2D" parent="Battlers" index="0"]
-position = Vector2(515, 451)
+position = Vector2(471, 669)
 script = ExtResource("6_q0bkx")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Battlers/Battler" index="0"]
-texture = ExtResource("3_d5gu6")
+[node name="WolfAnim" parent="Battlers/Battler" index="0" instance=ExtResource("5_2jmm4")]
 
 [node name="Battler2" type="Node2D" parent="Battlers" index="1"]
-position = Vector2(225, 635)
+position = Vector2(202, 788)
 script = ExtResource("6_q0bkx")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D2" type="Sprite2D" parent="Battlers/Battler2" index="0"]
-texture = ExtResource("4_kpf44")
+[node name="SquirrelAnim" parent="Battlers/Battler2" index="0" instance=ExtResource("6_758fa")]
 
 [node name="Battler3" type="Node2D" parent="Battlers" index="2"]
-position = Vector2(647, 747)
+position = Vector2(586, 902)
 script = ExtResource("6_q0bkx")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D2" type="Sprite2D" parent="Battlers/Battler3" index="0"]
-texture = ExtResource("4_kpf44")
+[node name="SquirrelAnim" parent="Battlers/Battler3" index="0" instance=ExtResource("6_758fa")]

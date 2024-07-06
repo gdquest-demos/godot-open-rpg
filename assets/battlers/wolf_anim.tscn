@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://8f7e4yxs3poj"]
+
+[ext_resource type="PackedScene" uid="uid://badexg85lctrq" path="res://src/combat/battlers/battler_anim.tscn" id="1_ffl4t"]
+[ext_resource type="Texture2D" uid="uid://dr8cs6liv45hd" path="res://assets/battlers/wolf.png" id="2_nnyj7"]
+
+[node name="WolfAnim" instance=ExtResource("1_ffl4t")]
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot" index="1"]
+texture = ExtResource("2_nnyj7")
+offset = Vector2(0, -235)
