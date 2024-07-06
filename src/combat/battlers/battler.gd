@@ -49,12 +49,12 @@ var is_selectable: bool = true:
 			is_selected = false
 
 # When this value reaches `100.0`, the battler is ready to take their turn.
-var _readiness := 0.0: 
+var readiness := 0.0: 
 	set(value):
-		_readiness = value
-		readiness_changed.emit(_readiness)
+		readiness = value
+		readiness_changed.emit(readiness)
 		
-		if _readiness >= 100.0:
+		if readiness >= 100.0:
 			ready_to_act.emit()
 			set_process(false)
 
@@ -70,7 +70,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	_readiness += stats.speed * delta * time_scale
+	readiness += stats.speed * delta * time_scale
 
 
 # Returns `true` if the battler is controlled by the player.
