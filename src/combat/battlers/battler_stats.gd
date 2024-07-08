@@ -14,6 +14,14 @@ signal health_changed(old_value, new_value)
 ## Emitted whenver [member energy] changes.
 signal energy_changed(old_value, new_value)
 
+@export_category("Elements")
+
+## The battler's elemental affinity. Determines which attacks are more or less effective against
+## this battler.
+@export var affinity: = Elements.Types.NONE
+
+@export_category("Stats")
+
 @export var base_max_health: = 100
 @export var base_max_energy: = 6
 

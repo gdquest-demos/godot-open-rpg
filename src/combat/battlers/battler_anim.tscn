@@ -4,7 +4,6 @@
 
 [node name="BattlerAnim" type="Marker2D"]
 script = ExtResource("1_j0v3v")
-select_move_time = null
 
 [node name="Pivot" type="Marker2D" parent="."]
 

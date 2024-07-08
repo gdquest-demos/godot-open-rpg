@@ -1,11 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://wivtmf75ic3f"]
+[gd_scene load_steps=10 format=3 uid="uid://wivtmf75ic3f"]
 
 [ext_resource type="PackedScene" uid="uid://b3ciqydkjnkkx" path="res://src/combat/combat_arena.tscn" id="1_etpkf"]
 [ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://assets/arenas/steppes.png" id="2_i30nm"]
 [ext_resource type="AudioStream" uid="uid://dagiejnj8dwqb" path="res://assets/music/squashin_bugs_fixed.mp3" id="2_vo8mp"]
 [ext_resource type="Script" path="res://src/combat/battlers/battler.gd" id="4_6ngh4"]
 [ext_resource type="Resource" uid="uid://bn4nqbuhq4ih8" path="res://maps/test_battler_stats.tres" id="5_id2tu"]
+[ext_resource type="Script" path="res://src/combat/actions/battler_action.gd" id="6_b04cs"]
 [ext_resource type="PackedScene" uid="uid://ugsq7u4cue4w" path="res://assets/battlers/bugcat_anim.tscn" id="6_r8rpm"]
+[ext_resource type="Resource" uid="uid://752xsau3xyx0" path="res://src/combat/actions/attackact.tres" id="7_aswds"]
+[ext_resource type="Resource" uid="uid://bs4g81qa8u57q" path="res://src/combat/actions/rangedact.tres" id="9_273jv"]
 
 [node name="TestCombatArena" instance=ExtResource("1_etpkf")]
 music = ExtResource("2_vo8mp")
@@ -17,16 +20,17 @@ texture = ExtResource("2_i30nm")
 position = Vector2(465, 722)
 script = ExtResource("4_6ngh4")
 stats = ExtResource("5_id2tu")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("7_aswds")])
+is_player = true
 metadata/_edit_group_ = true
 
 [node name="BugcatAnim" parent="Battlers/Battler" index="0" instance=ExtResource("6_r8rpm")]
-select_move_time = 0.3
 
 [node name="Battler2" type="Node2D" parent="Battlers" index="1"]
 position = Vector2(284, 896)
 script = ExtResource("4_6ngh4")
 stats = ExtResource("5_id2tu")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("9_273jv")])
 metadata/_edit_group_ = true
 
 [node name="BugcatAnim" parent="Battlers/Battler2" index="0" instance=ExtResource("6_r8rpm")]
-select_move_time = 0.3

@@ -1,20 +1,23 @@
 class_name Battler extends Node2D
 
-# Emitted when the battler's `_readiness` changes.
+## Emitted when the battler finished their action and arrived back at their rest position.
+signal action_finished
+
+## Emitted when the battler's `_readiness` changes.
 signal readiness_changed(new_value)
 
-# Emitted when the battler is ready to take a turn.
+## Emitted when the battler is ready to take a turn.
 signal ready_to_act
 
-# Emitted when modifying `is_selected`. The user interface will react to this for
-# player-controlled battlers.
+## Emitted when modifying `is_selected`. The user interface will react to this for
+## player-controlled battlers.
 signal selection_toggled(value: bool)
 
 @export var stats: BattlerStats = null
 
 # Each action's data stored in this array represents an action the battler can perform.
 # These can be anything: attacks, healing spells, etc.
-@export var actions: Array
+@export var actions: Array[BattlerAction]
 
 # If the battler has an `ai_scene`, we will instantiate it and let the AI make decisions.
 # If not, the player controls this battler. The system should allow for ally AIs.
@@ -71,6 +74,21 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	readiness += stats.speed * delta * time_scale
+
+
+func act(action: BattlerAction, targets: Array[Battler] = []) -> void:
+	stats.energy -= action.energy_cost
+	
+	# action.execute() almost certainly is a coroutine.
+	@warning_ignore("redundant_await")
+	await action.execute(self, targets)
+	
+	readiness = action.readiness_saved
+	
+	if is_active:
+		set_process(true)
+	
+	action_finished.emit()
 
 
 # Returns `true` if the battler is controlled by the player.

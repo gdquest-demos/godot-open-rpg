@@ -1,5 +1,15 @@
 class_name ActiveTurnQueue extends Node2D
 
+## Emitted when a player-controlled battler finished playing a turn. That is, when the _play_turn()
+## method returns.
+signal player_turn_finished
+
+# If true, the player is currently playing a turn (navigating menus, choosing targets, etc.).
+var _is_player_playing: = false
+
+# A stack of player-controlled battlers that have to take turns.
+var _queued_player_battlers: Array[Battler] = []
+
 var _party_members: = []
 var _enemies: = []
 
@@ -23,6 +33,8 @@ var time_scale: = 1.0:
 
 
 func _ready() -> void:
+	player_turn_finished.connect(_on_player_turn_finished)
+	
 	for battler: Battler in battlers:
 		battler.ready_to_act.connect(_on_battler_ready_to_act.bind(battler))
 		
@@ -34,7 +46,7 @@ func _ready() -> void:
 
 
 func _play_turn(battler: Battler) -> void:
-	var action_data: ActionData
+	var action: BattlerAction
 	var targets: Array[Battler] = []
 	
 	# The battler is getting a new turn, so increment its energy count.
@@ -48,6 +60,7 @@ func _play_turn(battler: Battler) -> void:
 			potential_targets.append(opponent)
 	
 	if battler.is_player_controlled():
+		_is_player_playing = true
 		battler.is_selected = true
 		
 		time_scale = 0.05
@@ -56,18 +69,18 @@ func _play_turn(battler: Battler) -> void:
 		var is_selection_complete: = false
 		while not is_selection_complete:
 			# First of all, the player must select an action.
-			action_data = await _player_select_action_async(battler)
+			action = await _player_select_action_async(battler)
 			
 			# Secondly, the player must select targets for the action.
 			# If the target may be selected automatically, do so.
-			if action_data.is_targeting_self:
+			if action.targets_self:
 				targets = [battler]
 			else:
-				targets = await _player_select_targets_async(action_data, potential_targets)
+				targets = await _player_select_targets_async(action, potential_targets)
 			
 			# If the player selected a correct action and target, break out of the loop. Otherwise,
 			# the player may reselect an action/targets.
-			is_selection_complete = action_data != null and targets != []
+			is_selection_complete = action != null and targets != []
 		
 		time_scale = 1.0
 		battler.is_selected = false
@@ -75,19 +88,44 @@ func _play_turn(battler: Battler) -> void:
 	else:
 		# Allow the AI to take a turn.
 		if battler.actions.size():
-			action_data = battler.actions[0]
+			action = battler.actions[0]
 			targets = [potential_targets[0]]
+	
+	await battler.act(action, targets)
+	
+	if battler.is_player_controlled():
+		player_turn_finished.emit()
 
 
-func _player_select_action_async(battler: Battler) -> ActionData:
+func _player_select_action_async(battler: Battler) -> BattlerAction:
 	await get_tree().process_frame
 	return battler.actions[0]
 
 
-func _player_select_targets_async(_action: ActionData, opponents: Array[Battler]) -> Array[Battler]:
+func _player_select_targets_async(_action: BattlerAction, 
+		opponents: Array[Battler]) -> Array[Battler]:
 	await get_tree().process_frame
 	return [opponents[0]]
 
 
 func _on_battler_ready_to_act(battler: Battler) -> void:
-	_play_turn(battler)
+	# If the battler is controlled by the player but another player-controlled battler is in the 
+	# middle of a turn, we add this one to the stack.
+	if battler.is_player_controlled() and _is_player_playing:
+		_queued_player_battlers.append(battler)
+	
+	# Otherwise, it's an AI-controlled battler or the player is waiting for a turn.
+	# The battler may act immediately.
+	else:
+		_play_turn(battler)
+
+
+func _on_player_turn_finished() -> void:
+	# When a player-controlled character finishes their turn and the stack is empty, the player is
+	# no longer playing.
+	if _queued_player_battlers.is_empty():
+		_is_player_playing = false
+	
+	# Otherwise, we pop the array's first value and let the corresponding battler play their turn.
+	else:
+		_play_turn(_queued_player_battlers.pop_front())
