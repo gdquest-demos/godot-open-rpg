@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://wivtmf75ic3f"]
+[gd_scene load_steps=11 format=3 uid="uid://wivtmf75ic3f"]
 
 [ext_resource type="PackedScene" uid="uid://b3ciqydkjnkkx" path="res://src/combat/combat_arena.tscn" id="1_etpkf"]
 [ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://assets/arenas/steppes.png" id="2_i30nm"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ugsq7u4cue4w" path="res://assets/battlers/bugcat_anim.tscn" id="6_r8rpm"]
 [ext_resource type="Resource" uid="uid://752xsau3xyx0" path="res://src/combat/actions/attackact.tres" id="7_aswds"]
 [ext_resource type="Resource" uid="uid://bs4g81qa8u57q" path="res://src/combat/actions/rangedact.tres" id="9_273jv"]
+[ext_resource type="PackedScene" uid="uid://bl8bmbt7v3lrj" path="res://assets/battlers/bear_anim.tscn" id="10_ajkh0"]
 
 [node name="TestCombatArena" instance=ExtResource("1_etpkf")]
 music = ExtResource("2_vo8mp")
@@ -21,7 +22,6 @@ position = Vector2(465, 722)
 script = ExtResource("4_6ngh4")
 stats = ExtResource("5_id2tu")
 actions = Array[ExtResource("6_b04cs")]([ExtResource("7_aswds")])
-is_player = true
 metadata/_edit_group_ = true
 
 [node name="BugcatAnim" parent="Battlers/Battler" index="0" instance=ExtResource("6_r8rpm")]
@@ -34,3 +34,15 @@ actions = Array[ExtResource("6_b04cs")]([ExtResource("9_273jv")])
 metadata/_edit_group_ = true
 
 [node name="BugcatAnim" parent="Battlers/Battler2" index="0" instance=ExtResource("6_r8rpm")]
+
+[node name="PlayerBattler" type="Node2D" parent="Battlers" index="2"]
+position = Vector2(1594, 738)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_id2tu")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("7_aswds")])
+is_player = true
+metadata/_edit_group_ = true
+
+[node name="BearAnim" parent="Battlers/PlayerBattler" index="0" instance=ExtResource("10_ajkh0")]
+scale = Vector2(-1, 1)
+direction = 0

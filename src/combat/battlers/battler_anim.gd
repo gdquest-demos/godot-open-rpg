@@ -17,7 +17,13 @@ signal animation_finished(name)
 
 ## Determines which direction the [BattlerAnim] faces. This is generally set by whichever "side"
 ## the battler is on, player or enemy.
-@export var direction: = Direction.RIGHT
+@export var direction: = Direction.RIGHT:
+	set(value):
+		direction = value
+		
+		scale.x = 1
+		if direction == Direction.LEFT:
+			scale.x = -1
 
 ## Determines the time it takes for the [BattlerAnim] to slide forward or backward when its turn
 ## comes up.

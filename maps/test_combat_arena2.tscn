@@ -1,11 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://bq6b26pctmol4"]
+[gd_scene load_steps=12 format=3 uid="uid://bq6b26pctmol4"]
 
 [ext_resource type="PackedScene" uid="uid://b3ciqydkjnkkx" path="res://src/combat/combat_arena.tscn" id="1_tqh6v"]
 [ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://assets/arenas/steppes.png" id="2_5pnp5"]
 [ext_resource type="AudioStream" uid="uid://dj7yf3u7fdxdu" path="res://assets/music/the_fun_run.mp3" id="2_gvpi1"]
 [ext_resource type="PackedScene" uid="uid://8f7e4yxs3poj" path="res://assets/battlers/wolf_anim.tscn" id="5_2jmm4"]
+[ext_resource type="Resource" uid="uid://bn4nqbuhq4ih8" path="res://maps/test_battler_stats.tres" id="5_dbmw8"]
 [ext_resource type="PackedScene" uid="uid://cch8nxgex1edr" path="res://assets/battlers/squirrel_anim.tscn" id="6_758fa"]
 [ext_resource type="Script" path="res://src/combat/battlers/battler.gd" id="6_q0bkx"]
+[ext_resource type="Script" path="res://src/combat/actions/battler_action.gd" id="7_7p3qq"]
+[ext_resource type="Resource" uid="uid://bs4g81qa8u57q" path="res://src/combat/actions/rangedact.tres" id="7_vldb3"]
+[ext_resource type="Resource" uid="uid://752xsau3xyx0" path="res://src/combat/actions/attackact.tres" id="8_71nny"]
+[ext_resource type="PackedScene" uid="uid://bl8bmbt7v3lrj" path="res://assets/battlers/bear_anim.tscn" id="9_jq0mb"]
 
 [node name="TestCombatArena" instance=ExtResource("1_tqh6v")]
 music = ExtResource("2_gvpi1")
@@ -16,6 +21,8 @@ texture = ExtResource("2_5pnp5")
 [node name="Battler" type="Node2D" parent="Battlers" index="0"]
 position = Vector2(471, 669)
 script = ExtResource("6_q0bkx")
+stats = ExtResource("5_dbmw8")
+actions = Array[ExtResource("7_7p3qq")]([ExtResource("7_vldb3")])
 metadata/_edit_group_ = true
 
 [node name="WolfAnim" parent="Battlers/Battler" index="0" instance=ExtResource("5_2jmm4")]
@@ -23,6 +30,8 @@ metadata/_edit_group_ = true
 [node name="Battler2" type="Node2D" parent="Battlers" index="1"]
 position = Vector2(202, 788)
 script = ExtResource("6_q0bkx")
+stats = ExtResource("5_dbmw8")
+actions = Array[ExtResource("7_7p3qq")]([ExtResource("7_vldb3")])
 metadata/_edit_group_ = true
 
 [node name="SquirrelAnim" parent="Battlers/Battler2" index="0" instance=ExtResource("6_758fa")]
@@ -30,6 +39,20 @@ metadata/_edit_group_ = true
 [node name="Battler3" type="Node2D" parent="Battlers" index="2"]
 position = Vector2(586, 902)
 script = ExtResource("6_q0bkx")
+stats = ExtResource("5_dbmw8")
+actions = Array[ExtResource("7_7p3qq")]([ExtResource("7_vldb3")])
 metadata/_edit_group_ = true
 
 [node name="SquirrelAnim" parent="Battlers/Battler3" index="0" instance=ExtResource("6_758fa")]
+
+[node name="PlayerBattler" type="Node2D" parent="Battlers" index="3"]
+position = Vector2(1620, 766)
+script = ExtResource("6_q0bkx")
+stats = ExtResource("5_dbmw8")
+actions = Array[ExtResource("7_7p3qq")]([ExtResource("8_71nny")])
+is_player = true
+metadata/_edit_group_ = true
+
+[node name="BearAnim" parent="Battlers/PlayerBattler" index="0" instance=ExtResource("9_jq0mb")]
+scale = Vector2(-1, 1)
+direction = 0

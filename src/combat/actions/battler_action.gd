@@ -1,3 +1,4 @@
+## Discrete actions that a [Battler] may take on its turn.
 class_name BattlerAction extends Resource
 
 ## An action-specific icon. Shown primarily in menus.

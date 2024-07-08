@@ -7,4 +7,4 @@ class_name AttackBattlerAction extends BattlerAction
 
 func execute(source: Battler, targets: Array[Battler] = []) -> void:
 	await source.get_tree().process_frame
-	print("%s attacks!!!!" % source.name)
+	print("%s attacks %s!!!!" % [source.name, str(targets)])
