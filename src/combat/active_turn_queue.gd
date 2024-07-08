@@ -82,7 +82,6 @@ func _play_turn(battler: Battler) -> void:
 			# the player may reselect an action/targets.
 			is_selection_complete = action != null and targets != []
 		
-		time_scale = 1.0
 		battler.is_selected = false
 	
 	else:
@@ -91,7 +90,9 @@ func _play_turn(battler: Battler) -> void:
 			action = battler.actions[0]
 			targets = [potential_targets[0]]
 	
+	time_scale = 0
 	await battler.act(action, targets)
+	time_scale = 1.0
 	
 	if battler.is_player_controlled():
 		player_turn_finished.emit()
