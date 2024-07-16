@@ -1,5 +1,9 @@
 class_name ActiveTurnQueue extends Node2D
 
+## Emitted when a combat has finished, indicating whether or not it may be considered a victory for
+## the player.
+signal finished(is_player_victory: bool)
+
 ## Emitted when a player-controlled battler finished playing a turn. That is, when the _play_turn()
 ## method returns.
 signal player_turn_finished
@@ -7,11 +11,14 @@ signal player_turn_finished
 # If true, the player is currently playing a turn (navigating menus, choosing targets, etc.).
 var _is_player_playing: = false
 
+# Only ever set true if the player has won the combat. I.e. enemy battlers are felled.
+var _has_player_won: = false
+
 # A stack of player-controlled battlers that have to take turns.
 var _queued_player_battlers: Array[Battler] = []
 
-var _party_members: = []
-var _enemies: = []
+var _party_members: Array[Battler] = []
+var _enemies: Array[Battler] = []
 
 # Allows pausing the Active Time Battle during combat intro, a cutscene, or combat end.
 var is_active: = true:
@@ -29,20 +36,38 @@ var time_scale: = 1.0:
 		for battler: Battler in battlers:
 			battler.time_scale = time_scale 
 
-@onready var battlers: = get_children()
+@onready var battlers = get_children()
 
 
 func _ready() -> void:
+	set_process(false)
+	
 	player_turn_finished.connect(_on_player_turn_finished)
 	
 	for battler: Battler in battlers:
 		battler.ready_to_act.connect(_on_battler_ready_to_act.bind(battler))
+		battler.health_depleted.connect(_on_battler_health_depleted)
 		
 		if battler.is_player:
 			_party_members.append(battler)
 		
 		else:
 			_enemies.append(battler)
+
+
+# The active turn queue waits until all battlers have finished their animations before emitting the
+# finished signal.
+func _process(_delta: float) -> void:
+	print("Checking for animations.")
+	for child: BattlerAnim in find_children("*", "BattlerAnim"):
+		# If there are still playing BattlerAnims, don't finish the battle yet.
+		if child.is_playing():
+			return
+	
+	# There are no animations being played. Combat can now finish.
+	set_process(false)
+	print("Finished combat. Has player won? ", _has_player_won)
+	finished.emit(_has_player_won)
 
 
 func _play_turn(battler: Battler) -> void:
@@ -109,6 +134,27 @@ func _player_select_targets_async(_action: BattlerAction,
 	return [opponents[0]]
 
 
+# Run through a provided array of battlers. If all of them are downed (that is, their health points
+# are 0), finish the combat and indicate whether or not the player was victorious.
+# Return true if the combat has finished, otherwise return false.
+func _deactivate_if_side_downed(checked_battlers: Array[Battler], 
+		is_player_victory: bool) -> bool:
+	for battler: Battler in checked_battlers:
+		if battler.stats.health > 0:
+			return false
+	
+	# If the player battlers are dead, wait for all animations to finish playing before signaling
+	# a resolution to the combat.
+	# This is done with this classes' process function, which will check each frame to see if any
+	# 'clean up' animations have finished.
+	set_process(true)
+	_has_player_won = is_player_victory
+	
+	# Don't allow anyone else to act.
+	is_active = false
+	return true
+
+
 func _on_battler_ready_to_act(battler: Battler) -> void:
 	# If the battler is controlled by the player but another player-controlled battler is in the 
 	# middle of a turn, we add this one to the stack.
@@ -130,3 +176,12 @@ func _on_player_turn_finished() -> void:
 	# Otherwise, we pop the array's first value and let the corresponding battler play their turn.
 	else:
 		_play_turn(_queued_player_battlers.pop_front())
+
+
+# Called whenever a battler dies. Check to see if one of the 'sides' of combat is fully downed. That
+# is, there are no battlers with positive health points.
+func _on_battler_health_depleted() -> void:
+	# Check, first of all, if the player battlers are dead. The player must survive to win.
+	if not _deactivate_if_side_downed(_party_members, false):
+		# The players are alive, so check to see if all enemy battlers have fallen.
+		_deactivate_if_side_downed(_enemies, true)

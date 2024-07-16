@@ -21,7 +21,7 @@ texture = ExtResource("2_i30nm")
 position = Vector2(465, 722)
 script = ExtResource("4_6ngh4")
 stats = ExtResource("5_id2tu")
-actions = Array[ExtResource("6_b04cs")]([ExtResource("7_aswds")])
+actions = Array[ExtResource("6_b04cs")]([ExtResource("9_273jv")])
 metadata/_edit_group_ = true
 
 [node name="BugcatAnim" parent="Battlers/Battler" index="0" instance=ExtResource("6_r8rpm")]

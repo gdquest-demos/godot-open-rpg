@@ -3,6 +3,9 @@ class_name Battler extends Node2D
 ## Emitted when the battler finished their action and arrived back at their rest position.
 signal action_finished
 
+## Forwarded from the receiving of [signal BettlerStats.health_depleted].
+signal health_depleted
+
 ## Emitted when taking damage or being healed from a [BattlerHit].
 ## [br][br]Note the difference between this and [signal BattlerStats.health_changed]:
 ## 'hit_received' is always the direct result of an action, requiring graphical feedback.
@@ -101,8 +104,8 @@ func act(action: BattlerAction, targets: Array[Battler] = []) -> void:
 
 func take_hit(hit: BattlerHit) -> void:
 	if hit.is_successful():
-		stats.health -= hit.damage
 		hit_received.emit(hit.damage)
+		stats.health -= hit.damage
 	
 	else:
 		hit_missed.emit()
@@ -117,5 +120,7 @@ func _on_stats_health_depleted() -> void:
 	is_active = false
 	
 	# When opponents die, they're dead, dead, dead. Players may still be brought back, however.
-	if not is_player:
-		is_selectable = false
+	#if not is_player:
+	is_selectable = false
+	
+	health_depleted.emit()

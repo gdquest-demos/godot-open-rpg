@@ -4,7 +4,11 @@
 
 [resource]
 script = ExtResource("1_hylg4")
+attack_distance = 350.0
+attack_time = 0.25
+return_time = 0.25
 hit_chance = 100.0
+base_damage = 2
 label = "Base combat action"
 description = "A combat action."
 energy_cost = 0

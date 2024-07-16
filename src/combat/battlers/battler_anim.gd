@@ -37,11 +37,17 @@ var _battler: Battler:
 		# If this object had a previous battler parent and had connected to its signals, disconnect
 		# these before setting the new parent.
 		if _battler and not Engine.is_editor_hint():
+			if _battler.health_depleted.is_connected(_on_battler_health_depleted):
+				_battler.health_depleted.disconnect(_on_battler_health_depleted)
+			if _battler.hit_received.is_connected(_on_battler_hit_received):
+				_battler.hit_received.disconnect(_on_battler_hit_received)
 			if _battler.selection_toggled.is_connected(_on_battler_selection_toggled):
 				_battler.selection_toggled.disconnect(_on_battler_selection_toggled)
 		
 		_battler = value
 		if _battler and not Engine.is_editor_hint():
+			_battler.health_depleted.connect(_on_battler_health_depleted)
+			_battler.hit_received.connect(_on_battler_hit_received)
 			_battler.selection_toggled.connect(_on_battler_selection_toggled)
 		
 		update_configuration_warnings()
@@ -130,3 +136,14 @@ func _on_battler_selection_toggled(value: bool) -> void:
 	
 	else:
 		move_to_rest(select_move_time)
+
+
+func _on_battler_hit_received(value: int) -> void:
+	print("Hit! ", value)
+	
+	if value > 0:
+		_anim.play("hurt")
+
+
+func _on_battler_health_depleted() -> void:
+	_anim.play("die")

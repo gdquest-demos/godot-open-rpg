@@ -23,13 +23,6 @@ class_name BattlerAction extends Resource
 ## design weak attacks that allow the Battler to take fast turns.
 @export_range(0.0, 100.0) var readiness_saved: = 0.0
 
-# The battler that is performing the action.
-var _actor: Battler
-
-# The targets affected by the action. Note that an action generally will not run without targets
-# first being set.
-var _targets: = []
-
 
 ## Returns true if the [Battler] is able to use the action.
 func can_be_used_by(battler: Battler) -> bool:
@@ -40,8 +33,5 @@ func can_be_used_by(battler: Battler) -> bool:
 ## Battler actions are (almost?) always coroutines, so it is expected that the caller will wait for
 ## execution to finish.
 ## [br][br]Note: The base action class does nothing, but must be overridden to do anything.
-func execute(source: Battler, targets: Array[Battler] = []) -> void:
+func execute(source: Battler, _targets: Array[Battler] = []) -> void:
 	await source.get_tree().process_frame
-	
-	_actor = source
-	_targets = targets
