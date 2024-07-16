@@ -3,6 +3,14 @@ class_name Battler extends Node2D
 ## Emitted when the battler finished their action and arrived back at their rest position.
 signal action_finished
 
+## Emitted when taking damage or being healed from a [BattlerHit].
+## [br][br]Note the difference between this and [signal BattlerStats.health_changed]:
+## 'hit_received' is always the direct result of an action, requiring graphical feedback.
+signal hit_received(value: int)
+
+## Emitted whenever a hit targeting this battler misses.
+signal hit_missed
+
 ## Emitted when the battler's `_readiness` changes.
 signal readiness_changed(new_value)
 
@@ -89,6 +97,15 @@ func act(action: BattlerAction, targets: Array[Battler] = []) -> void:
 		set_process(true)
 	
 	action_finished.emit()
+
+
+func take_hit(hit: BattlerHit) -> void:
+	if hit.is_successful():
+		stats.health -= hit.damage
+		hit_received.emit(hit.damage)
+	
+	else:
+		hit_missed.emit()
 
 
 # Returns `true` if the battler is controlled by the player.
