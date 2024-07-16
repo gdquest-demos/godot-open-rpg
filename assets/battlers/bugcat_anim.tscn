@@ -1,9 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://ugsq7u4cue4w"]
+[gd_scene load_steps=4 format=3 uid="uid://ugsq7u4cue4w"]
 
 [ext_resource type="PackedScene" uid="uid://badexg85lctrq" path="res://src/combat/battlers/battler_anim.tscn" id="1_ws2uh"]
 [ext_resource type="Texture2D" uid="uid://e4b6flk7roy3" path="res://assets/battlers/bugcat.png" id="2_jiam4"]
+[ext_resource type="AnimationLibrary" uid="uid://o2ktahx2nkki" path="res://assets/battlers/default_battler_animations.res" id="2_y0vwf"]
 
 [node name="BugcatAnim" instance=ExtResource("1_ws2uh")]
+
+[node name="AnimationPlayer" parent="Pivot" index="0"]
+libraries = {
+"default_battler_animations": ExtResource("2_y0vwf")
+}
 
 [node name="Sprite2D" type="Sprite2D" parent="Pivot" index="1"]
 texture = ExtResource("2_jiam4")

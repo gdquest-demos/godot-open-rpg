@@ -75,12 +75,7 @@ func play(anim_name: String) -> void:
 		% [name, anim_name])
 	
 	_anim.play(anim_name)
-	#if anim_name == "take_damage":
-		#anim_player_damage.play(anim_name)
-		## Seeking back to 0 restarts the animation if it is already playing.
-		#anim_player_damage.seek(0.0)
-	#else:
-		#anim_player.play(anim_name)
+
 
 ## Returns true if an animation is currently playing, otherwise returns false.
 func is_playing() -> bool:
