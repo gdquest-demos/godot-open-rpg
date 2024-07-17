@@ -8,7 +8,7 @@
 
 [node name="AnimationPlayer" parent="Pivot" index="0"]
 libraries = {
-"default_battler_animations": ExtResource("2_q1kws")
+"": ExtResource("2_q1kws")
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="Pivot" index="1"]

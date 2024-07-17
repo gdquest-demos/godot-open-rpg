@@ -956,4 +956,8 @@ grow_vertical = 2
 size_flags_horizontal = 4
 metadata/_edit_lock_ = true
 
+[node name="TransitionDelay" type="Timer" parent="Combat/CenterContainer"]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="area_entered" from="Field/Terrain/Gamepieces/Grove/GameEndTrigger/Area2D2" to="Field/Terrain/Gamepieces/Grove/GameEndTrigger" method="_on_area_entered"]

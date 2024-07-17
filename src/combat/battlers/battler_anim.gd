@@ -139,8 +139,6 @@ func _on_battler_selection_toggled(value: bool) -> void:
 
 
 func _on_battler_hit_received(value: int) -> void:
-	print("Hit! ", value)
-	
 	if value > 0:
 		_anim.play("hurt")
 

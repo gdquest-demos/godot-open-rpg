@@ -58,7 +58,6 @@ func _ready() -> void:
 # The active turn queue waits until all battlers have finished their animations before emitting the
 # finished signal.
 func _process(_delta: float) -> void:
-	print("Checking for animations.")
 	for child: BattlerAnim in find_children("*", "BattlerAnim"):
 		# If there are still playing BattlerAnims, don't finish the battle yet.
 		if child.is_playing():
@@ -66,7 +65,6 @@ func _process(_delta: float) -> void:
 	
 	# There are no animations being played. Combat can now finish.
 	set_process(false)
-	print("Finished combat. Has player won? ", _has_player_won)
 	finished.emit(_has_player_won)
 
 

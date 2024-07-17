@@ -22,7 +22,7 @@ texture = ExtResource("2_5pnp5")
 position = Vector2(471, 669)
 script = ExtResource("6_q0bkx")
 stats = ExtResource("5_dbmw8")
-actions = Array[ExtResource("7_7p3qq")]([ExtResource("7_vldb3")])
+actions = Array[ExtResource("7_7p3qq")]([ExtResource("8_71nny")])
 metadata/_edit_group_ = true
 
 [node name="WolfAnim" parent="Battlers/Battler" index="0" instance=ExtResource("5_2jmm4")]
