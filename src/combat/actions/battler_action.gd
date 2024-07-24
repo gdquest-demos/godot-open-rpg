@@ -1,4 +1,8 @@
 ## Discrete actions that a [Battler] may take on its turn.
+##
+## The following class is an interface that specific actions should implement. [method execute] is
+## called once an action has been chosen and is a coroutine, containing the logic of the action
+## including any animations or effects.
 class_name BattlerAction extends Resource
 
 ## An action-specific icon. Shown primarily in menus.

@@ -1,3 +1,10 @@
+## A playable combatant that carries out [BattlerActions] as its [member readiness] charges.
+##
+## Battlers are the playable characters or enemies that show up in battle. They have [BattlerStats],
+## a list of [BattlerAction]s to choose from, and respond to a variety of stimuli such as status 
+## effects and [BattlerHit]s, which typically deal damage or heal the Battler.
+##
+## [br][br]Battlers have [BattlerAnim]ation children which play out the Battler's actions.
 class_name Battler extends Node2D
 
 ## Emitted when the battler finished their action and arrived back at their rest position.

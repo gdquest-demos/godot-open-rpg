@@ -1,3 +1,11 @@
+## Responds to [Battler] and input signals to determine when and how Battlers may act.
+##
+## The ActiveTurnQueue sorts Battlers neatly into a queue as they are ready to act. Time is paused
+## as Battlers act and is resumed once actors are finished acting. The queue ceases once the player
+## or enemy Battlers have been felled, signaling that the combat has finished.
+## [br][br]Note: the turn queue defers action/target selection to either AI or player input. While 
+## time is slowed for player input, it is not stopped completely which may result in an AI Battler
+## acting while the player is taking their turn.
 class_name ActiveTurnQueue extends Node2D
 
 ## Emitted when a combat has finished, indicating whether or not it may be considered a victory for

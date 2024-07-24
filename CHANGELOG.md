@@ -6,12 +6,14 @@
 
 Combat instances have been fleshed out to include several new combat-specific nodes:
 	- Battlers form two 'teams' and face off against each other. One team wins when the other's battlers have all been defeated (health points have been depleted).
+	- BattlerStats track a Battlers given numerical characteristics, including health points.
 	- A BattlerAnim(ation) node brings Battlers to life, animating in response to various stimuli acting on the battler.
 	- an 'active turn queue' allows battlers to act in sequence as time passes.
-	- A Battler has a repertoire of Actions, selecting one (alongside any necessary targets) to perform on its turn.
+	- A Battler has a repertoire of BattlerActions, selecting one (alongside any necessary targets) to perform on its turn.
 
 ### Changes
 - Combat resolves (victory or loss on the player's part) automatically when one 'team' is defeated.
+- A series of cyber-themed elements dictate how Battlers and actions play out statistically.
 - Actions and combat resolution wait for animations and timers to play out, allowing for a smooth combat experience.
 - Miscellaneous fixes to the demo.
 

@@ -1,3 +1,4 @@
+# A sample [BattlerAction] implementation that simulates a direct melee hit.
 class_name AttackBattlerAction extends BattlerAction
 
 const ATTACK_DISTANCE: = 350.0

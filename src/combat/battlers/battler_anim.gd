@@ -1,3 +1,10 @@
+## The visual representation of a [Battler].
+##
+## Battler animations respond visually to a closed set of stimiuli, such as receiving a hit or 
+## moving to a position. These animations often represent a single character or a class of enemies
+## and are added as children to a given Battler.
+##
+## [br][br]Note: BattlerAnims must be children of a Battler object to function correctly!
 @tool
 class_name BattlerAnim extends Marker2D
 

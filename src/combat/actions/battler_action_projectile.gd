@@ -1,3 +1,4 @@
+# A sample [BattlerAction] implementation that simulates a ranged attack, such as a fireball.
 class_name RangedBattlerAction extends BattlerAction
 
 @export var attack_distance: = 350.0

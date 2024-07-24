@@ -1,3 +1,4 @@
+## Numerically represents the characteristics of a specific [Battler].
 class_name BattlerStats extends Resource
 
 ## A list of all properties that can receive bonuses.
