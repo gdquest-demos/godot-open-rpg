@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.3.1 Combat Demo ⚔️ - Battlers, Stats, and Animations
+
+### New
+
+Combat instances have been fleshed out to include several new combat-specific nodes:
+	- Battlers form two 'teams' and face off against each other. One team wins when the other's battlers have all been defeated (health points have been depleted).
+	- A BattlerAnim(ation) node brings Battlers to life, animating in response to various stimuli acting on the battler.
+	- an 'active turn queue' allows battlers to act in sequence as time passes.
+	- A Battler has a repertoire of Actions, selecting one (alongside any necessary targets) to perform on its turn.
+
+### Changes
+- Combat resolves (victory or loss on the player's part) automatically when one 'team' is defeated.
+- Actions and combat resolution wait for animations and timers to play out, allowing for a smooth combat experience.
+- Miscellaneous fixes to the demo.
+
 ## v0.3.0 Combat Demo ⚔️
 
 ### New

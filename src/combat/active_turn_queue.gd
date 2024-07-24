@@ -53,6 +53,9 @@ func _ready() -> void:
 		
 		else:
 			_enemies.append(battler)
+	
+	# Don't begin combat until the state has been setup. I.e. intro animations, UI is ready, etc.
+	is_active = false
 
 
 # The active turn queue waits until all battlers have finished their animations before emitting the

@@ -1,3 +1,12 @@
+## A container for the combat 'state' that cleanly handles the transition to and from combat.
+##
+## The battle is composed mainly from a [CombatArena], which contains all necessary subelements such
+## as battlers, visual effects, music, etc.
+##
+## This container handles the logic of switching between the field game state, the combat game
+## state, and the combat results screen (e.g. experience and levelling up, loot, etc.). It is
+## responsible for changing the music, playing screen transition animations, and other state-switch
+## elements.
 extends CanvasLayer
 
 var _active_arena: CombatArena = null
@@ -11,25 +20,14 @@ var _previous_music_track: AudioStream = null
 
 func _ready() -> void:
 	FieldEvents.combat_triggered.connect(start)
-	
-	# TODO: remove with _unhandled input once Battlers have been implemented.
-	set_process_unhandled_input(false)
 
 
-# TODO: This is included to allow leaving the combat state.
-# In future releases, these signals will be emitted once battlers from one side have fallen.
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_released("back"):
-		CombatEvents.did_player_win_last_combat = false
-		finish()
-	
-	elif event.is_action_released("interact"):
-		CombatEvents.did_player_win_last_combat = true
-		finish()
-
-
+## Begin a combat if one isn't currently underway.
+## Takes a PackedScene as its only parameter, expecting it to be a CombatState object once
+## instantiated.
+## This is normally a response to [signal FieldEvents.combat_triggered].
 func start(arena: PackedScene) -> void:
-	assert(not _active_arena, "Attempting to start a combat when one is ongoing!")
+	assert(not _active_arena, "Attempting to start a combat while one is ongoing!")
 	
 	# Cover the screen.
 	await Transition.cover(0.2)
@@ -62,14 +60,11 @@ func start(arena: PackedScene) -> void:
 	Transition.clear.call_deferred(0.2)
 	await Transition.finished
 	
-	# TODO: remove with _unhandled input once Battlers have been implemented.
-	set_process_unhandled_input(true)
+	# Begin the combat logic by setting the turn queue (and all battlers) as active.
+	_active_arena.turn_queue.is_active = true
 
 
 func finish() -> void:
-	# TODO: remove with _unhandled input once Battlers have been implemented.
-	set_process_unhandled_input(false)
-	
 	if not _active_arena:
 		return
 	
