@@ -32,7 +32,7 @@ func start(arena: PackedScene) -> void:
 
 	var new_arena: = arena.instantiate()
 	assert(
-    	new_arena != null,
+		new_arena != null,
 		"Failed to initiate combat. Provided 'arena' arugment is not a CombatArena."
 	)
 

@@ -60,7 +60,7 @@ func _ready() -> void:
 
 	for battler: Battler in _battlers:
 		battler.ready_to_act.connect(func on_battler_ready_to_act() -> void:
-			if battler.is_player_controlled() and _is_player_playing:
+			if battler.is_player and _is_player_playing:
 				_queued_player_battlers.append(battler)
 			else:
 				_play_turn(battler)
@@ -106,7 +106,7 @@ func _play_turn(battler: Battler) -> void:
 		if opponent.is_selectable:
 			potential_targets.append(opponent)
 
-	if battler.is_player_controlled():
+	if battler.is_player:
 		_is_player_playing = true
 		battler.is_selected = true
 
@@ -141,7 +141,7 @@ func _play_turn(battler: Battler) -> void:
 	await battler.act(action, targets)
 	time_scale = 1.0
 
-	if battler.is_player_controlled():
+	if battler.is_player:
 		player_turn_finished.emit()
 
 
