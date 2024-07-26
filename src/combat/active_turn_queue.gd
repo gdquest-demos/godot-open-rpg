@@ -11,7 +11,7 @@ class_name ActiveTurnQueue extends Node2D
 
 ## Emitted when a combat has finished, indicating whether or not it may be considered a victory for
 ## the player.
-signal finished(is_player_victory: bool)
+signal combat_finished(is_player_victory: bool)
 ## Emitted when a player-controlled battler finished playing a turn. That is, when the _play_turn()
 ## method returns.
 signal player_turn_finished
@@ -89,7 +89,7 @@ func _process(_delta: float) -> void:
 
 	# There are no animations being played. Combat can now finish.
 	set_process(false)
-	finished.emit(_has_player_won)
+	combat_finished.emit(_has_player_won)
 
 
 func _play_turn(battler: Battler) -> void:
