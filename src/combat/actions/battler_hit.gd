@@ -3,7 +3,6 @@
 class_name BattlerHit extends RefCounted
 
 var damage: = 0
-
 var hit_chance: = 100.0
 
 
