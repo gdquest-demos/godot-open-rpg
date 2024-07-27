@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cgwailb13nkcd"]
 
 [ext_resource type="PackedScene" uid="uid://caxhff6by5nqu" path="res://src/field/gamepieces/animation/gamepiece_animation.tscn" id="1_iqw7y"]
-[ext_resource type="Texture2D" uid="uid://ber3qsogrcx52" path="res://assets/characters/ghost.atlastex" id="2_reoms"]
+[ext_resource type="Texture2D" uid="uid://dopua6orsf0bs" path="res://assets/characters/ ghost.atlastex" id="2_xwhv8"]
 
 [sub_resource type="Animation" id="Animation_sr8xj"]
 length = 0.001
@@ -55,5 +55,5 @@ autoplay = "idle"
 shape = SubResource("RectangleShape2D_b20ad")
 
 [node name="Sprite" parent="GFX" index="0"]
-texture = ExtResource("2_reoms")
+texture = ExtResource("2_xwhv8")
 offset = Vector2(0, -6)

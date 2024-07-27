@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BattlerStats" load_steps=2 format=3 uid="uid://chd4ncpr7k7lg"]
+
+[ext_resource type="Script" path="res://src/combat/battlers/battler_stats.gd" id="1_8t274"]
+
+[resource]
+script = ExtResource("1_8t274")
+affinity = 0
+base_max_health = 100
+base_max_energy = 6
+base_attack = 10
+base_defense = 10
+base_speed = 60
+base_hit_chance = 100
+base_evasion = 0

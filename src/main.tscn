@@ -23,7 +23,7 @@
 [ext_resource type="Script" path="res://src/field/gameboard/debug_map_boundaries.gd" id="18_cqtg7"]
 [ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://assets/characters/wizard_gfx.tscn" id="19_ius2d"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="19_lpxfg"]
-[ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/interaction.tscn" id="19_sa6jd"]
+[ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="19_sa6jd"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="20_g8d34"]
 [ext_resource type="Script" path="res://src/field/ui/dialogue_window.gd" id="20_lk3dv"]
 [ext_resource type="Script" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="21_f53lt"]
@@ -42,14 +42,14 @@
 [ext_resource type="PackedScene" uid="uid://c8jtuge5yaqxa" path="res://src/field/cutscenes/templates/treasure_chests/chest.tscn" id="33_7djdg"]
 [ext_resource type="PackedScene" uid="uid://p0e4b0txynkd" path="res://src/field/cutscenes/templates/doors/door.tscn" id="33_lbtsh"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="33_ofo2l"]
-[ext_resource type="PackedScene" uid="uid://wivtmf75ic3f" path="res://maps/test_combat_arena.tscn" id="34_moieg"]
+[ext_resource type="PackedScene" uid="uid://wivtmf75ic3f" path="res://maps/town/battles/test_combat_arena.tscn" id="34_moieg"]
 [ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/interaction_popup.tscn" id="34_qs25x"]
 [ext_resource type="Script" path="res://src/field/ui/inventory/ui_inventory.gd" id="34_tk01t"]
 [ext_resource type="AudioStream" uid="uid://duwauer3vwtne" path="res://assets/music/Insect Factory.mp3" id="34_xbc6u"]
 [ext_resource type="Script" path="res://maps/town/door_unlock_interaction.gd" id="34_xtrml"]
 [ext_resource type="Resource" path="res://maps/town/sign.dtl" id="35_gv62s"]
 [ext_resource type="Script" path="res://maps/town/conversation_encounter.gd" id="35_i66wm"]
-[ext_resource type="PackedScene" uid="uid://bq6b26pctmol4" path="res://maps/test_combat_arena2.tscn" id="35_x5y1m"]
+[ext_resource type="PackedScene" uid="uid://bq6b26pctmol4" path="res://maps/town/battles/test_combat_arena2.tscn" id="35_x5y1m"]
 [ext_resource type="PackedScene" uid="uid://cgwailb13nkcd" path="res://assets/characters/ghost_gfx.tscn" id="36_7n3c5"]
 [ext_resource type="Resource" path="res://maps/town/encounter_before_combat.dtl" id="36_fu3a1"]
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="37_6xxks"]
@@ -58,7 +58,7 @@
 [ext_resource type="Resource" path="res://maps/town/encounter_on_loss.dtl" id="38_f1335"]
 [ext_resource type="PackedScene" uid="uid://ctuol1ff8u5e2" path="res://maps/house/wand_pedestal_interaction.tscn" id="38_n1c7a"]
 [ext_resource type="AudioStream" uid="uid://ohgp0pb24my4" path="res://assets/sfx/chop.ogg" id="39_02ti3"]
-[ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/trigger.tscn" id="39_p2lth"]
+[ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/Trigger.tscn" id="39_p2lth"]
 [ext_resource type="Script" path="res://maps/grove/game_end_trigger.gd" id="40_lduow"]
 [ext_resource type="AudioStream" uid="uid://ctnn0hqkx67k7" path="res://assets/music/Apple Cider.mp3" id="41_uxhyb"]
 [ext_resource type="AudioStream" uid="uid://c5w0ripyqfl68" path="res://assets/sfx/drop_002.ogg" id="42_bc1t5"]
@@ -363,10 +363,9 @@ size = Vector2(15, 15)
 
 [node name="Main" type="Node2D"]
 
-[node name="Field" type="Node2D" parent="." node_paths=PackedStringArray("opening_cutscene", "focused_game_piece")]
+[node name="Field" type="Node2D" parent="." node_paths=PackedStringArray("focused_game_piece")]
 scale = Vector2(5, 5)
 script = ExtResource("2_bkxev")
-opening_cutscene = NodePath("OpeningCutscene")
 focused_game_piece = NodePath("Terrain/Gamepieces/Player")
 gameboard = ExtResource("6_kd8tv")
 
@@ -956,5 +955,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 metadata/_edit_lock_ = true
+
+[node name="TransitionDelay" type="Timer" parent="Combat/CenterContainer"]
+wait_time = 0.5
+one_shot = true
 
 [connection signal="area_entered" from="Field/Terrain/Gamepieces/Grove/GameEndTrigger/Area2D2" to="Field/Terrain/Gamepieces/Grove/GameEndTrigger" method="_on_area_entered"]

@@ -1,0 +1,49 @@
+[gd_scene load_steps=12 format=3 uid="uid://wivtmf75ic3f"]
+
+[ext_resource type="PackedScene" uid="uid://b3ciqydkjnkkx" path="res://src/combat/combat_arena.tscn" id="1_etpkf"]
+[ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://assets/arenas/steppes.png" id="2_i30nm"]
+[ext_resource type="AudioStream" uid="uid://dagiejnj8dwqb" path="res://assets/music/squashin_bugs_fixed.mp3" id="2_vo8mp"]
+[ext_resource type="Script" path="res://src/combat/battlers/battler.gd" id="4_6ngh4"]
+[ext_resource type="Resource" uid="uid://chuarvle06xxf" path="res://battlers/bugcat_stats.tres" id="5_1st0g"]
+[ext_resource type="Resource" uid="uid://bn4nqbuhq4ih8" path="res://battlers/bear/bear_stats.tres" id="5_id2tu"]
+[ext_resource type="Script" path="res://src/combat/actions/battler_action.gd" id="6_b04cs"]
+[ext_resource type="PackedScene" uid="uid://ugsq7u4cue4w" path="res://assets/battlers/bugcat_anim.tscn" id="6_r8rpm"]
+[ext_resource type="Resource" uid="uid://bs4g81qa8u57q" path="res://battlers/actions/ranged_action.tres" id="9_273jv"]
+[ext_resource type="PackedScene" uid="uid://bl8bmbt7v3lrj" path="res://assets/battlers/bear_anim.tscn" id="10_ajkh0"]
+[ext_resource type="Resource" uid="uid://dp7wo0l4es3w4" path="res://battlers/bear/player_melee_action.tres" id="10_uukpg"]
+
+[node name="TestCombatArena" instance=ExtResource("1_etpkf")]
+music = ExtResource("2_vo8mp")
+
+[node name="Background" parent="." index="0"]
+texture = ExtResource("2_i30nm")
+
+[node name="Battler" type="Node2D" parent="Battlers" index="0"]
+position = Vector2(465, 722)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_1st0g")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("9_273jv")])
+metadata/_edit_group_ = true
+
+[node name="BugcatAnim" parent="Battlers/Battler" index="0" instance=ExtResource("6_r8rpm")]
+
+[node name="Battler2" type="Node2D" parent="Battlers" index="1"]
+position = Vector2(284, 896)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_1st0g")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("9_273jv")])
+metadata/_edit_group_ = true
+
+[node name="BugcatAnim" parent="Battlers/Battler2" index="0" instance=ExtResource("6_r8rpm")]
+
+[node name="PlayerBattler" type="Node2D" parent="Battlers" index="2"]
+position = Vector2(1594, 738)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_id2tu")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("10_uukpg")])
+is_player = true
+metadata/_edit_group_ = true
+
+[node name="BearAnim" parent="Battlers/PlayerBattler" index="0" instance=ExtResource("10_ajkh0")]
+scale = Vector2(-1, 1)
+direction = 0
