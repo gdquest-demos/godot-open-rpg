@@ -93,7 +93,7 @@ enum ValueType {
 	NUMBER,
 	VECTOR2, VECTOR3, VECTOR4,
 	# Other
-	CUSTOM, BUTTON, LABEL
+	CUSTOM, BUTTON, LABEL, COLOR
 }
 ## List that stores the fields for the editor
 var editor_list: Array = []
@@ -344,10 +344,11 @@ func parse_shortcode_parameters(shortcode : String) -> Dictionary:
 
 func _get_icon() -> Resource:
 	var _icon_file_name := "res://addons/dialogic/Editor/Images/Pieces/closed-icon.svg" # Default
-	if ResourceLoader.exists(self.get_script().get_path().get_base_dir() + "/icon.png"):
-		_icon_file_name = self.get_script().get_path().get_base_dir() + "/icon.png"
+	# Check for both svg and png, but prefer svg if available
 	if ResourceLoader.exists(self.get_script().get_path().get_base_dir() + "/icon.svg"):
 		_icon_file_name = self.get_script().get_path().get_base_dir() + "/icon.svg"
+	elif ResourceLoader.exists(self.get_script().get_path().get_base_dir() + "/icon.png"):
+		_icon_file_name = self.get_script().get_path().get_base_dir() + "/icon.png"
 	return load(_icon_file_name)
 
 
