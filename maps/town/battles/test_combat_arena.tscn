@@ -23,27 +23,22 @@ position = Vector2(465, 722)
 script = ExtResource("4_6ngh4")
 stats = ExtResource("5_1st0g")
 actions = Array[ExtResource("6_b04cs")]([ExtResource("9_273jv")])
+battler_anim_scene = ExtResource("6_r8rpm")
 metadata/_edit_group_ = true
-
-[node name="BugcatAnim" parent="Battlers/Battler" index="0" instance=ExtResource("6_r8rpm")]
 
 [node name="Battler2" type="Node2D" parent="Battlers" index="1"]
 position = Vector2(284, 896)
 script = ExtResource("4_6ngh4")
 stats = ExtResource("5_1st0g")
 actions = Array[ExtResource("6_b04cs")]([ExtResource("9_273jv")])
+battler_anim_scene = ExtResource("6_r8rpm")
 metadata/_edit_group_ = true
-
-[node name="BugcatAnim" parent="Battlers/Battler2" index="0" instance=ExtResource("6_r8rpm")]
 
 [node name="PlayerBattler" type="Node2D" parent="Battlers" index="2"]
 position = Vector2(1594, 738)
 script = ExtResource("4_6ngh4")
 stats = ExtResource("5_id2tu")
 actions = Array[ExtResource("6_b04cs")]([ExtResource("10_uukpg")])
+battler_anim_scene = ExtResource("10_ajkh0")
 is_player = true
 metadata/_edit_group_ = true
-
-[node name="BearAnim" parent="Battlers/PlayerBattler" index="0" instance=ExtResource("10_ajkh0")]
-scale = Vector2(-1, 1)
-direction = 0

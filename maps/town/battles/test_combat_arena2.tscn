@@ -26,36 +26,30 @@ position = Vector2(202, 788)
 script = ExtResource("6_q0bkx")
 stats = ExtResource("5_ejdro")
 actions = Array[ExtResource("7_7p3qq")]([ExtResource("7_vldb3")])
+battler_anim_scene = ExtResource("6_758fa")
 metadata/_edit_group_ = true
-
-[node name="SquirrelAnim" parent="Battlers/Battler2" index="0" instance=ExtResource("6_758fa")]
 
 [node name="Battler3" type="Node2D" parent="Battlers" index="1"]
 position = Vector2(586, 902)
 script = ExtResource("6_q0bkx")
 stats = ExtResource("5_ejdro")
 actions = Array[ExtResource("7_7p3qq")]([ExtResource("7_vldb3")])
+battler_anim_scene = ExtResource("6_758fa")
 metadata/_edit_group_ = true
-
-[node name="SquirrelAnim" parent="Battlers/Battler3" index="0" instance=ExtResource("6_758fa")]
 
 [node name="Battler" type="Node2D" parent="Battlers" index="2"]
 position = Vector2(471, 669)
 script = ExtResource("6_q0bkx")
 stats = ExtResource("9_n8llw")
 actions = Array[ExtResource("7_7p3qq")]([ExtResource("8_71nny")])
+battler_anim_scene = ExtResource("5_2jmm4")
 metadata/_edit_group_ = true
-
-[node name="WolfAnim" parent="Battlers/Battler" index="0" instance=ExtResource("5_2jmm4")]
 
 [node name="PlayerBattler" type="Node2D" parent="Battlers" index="3"]
 position = Vector2(1620, 766)
 script = ExtResource("6_q0bkx")
 stats = ExtResource("5_dbmw8")
 actions = Array[ExtResource("7_7p3qq")]([ExtResource("13_232fw")])
+battler_anim_scene = ExtResource("9_jq0mb")
 is_player = true
 metadata/_edit_group_ = true
-
-[node name="BearAnim" parent="Battlers/PlayerBattler" index="0" instance=ExtResource("9_jq0mb")]
-scale = Vector2(-1, 1)
-direction = 0

@@ -5,6 +5,7 @@
 ## and are added as children to a given Battler.
 ##
 ## [br][br]Note: BattlerAnims must be children of a Battler object to function correctly!
+@tool
 class_name BattlerAnim extends Marker2D
 
 ## Dictates how far the battler moves forwards and backwards at the beginning/end of its turn.
@@ -51,7 +52,9 @@ func _ready() -> void:
 
 
 ## Setup the BattlerAnim object to respond to gameplay signals from a [Battler] class.
-func setup(battler: Battler) -> void:
+func setup(battler: Battler, facing: Direction) -> void:
+	direction = facing
+	
 	battler.health_depleted.connect(_on_battler_health_depleted)
 	battler.hit_received.connect(_on_battler_hit_received)
 	battler.selection_toggled.connect(_on_battler_selection_toggled)
