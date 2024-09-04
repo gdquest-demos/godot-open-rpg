@@ -53,6 +53,15 @@ func _ready() -> void:
 
 ## Setup the BattlerAnim object to respond to gameplay signals from a [Battler] class.
 func setup(battler: Battler, facing: Direction) -> void:
+	# BattlerAnim objects are assigned in-editor and created dynamically both in-game and in-editor.
+	# We do not want the BattlerAnim objects to be saved with the CombatArena scenes, since they are
+	# instantiated at runtime, so they should not be assigned an owner when in the editor.
+	# However, in gameplay the BattlerAnim class must have an owner, as these objects need to be
+	# discoverable by Node::find_children(). This allows us to wait for animations to finish playing
+	# before ending combat, for example.
+	if not Engine.is_editor_hint():
+		owner = battler
+	
 	direction = facing
 	
 	battler.health_depleted.connect(_on_battler_health_depleted)

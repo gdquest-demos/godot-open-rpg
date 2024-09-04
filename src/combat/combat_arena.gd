@@ -5,3 +5,8 @@ class_name CombatArena extends Control
 @export var music: AudioStream
 
 @onready var turn_queue: ActiveTurnQueue = $Battlers
+@onready var effect_label_builder: UIEffectLabelBuilder = $UI/EffectLabelBuilder
+
+
+func _ready() -> void:
+	effect_label_builder.setup(turn_queue.get_battlers())

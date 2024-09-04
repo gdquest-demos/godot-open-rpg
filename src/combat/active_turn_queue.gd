@@ -92,6 +92,10 @@ func _process(_delta: float) -> void:
 	combat_finished.emit(_has_player_won)
 
 
+func get_battlers() -> Array[Battler]:
+	return _battlers
+
+
 func _play_turn(battler: Battler) -> void:
 	var action: BattlerAction
 	var targets: Array[Battler] = []
