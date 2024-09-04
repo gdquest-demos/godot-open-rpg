@@ -8,3 +8,7 @@ script = ExtResource("1_j0v3v")
 [node name="Pivot" type="Marker2D" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot"]
+
+[node name="FrontAnchor" type="Marker2D" parent="."]
+
+[node name="TopAnchor" type="Marker2D" parent="."]
