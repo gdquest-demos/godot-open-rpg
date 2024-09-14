@@ -5,6 +5,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://o2ktahx2nkki" path="res://assets/battlers/default_battler_animations.res" id="2_q1kws"]
 
 [node name="WolfAnim" instance=ExtResource("1_ffl4t")]
+battler_icon = ExtResource("2_nnyj7")
 
 [node name="AnimationPlayer" parent="Pivot" index="0"]
 libraries = {

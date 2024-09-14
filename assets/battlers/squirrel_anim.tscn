@@ -95,6 +95,7 @@ _data = {
 }
 
 [node name="SquirrelAnim" instance=ExtResource("1_d3f8c")]
+battler_icon = ExtResource("2_0aqb7")
 
 [node name="AnimationPlayer" parent="Pivot" index="0"]
 libraries = {

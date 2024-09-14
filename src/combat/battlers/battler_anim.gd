@@ -22,6 +22,9 @@ signal action_triggered
 ## Forward AnimationPlayer's same signal.
 signal animation_finished(name)
 
+## An icon that shows up on the turn bar.
+@export var battler_icon: Texture
+
 ## Determines which direction the [BattlerAnim] faces. This is generally set by whichever "side"
 ## the battler is on, player or enemy.
 @export var direction: = Direction.RIGHT:

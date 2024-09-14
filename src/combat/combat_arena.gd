@@ -5,8 +5,12 @@ class_name CombatArena extends Control
 @export var music: AudioStream
 
 @onready var turn_queue: ActiveTurnQueue = $Battlers
+@onready var ui_turn_bar: UITurnBar = $UI/TurnBar as UITurnBar
 @onready var effect_label_builder: UIEffectLabelBuilder = $UI/EffectLabelBuilder
 
 
 func _ready() -> void:
 	effect_label_builder.setup(turn_queue.get_battlers())
+	ui_turn_bar.setup(turn_queue.get_battlers())
+	
+	turn_queue.battlers_downed.connect(ui_turn_bar.fade_out)
