@@ -45,8 +45,8 @@ actions = Array[ExtResource("7_7p3qq")]([ExtResource("8_71nny")])
 battler_anim_scene = ExtResource("5_2jmm4")
 metadata/_edit_group_ = true
 
-[node name="PlayerBattler" type="Node2D" parent="Battlers" index="3"]
-position = Vector2(1620, 766)
+[node name="Baloo" type="Node2D" parent="Battlers" index="3"]
+position = Vector2(1420, 766)
 script = ExtResource("6_q0bkx")
 stats = ExtResource("5_dbmw8")
 actions = Array[ExtResource("7_7p3qq")]([ExtResource("13_232fw")])

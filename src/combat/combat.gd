@@ -73,4 +73,4 @@ func start(arena: PackedScene) -> void:
 	await Transition.finished
 
 	# Begin the combat. The turn queue takes over from here.
-	_active_arena.turn_queue.is_active = true
+	_active_arena.start()

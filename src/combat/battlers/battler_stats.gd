@@ -9,9 +9,9 @@ const MODIFIABLE_STATS = [
 ## Emitted when [member health] has reached 0.
 signal health_depleted
 ## Emitted whenever [member health] changes.
-signal health_changed(old_value, new_value)
+signal health_changed()
 ## Emitted whenver [member energy] changes.
-signal energy_changed(old_value, new_value)
+signal energy_changed()
 
 @export_category("Elements")
 ## The battler's elemental affinity. Determines which attacks are more or less effective against
@@ -53,19 +53,17 @@ var evasion := base_evasion
 var health := max_health:
 	set(value):
 		if value != health:
-			var previous_health := health
 			health = clampi(value, 0, max_health)
 
-			health_changed.emit(previous_health, health)
+			health_changed.emit()
 			if health == 0:
 				health_depleted.emit()
+
 var energy := 0:
 	set(value):
 		if value != energy:
-			var previous_energy = energy
 			energy = clampi(value, 0, max_energy)
-
-			energy_changed.emit(previous_energy, energy)
+			energy_changed.emit()
 
 # The properties below stores a list of modifiers for each property listed in MODIFIABLE_STATS.
 # Dictionary keys are the name of the property (String).
