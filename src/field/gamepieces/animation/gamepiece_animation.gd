@@ -162,7 +162,7 @@ func _on_gamepiece_direction_changed(new_direction: Vector2) -> void:
 		set_direction(direction_value)
 
 
-# Change the collision shape's colour depending on whether or not it blocks pathfinding.
+# Change the collision shape's color depending on whether or not it blocks pathfinding.
 # Please turn on 'Visible Collision Shapes' under the editor's Debug menu to see which cells are
 # occupied by gamepieces.
 func _on_gamepiece_blocks_movement_changed(gamepiece: Gamepiece) -> void:

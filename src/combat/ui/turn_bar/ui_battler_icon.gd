@@ -8,9 +8,9 @@ class_name UIBattlerIcon extends TextureRect
 enum Types { ALLY, PLAYER, ENEMY }
 
 const PORTRAIT_BACKS: = {
-	Types.ALLY: preload("res://assets/gui/combat/portrait_bg_ally.png"),
-	Types.PLAYER: preload("res://assets/gui/combat/portrait_bg_player.png"),
-	Types.ENEMY: preload("res://assets/gui/combat/portrait_bg_enemy.png"),
+	Types.ALLY: preload("portrait_bg_ally.png"),
+	Types.PLAYER: preload("portrait_bg_player.png"),
+	Types.ENEMY: preload("portrait_bg_enemy.png"),
 }
 
 @export var battler_type: Types:

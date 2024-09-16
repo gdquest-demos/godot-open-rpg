@@ -1,8 +1,23 @@
 [gd_scene load_steps=7 format=3 uid="uid://c8ikc817ccjtv"]
 
-[ext_resource type="Texture2D" uid="uid://bt4jp5jwumaxr" path="res://assets/gui/combat/portrait_bg_player.png" id="1_ba558"]
+[ext_resource type="Texture2D" uid="uid://bt4jp5jwumaxr" path="res://src/combat/ui/turn_bar/portrait_bg_player.png" id="1_ba558"]
 [ext_resource type="Script" path="res://src/combat/ui/turn_bar/ui_battler_icon.gd" id="2_471d1"]
 [ext_resource type="Texture2D" uid="uid://pkp6t20skjpe" path="res://assets/battlers/bear.png" id="2_qfsow"]
+
+[sub_resource type="Animation" id="Animation_ih8oe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_p1hyi"]
 resource_name = "fade_out"
@@ -33,21 +48,6 @@ tracks/1/keys = {
 "args": [],
 "method": &"queue_free"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_ih8oe"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vp71b"]

@@ -11,21 +11,21 @@ class_name UIDamageLabel extends Marker2D
 ## <br><br><b>Note:</b> fade_time must be less than [member move_time].
 @export var fade_time: = 0.2
 
-## Label colour when [member amount] is >= 0.
+## Label color when [member amount] is >= 0.
 @export var color_damage := Color("#b0305c")
 
-## Label outline colour when [member amount] is >= 0.
+## Label outline color when [member amount] is >= 0.
 @export var color_damage_outline := Color("#b0305c")
 
-## Label colour when [member amount] is < 0.
+## Label color when [member amount] is < 0.
 @export var color_heal := Color("#3ca370")
 
-## Label outline colour when [member amount] is < 0.
+## Label outline color when [member amount] is < 0.
 @export var color_heal_outline := Color("#3ca370")
 
 ## Consistent with [BattlerHit], damage values greater than 0 incur damage whereas those less than 0
 ## are for healing.
-var amount: int:
+var amount := 0:
 	set(value):
 		amount = value
 		
@@ -45,7 +45,7 @@ var _tween: Tween = null
 
 
 func _ready() -> void:
-	assert(fade_time < move_time, "%s's fade_time must be less than it's move_time!")
+	assert(fade_time < move_time, "%s's fade_time must be less than its move_time!")
 
 
 func setup(origin: Vector2, damage_amount: int) -> void:

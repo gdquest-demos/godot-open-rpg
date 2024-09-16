@@ -22,7 +22,7 @@ static var _correct_pedestals: = {}
 ## Specify a timeline that should be run if an item is already placed on the pedestal.
 @export var wand_placed_timeline: DialogicTimeline
 
-## Specify which wand colour this pedestal expects.
+## Specify which wand color this pedestal expects.
 @export_enum("Red", "Blue", "Green") var pedestal_requirement: = "Red"
 
 ## Keep track of the id of the item currently placed on the pedestal, from Inventory.ItemTypes enum.

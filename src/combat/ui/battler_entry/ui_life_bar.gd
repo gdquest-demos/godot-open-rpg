@@ -37,7 +37,7 @@ var _tween: Tween = null
 
 func _ready() -> void:
 	value_changed.connect(
-		func(new_value: float):
+		func _on_value_changed(new_value: float):
 			_value_label.text = str(int(new_value))
 	)
 

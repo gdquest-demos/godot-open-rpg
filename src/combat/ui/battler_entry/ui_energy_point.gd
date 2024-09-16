@@ -9,7 +9,7 @@ const SELECT_TIME: = 0.2
 ## The time required to fade in or out the filled point.
 const FADE_TIME: = 0.3
 
-var _colour_tween: Tween = null
+var _color_tween: Tween = null
 var _offset_tween: Tween = null
 
 @onready var _fill: = $EnergyPoint/Fill as TextureRect
@@ -21,18 +21,18 @@ var _offset_tween: Tween = null
 
 ## Animate the point fill texture to fully opaque.
 func appear() -> void:
-	if _colour_tween:
-		_colour_tween.kill()
-	_colour_tween = create_tween()
-	_colour_tween.tween_property(_fill, "modulate", Color.WHITE, FADE_TIME)
+	if _color_tween:
+		_color_tween.kill()
+	_color_tween = create_tween()
+	_color_tween.tween_property(_fill, "modulate", Color.WHITE, FADE_TIME)
 
 
 ## Animate the point fill texture to mostly-transparent.
 func disappear() -> void:
-	if _colour_tween:
-		_colour_tween.kill()
-	_colour_tween = create_tween()
-	_colour_tween.tween_property(_fill, "modulate", _color_transparent, FADE_TIME)
+	if _color_tween:
+		_color_tween.kill()
+	_color_tween = create_tween()
+	_color_tween.tween_property(_fill, "modulate", _color_transparent, FADE_TIME)
 
 
 func select() -> void:

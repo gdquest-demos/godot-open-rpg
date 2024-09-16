@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bt4jp5jwumaxr"
-path="res://.godot/imported/portrait_bg_player.png-94f0d732bebbf0a700d2cc16807fce28.ctex"
+uid="uid://cx3migkss6sja"
+path="res://.godot/imported/portrait_bg_enemy.png-b47360190e5adcea6e504f7c5c31a47f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/gui/combat/portrait_bg_player.png"
-dest_files=["res://.godot/imported/portrait_bg_player.png-94f0d732bebbf0a700d2cc16807fce28.ctex"]
+source_file="res://src/combat/ui/turn_bar/portrait_bg_enemy.png"
+dest_files=["res://.godot/imported/portrait_bg_enemy.png-b47360190e5adcea6e504f7c5c31a47f.ctex"]
 
 [params]
 
