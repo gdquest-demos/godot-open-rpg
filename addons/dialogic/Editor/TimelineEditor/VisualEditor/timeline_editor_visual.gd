@@ -257,8 +257,7 @@ func load_event_buttons() -> void:
 			%RightSidebar.get_child(0).move_child(%RightSidebar.get_child(0).get_node(section_name), 0)
 
 	# Resize RightSidebar
-	var _scale := DialogicUtil.get_editor_scale()
-	%RightSidebar.custom_minimum_size.x = 50 * _scale
+	%RightSidebar.custom_minimum_size.x = 50 * DialogicUtil.get_editor_scale()
 
 	_on_right_sidebar_resized()
 #endregion

@@ -22,6 +22,9 @@ signal action_triggered
 ## Forward AnimationPlayer's same signal.
 signal animation_finished(name)
 
+## An icon that shows up on the turn bar.
+@export var battler_icon: Texture
+
 ## Determines which direction the [BattlerAnim] faces. This is generally set by whichever "side"
 ## the battler is on, player or enemy.
 @export var direction: = Direction.RIGHT:
@@ -39,25 +42,8 @@ signal animation_finished(name)
 var _move_tween: Tween = null
 var _rest_position: = Vector2.ZERO
 
-var _battler: Battler:
-	set(value):
-		# If this object had a previous battler parent and had connected to its signals, disconnect
-		# these before setting the new parent.
-		if _battler and not Engine.is_editor_hint():
-			if _battler.health_depleted.is_connected(_on_battler_health_depleted):
-				_battler.health_depleted.disconnect(_on_battler_health_depleted)
-			if _battler.hit_received.is_connected(_on_battler_hit_received):
-				_battler.hit_received.disconnect(_on_battler_hit_received)
-			if _battler.selection_toggled.is_connected(_on_battler_selection_toggled):
-				_battler.selection_toggled.disconnect(_on_battler_selection_toggled)
-		
-		_battler = value
-		if _battler and not Engine.is_editor_hint():
-			_battler.health_depleted.connect(_on_battler_health_depleted)
-			_battler.hit_received.connect(_on_battler_hit_received)
-			_battler.selection_toggled.connect(_on_battler_selection_toggled)
-		
-		update_configuration_warnings()
+@onready var front: = $FrontAnchor as Marker2D
+@onready var top: = $TopAnchor as Marker2D
 
 @onready var _anim: = $Pivot/AnimationPlayer as AnimationPlayer
 
@@ -68,21 +54,26 @@ func _ready() -> void:
 	_rest_position = position
 
 
-func _notification(msg: int) -> void:
-	if msg == NOTIFICATION_PARENTED:
-		_battler = get_parent() as Battler
-
-
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: = []
-	if not _battler:
-		warnings.append("Requires a Battler as a parent to function correctly!")
+## Setup the BattlerAnim object to respond to gameplay signals from a [Battler] class.
+func setup(battler: Battler, facing: Direction) -> void:
+	# BattlerAnim objects are assigned in-editor and created dynamically both in-game and in-editor.
+	# We do not want the BattlerAnim objects to be saved with the CombatArena scenes, since they are
+	# instantiated at runtime, so they should not be assigned an owner when in the editor.
+	# However, in gameplay the BattlerAnim class must have an owner, as these objects need to be
+	# discoverable by Node::find_children(). This allows us to wait for animations to finish playing
+	# before ending combat, for example.
+	if not Engine.is_editor_hint():
+		owner = battler
 	
-	return warnings
+	direction = facing
+	
+	battler.health_depleted.connect(_on_battler_health_depleted)
+	battler.hit_received.connect(_on_battler_hit_received)
+	battler.selection_toggled.connect(_on_battler_selection_toggled)
 
 
-# Functions that wraps around the animation players' `play()` function, delegating the work to the
-# `AnimationPlayerDamage` node when necessary.
+## A function that wraps around the animation players' `play()` function, delegating the work to the
+## `AnimationPlayerDamage` node when necessary.
 func play(anim_name: String) -> void:
 	assert(_anim.has_animation(anim_name), "Battler animation '%s' does not have animation '%s'!"
 		% [name, anim_name])

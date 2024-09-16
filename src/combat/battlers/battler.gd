@@ -5,6 +5,7 @@
 ## effects and [BattlerHit]s, which typically deal damage or heal the Battler.
 ##
 ## [br][br]Battlers have [BattlerAnim]ation children which play out the Battler's actions.
+@tool
 class_name Battler extends Node2D
 
 ## Emitted when the battler finished their action and arrived back at their rest position.
@@ -25,14 +26,58 @@ signal ready_to_act
 ## player-controlled battlers.
 signal selection_toggled(value: bool)
 
+## A Battler must have [BattlerStats] to act and receive actions.
 @export var stats: BattlerStats = null
-# Each action's data stored in this array represents an action the battler can perform.
-# These can be anything: attacks, healing spells, etc.
+## Each action's data stored in this array represents an action the battler can perform.
+## These can be anything: attacks, healing spells, etc.
 @export var actions: Array[BattlerAction]
-# If the battler has an `ai_scene`, we will instantiate it and let the AI make decisions.
-# If not, the player controls this battler. The system should allow for ally AIs.
+
+## Each Battler is shown on the screen by a [BattlerAnim] object. The object is created dynamically
+## from a PackedScene, which must yield a [BattlerAnim] object when instantiated.
+@export var battler_anim_scene: PackedScene:
+	set(value):
+		battler_anim_scene = value
+		
+		if not is_inside_tree():
+			await ready
+		
+		# Free an already existing BattlerAnim.
+		if anim:
+			anim.queue_free()
+			anim = null
+		
+		# Add the new BattlerAnim class as a child and link it to this Battler instance.
+		if battler_anim_scene:
+			# Normally we could wrap a check for battler_anim_scene's type (should be BattlerAnim)
+			# in a call to assert, but we want the following code to run in the editor and clean up
+			# dynamically if the user drops an incorrect PackedScene (i.e. not a BattlerAnim) into
+			# the battler_anim_scene slot.
+			var new_scene: = battler_anim_scene.instantiate()
+			anim = new_scene as BattlerAnim
+			if not anim:
+				push_warning("Battler '%s' cannot accept '%s' as " % [name, new_scene.name],
+					"battler_anim_scene. '%s' is not a BattlerAnim!" % new_scene.name)
+				new_scene.free()
+				battler_anim_scene = null
+				return
+			
+			add_child(anim)
+			var facing: = BattlerAnim.Direction.LEFT if is_player else BattlerAnim.Direction.RIGHT
+			anim.setup(self, facing)
+
+## If the battler has an `ai_scene`, we will instantiate it and let the AI make decisions.
+## If not, the player controls this battler. The system should allow for ally AIs.
 @export var ai_scene: PackedScene
-@export var is_player: = false
+## Player battlers are controlled by the player.
+@export var is_player: = false:
+	set(value):
+		is_player = value
+		if anim:
+			var facing: = BattlerAnim.Direction.LEFT if is_player else BattlerAnim.Direction.RIGHT
+			anim.direction = facing
+
+## Reference to this Battler's child [BattlerAnim] node.
+var anim: BattlerAnim = null
 
 ## If `false`, the battler will not be able to act.
 var is_active: bool = true:
@@ -73,17 +118,21 @@ var readiness := 0.0:
 
 
 func _ready() -> void:
-	assert(stats, "Battler %s does not have stats assigned!" % name)
+	if Engine.is_editor_hint():
+		set_process(false)
+	
+	else:
+		assert(stats, "Battler %s does not have stats assigned!" % name)
 
-	# Resources are NOT unique, so treat the currently assigned BattlerStats as a prototype.
-	# That is, copy what it is now and use the copy, so that the original remains unaltered.
-	stats = stats.duplicate()
-	stats.initialize()
-	stats.health_depleted.connect(func on_stats_health_depleted() -> void:
-		is_active = false
-		is_selectable = false
-		health_depleted.emit()
-	)
+		# Resources are NOT unique, so treat the currently assigned BattlerStats as a prototype.
+		# That is, copy what it is now and use the copy, so that the original remains unaltered.
+		stats = stats.duplicate()
+		stats.initialize()
+		stats.health_depleted.connect(func on_stats_health_depleted() -> void:
+			is_active = false
+			is_selectable = false
+			health_depleted.emit()
+		)
 
 
 func _process(delta: float) -> void:

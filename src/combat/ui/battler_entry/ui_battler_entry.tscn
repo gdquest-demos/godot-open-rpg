@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://b35omff3fdb2g"]
+
+[ext_resource type="Texture2D" uid="uid://c1j6dohohfgo8" path="res://assets/gui/combat/battler_hud_background.png" id="1_hbmgc"]
+[ext_resource type="Script" path="res://src/combat/ui/battler_entry/ui_battler_entry.gd" id="2_82qpa"]
+[ext_resource type="PackedScene" uid="uid://u8ldf4atgqo" path="res://src/combat/ui/battler_entry/ui_life_bar.tscn" id="2_ld6s8"]
+[ext_resource type="Script" path="res://src/combat/ui/battler_entry/ui_energy_bar.gd" id="3_tx6pk"]
+
+[node name="BattlerEntry" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_hbmgc")
+script = ExtResource("2_82qpa")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -145.0
+offset_top = -30.0
+offset_right = 181.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LifeBar" parent="HBoxContainer" instance=ExtResource("2_ld6s8")]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="EnergyBar" type="HBoxContainer" parent="HBoxContainer/CenterContainer"]
+layout_mode = 2
+script = ExtResource("3_tx6pk")

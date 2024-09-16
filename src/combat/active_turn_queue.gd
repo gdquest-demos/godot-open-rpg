@@ -9,8 +9,12 @@
 ## acting while the player is taking their turn.
 class_name ActiveTurnQueue extends Node2D
 
-## Emitted when a combat has finished, indicating whether or not it may be considered a victory for
-## the player.
+## Emitted immediately once the player has won or lost the battle. Note that all animations (such
+## as the player or AI battlers disappearing) are not yet completed.
+## This is the point at which most UI elements will disappear.
+signal battlers_downed
+## Emitted once a player has won or lost a battle, indicating whether or not it may be considered a 
+## victory for the player. All combat animations have finished playing.
 signal combat_finished(is_player_victory: bool)
 ## Emitted when a player-controlled battler finished playing a turn. That is, when the _play_turn()
 ## method returns.
@@ -43,7 +47,6 @@ var _queued_player_battlers: Array[Battler] = []
 var _battlers: Array[Battler] = []
 var _party_members: Array[Battler] = []
 var _enemies: Array[Battler] = []
-
 
 
 func _ready() -> void:
@@ -90,6 +93,10 @@ func _process(_delta: float) -> void:
 	# There are no animations being played. Combat can now finish.
 	set_process(false)
 	combat_finished.emit(_has_player_won)
+
+
+func get_battlers() -> Array[Battler]:
+	return _battlers
 
 
 func _play_turn(battler: Battler) -> void:
@@ -159,7 +166,7 @@ func _player_select_targets_async(_action: BattlerAction, opponents: Array[Battl
 # are 0), finish the combat and indicate whether or not the player was victorious.
 # Return true if the combat has finished, otherwise return false.
 func _deactivate_if_side_downed(checked_battlers: Array[Battler],
-	is_player_victory: bool) -> bool:
+		is_player_victory: bool) -> bool:
 	for battler: Battler in checked_battlers:
 		if battler.stats.health > 0:
 			return false
@@ -173,4 +180,7 @@ func _deactivate_if_side_downed(checked_battlers: Array[Battler],
 
 	# Don't allow anyone else to act.
 	is_active = false
+	
+	# Let the normal combat UI systems know that they can fade out now.
+	battlers_downed.emit()
 	return true

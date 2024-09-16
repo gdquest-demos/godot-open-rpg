@@ -5,6 +5,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://o2ktahx2nkki" path="res://assets/battlers/default_battler_animations.res" id="2_q1kws"]
 
 [node name="WolfAnim" instance=ExtResource("1_ffl4t")]
+battler_icon = ExtResource("2_nnyj7")
 
 [node name="AnimationPlayer" parent="Pivot" index="0"]
 libraries = {
@@ -14,3 +15,9 @@ libraries = {
 [node name="Sprite2D" type="Sprite2D" parent="Pivot" index="1"]
 texture = ExtResource("2_nnyj7")
 offset = Vector2(0, -235)
+
+[node name="FrontAnchor" parent="." index="1"]
+position = Vector2(259, -196)
+
+[node name="TopAnchor" parent="." index="2"]
+position = Vector2(-60, -407)

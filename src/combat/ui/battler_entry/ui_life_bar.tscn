@@ -1,0 +1,116 @@
+[gd_scene load_steps=9 format=3 uid="uid://u8ldf4atgqo"]
+
+[ext_resource type="Texture2D" uid="uid://b7pj05tm03e1j" path="res://assets/gui/combat/life_bar_bg.png" id="1_cgmm4"]
+[ext_resource type="Texture2D" uid="uid://dbh813ddw3j3n" path="res://assets/gui/combat/life_bar_fill.png" id="2_ax0cw"]
+[ext_resource type="Script" path="res://src/combat/ui/battler_entry/ui_life_bar.gd" id="3_xposf"]
+
+[sub_resource type="Animation" id="Animation_x8piy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:tint_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fy1ln"]
+resource_name = "damage"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(4, 4, 4, 1), Color(1, 1, 1, 1), Color(4, 4, 4, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_yd5e2"]
+resource_name = "danger"
+length = 1.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:tint_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.9, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_poap1"]
+_data = {
+"RESET": SubResource("Animation_x8piy"),
+"damage": SubResource("Animation_fy1ln"),
+"danger": SubResource("Animation_yd5e2")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_5nlqb"]
+font_size = 64
+font_color = Color(0.9, 0.948333, 1, 1)
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[node name="LifeBar" type="TextureProgressBar"]
+offset_right = 326.0
+offset_bottom = 21.0
+step = 0.01
+texture_under = ExtResource("1_cgmm4")
+texture_progress = ExtResource("2_ax0cw")
+script = ExtResource("3_xposf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_poap1")
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 40
+
+[node name="Value" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "9999"
+label_settings = SubResource("LabelSettings_5nlqb")
+
+[node name="Name" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Name"
+label_settings = SubResource("LabelSettings_5nlqb")

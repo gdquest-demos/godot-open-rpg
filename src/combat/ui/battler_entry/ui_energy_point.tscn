@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://3wxb0jcnl05i"]
+
+[ext_resource type="Texture2D" uid="uid://bq6iic1qrqu76" path="res://assets/gui/combat/energy_point_bg.png" id="1_4j2fm"]
+[ext_resource type="Script" path="res://src/combat/ui/battler_entry/ui_energy_point.gd" id="1_ml525"]
+[ext_resource type="Texture2D" uid="uid://q33205xhg7pj" path="res://assets/gui/combat/energy_point_fill.png" id="2_3qat2"]
+
+[node name="EnergyPoint" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1884.0
+offset_bottom = -1045.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ml525")
+
+[node name="EnergyPoint" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="Background" type="TextureRect" parent="EnergyPoint"]
+layout_mode = 2
+texture = ExtResource("1_4j2fm")
+stretch_mode = 3
+
+[node name="Fill" type="TextureRect" parent="EnergyPoint"]
+modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+texture = ExtResource("2_3qat2")
+stretch_mode = 3

@@ -10,5 +10,5 @@ base_max_energy = 6
 base_attack = 10
 base_defense = 10
 base_speed = 100
-base_hit_chance = 100
+base_hit_chance = 0
 base_evasion = 15
