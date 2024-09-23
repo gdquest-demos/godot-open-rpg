@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://8oksn1o1v3mx"]
+
+[ext_resource type="Script" path="res://src/combat/ui/action_menu/ui_action_menu.gd" id="1_5ab78"]
+
+[node name="ActionMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 882.0
+offset_top = 664.0
+offset_right = 922.0
+offset_bottom = 704.0
+script = ExtResource("1_5ab78")
+metadata/_edit_group_ = true

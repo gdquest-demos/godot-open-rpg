@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://b6quqbipabdox"]
+
+[ext_resource type="Texture2D" uid="uid://cx0jpdg58vb33" path="res://src/combat/ui/action_menu/menu_action_bg.png" id="1_p6wmu"]
+[ext_resource type="Script" path="res://src/combat/ui/action_menu/ui_action_button.gd" id="1_tntc3"]
+[ext_resource type="Texture2D" uid="uid://dllh3cswof4m1" path="res://src/combat/ui/action_menu/menu_action_bg_pressed.png" id="2_4uiu2"]
+[ext_resource type="Texture2D" uid="uid://d2vajhpv3eb8i" path="res://src/combat/ui/action_menu/menu_action_bg_disabled.png" id="3_5oias"]
+[ext_resource type="Texture2D" uid="uid://kyl3dpbphoik" path="res://src/combat/ui/action_menu/menu_action_bg_focused.png" id="4_gyvxq"]
+[ext_resource type="Texture2D" uid="uid://y2fg5cf57i7t" path="res://battlers/actions/icon_punch.svg" id="6_1t1bw"]
+[ext_resource type="FontFile" uid="uid://d12hnvq203mdg" path="res://assets/gui/font/SourceCodePro-Bold.ttf" id="7_gvn2i"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f2eql"]
+font = ExtResource("7_gvn2i")
+font_size = 48
+
+[node name="ActionButton" type="TextureButton"]
+offset_right = 334.0
+offset_bottom = 96.0
+texture_normal = ExtResource("1_p6wmu")
+texture_pressed = ExtResource("2_4uiu2")
+texture_disabled = ExtResource("3_5oias")
+texture_focused = ExtResource("4_gyvxq")
+script = ExtResource("1_tntc3")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Items" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/Items"]
+layout_mode = 2
+texture = ExtResource("6_1t1bw")
+stretch_mode = 3
+
+[node name="Name" type="Label" parent="MarginContainer/Items"]
+layout_mode = 2
+text = "Action"
+label_settings = SubResource("LabelSettings_f2eql")
+vertical_alignment = 1

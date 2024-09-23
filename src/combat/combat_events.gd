@@ -12,6 +12,14 @@ signal combat_initiated(arena: PackedScene)
 @warning_ignore("unused_signal")
 signal combat_finished(is_player_victory: bool)
 
+## Emitted whenever a player battler is selected, prompting the player to choose an action.
+@warning_ignore("unused_signal")
+signal player_battler_selected(battler: Battler)
+
+## Emitted whenever a player selects an action from the action menu.
+@warning_ignore("unused_signal")
+signal player_action_selected(action: BattlerAction)
+
 
 ## A variable that allows objects to know if the player won the most recent combat. This should only
 ## be accessed, and is designed to be set by the combat state.

@@ -34,14 +34,14 @@ var amount := 0:
 		
 		if amount >= 0:
 			_label.modulate = color_damage
-			_label.label_settings.outline_color = color_damage_outline
+			_label.add_theme_color_override("font_outline_colour", color_damage_outline)
 		else:
 			_label.modulate = color_heal
-			_label.label_settings.outline_color = color_heal_outline
+			_label.add_theme_color_override("font_outline_colour", color_heal_outline)
 
 var _tween: Tween = null
 
-@onready var _label: = $CenterContainer/Label as Label
+@onready var _label: = $Label as Label
 
 
 func _ready() -> void:

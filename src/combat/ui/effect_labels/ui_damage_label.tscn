@@ -1,11 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bo6hj2mg02uef"]
 
 [ext_resource type="Script" path="res://src/combat/ui/effect_labels/ui_damage_label.gd" id="1_ukhhs"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_ill5u"]
-font_size = 96
-outline_size = 16
-outline_color = Color(0, 0, 0, 1)
+[ext_resource type="Theme" uid="uid://dgb8v5sh8ropf" path="res://src/combat/ui/ui_combat.theme" id="2_krdq3"]
 
 [node name="UIDamageLabel" type="Marker2D"]
 script = ExtResource("1_ukhhs")
@@ -13,12 +9,17 @@ color_damage_outline = Color(0.3, 0.081, 0.15765, 1)
 color_heal_outline = Color(0.111, 0.3, 0.2055, 1)
 metadata/_edit_group_ = true
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-offset_top = -32.0
-offset_bottom = -32.0
-use_top_left = true
-
-[node name="Label" type="Label" parent="CenterContainer"]
-layout_mode = 2
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -62.0
+offset_right = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_krdq3")
+theme_override_constants/outline_size = 24
 text = "Ouch!"
-label_settings = SubResource("LabelSettings_ill5u")

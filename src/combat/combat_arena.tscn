@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3ciqydkjnkkx"]
+[gd_scene load_steps=9 format=3 uid="uid://b3ciqydkjnkkx"]
 
 [ext_resource type="Script" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
 [ext_resource type="Script" path="res://src/combat/active_turn_queue.gd" id="2_ll0ok"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dxyw5j7wr56hl" path="res://src/combat/ui/effect_labels/ui_missed_label.tscn" id="5_y3d4p"]
 [ext_resource type="PackedScene" uid="uid://derqg1tjy74tw" path="res://src/combat/ui/turn_bar/ui_turn_bar.tscn" id="6_yrwb4"]
 [ext_resource type="PackedScene" uid="uid://cy0jvvqhcopp3" path="res://src/combat/ui/battler_entry/ui_player_battler_list.tscn" id="7_klx1g"]
+[ext_resource type="Script" path="res://src/combat/ui/action_menu/ui_player_action_menu_builder.gd" id="8_md0ic"]
 
 [node name="CombatArena" type="Control"]
 custom_minimum_size = Vector2(1920, 1080)
@@ -40,9 +41,14 @@ damage_label_scene = ExtResource("4_vmu37")
 missed_label_scene = ExtResource("5_y3d4p")
 
 [node name="TurnBar" parent="UI" instance=ExtResource("6_yrwb4")]
-modulate = Color(1, 1, 1, 0)
 
 [node name="PlayerBattlerList" parent="UI" instance=ExtResource("7_klx1g")]
-modulate = Color(1, 1, 1, 0)
+
+[node name="PlayerActionMenuBuilder" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("8_md0ic")
 
 [node name="Timer" type="Timer" parent="UI"]

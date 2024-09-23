@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8cwyjexe7i04"]
+
+[ext_resource type="Script" path="res://src/combat/ui/action_menu/ui_action_menu_page.gd" id="1_5ab78"]
+[ext_resource type="PackedScene" uid="uid://cxrn4uvha8g2w" path="res://src/combat/ui/action_menu/ui_action_menu_cursor.tscn" id="2_bq7qb"]
+
+[node name="ActionMenuPage" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_5ab78")
+
+[node name="ActionMenuCursor" parent="." instance=ExtResource("2_bq7qb")]

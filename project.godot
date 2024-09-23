@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Camera="*res://src/field/field_camera.gd"
-CombatEvents="*res://src/common/combat_events.gd"
-FieldEvents="*res://src/common/field_events.gd"
+CombatEvents="*res://src/combat/combat_events.gd"
+FieldEvents="*res://src/field/field_events.gd"
 Music="*res://src/common/music/music_player.tscn"
 Transition="*res://src/common/screen_transitions/ScreenTransition.tscn"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"

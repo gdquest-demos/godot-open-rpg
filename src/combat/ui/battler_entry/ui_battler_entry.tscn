@@ -6,9 +6,11 @@
 [ext_resource type="Script" path="res://src/combat/ui/battler_entry/ui_energy_bar.gd" id="3_tx6pk"]
 
 [node name="BattlerEntry" type="TextureRect"]
-offset_right = 40.0
-offset_bottom = 40.0
+custom_minimum_size = Vector2(350, 152)
+offset_right = 350.0
+offset_bottom = 152.0
 texture = ExtResource("1_hbmgc")
+expand_mode = 1
 script = ExtResource("2_82qpa")
 
 [node name="HBoxContainer" type="VBoxContainer" parent="."]
@@ -18,9 +20,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -145.0
+offset_left = -163.0
 offset_top = -30.0
-offset_right = 181.0
+offset_right = 163.0
 offset_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2

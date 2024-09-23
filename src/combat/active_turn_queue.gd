@@ -95,6 +95,7 @@ func _process(_delta: float) -> void:
 	combat_finished.emit(_has_player_won)
 
 
+## Return all existing [Battler] objects participating in combat.
 func get_battlers() -> Array[Battler]:
 	return _battlers
 
@@ -122,8 +123,11 @@ func _play_turn(battler: Battler) -> void:
 		# Loop until the player selects a valid set of actions and targets of said action.
 		var is_selection_complete: = false
 		while not is_selection_complete:
+			CombatEvents.player_battler_selected.emit(battler)
 			# First of all, the player must select an action.
-			action = await _player_select_action_async(battler)
+			action = await CombatEvents.player_action_selected as BattlerAction
+			if action == null:
+				continue
 
 			# Secondly, the player must select targets for the action.
 			# If the target may be selected automatically, do so.
@@ -150,11 +154,6 @@ func _play_turn(battler: Battler) -> void:
 
 	if battler.is_player:
 		player_turn_finished.emit()
-
-
-func _player_select_action_async(battler: Battler) -> BattlerAction:
-	await get_tree().process_frame
-	return battler.actions[0]
 
 
 func _player_select_targets_async(_action: BattlerAction, opponents: Array[Battler]) -> Array[Battler]:
