@@ -1,10 +1,6 @@
 ## A signal bus to connect distant scenes to various combat-exclusive events.
 extends Node
 
-## Emitted whenever the [member BattlerStats.health] of a [Battler] is depleted.
-@warning_ignore("unused_signal")
-signal battler_downed(battler: Battler)
-
 ## Emitted whenever a combat has been setup and is ready to become the active 'game state'. At this
 ## point, the screen is fully covered by the [ScreenTransition] autoload.
 @warning_ignore("unused_signal")

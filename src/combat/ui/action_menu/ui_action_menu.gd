@@ -9,7 +9,12 @@ func _ready() -> void:
 	hide()
 
 
+## Build the action menu based on a combatant's [member Battler.actions].
+## Note that the menu will automatically close if it receives the [signal Battler.health_depleted]
+## signal.
 func open(battler: Battler) -> void:
+	battler.health_depleted.connect(close)
+	
 	var new_page: = MENU_PAGE_SCENE.instantiate()
 	add_child(new_page)
 	new_page.setup(battler)
