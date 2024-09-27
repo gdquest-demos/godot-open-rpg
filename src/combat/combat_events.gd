@@ -18,8 +18,11 @@ signal player_battler_selected(battler: Battler)
 
 ## Emitted whenever a player selects an action from the action menu.
 @warning_ignore("unused_signal")
-signal player_action_selected(action: BattlerAction)
+signal player_action_selected(action: BattlerAction, possible_targets: Array[Battler])
 
+## Emitted whenever a player selects targets or cancels target selection.
+@warning_ignore("unused_signal")
+signal player_targets_selected(targets: Array[Battler])
 
 ## A variable that allows objects to know if the player won the most recent combat. This should only
 ## be accessed, and is designed to be set by the combat state.

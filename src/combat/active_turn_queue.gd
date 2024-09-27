@@ -126,7 +126,7 @@ func _play_turn(battler: Battler) -> void:
 			CombatEvents.player_battler_selected.emit(battler)
 			# First of all, the player must select an action.
 			action = await CombatEvents.player_action_selected as BattlerAction
-			if action == null:
+			if action == null: 
 				continue
 
 			# Secondly, the player must select targets for the action.
@@ -134,7 +134,7 @@ func _play_turn(battler: Battler) -> void:
 			if action.targets_self:
 				targets = [battler]
 			else:
-				targets = await _player_select_targets_async(action, potential_targets)
+				targets = await CombatEvents.player_targets_selected
 
 			# If the player selected a correct action and target, break out of the loop. Otherwise,
 			# the player may reselect an action/targets.
@@ -147,18 +147,14 @@ func _play_turn(battler: Battler) -> void:
 		if battler.actions.size():
 			action = battler.actions[0]
 			targets = [potential_targets[0]]
-
+	
+	# Time should not pass while another battler is acting.
 	time_scale = 0
 	await battler.act(action, targets)
 	time_scale = 1.0
 
 	if battler.is_player:
 		player_turn_finished.emit()
-
-
-func _player_select_targets_async(_action: BattlerAction, opponents: Array[Battler]) -> Array[Battler]:
-	await get_tree().process_frame
-	return [opponents[0]]
 
 
 # Run through a provided array of battlers. If all of them are downed (that is, their health points

@@ -44,7 +44,7 @@ missed_label_scene = ExtResource("5_y3d4p")
 
 [node name="PlayerBattlerList" parent="UI" instance=ExtResource("7_klx1g")]
 
-[node name="PlayerActionMenuBuilder" type="Control" parent="UI"]
+[node name="PlayerActionUIBuilder" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

@@ -18,7 +18,6 @@ func open(battler: Battler) -> void:
 		func _on_menu_page_action_selected(action: BattlerAction) -> void:
 			CombatEvents.player_action_selected.emit(action)
 			close()
-			#action_selected.emit(action)
 	)
 	
 	show()

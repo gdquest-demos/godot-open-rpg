@@ -11,6 +11,8 @@ func _ready() -> void:
 	)
 
 
+## Setup the button's icon and label to match a [BattlerAction], and disable or enable the button
+## depending on whether or not the [Battler] can use the action.
 func setup(action: BattlerAction, can_be_used: = true) -> void:
 	if not is_inside_tree():
 		await ready
