@@ -8,7 +8,7 @@ func _execute() -> void:
 	# Let other systems know that a combat has been triggered and then wait for its outcome.
 	FieldEvents.combat_triggered.emit(combat_arena)
 	
-	await CombatEvents.combat_finished
+	var did_player_win: bool = await CombatEvents.combat_finished
 	
 	# The combat ends with a covered screen, and so we fix that here.
 	Transition.clear.call_deferred(0.2)
@@ -18,7 +18,7 @@ func _execute() -> void:
 	# game-over screen or removing an AI combat-starting gamepiece from the field.
 	# In some cases, however, we'll want a dialogue to play or some creative event to occur if, for
 	# example, the player lost a difficult but non-essential battle.
-	if CombatEvents.did_player_win_last_combat:
+	if did_player_win:
 		await _run_victory_cutscene()
 	
 	else:

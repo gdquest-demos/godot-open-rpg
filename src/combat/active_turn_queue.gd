@@ -134,7 +134,8 @@ func _play_turn(battler: Battler) -> void:
 			if action.targets_self:
 				targets = [battler]
 			else:
-				targets = await CombatEvents.player_targets_selected
+				#targets = await CombatEvents.player_targets_selected
+				targets = [potential_targets[0]]
 
 			# If the player selected a correct action and target, break out of the loop. Otherwise,
 			# the player may reselect an action/targets.

@@ -21,11 +21,11 @@ func _ready() -> void:
 	# If a valid player action has been selected, the targetting cursor should allow the player to
 	# pick a target from a variety of battlers.
 	# The following is connected directly 
-	CombatEvents.player_action_selected.connect(
-		func _on_turn_queue_player_targeting(_action: BattlerAction, 
-				possible_targets: Array[Battler]) -> void:
-			var cursor: = target_cursor_scene.instantiate() as UIBattlerTargetingCursor
-			add_child(cursor)
-			
-			cursor.setup(possible_targets)
-	)
+	#CombatEvents.player_action_selected.connect(
+		#func _on_turn_queue_player_targeting(_action: BattlerAction, 
+				#possible_targets: Array[Battler]) -> void:
+			#var cursor: = target_cursor_scene.instantiate() as UIBattlerTargetingCursor
+			#add_child(cursor)
+			#
+			#cursor.setup(possible_targets)
+	#)

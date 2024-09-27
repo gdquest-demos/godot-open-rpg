@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3ciqydkjnkkx"]
+[gd_scene load_steps=11 format=3 uid="uid://b3ciqydkjnkkx"]
 
 [ext_resource type="Script" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
 [ext_resource type="Script" path="res://src/combat/active_turn_queue.gd" id="2_ll0ok"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://derqg1tjy74tw" path="res://src/combat/ui/turn_bar/ui_turn_bar.tscn" id="6_yrwb4"]
 [ext_resource type="PackedScene" uid="uid://cy0jvvqhcopp3" path="res://src/combat/ui/battler_entry/ui_player_battler_list.tscn" id="7_klx1g"]
 [ext_resource type="Script" path="res://src/combat/ui/action_menu/ui_player_action_menu_builder.gd" id="8_md0ic"]
+[ext_resource type="PackedScene" uid="uid://8oksn1o1v3mx" path="res://src/combat/ui/action_menu/ui_action_menu.tscn" id="9_5vipg"]
+[ext_resource type="PackedScene" uid="uid://bu56ii26ps128" path="res://src/combat/ui/ui_battler_target_cursor.tscn" id="10_g5v87"]
 
 [node name="CombatArena" type="Control"]
 custom_minimum_size = Vector2(1920, 1080)
@@ -50,5 +52,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_md0ic")
+action_menu_scene = ExtResource("9_5vipg")
+target_cursor_scene = ExtResource("10_g5v87")
 
 [node name="Timer" type="Timer" parent="UI"]
