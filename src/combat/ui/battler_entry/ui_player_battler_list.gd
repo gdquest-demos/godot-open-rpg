@@ -17,7 +17,7 @@ class_name UIPlayerBattlerList extends UIListMenu
 		# Create a UI entry for each battler in the party.
 		for battler in battlers:
 			var new_entry = _create_entry() as UIBattlerEntry
-			new_entry.setup(battler)
+			new_entry.battler = battler
 		
 		fade_in()
 
@@ -26,6 +26,4 @@ class_name UIPlayerBattlerList extends UIListMenu
 func _on_entry_pressed(entry: BaseButton) -> void:
 	if not is_disabled:
 		var battler_entry = entry as UIBattlerEntry
-		print(battler_entry)
-		
-		fade_out()
+		CombatEvents.player_battler_selected.emit(battler_entry.battler)

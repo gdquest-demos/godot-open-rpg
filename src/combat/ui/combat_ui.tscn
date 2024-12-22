@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://erpdtvccm3j3"]
+[gd_scene load_steps=9 format=3 uid="uid://erpdtvccm3j3"]
 
 [ext_resource type="PackedScene" uid="uid://cy0jvvqhcopp3" path="res://src/combat/ui/battler_entry/ui_player_battler_list.tscn" id="1_76ta8"]
+[ext_resource type="Script" path="res://src/combat/ui/combat_ui.gd" id="1_pcl62"]
 [ext_resource type="PackedScene" uid="uid://b35omff3fdb2g" path="res://src/combat/ui/battler_entry/ui_battler_entry.tscn" id="2_2myou"]
 [ext_resource type="Script" path="res://src/combat/battlers/battler.gd" id="2_rwss2"]
 [ext_resource type="Resource" uid="uid://chuarvle06xxf" path="res://battlers/bugcat_stats.tres" id="3_i5470"]
@@ -9,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bl8bmbt7v3lrj" path="res://assets/battlers/bear_anim.tscn" id="6_7eo2l"]
 
 [node name="CombatUI" type="CanvasLayer"]
+script = ExtResource("1_pcl62")
 
 [node name="PlayerBattlerList" parent="." node_paths=PackedStringArray("battlers") instance=ExtResource("1_76ta8")]
 battlers = [NodePath("../Franky"), NodePath("../Blippy")]
