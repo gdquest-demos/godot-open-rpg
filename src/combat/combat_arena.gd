@@ -12,7 +12,10 @@ class_name CombatArena extends Control
 
 
 func _ready() -> void:
-	battler_list.setup(turn_queue.get_battlers().filter(func(i): return i.is_player))
+	# Setup the player battler list.
+	# This is done by filtering the full battler list for only those that belong to the player.
+	battler_list.battlers = turn_queue.get_battlers().filter(func(i): return i.is_player)
+	
 	effect_label_builder.setup(turn_queue.get_battlers())
 	turn_bar.setup(turn_queue.get_battlers())
 	
@@ -22,15 +25,17 @@ func _ready() -> void:
 
 ## Begin combat, setting up the UI before running combat logic.
 func start() -> void:
+	# Note that ALL combat UI elements could fade in here. However...
 	turn_bar.fade_in()
 	
-	# Stagger UI element fade-in slightly for visual effect.
+	# ...slightly staggering the UI elements' fade-in creates a nice visual effect.
 	ui_timer.start(0.2)
 	await ui_timer.timeout
 
 	await battler_list.fade_in()
 	
 	# Once the UI elements have been setup, pause slightly before beginning combat logic.
+	# This gives the player a short moment to get their bearings before combat begins.
 	ui_timer.start(0.5)
 	await ui_timer.timeout
 	turn_queue.is_active = true

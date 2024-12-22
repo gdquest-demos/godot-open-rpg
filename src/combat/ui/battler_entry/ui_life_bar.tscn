@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://u8ldf4atgqo"]
 
-[ext_resource type="Texture2D" uid="uid://b7pj05tm03e1j" path="res://assets/gui/combat/life_bar_bg.png" id="1_cgmm4"]
+[ext_resource type="Texture2D" uid="uid://b7pj05tm03e1j" path="res://src/combat/ui/battler_entry/life_bar_bg.png" id="1_cgmm4"]
 [ext_resource type="Theme" uid="uid://dgb8v5sh8ropf" path="res://src/combat/ui/ui_combat.theme" id="1_kcngn"]
-[ext_resource type="Texture2D" uid="uid://dbh813ddw3j3n" path="res://assets/gui/combat/life_bar_fill.png" id="2_ax0cw"]
+[ext_resource type="Texture2D" uid="uid://dbh813ddw3j3n" path="res://src/combat/ui/battler_entry/life_bar_fill.png" id="2_ax0cw"]
 [ext_resource type="Script" path="res://src/combat/ui/battler_entry/ui_life_bar.gd" id="3_xposf"]
 
 [sub_resource type="Animation" id="Animation_x8piy"]

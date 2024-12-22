@@ -20,7 +20,7 @@ var is_disabled: = false:
 # Track which children are buttons, since one is a cursor.
 var _buttons: Array[UIActionButton] = []
 
-@onready var _cursor: = $ActionMenuCursor as UIActionMenuCursor
+@onready var _cursor: = $ActionMenuCursor as UIMenuCursor
 
 
 ## Setup the menu page for use, populating it with a list of actions.

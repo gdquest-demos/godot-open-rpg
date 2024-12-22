@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bu56ii26ps128"]
 
-[ext_resource type="Script" path="res://src/combat/ui/ui_battler_target_cursor.gd" id="1_7w7pq"]
+[ext_resource type="Script" path="res://src/combat/ui/cursors/ui_battler_target_cursor.gd" id="1_7w7pq"]
 [ext_resource type="Texture2D" uid="uid://b1tcvapw3hqti" path="res://src/combat/ui/action_menu/menu_selection_arrow.png" id="2_bn0ds"]
 
 [sub_resource type="Animation" id="Animation_wnwjy"]

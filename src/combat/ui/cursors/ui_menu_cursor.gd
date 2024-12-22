@@ -1,5 +1,5 @@
 ## The cursor of a [UIActionMenuPage], indicating which option is currently in focus.
-class_name UIActionMenuCursor extends Marker2D
+class_name UIMenuCursor extends Marker2D
 
 ## The time taken to move the cursor from one [UIActionButton] to the next.
 const SLIDE_TIME: = 0.1

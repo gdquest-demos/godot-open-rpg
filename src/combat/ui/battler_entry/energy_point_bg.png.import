@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q33205xhg7pj"
-path="res://.godot/imported/energy_point_fill.png-bb2d29108b37e9310146498ba6bcff2e.ctex"
+uid="uid://bq6iic1qrqu76"
+path="res://.godot/imported/energy_point_bg.png-f0deee18402458431394bee6d1b34646.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/gui/combat/energy_point_fill.png"
-dest_files=["res://.godot/imported/energy_point_fill.png-bb2d29108b37e9310146498ba6bcff2e.ctex"]
+source_file="res://src/combat/ui/battler_entry/energy_point_bg.png"
+dest_files=["res://.godot/imported/energy_point_bg.png-f0deee18402458431394bee6d1b34646.ctex"]
 
 [params]
 

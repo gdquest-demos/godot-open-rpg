@@ -42,3 +42,12 @@ actions = Array[ExtResource("6_b04cs")]([ExtResource("10_uukpg"), ExtResource("9
 battler_anim_scene = ExtResource("10_ajkh0")
 is_player = true
 metadata/_edit_group_ = true
+
+[node name="Baloo2" type="Node2D" parent="Battlers" index="3"]
+position = Vector2(1243, 906)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_id2tu")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("10_uukpg"), ExtResource("9_273jv")])
+battler_anim_scene = ExtResource("10_ajkh0")
+is_player = true
+metadata/_edit_group_ = true

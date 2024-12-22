@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7pj05tm03e1j"
-path="res://.godot/imported/life_bar_bg.png-95acd6147c138978a67eed93e1314a0e.ctex"
+uid="uid://c1j6dohohfgo8"
+path="res://.godot/imported/battler_hud_background.png-eda472162a57e5a374fc844216b466da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/gui/combat/life_bar_bg.png"
-dest_files=["res://.godot/imported/life_bar_bg.png-95acd6147c138978a67eed93e1314a0e.ctex"]
+source_file="res://src/combat/ui/battler_entry/battler_hud_background.png"
+dest_files=["res://.godot/imported/battler_hud_background.png-eda472162a57e5a374fc844216b466da.ctex"]
 
 [params]
 

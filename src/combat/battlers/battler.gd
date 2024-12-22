@@ -8,6 +8,9 @@
 @tool
 class_name Battler extends Node2D
 
+## Emitted when the battler has selected an action. This is done either by the [member ai_scene] or
+## by the player through the [UIActionMenu].
+signal action_selected
 ## Emitted when the battler finished their action and arrived back at their rest position.
 signal action_finished
 ## Forwarded from the receiving of [signal BettlerStats.health_depleted].
@@ -113,6 +116,8 @@ var readiness := 0.0:
 		readiness_changed.emit(readiness)
 
 		if readiness >= 100.0:
+			readiness = 100.0
+			
 			ready_to_act.emit()
 			set_process(false)
 
@@ -140,6 +145,8 @@ func _process(delta: float) -> void:
 
 
 func act(action: BattlerAction, targets: Array[Battler] = []) -> void:
+	set_process(false)
+	
 	stats.energy -= action.energy_cost
 
 	# action.execute() almost certainly is a coroutine.

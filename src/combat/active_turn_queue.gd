@@ -35,11 +35,15 @@ var time_scale: = 1.0:
 		for battler: Battler in _battlers:
 			battler.time_scale = time_scale
 
-## If true, the player is currently playing a turn (navigating menus, choosing targets, etc.).
+# If true, the player is currently playing a turn (navigating menus, choosing targets, etc.).
 var _is_player_playing: = false
 
-## Only ever set true if the player has won the combat. I.e. enemy battlers are felled.
+# Only ever set to true if the player has won the combat. I.e. enemy battlers are felled.
 var _has_player_won: = false
+
+# Actions may be placed in the following queue and will be exectued in order by the ActiveTurnQueue.
+# This prevents actions from being executed concurrently.
+var _actions: = {}
 
 ## A stack of player-controlled battlers that have to take turns.
 var _queued_player_battlers: Array[Battler] = []
@@ -52,6 +56,9 @@ var _enemies: Array[Battler] = []
 func _ready() -> void:
 	# This is required in Godot 4.3 to strongly type the array.
 	_battlers.assign(get_children())
+	
+	# The ActiveTurnQueue uses _process to wait for animations to finish at combat end, so disable
+	# _process for now.
 	set_process(false)
 
 	player_turn_finished.connect(func _on_player_turn_finished() -> void:

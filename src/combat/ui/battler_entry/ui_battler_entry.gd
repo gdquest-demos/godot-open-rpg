@@ -1,4 +1,4 @@
-class_name UIBattlerEntry extends TextureRect
+class_name UIBattlerEntry extends TextureButton
 
 @onready var _energy: = $HBoxContainer/CenterContainer/EnergyBar as UIBattlerEnergyBar
 @onready var _life: = $HBoxContainer/LifeBar as UIBattlerLifeBar
