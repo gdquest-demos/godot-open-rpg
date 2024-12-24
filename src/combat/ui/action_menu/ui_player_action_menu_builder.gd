@@ -1,7 +1,7 @@
 # Is responsible for the creation of the UI elements needed for the player to select actions.
 # This includes the action menu and the targetting cursor, both created in response to combat
 # signals.
-class_name UIActionUIBuilder extends Control
+class_name UIActionMenuBuilder extends Control
 
 @export var action_menu_scene: PackedScene
 @export var target_cursor_scene: PackedScene
@@ -14,8 +14,10 @@ func _ready() -> void:
 		func _on_player_battler_selected(battler: Battler) -> void:
 			var action_menu: = action_menu_scene.instantiate() as UIActionMenu
 			add_child(action_menu)
+			action_menu.global_position = Vector2(1056,984)
+			action_menu.battler = battler
 			
-			action_menu.open(battler)
+			#action_menu.open(battler)
 	)
 	
 	# If a valid player action has been selected, the targetting cursor should allow the player to

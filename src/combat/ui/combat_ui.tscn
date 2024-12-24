@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://erpdtvccm3j3"]
+[gd_scene load_steps=14 format=3 uid="uid://erpdtvccm3j3"]
 
 [ext_resource type="PackedScene" uid="uid://cy0jvvqhcopp3" path="res://src/combat/ui/battler_entry/ui_player_battler_list.tscn" id="1_76ta8"]
 [ext_resource type="Script" path="res://src/combat/ui/combat_ui.gd" id="1_pcl62"]
@@ -6,24 +6,39 @@
 [ext_resource type="Script" path="res://src/combat/battlers/battler.gd" id="2_rwss2"]
 [ext_resource type="Resource" uid="uid://chuarvle06xxf" path="res://battlers/bugcat_stats.tres" id="3_i5470"]
 [ext_resource type="PackedScene" uid="uid://ugsq7u4cue4w" path="res://assets/battlers/bugcat_anim.tscn" id="4_5dodt"]
+[ext_resource type="PackedScene" uid="uid://bipyuaeqoxmt2" path="res://src/combat/ui/action_menu/ui_action_menu.tscn" id="4_bh5gy"]
+[ext_resource type="Script" path="res://src/combat/ui/action_menu/ui_player_action_menu_builder.gd" id="4_f8t21"]
 [ext_resource type="Resource" uid="uid://bn4nqbuhq4ih8" path="res://battlers/bear/bear_stats.tres" id="5_8hi3d"]
 [ext_resource type="PackedScene" uid="uid://bl8bmbt7v3lrj" path="res://assets/battlers/bear_anim.tscn" id="6_7eo2l"]
+[ext_resource type="Script" path="res://src/combat/actions/battler_action.gd" id="8_tg2h6"]
+[ext_resource type="Resource" uid="uid://752xsau3xyx0" path="res://battlers/actions/melee_action.tres" id="9_81u7u"]
+[ext_resource type="Resource" uid="uid://bs4g81qa8u57q" path="res://battlers/actions/ranged_action.tres" id="10_ao34c"]
 
 [node name="CombatUI" type="CanvasLayer"]
 script = ExtResource("1_pcl62")
-
-[node name="PlayerBattlerList" parent="." node_paths=PackedStringArray("battlers") instance=ExtResource("1_76ta8")]
-battlers = [NodePath("../Franky"), NodePath("../Blippy")]
-entry_scene = ExtResource("2_2myou")
 
 [node name="Franky" type="Node2D" parent="."]
 position = Vector2(597, 602)
 script = ExtResource("2_rwss2")
 stats = ExtResource("3_i5470")
+actions = Array[ExtResource("8_tg2h6")]([ExtResource("9_81u7u"), ExtResource("10_ao34c")])
 battler_anim_scene = ExtResource("4_5dodt")
 
 [node name="Blippy" type="Node2D" parent="."]
 position = Vector2(930, 907)
 script = ExtResource("2_rwss2")
 stats = ExtResource("5_8hi3d")
+actions = Array[ExtResource("8_tg2h6")]([ExtResource("10_ao34c")])
 battler_anim_scene = ExtResource("6_7eo2l")
+
+[node name="PlayerBattlerList" parent="." node_paths=PackedStringArray("battlers") instance=ExtResource("1_76ta8")]
+battlers = [NodePath("../Franky"), NodePath("../Blippy")]
+entry_scene = ExtResource("2_2myou")
+
+[node name="ActionMenuBuilder" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_f8t21")
+action_menu_scene = ExtResource("4_bh5gy")

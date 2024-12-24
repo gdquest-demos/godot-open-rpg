@@ -78,4 +78,4 @@ libraries = {
 "": SubResource("AnimationLibrary_25pwl")
 }
 
-[node name="ActionMenuCursor" parent="." instance=ExtResource("2_eegdl")]
+[node name="MenuCursor" parent="." instance=ExtResource("2_eegdl")]

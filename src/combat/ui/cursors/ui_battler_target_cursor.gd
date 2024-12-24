@@ -18,7 +18,7 @@ var _current_target: Battler = null:
 			hide()
 		
 		else:
-			_move_to(_current_target.anim.front.global_position)
+			_move_to(_current_target.anim.top.global_position)
 
 
 func _ready() -> void:

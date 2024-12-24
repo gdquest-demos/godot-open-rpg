@@ -23,7 +23,7 @@ var is_disabled: = true:
 var _entries: Array[BaseButton] = []
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
-@onready var _menu_cursor: = $ActionMenuCursor as UIMenuCursor
+@onready var _menu_cursor: = $MenuCursor as UIMenuCursor
 
 
 ## Bring the first entry into input focus, moving the cursor to its position.

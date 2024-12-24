@@ -33,7 +33,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(0.35, 2.86),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-50, 0)]
+"values": [Vector2(0, 0), Vector2(0, -50)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xs2hl"]
@@ -46,6 +46,7 @@ _data = {
 script = ExtResource("1_7w7pq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
 texture = ExtResource("2_bn0ds")
 offset = Vector2(-67, 0)
 
