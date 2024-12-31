@@ -61,16 +61,12 @@ _data = {
 }
 
 [node name="UIActionMenu" instance=ExtResource("1_aaqxu")]
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 3
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 96.0
-offset_top = -96.0
-offset_right = 96.0
-offset_bottom = -96.0
-grow_horizontal = 2
+offset_left = 0.0
+offset_top = 0.0
+offset_bottom = 0.0
 grow_vertical = 0
 size_flags_vertical = 10
 alignment = 2

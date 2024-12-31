@@ -35,10 +35,9 @@ battler_anim_scene = ExtResource("6_7eo2l")
 battlers = [NodePath("../Franky"), NodePath("../Blippy")]
 entry_scene = ExtResource("2_2myou")
 
-[node name="ActionMenuBuilder" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ActionMenuBuilder" type="Node2D" parent="."]
 script = ExtResource("4_f8t21")
 action_menu_scene = ExtResource("4_bh5gy")
+
+[node name="ActionMenuAnchor" type="Marker2D" parent="ActionMenuBuilder"]
+position = Vector2(1056, 984)

@@ -1,23 +1,27 @@
 # Is responsible for the creation of the UI elements needed for the player to select actions.
 # This includes the action menu and the targetting cursor, both created in response to combat
 # signals.
-class_name UIActionMenuBuilder extends Control
+class_name UIActionMenuBuilder extends Node2D
 
 @export var action_menu_scene: PackedScene
 @export var target_cursor_scene: PackedScene
 
+var action_menu: UIActionMenu
+
 
 func _ready() -> void:
+	set_process_unhandled_input(false)
+	
 	# If a player battler has been selected, the action menu should open so that the player may
 	# choose an action.
 	CombatEvents.player_battler_selected.connect(
 		func _on_player_battler_selected(battler: Battler) -> void:
-			var action_menu: = action_menu_scene.instantiate() as UIActionMenu
-			add_child(action_menu)
-			action_menu.global_position = Vector2(1056,984)
-			action_menu.battler = battler
+			if battler:
+				action_menu = action_menu_scene.instantiate() as UIActionMenu
+				$ActionMenuAnchor.add_child(action_menu)
+				action_menu.battler = battler
 			
-			#action_menu.open(battler)
+			set_process_unhandled_input(battler != null)
 	)
 	
 	# If a valid player action has been selected, the targetting cursor should allow the player to

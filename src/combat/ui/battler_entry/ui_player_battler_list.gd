@@ -22,6 +22,16 @@ class_name UIPlayerBattlerList extends UIListMenu
 		fade_in()
 
 
+func _ready() -> void:
+	# If the player has selected a battler, prevent input from reaching the battler list.
+	# This is relevant with mouse/touchscreen input.
+	# If the player has finished navigating the menu, restore input to the battler list.
+	CombatEvents.player_battler_selected.connect(
+		func _on_player_battler_selected(battler: Battler):
+			is_disabled = battler != null
+	)
+
+
 ## Override the base method to let the combat know which battler was selected.
 func _on_entry_pressed(entry: BaseButton) -> void:
 	if not is_disabled:

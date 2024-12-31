@@ -54,6 +54,15 @@ func _ready() -> void:
 	hide()
 
 
+# Capture any input events that will signal going "back" in the menu hierarchy.
+# This includes mouse or touch input outside of a menu or pressing the back button/key.
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("select") or event.is_action_released("back"):
+		close()
+
+
 func close() -> void:
 	await fade_out()
 	queue_free()
+	
+	CombatEvents.player_battler_selected.emit(null)
