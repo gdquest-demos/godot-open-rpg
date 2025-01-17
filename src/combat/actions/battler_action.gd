@@ -33,3 +33,26 @@ func can_be_used_by(battler: Battler) -> bool:
 ## [br][br]Note: The base action class does nothing, but must be overridden to do anything.
 func execute(source: Battler, _targets: Array[Battler] = []) -> void:
 	await source.get_tree().process_frame
+
+
+## Returns and array of [Battler]s that could be affected by the action.
+## This includes most cases, accounting for parameters such as [member targets_self]. Specific
+## actions may wish to override get_possible_targets (to target only mushrooms, for example).
+func get_possible_targets(source: Battler, battlers: CombatTeamData) -> Array[Battler]:
+	var possible_targets: Array[Battler] = []
+	
+	# Normally, actions can pick from battlers of the opposing team. However, actions may be
+	# specified to target the source battler only or to target ALL battlers instead.
+	if targets_self:
+		possible_targets.append(source)
+	
+	elif targets_all:
+		possible_targets.append_array(battlers.get_all_battlers())
+	
+	else:
+		if source.is_player:
+			possible_targets.append_array(battlers.enemies)
+		else:
+			possible_targets.append_array(battlers.player_battlers)
+	
+	return possible_targets

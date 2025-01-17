@@ -1,3 +1,5 @@
+## The player battler UI displays information for each player-owned [Battler] in a combat.
+## These entries may be selected in order to queue actions for the battlers to perform.
 class_name UIPlayerBattlerList extends UIListMenu
 
 ## The battler list will create individual entries for each [Battler] contained in this array.
@@ -30,6 +32,19 @@ func _ready() -> void:
 		func _on_player_battler_selected(battler: Battler):
 			is_disabled = battler != null
 	)
+	
+	# If the player has selected targets for an action, then the battler list needs to pickup input.
+	CombatEvents.player_targets_selected.connect(
+		func _on_player_targets_selected(targets: Array[Battler]):
+			# A non-empty array indicates that there are valid targets.
+			if not targets.is_empty():
+				is_disabled = false
+	)
+
+
+## Create all menu entries needed to track player battlers throughout the combat.
+func setup(battler_data: CombatTeamData) -> void:
+	battlers = battler_data.player_battlers
 
 
 ## Override the base method to let the combat know which battler was selected.

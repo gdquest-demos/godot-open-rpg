@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3ciqydkjnkkx"]
+[gd_scene load_steps=12 format=3 uid="uid://b3ciqydkjnkkx"]
 
 [ext_resource type="Script" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
 [ext_resource type="Script" path="res://src/combat/active_turn_queue.gd" id="2_ll0ok"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://derqg1tjy74tw" path="res://src/combat/ui/turn_bar/ui_turn_bar.tscn" id="6_yrwb4"]
 [ext_resource type="PackedScene" uid="uid://cy0jvvqhcopp3" path="res://src/combat/ui/battler_entry/ui_player_battler_list.tscn" id="7_klx1g"]
 [ext_resource type="Script" path="res://src/combat/ui/action_menu/ui_player_action_menu_builder.gd" id="8_md0ic"]
+[ext_resource type="PackedScene" uid="uid://b35omff3fdb2g" path="res://src/combat/ui/battler_entry/ui_battler_entry.tscn" id="8_yvvff"]
+[ext_resource type="PackedScene" uid="uid://bipyuaeqoxmt2" path="res://src/combat/ui/action_menu/ui_action_menu.tscn" id="9_7r1pn"]
 [ext_resource type="PackedScene" uid="uid://bu56ii26ps128" path="res://src/combat/ui/cursors/ui_battler_target_cursor.tscn" id="10_g5v87"]
 
 [node name="CombatArena" type="Control"]
@@ -44,13 +46,15 @@ missed_label_scene = ExtResource("5_y3d4p")
 [node name="TurnBar" parent="UI" instance=ExtResource("6_yrwb4")]
 
 [node name="PlayerBattlerList" parent="UI" instance=ExtResource("7_klx1g")]
+entry_scene = ExtResource("8_yvvff")
 
-[node name="PlayerActionUIBuilder" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="PlayerActionUIBuilder" type="Node2D" parent="UI"]
 script = ExtResource("8_md0ic")
+action_menu_scene = ExtResource("9_7r1pn")
 target_cursor_scene = ExtResource("10_g5v87")
+metadata/_edit_group_ = true
+
+[node name="ActionMenuAnchor" type="Marker2D" parent="UI/PlayerActionUIBuilder"]
+position = Vector2(1056, 984)
 
 [node name="Timer" type="Timer" parent="UI"]

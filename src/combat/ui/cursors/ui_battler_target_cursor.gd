@@ -1,13 +1,29 @@
 class_name UIBattlerTargetingCursor extends Marker2D
 
+## An empty array of [Battler]s passed to [signal CombatEvents.player_targets_selected] when no 
+## target is selected.
+const INVALID_TARGETS: Array[Battler] = []
+
 ## The time taken to move the cursor from one [Battler] to the next.
 const SLIDE_TIME: = 0.1
 
+## All possible targets for a given action.
+var targets: Array[Battler] = []:
+	set(value):
+		targets = value
+		if not targets.is_empty():
+			_current_target = targets[0]
+			
+			# We want the arrow to appear immediately at the targert, so advance the tween to its end.
+			_slide_tween.custom_step(SLIDE_TIME)
+			
+			# Due to processing the tween above, there is a single frame where the cursor will be stuck
+			# at the origin (before the tween updates).
+			# Therefore, defer calling show() until after the tween will have processed.
+			show.call_deferred()
+
 # The tween used to move the cursor from Battler to Battler.
 var _slide_tween: Tween = null
-
-# All possible targets for a given action.
-var _targets: Array[Battler] = []
 
 # One of the entries specified by _targets, at which the cursor is located.
 var _current_target: Battler = null:
@@ -29,11 +45,12 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("ui_accept"):
-		CombatEvents.player_targets_selected.emit([_current_target])
+		var selected_target: Array[Battler] = [_current_target]
+		CombatEvents.player_targets_selected.emit(selected_target)
 		queue_free()
 	
-	elif event.is_action_released("ui_cancel"):
-		CombatEvents.player_targets_selected.emit([])
+	elif event.is_action_released("back"):
+		CombatEvents.player_targets_selected.emit(INVALID_TARGETS)
 		queue_free()
 	
 	# Other keypresses may indicate that the player is selecting another target.
@@ -54,22 +71,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				_current_target = new_target
 
 
-## Designate all possible targets that may be selected and set the cursor to the first entry.
-func setup(possible_targets: Array[Battler]) -> void:
-	_targets = possible_targets
-	
-	if not _targets.is_empty():
-		_current_target = _targets[0]
-		
-		# We want the arrow to appear immediately at the targert, so advance the tween to its end.
-		_slide_tween.custom_step(SLIDE_TIME)
-		
-		# Due to processing the tween above, there is a single frame where the cursor will be stuck
-		# at the origin (before the tween updates).
-		# Therefore, defer calling show() until after the tween will have processed.
-		show.call_deferred()
-
-
 # Finds the closest battler (that is also in _targets) in a given direction.
 # Returns null if no battlers may be found in that direction.
 func _find_closest_target(direction: Vector2) -> Battler:
@@ -78,7 +79,7 @@ func _find_closest_target(direction: Vector2) -> Battler:
 	
 	# First, we find all targetable battlers in a given direction.
 	var candidates: Array[Battler] = []
-	for battler in _targets:
+	for battler in targets:
 		# Don't select the current target.
 		if battler == _current_target:
 			continue

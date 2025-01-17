@@ -18,7 +18,7 @@ signal player_battler_selected(battler: Battler)
 
 ## Emitted whenever a player selects an action from the action menu.
 @warning_ignore("unused_signal")
-signal player_action_selected(action: BattlerAction)
+signal player_action_selected(action: BattlerAction, source: Battler)
 
 ## Emitted whenever a player selects targets or cancels target selection.
 @warning_ignore("unused_signal")

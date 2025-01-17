@@ -17,6 +17,7 @@ var is_disabled: = true:
 		for entry in _entries:
 			entry.disabled = is_disabled
 		
+		focus_first_entry()
 		_menu_cursor.visible = !is_disabled
 
 # Track all battler list entries in the following array. 

@@ -4,8 +4,8 @@ class_name UIEffectLabelBuilder extends Node2D
 @export var missed_label_scene: PackedScene
 
 
-func setup(battlers: Array[Battler]) -> void:
-	for battler in battlers:
+func setup(battler_data: CombatTeamData) -> void:
+	for battler in battler_data.get_all_battlers():
 
 		battler.hit_missed.connect(func _on_battler_hit_missed() -> void:
 			var label: = missed_label_scene.instantiate()

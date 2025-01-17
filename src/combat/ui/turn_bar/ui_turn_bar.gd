@@ -20,8 +20,8 @@ func fade_out() -> void:
 
 
 ## Initialize the turn bar, passing in all the battlers that we want to display.
-func setup(battlers: Array[Battler]) -> void:
-	for battler in battlers:
+func setup(battler_data: CombatTeamData) -> void:
+	for battler in battler_data.get_all_battlers():
 		# Connect a handful of signals to the icon so that it may respond to changes in the
 		# Battler's readiness and fade out if the Battler falls in combat.
 		var icon: UIBattlerIcon = ICON_SCENE.instantiate()
