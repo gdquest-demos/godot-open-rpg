@@ -23,8 +23,28 @@ class_name BattlerAction extends Resource
 
 
 ## Returns true if the [Battler] is able to use the action.
+## [br][br]By default, this method checks for a few conditions:
+##    - The battler reference is valid.
+##    - The battler has health points.
+##    - The battler has enough action points to perform the action.
 func can_be_used_by(battler: Battler) -> bool:
-	return energy_cost <= battler.stats.energy
+	return battler != null \
+		and battler.stats.health > 0 \
+		and battler.stats.energy >= energy_cost
+
+
+## Verifies that an action can be run. This can be dependent on any number of details regarding the
+## source and target [Battler]s.
+## The default behaviour is to check that the source can use the action and that there is at least 
+## one target that has health points and is selectable.
+func can_execute(source: Battler, targets: Array[Battler] = []) -> bool:
+	if not can_be_used_by(source):
+		return false
+	
+	for battler in targets:
+		if battler.is_selectable and battler.stats.health > 0:
+			return true
+	return false
 
 
 ## The body of the action, where different animations/modifiers/damage/etc. will be played out.

@@ -9,6 +9,21 @@
 ## acting while the player is taking their turn.
 class_name ActiveTurnQueue extends Node2D
 
+## The slow-motion value of [time_scale] used when the player is navigating action/target menus.
+const SLOW_TIME_SCALE: = 0.05
+
+## A small data structure that allows the turn queue to easily add, remove, and play different
+## [BattlerActions].
+class Entry:
+	var source: Battler
+	var targets: Array[Battler]
+	var action: BattlerAction
+	
+	func _init(queued_action: BattlerAction, actor: Battler, targeted: Array[Battler]) -> void:
+		source = actor
+		targets = targeted
+		action = queued_action
+
 ## Emitted immediately once the player has won or lost the battle. Note that all animations (such
 ## as the player or AI battlers disappearing) are not yet completed.
 ## This is the point at which most UI elements will disappear.
@@ -16,9 +31,6 @@ signal battlers_downed
 ## Emitted once a player has won or lost a battle, indicating whether or not it may be considered a 
 ## victory for the player. All combat animations have finished playing.
 signal combat_finished(is_player_victory: bool)
-## Emitted when a player-controlled battler finished playing a turn. That is, when the _play_turn()
-## method returns.
-signal player_turn_finished
 
 ## Allows pausing the Active Time Battle during combat intro, a cutscene, or combat end.
 var is_active: = true:
@@ -36,15 +48,11 @@ var time_scale: = 1.0:
 		for battler in battlers.get_all_battlers():
 			battler.time_scale = time_scale
 
-# If true, the player is currently playing a turn (navigating menus, choosing targets, etc.).
-var _is_player_playing: = false
-
-# Actions may be placed in the following queue and will be exectued in order by the ActiveTurnQueue.
-# This prevents actions from being executed concurrently.
-var _actions: = {}
-
 ## A stack of player-controlled battlers that have to take turns.
-var _queued_player_battlers: Array[Battler] = []
+var _queue: Array[Entry] = []
+
+# Tracks which [BattlerAction] is currently running. _active_action is null if no action is running.
+var _active_action: BattlerAction = null
 
 ## A list of the combat participants, in [CombatTeamData] form. This object is created by the turn
 ## queue from children [Battler]s and then made available to other combat systems.
@@ -58,6 +66,18 @@ func _ready() -> void:
 	
 	battlers.player_battlers_downed.connect(_on_combat_side_downed)
 	battlers.enemy_battlers_downed.connect(_on_combat_side_downed)
+	
+	# The time scale slows down whenever the user is picking an action. Connect to UI signals here
+	# to adjust accordingly to whether or not the play is navigating the target/action menus.
+	CombatEvents.player_battler_selected.connect(
+		func _on_player_battler_selected(battler: Battler):
+			time_scale = SLOW_TIME_SCALE if battler else 1.0
+	)
+	CombatEvents.player_targets_selected.connect(
+		func _on_player_targets_selected(targets: Array[Battler]):
+			if not targets.is_empty():
+				time_scale = 1.0
+	)
 	
 	# The ActiveTurnQueue uses _process to wait for animations to finish at combat end, so disable
 	# _process for now.
@@ -98,6 +118,54 @@ func _process(_delta: float) -> void:
 	# There are no defeat animations being played. Combat can now finish.
 	set_process(false)
 	combat_finished.emit(battlers.has_player_won)
+
+
+## Add a new [BattlerAction] to the turn queue. If no action is currently running, the new action
+## will be executed immediately. Otherwise, the new action will be executed after the 
+## that action that is in-progress.
+func queue_action(action: BattlerAction, source: Battler, targets: Array[Battler]) -> void:
+	var new_entry: = Entry.new(action, source, targets)
+	_queue.append(new_entry)
+	
+	if _active_action == null:
+		_play_next_action()
+
+
+## Check if the battler is registered with any of the queued actions. If so, remove them from the
+## queue.[br][br]
+## [b]Note:[/b] This will not unqueue the active action, as it has already been removed from queue.
+func unqueue_battler(battler: Battler) -> void:
+	_queue = _queue.filter(func(entry: Entry): return battler != entry.source)
+
+
+# Play the next action in the queue, if there is one. The active action will be tracked by the
+# _active_action property.
+func _play_next_action() -> void:
+	_active_action = null
+	
+	if not _queue.is_empty():
+		# Pull out the queue entry, which contains the action itself, the action source, and the
+		# targets of the action.
+		var next_entry: = _queue.pop_front() as Entry
+		
+		# Verify that the action is still valid (i.e. the source is alive and able to act, there are
+		# targets, etc.) and, if so, run it. The queue will not resume until the action has ended.
+		var battler: = next_entry.source
+		var targets: = next_entry.targets
+		var action: = next_entry.action
+		
+		if action.can_execute(battler, targets):
+			_active_action = action
+			battler.action_finished.connect(_play_next_action, CONNECT_DEFERRED | CONNECT_ONE_SHOT)
+			battler.act(action, targets)
+		
+		# The action was invalid, so go on to the next queued action.
+		else:
+			_play_next_action()
+
+
+func _on_action_finished() -> void:
+	_play_next_action.call_deferred()
 
 
 #func _play_turn(battler: Battler) -> void:
