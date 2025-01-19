@@ -1,11 +1,14 @@
 class_name UIBattlerTargetingCursor extends Marker2D
 
-## An empty array of [Battler]s passed to [signal CombatEvents.player_targets_selected] when no 
-## target is selected.
+## An empty array of [Battler]s passed to targets_selected] when no target is selected.
 const INVALID_TARGETS: Array[Battler] = []
 
 ## The time taken to move the cursor from one [Battler] to the next.
 const SLIDE_TIME: = 0.1
+
+## Emitted when the player has selected targets.
+## If the player has pressed 'back' instead, [const INVALID_TARGETS] will be returned.
+signal targets_selected(selection: Array[Battler])
 
 ## All possible targets for a given action.
 var targets: Array[Battler] = []:
@@ -46,11 +49,11 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("ui_accept"):
 		var selected_target: Array[Battler] = [_current_target]
-		CombatEvents.player_targets_selected.emit(selected_target)
+		targets_selected.emit(selected_target)
 		queue_free()
 	
 	elif event.is_action_released("back"):
-		CombatEvents.player_targets_selected.emit(INVALID_TARGETS)
+		targets_selected.emit(INVALID_TARGETS)
 		queue_free()
 	
 	# Other keypresses may indicate that the player is selecting another target.

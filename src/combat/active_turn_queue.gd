@@ -73,8 +73,8 @@ func _ready() -> void:
 		func _on_player_battler_selected(battler: Battler):
 			time_scale = SLOW_TIME_SCALE if battler else 1.0
 	)
-	CombatEvents.player_targets_selected.connect(
-		func _on_player_targets_selected(targets: Array[Battler]):
+	CombatEvents.action_selected.connect(
+		func action_selected(_action: BattlerAction, _source: Battler, targets: Array[Battler]):
 			if not targets.is_empty():
 				time_scale = 1.0
 	)

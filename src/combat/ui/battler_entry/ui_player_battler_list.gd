@@ -32,14 +32,6 @@ func _ready() -> void:
 		func _on_player_battler_selected(battler: Battler):
 			is_disabled = battler != null
 	)
-	
-	# If the player has selected targets for an action, then the battler list needs to pickup input.
-	CombatEvents.player_targets_selected.connect(
-		func _on_player_targets_selected(targets: Array[Battler]):
-			# A non-empty array indicates that there are valid targets.
-			if not targets.is_empty():
-				is_disabled = false
-	)
 
 
 ## Create all menu entries needed to track player battlers throughout the combat.

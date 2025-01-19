@@ -8,9 +8,7 @@
 @tool
 class_name Battler extends Node2D
 
-## Emitted when the battler has selected an action. This is done either by the [member ai_scene] or
-## by the player through the [UIActionMenu].
-signal action_selected
+
 ## Emitted when the battler finished their action and arrived back at their rest position.
 signal action_finished
 ## Forwarded from the receiving of [signal BettlerStats.health_depleted].
@@ -157,7 +155,7 @@ func act(action: BattlerAction, targets: Array[Battler] = []) -> void:
 	if is_active:
 		set_process(true)
 
-	action_finished.emit()
+	action_finished.emit.call_deferred()
 
 
 func take_hit(hit: BattlerHit) -> void:

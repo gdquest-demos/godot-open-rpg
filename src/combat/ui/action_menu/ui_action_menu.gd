@@ -1,6 +1,8 @@
 ## A menu that may have one or more [UIActionMenuPage]s, allowing the player to select actions.
 class_name UIActionMenu extends UIListMenu
 
+signal action_selected(action: BattlerAction)
+
 ## The menu tracks the [BattlerAction]s available to a single [Battler], depending on Battler state 
 ## (energy costs, for example).
 ## The action menu also needs to respond to Battler state, such as a change in energy points or the
@@ -34,7 +36,8 @@ class_name UIActionMenu extends UIListMenu
 				# the entire action menu. Also, forward along which action was pressed.
 				(func _on_action_button_pressed(battler_action: BattlerAction) -> void:
 					await close()
-					CombatEvents.player_action_selected.emit(battler_action, battler)
+					action_selected.emit(battler_action)
+					#CombatEvents.player_action_selected.emit(battler_action, battler)
 					).bind(action)
 			)
 		
@@ -48,21 +51,6 @@ class_name UIActionMenu extends UIListMenu
 							Vector2(0.0, button.size.y/2.0))
 					).bind(new_entry)
 			)
-			
-			# When an action is chosen, this menu is merely hidden in case the player decides to go
-			# 'back' in the menu hierarchy and choose a new action.
-			CombatEvents.player_targets_selected.connect(
-				func _on_player_targets_selected(targets: Array[Battler]):
-					# The player did not choose targets. Unhide the menu so that the player can
-					# choose a new action.
-					if targets.is_empty():
-						fade_in()
-					
-					# Alternatively, the player has selected targets for the chosen action, in which
-					# case the menu may be freed. It is no longer needed.
-					else:
-						queue_free()
-			)
 		
 		show()
 		fade_in()
@@ -71,6 +59,21 @@ class_name UIActionMenu extends UIListMenu
 func _ready() -> void:
 	hide()
 	set_process_unhandled_input(false)
+	
+	# When an action is chosen, this menu is merely hidden in case the player decides to go
+	# 'back' in the menu hierarchy and choose a new action.
+	#CombatEvents.player_targets_selected.connect(
+		#func _on_player_targets_selected(targets: Array[Battler]):
+			## The player did not choose targets. Unhide the menu so that the player can
+			## choose a new action.
+			#if targets.is_empty():
+				#fade_in()
+			#
+			## Alternatively, the player has selected targets for the chosen action, in which
+			## case the menu may be freed. It is no longer needed.
+			#else:
+				#queue_free()
+	#)
 
 
 # Capture any input events that will signal going "back" in the menu hierarchy.
@@ -90,3 +93,17 @@ func fade_in() -> void:
 func close() -> void:
 	set_process_unhandled_input(false)
 	await fade_out()
+
+
+# When an action is chosen, this menu is merely hidden in case the player decides to go
+# 'back' in the menu hierarchy and choose a new action.
+func _on_targets_selected(targets: Array[Battler]) -> void:
+	# The player did not choose targets. Unhide the menu so that the player can
+	# choose a new action.
+	if targets.is_empty():
+		fade_in()
+	
+	# Alternatively, the player has selected targets for the chosen action, in which
+	# case the menu may be freed. It is no longer needed.
+	else:
+		queue_free()
