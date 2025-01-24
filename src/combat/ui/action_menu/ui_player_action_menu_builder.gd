@@ -1,6 +1,5 @@
-# The builder is responsible for the creation of the UI elements needed for the player to select 
-# actions and their targets. This includes the action menu and the targetting cursor, both created
-# in response to combat signals.
+# The builder handles the creation of player BattlerActions by coordinating action and target menus.
+# These menus are created at runtime in response to UI signals that are triggered by player input.
 class_name UIActionMenuBuilder extends Node2D
 
 # The action menu scene that will be created whenever the player needs to select an action.

@@ -164,3 +164,7 @@ func take_hit(hit: BattlerHit) -> void:
 		stats.health -= hit.damage
 	else:
 		hit_missed.emit()
+
+
+func is_ready_to_act() -> bool:
+	return readiness >= 100.0
