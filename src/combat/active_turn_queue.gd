@@ -24,9 +24,9 @@ var is_active: = true:
 			for battler in battlers.get_all_battlers():
 				battler.is_active = is_active
 
-## A list of the combat participants, in [CombatTeamData] form. This object is created by the turn
+## A list of the combat participants, in [BattlerManager] form. This object is created by the turn
 ## queue from children [Battler]s and then made available to other combat systems.
-var battlers: CombatTeamData
+var battlers: BattlerManager
 
 ## Battlers may select their action at any point, where they will be cached in this dictionary.
 ## The battlers will not act, however, until the queue receives their [signal Battler.ready_to_act]
@@ -92,7 +92,7 @@ func _ready() -> void:
 	var enemies: Array[Battler]
 	enemies.assign(get_children().filter(func(i): return !i.is_player))
 	
-	battlers = CombatTeamData.new(players, enemies)
+	battlers = BattlerManager.new(players, enemies)
 	battlers.battlers_downed.connect(
 		# Begin the shutdown sequence for the combat, flagging end of the combat logic.
 		# This is called immediately when the player has either won or lost the combat.

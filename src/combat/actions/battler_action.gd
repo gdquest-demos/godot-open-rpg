@@ -58,7 +58,7 @@ func execute(source: Battler, _targets: Array[Battler] = []) -> void:
 ## Returns and array of [Battler]s that could be affected by the action.
 ## This includes most cases, accounting for parameters such as [member targets_self]. Specific
 ## actions may wish to override get_possible_targets (to target only mushrooms, for example).
-func get_possible_targets(source: Battler, battlers: CombatTeamData) -> Array[Battler]:
+func get_possible_targets(source: Battler, battlers: BattlerManager) -> Array[Battler]:
 	var possible_targets: Array[Battler] = []
 	
 	# Normally, actions can pick from battlers of the opposing team. However, actions may be

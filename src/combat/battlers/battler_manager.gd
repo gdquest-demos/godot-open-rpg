@@ -1,5 +1,5 @@
 ## Keeps reference to the various combat participants, including all [Battler]s and their teams.
-class_name CombatTeamData extends RefCounted
+class_name BattlerManager extends RefCounted
 
 ## Emitted immediately once the player has won or lost the battle. Note that all animations (such
 ## as the player or AI battlers disappearing) are not yet completed.

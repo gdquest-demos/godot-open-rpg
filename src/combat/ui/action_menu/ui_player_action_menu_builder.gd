@@ -10,7 +10,7 @@ class_name UIActionMenuBuilder extends Node2D
 
 # The action menu/targeting cursor are created/freed dynamically. We'll track the combat participant
 # data so that it can be fed into the action menu and targeting cursor on creation.
-var _battlers: CombatTeamData
+var _battlers: BattlerManager
 
 # The UI is responsible for relaying player input to the combat systems. In this case, we want to
 # track which battler and action are currently selected, so that we may queue orders for player
@@ -79,7 +79,7 @@ func _ready() -> void:
 
 
 # Keep track of combat participants for the target menu.
-func setup(battler_data: CombatTeamData) -> void:
+func setup(battler_data: BattlerManager) -> void:
 	_battlers = battler_data
 
 
