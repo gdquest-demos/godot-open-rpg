@@ -28,8 +28,8 @@ func _ready() -> void:
 	_ui_turn_bar.setup(combat_participant_data)
 	
 	# The UI elements will automatically fade out once one of the battler teams has lost.
-	turn_queue.battlers_downed.connect(_ui_turn_bar.fade_out)
-	turn_queue.battlers_downed.connect(_ui_battler_list.fade_out)
+	combat_participant_data.battlers_downed.connect(_ui_turn_bar.fade_out)
+	combat_participant_data.battlers_downed.connect(_ui_battler_list.fade_out)
 
 
 ## Begin combat, setting up the UI before running combat logic.

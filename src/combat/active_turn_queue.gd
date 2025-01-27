@@ -12,10 +12,6 @@ class_name ActiveTurnQueue extends Node2D
 ## The slow-motion value of [time_scale] used when the player is navigating action/target menus.
 const SLOW_TIME_SCALE: = 0.05
 
-## Emitted immediately once the player has won or lost the battle. Note that all animations (such
-## as the player or AI battlers disappearing) are not yet completed.
-## This is the point at which most UI elements will disappear.
-signal battlers_downed
 ## Emitted once a player has won or lost a battle, indicating whether or not it may be considered a 
 ## victory for the player. All combat animations have finished playing.
 signal combat_finished(is_player_victory: bool)
@@ -97,8 +93,21 @@ func _ready() -> void:
 	enemies.assign(get_children().filter(func(i): return !i.is_player))
 	
 	battlers = CombatTeamData.new(players, enemies)
-	battlers.player_battlers_downed.connect(_on_combat_side_downed)
-	battlers.enemy_battlers_downed.connect(_on_combat_side_downed)
+	battlers.battlers_downed.connect(
+		# Begin the shutdown sequence for the combat, flagging end of the combat logic.
+		# This is called immediately when the player has either won or lost the combat.
+		func _on_combat_side_downed() -> void:
+			# On combat end, a number of systems will animate out (the UI fades, for example).
+			# However, the battlers also end with animations: celebration or death animations. The 
+			# combat cannot truly end until these animations have finished, so wait for children 
+			# Battlers to 'wrap up' from this point onwards.
+			# This is done with the ActiveTurnQueue's process function, which will check each frame
+			# to see if the losing team's final animations have finished.
+			set_process(true)
+			
+			# Don't allow anyone else to act.
+			is_active = false
+	)
 	
 	# Battlers will act as their ready_to_act signal is emitted. The turn queue will allow them to
 	# act if another action is not currently underway.
@@ -160,21 +169,3 @@ func _on_battler_ready_to_act(battler: Battler):
 			_active_action = action
 			await battler.act(action, targets)
 			_active_action = null
-
-
-# Begin the shutdown sequence for the combat, flagging end of the combat logic.
-# This is called immediately when the player has either won or lost the combat.
-func _on_combat_side_downed() -> void:
-	# On combat end, a number of systems will animate out (the UI fades, for example).
-	# However, the battlers also end with animations: celebration or death animations. The combat
-	# cannot truly end until these animations have finished, so wait for children Battlers to
-	# 'wrap up' from this point onwards.
-	# This is done with the ActiveTurnQueue's process function, which will check each frame to see 
-	# if the losing team's final animations have finished.
-	set_process(true)
-
-	# Don't allow anyone else to act.
-	is_active = false
-	
-	# Let the normal combat UI systems know that they can fade out now.
-	battlers_downed.emit()

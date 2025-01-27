@@ -1,15 +1,10 @@
 ## Keeps reference to the various combat participants, including all [Battler]s and their teams.
 class_name CombatTeamData extends RefCounted
 
-## Emitted immediately once the player has won the battle. Note that all animations (such
+## Emitted immediately once the player has won or lost the battle. Note that all animations (such
 ## as the player or AI battlers disappearing) are not yet completed.
 ## This is the point at which most UI elements will disappear.
-signal enemy_battlers_downed
-
-## Emitted immediately once the player has lost the battle. Note that all animations (such
-## as the player or AI battlers disappearing) are not yet completed.
-## This is the point at which most UI elements will disappear.
-signal player_battlers_downed
+signal battlers_downed
 
 var player_battlers: Array[Battler] = []:
 	set(value):
@@ -26,7 +21,7 @@ var player_battlers: Array[Battler] = []:
 					# All player battlers have zero health. The player lost the battle!
 					print("Player lost!")
 					has_player_won = false
-					player_battlers_downed.emit()
+					battlers_downed.emit()
 			)
 
 var enemies: Array[Battler] = []:
@@ -46,7 +41,7 @@ var enemies: Array[Battler] = []:
 					# All enemy battlers have zero health. The player won!
 					print("Player won!")
 					has_player_won = true
-					enemy_battlers_downed.emit()
+					battlers_downed.emit()
 			)
 
 ## Tracks whether or not the player has won the combat.
