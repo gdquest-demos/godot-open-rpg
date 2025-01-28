@@ -19,7 +19,6 @@ signal action_selected(action: BattlerAction)
 			func _on_battler_health_depleted():
 				await close()
 				CombatEvents.player_battler_selected.emit(null)
-				queue_free()
 		)
 		
 		# Populate the menu with a list of actions.
@@ -83,7 +82,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("select") or event.is_action_released("back"):
 		await close()
 		CombatEvents.player_battler_selected.emit(null)
-		queue_free()
 
 
 func fade_in() -> void:
@@ -94,17 +92,4 @@ func fade_in() -> void:
 func close() -> void:
 	set_process_unhandled_input(false)
 	await fade_out()
-
-
-# When an action is chosen, this menu is merely hidden in case the player decides to go
-# 'back' in the menu hierarchy and choose a new action.
-func _on_targets_selected(targets: Array[Battler]) -> void:
-	# The player did not choose targets. Unhide the menu so that the player can
-	# choose a new action.
-	if targets.is_empty():
-		fade_in()
-	
-	# Alternatively, the player has selected targets for the chosen action, in which
-	# case the menu may be freed. It is no longer needed.
-	else:
-		queue_free()
+	queue_free()

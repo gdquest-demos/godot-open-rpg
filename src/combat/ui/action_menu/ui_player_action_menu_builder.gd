@@ -77,10 +77,13 @@ func _on_action_menu_action_selected(action: BattlerAction, action_menu: UIActio
 	# And connect to the cursor's signals that will indicate that targets have been chosen.
 	# Note that the action menu is currently hidden, and will be reshown if the player opts to
 	# press the 'back' input.
-	cursor.targets_selected.connect(action_menu._on_targets_selected)
+	#cursor.targets_selected.connect(action_menu._on_targets_selected)
 	cursor.targets_selected.connect(
 		func _on_cursor_targets_selected(targets: Array[Battler]) -> void:
 			if not targets.is_empty():
+				# Targets were selected, so the action menu instance is no longer needed.
+				action_menu.queue_free()
+				
 				# At this point, the player should have selected a valid action and assigned it
 				# targets, so the action may be cached for whenever the battler is ready.
 				CombatEvents.action_selected.emit(_selected_action, _selected_battler, targets)
@@ -88,4 +91,8 @@ func _on_action_menu_action_selected(action: BattlerAction, action_menu: UIActio
 				# The player has properly queued an action. Return the UI to the state where the
 				# player will pick a player Battler.
 				CombatEvents.player_battler_selected.emit(null)
+			
+			# No targets were selected, so the action menu can be re-used to find a new action.
+			else:
+				action_menu.fade_in()
 	)
