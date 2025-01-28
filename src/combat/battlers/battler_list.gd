@@ -1,5 +1,5 @@
 ## Keeps reference to the various combat participants, including all [Battler]s and their teams.
-class_name BattlerManager extends RefCounted
+class_name BattlerList extends RefCounted
 
 ## Emitted immediately once the player has won or lost the battle. Note that all animations (such
 ## as the player or AI battlers disappearing) are not yet completed.
@@ -57,3 +57,7 @@ func get_all_battlers() -> Array[Battler]:
 	var all_battlers: = player_battlers.duplicate()
 	all_battlers.append_array(enemies)
 	return all_battlers
+
+
+func get_live_battlers(battlers: Array[Battler]) -> Array[Battler]:
+	return battlers.filter(func(battler: Battler): return battler.stats.health > 0)

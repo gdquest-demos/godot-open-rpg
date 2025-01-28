@@ -35,7 +35,7 @@ func _ready() -> void:
 
 
 ## Create all menu entries needed to track player battlers throughout the combat.
-func setup(battler_data: BattlerManager) -> void:
+func setup(battler_data: BattlerList) -> void:
 	battlers = battler_data.player_battlers
 
 

@@ -22,6 +22,7 @@ signal action_selected(action: BattlerAction)
 				queue_free()
 		)
 		
+		# Populate the menu with a list of actions.
 		for action in battler.actions:
 			var can_use_action: = battler.stats.energy >= action.energy_cost
 			

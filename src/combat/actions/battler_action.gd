@@ -35,8 +35,6 @@ func can_be_used_by(battler: Battler) -> bool:
 
 ## Verifies that an action can be run. This can be dependent on any number of details regarding the
 ## source and target [Battler]s.
-## The default behaviour is to check that the source can use the action and that there is at least 
-## one target that has health points and is selectable.
 func can_execute(source: Battler, targets: Array[Battler] = []) -> bool:
 	if not can_be_used_by(source):
 		return false
@@ -58,7 +56,7 @@ func execute(source: Battler, _targets: Array[Battler] = []) -> void:
 ## Returns and array of [Battler]s that could be affected by the action.
 ## This includes most cases, accounting for parameters such as [member targets_self]. Specific
 ## actions may wish to override get_possible_targets (to target only mushrooms, for example).
-func get_possible_targets(source: Battler, battlers: BattlerManager) -> Array[Battler]:
+func get_possible_targets(source: Battler, battlers: BattlerList) -> Array[Battler]:
 	var possible_targets: Array[Battler] = []
 	
 	# Normally, actions can pick from battlers of the opposing team. However, actions may be
@@ -75,4 +73,12 @@ func get_possible_targets(source: Battler, battlers: BattlerManager) -> Array[Ba
 		else:
 			possible_targets.append_array(battlers.player_battlers)
 	
+	# Filter the targets to only include live Battlers.
+	possible_targets = battlers.get_live_battlers(possible_targets)
 	return possible_targets
+
+
+func can_target_battler(target: Battler) -> bool:
+	if target.is_selectable and target.stats.health > 0:
+		return true
+	return false

@@ -10,7 +10,7 @@ class_name UIActionMenuBuilder extends Node2D
 
 # The action menu/targeting cursor are created/freed dynamically. We'll track the combat participant
 # data so that it can be fed into the action menu and targeting cursor on creation.
-var _battlers: BattlerManager
+var _battlers: BattlerList
 
 # The UI is responsible for relaying player input to the combat systems. In this case, we want to
 # track which battler and action are currently selected, so that we may queue orders for player
@@ -19,16 +19,12 @@ var _battlers: BattlerManager
 # case we want the menus to close immediately.
 var _selected_battler: Battler = null:
 	set(value):
-		if _selected_battler:
-			_selected_battler.health_depleted.disconnect(_on_selected_battler_health_depleted)
-		
 		_selected_battler = value
 		if _selected_battler == null:
 			_selected_action = null
-		
-		else:
-			_selected_battler.health_depleted.connect(_on_selected_battler_health_depleted)
 
+# Keep track of which action the player is currently building. This is relevent whenever the player
+# is choosing targets.
 var _selected_action: BattlerAction = null
 
 # The action menu originates from a point set in the scene tree by the following Marker2D.
@@ -52,40 +48,20 @@ func _ready() -> void:
 				action_menu.action_selected.connect(
 					_on_action_menu_action_selected.bind(action_menu))
 	)
-	
-	# If a valid player action has been selected, the targeting cursor should allow the player to
-	# pick a target from a variety of battlers.
-	#CombatEvents.player_action_selected.connect(
-		#func _on_player_action_selected(action: BattlerAction, source: Battler) -> void:
-			#_selected_action = action
-			#
-			#var cursor: = target_cursor_scene.instantiate() as UIBattlerTargetingCursor
-			#add_child(cursor)
-			#
-			#cursor.targets = action.get_possible_targets(source, _battlers)
-	#)
-	
-	# If valid targets have been selected, the player may issue an order to the Battler for it to
-	# play out whenever its turn arrives.
-	#CombatEvents.player_targets_selected.connect(
-		#func _on_player_targets_selected(targets: Array[Battler]):
-			#if not targets.is_empty():
-				#
-				#
-				## The player has properly queued an action. Return the UI to the state where the
-				## player will pick a player Battler.
-				#CombatEvents.player_battler_selected.emit(null)
-	#)
 
 
 # Keep track of combat participants for the target menu.
-func setup(battler_data: BattlerManager) -> void:
+func setup(battler_data: BattlerList) -> void:
 	_battlers = battler_data
-
-
-# If the Battler dies while selecting an action or targets, close the menus immediately.
-func _on_selected_battler_health_depleted():
-	CombatEvents.player_battler_selected.emit(null)
+	
+	# If a player Battler dies while the player is selecting an action or choosing targets, signal
+	# that the targeting cursor/menu should close.
+	for battler in battler_data.player_battlers:
+		battler.health_depleted.connect(
+			(func _on_player_battler_health_depleted(downed_battler: Battler):
+				if downed_battler == _selected_battler:
+					CombatEvents.player_battler_selected.emit(null)).bind(battler)
+		)
 
 
 # Callback triggered by the player selecting an action from the action menu. A cursor is created to

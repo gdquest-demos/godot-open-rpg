@@ -15,15 +15,20 @@ var targets: Array[Battler] = []:
 	set(value):
 		targets = value
 		if not targets.is_empty():
-			_current_target = targets[0]
+			if not _current_target in targets:
+				_current_target = targets[0]
 			
-			# We want the arrow to appear immediately at the targert, so advance the tween to its end.
+			# We want the arrow to appear immediately at the targert, so advance the tween to its
+			# end.
 			_slide_tween.custom_step(SLIDE_TIME)
 			
-			# Due to processing the tween above, there is a single frame where the cursor will be stuck
-			# at the origin (before the tween updates).
+			# Due to processing the tween above, there is a single frame where the cursor will be 
+			# stuck at the origin (before the tween updates).
 			# Therefore, defer calling show() until after the tween will have processed.
 			show.call_deferred()
+		
+		else:
+			_current_target = null
 
 # The tween used to move the cursor from Battler to Battler.
 var _slide_tween: Tween = null

@@ -15,7 +15,10 @@ var battler: Battler:
 		battler.stats.energy_changed.connect(
 			func _on_battler_energy_changed(): _energy.value = battler.stats.energy)
 		battler.stats.health_changed.connect(
-			func _on_battler_health_changed(): _life.target_value = battler.stats.health)
+			func _on_battler_health_changed(): 
+				_life.target_value = battler.stats.health
+				disabled = battler.stats.health <= 0
+		)
 
 @onready var _energy: = $HBoxContainer/CenterContainer/EnergyBar as UIBattlerEnergyBar
 @onready var _life: = $HBoxContainer/LifeBar as UIBattlerLifeBar
