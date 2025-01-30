@@ -38,6 +38,10 @@ var _selected_battler: Battler = null:
 # is choosing targets.
 var _selected_action: BattlerAction = null
 
+# Keep reference to the active targeting cursor. If no cursor is active, the value is null.
+# This allows the cursor targets to be updated in real-time as Battler states change.
+var _cursor: UIBattlerTargetingCursor = null
+
 @onready var _action_menu_anchor: = $ActionMenuAnchor as Node2D
 @onready var _battler_list: = $PlayerBattlerList as UIPlayerBattlerList
 
@@ -57,6 +61,11 @@ func setup(battler_data: BattlerList) -> void:
 			if _selected_battler:
 				_create_action_menu()
 	)
+	
+	# If there is a change in Battler states (for now, only consider a change in health points),
+	# re-evaluate the targeting cursor's target list, if the cursor is currently active.
+	for battler in battler_data.get_all_battlers():
+		battler.stats.health_changed.connect(_on_battler_health_changed)
 	
 	# If a player Battler dies while the player is selecting an action or choosing targets, signal
 	# that the targeting cursor/menu should close.
@@ -89,13 +98,16 @@ func _create_targeting_cursor() -> void:
 	assert(_selected_action, "Trying to create the targeting cursor without a selected action!")
 	
 	# Create the cursor which will respond to player input and allow choosing a target.
-	var cursor: = target_cursor_scene.instantiate() as UIBattlerTargetingCursor
-	add_child(cursor)
-	cursor.targets = _selected_action.get_possible_targets(_selected_battler, _battlers)
+	_cursor = target_cursor_scene.instantiate() as UIBattlerTargetingCursor
+	add_child(_cursor)
+	_cursor.targets = _selected_action.get_possible_targets(_selected_battler, _battlers)
 	
-	# And connect to the cursor's signals that will indicate that targets have been chosen.
-	cursor.targets_selected.connect(
+	# Finally, connect to the cursor's signals that will indicate that targets have been chosen.
+	_cursor.targets_selected.connect(
 		func _on_cursor_targets_selected(targets: Array[Battler]) -> void:
+			# The cursor will be freed after emitting this signal. Remove reference to the cursor.
+			_cursor = null
+			
 			if not targets.is_empty():
 				# At this point, the player should have selected a valid action and assigned it
 				# targets, so the action may be cached for whenever the battler is ready.
@@ -109,3 +121,8 @@ func _create_targeting_cursor() -> void:
 				_selected_action = null
 				_create_action_menu()
 	)
+
+
+func _on_battler_health_changed() -> void:
+	if _cursor != null:
+		_cursor.targets = _selected_action.get_possible_targets(_selected_battler, _battlers)

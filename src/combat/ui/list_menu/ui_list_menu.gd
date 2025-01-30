@@ -75,6 +75,21 @@ func _create_entry() -> BaseButton:
 	return new_entry
 
 
+func _loop_first_and_last_entries() -> void:
+	assert(not _entries.is_empty(), "No action entries for the menu to connect!")
+	
+	var last_entry_index: = _entries.size()-1
+	var first_entry: = _entries[0]
+	if last_entry_index > 0:
+		var last_entry: = _entries[last_entry_index]
+		first_entry.focus_neighbor_top = first_entry.get_path_to(last_entry)
+		last_entry.focus_neighbor_bottom = last_entry.get_path_to(first_entry)
+	
+	elif last_entry_index == 0:
+		first_entry.focus_neighbor_top = "."
+		first_entry.focus_neighbor_bottom = "."
+
+
 ## Moves the [UIMenuCursor] to the focused entry. Derivative menus may want to add additional
 ## behaviour.
 func _on_entry_focused(entry: BaseButton) -> void:

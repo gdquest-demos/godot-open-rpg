@@ -12,6 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://bu56ii26ps128" path="res://src/combat/ui/cursors/ui_battler_target_cursor.tscn" id="10_g5v87"]
 [ext_resource type="Script" path="res://src/combat/ui/ui_combat_menus.gd" id="12_mmb61"]
 
+[sub_resource type="Animation" id="Animation_wen7t"]
+length = 0.001
+
 [sub_resource type="Animation" id="Animation_1kh4k"]
 resource_name = "fade_in"
 length = 1.2
@@ -44,9 +47,6 @@ tracks/1/keys = {
 "method": &"fade_in"
 }]
 }
-
-[sub_resource type="Animation" id="Animation_wen7t"]
-length = 0.001
 
 [sub_resource type="Animation" id="Animation_16p0q"]
 resource_name = "fade_out"

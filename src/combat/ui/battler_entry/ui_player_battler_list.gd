@@ -21,6 +21,8 @@ class_name UIPlayerBattlerList extends UIListMenu
 			var new_entry = _create_entry() as UIBattlerEntry
 			new_entry.battler = battler
 		
+		_loop_first_and_last_entries()
+		
 		fade_in()
 
 

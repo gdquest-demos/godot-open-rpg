@@ -7,7 +7,8 @@ const INVALID_TARGETS: Array[Battler] = []
 const SLIDE_TIME: = 0.1
 
 ## Emitted when the player has selected targets.
-## If the player has pressed 'back' instead, [const INVALID_TARGETS] will be returned.
+## If the player has pressed 'back' instead, [const INVALID_TARGETS] will be returned.[br][br]
+## In either case, the cursor will call queue_free() after emitting this signal.
 signal targets_selected(selection: Array[Battler])
 
 ## All possible targets for a given action.
