@@ -55,11 +55,20 @@ func setup(battler_data: BattlerList) -> void:
 	
 	# If a player battler has been selected, the action menu should open so that the player may
 	# choose an action.
+	# If the selected Battler had already queued an action, the player must rechoose that
+	# action.
 	CombatEvents.player_battler_selected.connect(
 		func _on_player_battler_selected(battler: Battler) -> void:
 			_selected_battler = battler
 			if _selected_battler:
 				_create_action_menu()
+				
+				# There is a chance that the player had already selected an action for this Battler
+				# and now wants to change it. In that case, unqueue the action through the proper
+				# CombatEvents signal.
+				# Note that the targets parameter must be cast to the correct array type.
+				var empty_target_array: Array[Battler] = []
+				CombatEvents.action_selected.emit(null, _selected_battler, empty_target_array)
 	)
 	
 	# If there is a change in Battler states (for now, only consider a change in health points),

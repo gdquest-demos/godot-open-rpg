@@ -31,8 +31,9 @@ var target_value := 0.0:
 var _tween: Tween = null
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
-@onready var _name_label: = $MarginContainer/Name as Label
-@onready var _value_label: = $MarginContainer/Value as Label
+@onready var _name_label: = $MarginContainer/HBoxContainer/Name as Label
+@onready var _queued_action_icon: = $MarginContainer/HBoxContainer/QueuedActionIcon as TextureRect
+@onready var _value_label: = $MarginContainer/HBoxContainer/Value as Label
 
 
 func _ready() -> void:
@@ -47,3 +48,7 @@ func setup(battler_name: String, max_hp: int, start_hp: int) -> void:
 	
 	max_value = max_hp
 	value = start_hp
+
+
+func set_action_icon(texture: Texture) -> void:
+	_queued_action_icon.texture = texture

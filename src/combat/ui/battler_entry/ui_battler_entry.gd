@@ -19,6 +19,29 @@ var battler: Battler:
 				_life.target_value = battler.stats.health
 				disabled = battler.stats.health <= 0
 		)
+		
+		# Once the player has started to act, remove the action preview icon. The icon only exists
+		# to help the player with their battlefield strategy.
+		battler.ready_to_act.connect(
+			func _on_battler_ready_to_act() -> void:
+				_life.set_action_icon(null)
+		)
 
-@onready var _energy: = $HBoxContainer/CenterContainer/EnergyBar as UIBattlerEnergyBar
-@onready var _life: = $HBoxContainer/LifeBar as UIBattlerLifeBar
+@onready var _energy: = $VBoxContainer/CenterContainer/EnergyBar as UIBattlerEnergyBar
+@onready var _life: = $VBoxContainer/LifeBar as UIBattlerLifeBar
+
+
+func _ready() -> void:
+	# If the player queues an action for this Battler, display the queued action's icon next to the
+	# Battler name and health points information.
+	CombatEvents.action_selected.connect(
+		func _on_battler_action_selected(action: BattlerAction, source: Battler, 
+				_targets: Array[Battler]) -> void:
+			if source == battler:
+				if action:
+					_life.set_action_icon(action.icon)
+				
+				else:
+					_life.set_action_icon(null)
+	)
+	

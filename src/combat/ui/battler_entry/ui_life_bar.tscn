@@ -97,16 +97,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_bottom = 40
 
-[node name="Value" type="Label" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 8
-theme_override_constants/outline_size = 16
-text = "9999"
+size_flags_vertical = 4
+theme_override_constants/separation = 24
+alignment = 2
 
-[node name="Name" type="Label" parent="MarginContainer"]
+[node name="QueuedActionIcon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_constants/outline_size = 16
 text = "Name"
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/outline_size = 16
+text = "9999"
