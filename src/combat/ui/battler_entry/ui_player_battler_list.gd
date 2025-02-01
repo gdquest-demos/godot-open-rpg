@@ -38,10 +38,10 @@ func _ready() -> void:
 
 ## Create all menu entries needed to track player battlers throughout the combat.
 func setup(battler_data: BattlerList) -> void:
-	battlers = battler_data.player_battlers
+	battlers = battler_data.players
 
 
-## Override the base method to let the combat know which battler was selected.
+# Override the base method to let the combat know which battler was selected.
 func _on_entry_pressed(entry: BaseButton) -> void:
 	if not is_disabled:
 		var battler_entry = entry as UIBattlerEntry

@@ -128,7 +128,7 @@ func _process(_delta: float) -> void:
 	# Only track the animations of the losing team, as the winning team will animate their idle
 	# poses indefinitely.
 	var tracked_battlers: Array[Battler] = battlers.enemies if battlers.has_player_won \
-		else battlers.player_battlers
+		else battlers.players
 	
 	for child: Battler in tracked_battlers:
 		# If there are still playing BattlerAnims, don't finish the battle yet.

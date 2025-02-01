@@ -78,7 +78,7 @@ func setup(battler_data: BattlerList) -> void:
 	
 	# If a player Battler dies while the player is selecting an action or choosing targets, signal
 	# that the targeting cursor/menu should close.
-	for battler in battler_data.player_battlers:
+	for battler in battler_data.players:
 		battler.health_depleted.connect(
 			(func _on_player_battler_health_depleted(downed_battler: Battler):
 				if downed_battler == _selected_battler:
@@ -91,13 +91,14 @@ func _create_action_menu() -> void:
 	
 	var action_menu = action_menu_scene.instantiate() as UIActionMenu
 	_action_menu_anchor.add_child(action_menu)
-	action_menu.battler = _selected_battler
+	action_menu.setup(_selected_battler, _battlers)
 	
 	# The action builder will wait until the player selects an action or presses 'back'.
 	# Selecting an action will trigger the following signal, whereas pressing 'back'
 	# will close the menu directly and deselect the current battler.
 	action_menu.action_selected.connect(
 		func _on_action_selected(action: BattlerAction):
+			print("Selected???")
 			_selected_action = action
 			_create_targeting_cursor()
 	)

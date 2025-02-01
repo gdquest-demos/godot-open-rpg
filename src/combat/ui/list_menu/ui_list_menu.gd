@@ -93,8 +93,7 @@ func _loop_first_and_last_entries() -> void:
 ## Moves the [UIMenuCursor] to the focused entry. Derivative menus may want to add additional
 ## behaviour.
 func _on_entry_focused(entry: BaseButton) -> void:
-	if not is_disabled:
-		_menu_cursor.move_to(entry.global_position + Vector2(0.0, entry.size.y/2.0))
+	_menu_cursor.move_to(entry.global_position + Vector2(0.0, entry.size.y/2.0))
 
 
 ## Hides (and disables) the menu. Derivative menus may want to add additional behaviour.

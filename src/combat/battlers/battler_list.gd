@@ -6,20 +6,18 @@ class_name BattlerList extends RefCounted
 ## This is the point at which most UI elements will disappear.
 signal battlers_downed
 
-var player_battlers: Array[Battler] = []:
+var players: Array[Battler] = []:
 	set(value):
-		player_battlers = value
-		print("Players ", player_battlers)
-		for battler in player_battlers:
+		players = value
+		for battler in players:
 			# If a party member falls in battle, check to see if the player has lost.
 			battler.health_depleted.connect(
 				func _on_party_member_health_depleted():
-					for player in player_battlers:
+					for player in players:
 						if player.stats.health > 0:
 							return
 					
 					# All player battlers have zero health. The player lost the battle!
-					print("Player lost!")
 					has_player_won = false
 					battlers_downed.emit()
 			)
@@ -27,19 +25,15 @@ var player_battlers: Array[Battler] = []:
 var enemies: Array[Battler] = []:
 	set(value):
 		enemies = value
-		print(enemies)
 		for battler in enemies:
 			# If an enemy falls in battle, check to see if the player has won.
 			battler.health_depleted.connect(
 				func _on_enemy_health_depleted():
-					print("Enemy hp depleted")
 					for enemy in enemies:
 						if enemy.stats.health > 0:
-							print("enemy %s has hp" % enemy.name)
 							return
 					
 					# All enemy battlers have zero health. The player won!
-					print("Player won!")
 					has_player_won = true
 					battlers_downed.emit()
 			)
@@ -48,13 +42,13 @@ var enemies: Array[Battler] = []:
 var has_player_won: = false
 
 
-func _init(players: Array[Battler], enemy_battlers: Array[Battler]) -> void:
-	player_battlers = players
+func _init(player_battlers: Array[Battler], enemy_battlers: Array[Battler]) -> void:
+	players = player_battlers
 	enemies = enemy_battlers
 
 
 func get_all_battlers() -> Array[Battler]:
-	var all_battlers: = player_battlers.duplicate()
+	var all_battlers: = players.duplicate()
 	all_battlers.append_array(enemies)
 	return all_battlers
 

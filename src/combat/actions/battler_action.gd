@@ -5,18 +5,36 @@
 ## including any animations or effects.
 class_name BattlerAction extends Resource
 
+enum TargetScope { SELF, SINGLE, ALL }
+
+@export_group("UI")
 ## An action-specific icon. Shown primarily in menus.
 @export var icon: Texture
 ## The 'name' of the action. Shown primarily in menus.
 @export var label: = "Base combat action"
 ## Tells the player exactly what an action does. Shown primarily in menus.
 @export var description: = "A combat action."
-## Amount of energy required to perform the action.
-@export_range(0, 10) var energy_cost: = 0
+
+# Action targeting properties.
+@export_group("Targets")
+## Determines how many [Battler]s this action targets. [b]Note:[/b] [enum TargetScope.SELF] will not
+## make use of the [targets_friendlies] or [targets_enemies] flags.
+@export var target_scope: = TargetScope.SINGLE
+## Can this action target friendly [Battler]s? Has no effect if [target_scope] is
+## [enum TargetScope.SELF].
+@export var targets_friendlies: = false
+## Can this action target enemy [Battler]s? Has no effect if [target_scope] is
+## [enum TargetScope.SELF].
+@export var targets_enemies: = false
+
+@export_group("")
+
 ## The action's [enum Elements.Types].
 @export var element: = Elements.Types.NONE
-@export var targets_self: = false
-@export var targets_all: = false
+
+## Amount of energy required to perform the action.
+@export_range(0, 10) var energy_cost: = 0
+
 ## The amount of [member Battler.readiness] left to the Battler after acting. This can be used to
 ## design weak attacks that allow the Battler to take fast turns.
 @export_range(0.0, 100.0) var readiness_saved: = 0.0
@@ -61,17 +79,22 @@ func get_possible_targets(source: Battler, battlers: BattlerList) -> Array[Battl
 	
 	# Normally, actions can pick from battlers of the opposing team. However, actions may be
 	# specified to target the source battler only or to target ALL battlers instead.
-	if targets_self:
+	if target_scope == TargetScope.SELF:
 		possible_targets.append(source)
 	
-	elif targets_all:
-		possible_targets.append_array(battlers.get_all_battlers())
+	elif source.is_player:
+		if targets_friendlies:
+			possible_targets.append_array(battlers.players)
+		
+		if targets_enemies:
+			possible_targets.append_array(battlers.enemies)
 	
 	else:
-		if source.is_player:
+		if targets_friendlies:
 			possible_targets.append_array(battlers.enemies)
-		else:
-			possible_targets.append_array(battlers.player_battlers)
+		
+		elif targets_enemies:
+			possible_targets.append_array(battlers.players)
 	
 	# Filter the targets to only include live Battlers.
 	possible_targets = battlers.get_live_battlers(possible_targets)

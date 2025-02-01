@@ -3,36 +3,35 @@ class_name UIActionMenu extends UIListMenu
 
 signal action_selected(action: BattlerAction)
 
-## The menu tracks the [BattlerAction]s available to a single [Battler], depending on Battler state 
-## (energy costs, for example).
-## The action menu also needs to respond to Battler state, such as a change in energy points or the
-## Battler's health.
-@export var battler: Battler:
+# The menu tracks the [BattlerAction]s available to a single [Battler], depending on Battler state 
+# (energy costs, for example).
+# The action menu also needs to respond to Battler state, such as a change in energy points or the
+# Battler's health.
+@export var _battler: Battler:
 	set(value):
-		battler = value
+		_battler = value
 		
 		if not is_inside_tree():
 			await ready
 		
 		# If the battler currently choosing the action dies, close and free the menu.
-		battler.health_depleted.connect(
+		_battler.health_depleted.connect(
 			func _on_battler_health_depleted():
 				await close()
 				CombatEvents.player_battler_selected.emit(null)
 		)
 		
 		# If the battler's energy levels changed, re-evaluate which actions are available.
-		battler.stats.energy_changed.connect(
+		_battler.stats.energy_changed.connect(
 			func _on_battler_energy_changed():
 				for entry: UIActionButton in _entries:
-					var can_use_action: = battler.stats.energy >= entry.action.energy_cost
+					var can_use_action: = _battler.stats.energy >= entry.action.energy_cost
 					entry.disabled = !can_use_action or is_disabled
 		)
-		
-		_build_action_menu()
-		
-		show()
-		fade_in()
+
+# Refer to the BattlerList to check whether or not an action is valid when it is selected.
+# This allows us to prevent the player from selecting an invalid action.
+var _battler_list: BattlerList
 
 
 func _ready() -> void:
@@ -48,6 +47,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		CombatEvents.player_battler_selected.emit(null)
 
 
+## Create the action menu, creating an entry for each [BattlerAction] (valid or otherwise) available
+## to the selected [Battler].
+## These actions are validated at run-time as they are selected in the menu.
+func setup(selected_battler: Battler, battler_list: BattlerList) -> void:
+	_battler = selected_battler
+	_battler_list = battler_list
+	_build_action_menu()
+		
+	show()
+	fade_in()
+
+
 func fade_in() -> void:
 	await super.fade_in()
 	set_process_unhandled_input(true)
@@ -61,33 +72,31 @@ func close() -> void:
 
 # Populate the menu with a list of actions.
 func _build_action_menu() -> void:
-	assert(battler, "Must assign a Battler before building the action menu!")
-	
-	for action in battler.actions:
-		var can_use_action: = battler.stats.energy >= action.energy_cost
+	for action in _battler.actions:
+		var can_use_action: = _battler.stats.energy >= action.energy_cost
 		
 		var new_entry = _create_entry() as UIActionButton
 		new_entry.action = action
 		new_entry.disabled = !can_use_action or is_disabled
 		new_entry.focus_neighbor_right = "." # Don't allow input to jump to the player battler list.
-		
-		# Setup callbacks to the action entry's button signals. For these connections, wrap the
-		# lambda in parentheses so that we can bind arguments.
-		new_entry.pressed.connect(
-			# When an action is pressed, the menu should prevent being re-pressed by disabling
-			# the entire action menu. Also, forward along which action was pressed.
-			(func _on_action_button_pressed(battler_action: BattlerAction) -> void:
-				await close()
-				action_selected.emit(battler_action)
-				).bind(action)
-		)
-	
-		new_entry.focus_entered.connect(
-			# Move the cursor to show which entry is currently in focus.
-			(func _on_action_button_focus_entered(button: UIActionButton) -> void:
-				_menu_cursor.move_to(button.global_position + 
-					Vector2(0.0, button.size.y/2.0))
-				).bind(new_entry)
-		)
 	
 	_loop_first_and_last_entries()
+
+
+# Override the base method to allow the player to select an action for the specified Battler.
+func _on_entry_pressed(entry: BaseButton) -> void:
+	var action_entry: = entry as UIActionButton
+	var action: = action_entry.action
+	
+	# First of all, check to make sure that the action has valid targets. If it does
+	# not, do not allow selection of the action.
+	if action.get_possible_targets(_battler, _battler_list).is_empty():
+		# Normally, the button gives up focus when selected (to stop cycling menu during animation).
+		# However, the action is invalid and so the menu needs to keep focus for the player to
+		# select another action.
+		entry.grab_focus.call_deferred()
+		return
+	
+	# There are available targets, so the UI can move on to selecting targets.
+	await close()
+	action_selected.emit(action)
