@@ -1,6 +1,7 @@
-## A menu that may have one or more [UIActionMenuPage]s, allowing the player to select actions.
+## A menu lists a [Battler]'s [member Battler.actions], allowing the player to select one.
 class_name UIActionMenu extends UIListMenu
 
+## Emitted when a player has selected an action and the menu has faded to transparent.
 signal action_selected(action: BattlerAction)
 
 # The menu tracks the [BattlerAction]s available to a single [Battler], depending on Battler state 
@@ -42,6 +43,9 @@ func _ready() -> void:
 # Capture any input events that will signal going "back" in the menu hierarchy.
 # This includes mouse or touch input outside of a menu or pressing the back button/key.
 func _unhandled_input(event: InputEvent) -> void:
+	if is_disabled:
+		return
+	
 	if event.is_action_released("select") or event.is_action_released("back"):
 		await close()
 		CombatEvents.player_battler_selected.emit(null)

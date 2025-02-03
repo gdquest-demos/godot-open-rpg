@@ -93,6 +93,9 @@ func _create_action_menu() -> void:
 	_action_menu_anchor.add_child(action_menu)
 	action_menu.setup(_selected_battler, _battlers)
 	
+	# On combat end, remove the action menu immediately.
+	_battlers.battlers_downed.connect(action_menu.fade_out)
+	
 	# The action builder will wait until the player selects an action or presses 'back'.
 	# Selecting an action will trigger the following signal, whereas pressing 'back'
 	# will close the menu directly and deselect the current battler.
@@ -111,6 +114,9 @@ func _create_targeting_cursor() -> void:
 	_cursor.targets_all = _selected_action.targets_all()
 	_cursor.targets = _selected_action.get_possible_targets(_selected_battler, _battlers)
 	add_child(_cursor)
+	
+	# On combat end, remove the cursor from the scene tree.
+	_battlers.battlers_downed.connect(_cursor.queue_free)
 	
 	# Finally, connect to the cursor's signals that will indicate that targets have been chosen.
 	_cursor.targets_selected.connect(
