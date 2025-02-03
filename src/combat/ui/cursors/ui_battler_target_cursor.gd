@@ -79,7 +79,7 @@ func _ready() -> void:
 	
 	# If the Battler that is currently selecting targets is downed, close the cursor immediately.
 	CombatEvents.player_battler_selected.connect(
-		func _on_player_battler_selected(battler: Battler) -> void:
+		func _on_player_battler_selected(_battler: Battler) -> void:
 			set_process_unhandled_input(false)
 			queue_free()
 	)

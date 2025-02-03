@@ -33,6 +33,12 @@ func _ready() -> void:
 	CombatEvents.player_battler_selected.connect(
 		func _on_player_battler_selected(battler: Battler):
 			is_disabled = battler != null
+			
+			# Don't re-enable entries that have dead Battlers.
+			if not is_disabled:
+				for entry: UIBattlerEntry in _entries:
+					if entry.battler.stats.health <= 0:
+						entry.disabled = true
 	)
 
 
