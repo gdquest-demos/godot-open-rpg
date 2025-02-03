@@ -13,7 +13,6 @@ var _slide_tween: Tween = null
 func _ready() -> void:
 	# The arrow needs to move indepedently from its parent.
 	set_as_top_level(true)
-	print("New cursor!")
 
 
 ## Smoothly move the cursor to an arbitrary position.

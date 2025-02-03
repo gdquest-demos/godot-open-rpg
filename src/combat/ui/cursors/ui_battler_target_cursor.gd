@@ -16,7 +16,6 @@ signal targets_selected(selection: Array[Battler])
 ## All possible targets for a given action. Generates cursor instances if [targets_all] is true.
 @export var targets: Array[Battler] = []:
 	set(value):
-		print("Set targest")
 		targets = value
 		if not targets.is_empty():
 			if not _current_target in targets:

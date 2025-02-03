@@ -166,6 +166,7 @@ func _on_battler_ready_to_act(battler: Battler):
 		var targets: Array[Battler] = action_data.targets
 		
 		if action.can_execute(battler, targets):
+			_cached_actions.erase(battler)
 			_active_action = action
 			await battler.act(action, targets)
 			_active_action = null
