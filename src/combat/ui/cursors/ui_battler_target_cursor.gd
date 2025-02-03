@@ -1,27 +1,45 @@
-class_name UIBattlerTargetingCursor extends Marker2D
+class_name UIBattlerTargetingCursor extends Node2D
 
 ## An empty array of [Battler]s passed to targets_selected] when no target is selected.
 const INVALID_TARGETS: Array[Battler] = []
 
-## The time taken to move the cursor from one [Battler] to the next.
-const SLIDE_TIME: = 0.1
+## The cursor scene that will be used to denote the active target[s].
+const CURSOR_SCENE: = preload("res://src/combat/ui/cursors/ui_menu_cursor.tscn")
 
 ## Emitted when the player has selected targets.
 ## If the player has pressed 'back' instead, [const INVALID_TARGETS] will be returned.[br][br]
 ## In either case, the cursor will call queue_free() after emitting this signal.
 signal targets_selected(selection: Array[Battler])
 
-## All possible targets for a given action.
-var targets: Array[Battler] = []:
+@export var targets_all: = false
+
+## All possible targets for a given action. Generates cursor instances if [targets_all] is true.
+@export var targets: Array[Battler] = []:
 	set(value):
+		print("Set targest")
 		targets = value
 		if not targets.is_empty():
 			if not _current_target in targets:
 				_current_target = targets[0]
+				_secondary_cursors.erase(_current_target)
 			
-			# We want the arrow to appear immediately at the targert, so advance the tween to its
-			# end.
-			_slide_tween.custom_step(SLIDE_TIME)
+			# The target list has changed, so "secondary" cursors need to accomodate the new list.
+			# Any new Battlers will need a cursor and any removed Battlers should no longer be
+			# targeted.
+			if targets_all:
+				# Remove cursors over targets that are no longer in the target list.
+				for battler: Battler in _secondary_cursors.keys():
+					if not battler in targets:
+						_secondary_cursors[battler].queue_free()
+						_secondary_cursors.erase(battler)
+				
+				# Add cursors to new targets, syncing the animation time.
+				for battler: Battler in targets:
+					if not battler in _secondary_cursors.keys() and battler != _current_target:
+						var new_cursor: = _create_cursor_over_battler(battler)
+						if _cursor:
+							new_cursor.advance_animation(_cursor.get_animation_position())
+						_secondary_cursors[battler] = new_cursor
 			
 			# Due to processing the tween above, there is a single frame where the cursor will be 
 			# stuck at the origin (before the tween updates).
@@ -31,9 +49,6 @@ var targets: Array[Battler] = []:
 		else:
 			_current_target = null
 
-# The tween used to move the cursor from Battler to Battler.
-var _slide_tween: Tween = null
-
 # One of the entries specified by _targets, at which the cursor is located.
 var _current_target: Battler = null:
 	set(value):
@@ -42,20 +57,43 @@ var _current_target: Battler = null:
 		if _current_target == null:
 			hide()
 		
-		else:
-			_move_to(_current_target.anim.top.global_position)
+		elif _cursor != null:
+			_cursor.move_to(_current_target.anim.top.global_position)
+
+# The primary cursor instance, which is moved from target to target whenever _targets_all is false.
+var _cursor: UIMenuCursor = null
+
+# Secondary cursors, which are created whenever _targets_all is true.
+# They are children of the UIBattlerTargetingCursor. Dictionary keys are a Battler instance that
+# corresponds with one of the targets. This allows the number of cursors to be updated as Battler
+# state changes.
+# In other words, if targets die or are added while the player is choosing targets, the cursors
+# highlighting the targets will update accordingly.
+var _secondary_cursors: = {}
 
 
 func _ready() -> void:
-	# The arrow needs to move indepedently from its parent.
-	set_as_top_level(true)
+	assert(!targets.is_empty(), "The target cursor needs a non-empty target array!")
+	
 	hide()
+	_cursor = _create_cursor_over_battler(_current_target)
+	#
+	## If the cursor is set to target ALL battlers that are listed, create extra cursors for them.
+	#if targets_all:
+		#for battler in targets:
+			#if battler != _current_target:
+				#var new_cursor: = _create_cursor_over_battler(battler)
+				#_secondary_cursors[battler] = new_cursor
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("ui_accept"):
-		var selected_target: Array[Battler] = [_current_target]
-		targets_selected.emit(selected_target)
+		# Let the UI know which Battler(s) were selected.
+		var highlighted_targets: Array[Battler] = []
+		if targets_all:		highlighted_targets.assign(targets)
+		else:				highlighted_targets.append(_current_target)
+			
+		targets_selected.emit(highlighted_targets)
 		queue_free()
 	
 	elif event.is_action_released("back"):
@@ -64,6 +102,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	# Other keypresses may indicate that the player is selecting another target.
 	elif event is InputEventKey:
+		# Don't move anything if ALL targets are currently being targeted.
+		if targets_all:
+			return
+		
 		var direction: = Vector2.ZERO
 		if event.is_action_released("ui_left"):
 			direction = Vector2.LEFT
@@ -111,18 +153,10 @@ func _find_closest_target(direction: Vector2) -> Battler:
 	return new_target
 
 
-# Smoothly move the cursor to an arbitrary position. Called whenever _current_target changes.
-func _move_to(target_position: Vector2) -> void:
-	if _slide_tween:
-		_slide_tween.kill()
-	_slide_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+func _create_cursor_over_battler(target: Battler) -> UIMenuCursor:
+	var new_cursor: = CURSOR_SCENE.instantiate() as UIMenuCursor
+	add_child(new_cursor)
 	
-	# Move the cursor to the target position...
-	_slide_tween.tween_property(self, "position", target_position, SLIDE_TIME)
-	
-	# ...and halfway through the movement, flip the arrow's orientation to correspond to whether or
-	# not the target is an enemy or friendly battler.
-	_slide_tween.parallel().tween_callback(
-		func _flip_arrow() -> void:
-			scale.x = 1.0 if _current_target.is_player else -1.0
-	).set_delay(SLIDE_TIME/2.0)
+	new_cursor.rotation = PI/2
+	new_cursor.global_position = target.anim.top.global_position
+	return new_cursor

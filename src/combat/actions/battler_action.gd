@@ -105,3 +105,7 @@ func can_target_battler(target: Battler) -> bool:
 	if target.is_selectable and target.stats.health > 0:
 		return true
 	return false
+
+
+func targets_all() -> bool:
+	return target_scope == TargetScope.ALL

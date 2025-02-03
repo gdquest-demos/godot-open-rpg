@@ -13,10 +13,10 @@
 ## [signal CombatEvents.action_selected] global signal.
 class_name UICombatMenus extends Control
 
-# The action menu scene that will be created whenever the player needs to select an action.
+## The action menu scene that will be created whenever the player needs to select an action.
 @export var action_menu_scene: PackedScene
 
-# The targetting cursor scene that will be created whenever the player needs to choose targets.
+## The targetting cursor scene that will be created whenever the player needs to choose targets.
 @export var target_cursor_scene: PackedScene
 
 # The action menu/targeting cursor are created/freed dynamically. We'll track the combat participant
@@ -98,7 +98,6 @@ func _create_action_menu() -> void:
 	# will close the menu directly and deselect the current battler.
 	action_menu.action_selected.connect(
 		func _on_action_selected(action: BattlerAction):
-			print("Selected???")
 			_selected_action = action
 			_create_targeting_cursor()
 	)
@@ -109,8 +108,9 @@ func _create_targeting_cursor() -> void:
 	
 	# Create the cursor which will respond to player input and allow choosing a target.
 	_cursor = target_cursor_scene.instantiate() as UIBattlerTargetingCursor
-	add_child(_cursor)
+	_cursor.targets_all = _selected_action.targets_all()
 	_cursor.targets = _selected_action.get_possible_targets(_selected_battler, _battlers)
+	add_child(_cursor)
 	
 	# Finally, connect to the cursor's signals that will indicate that targets have been chosen.
 	_cursor.targets_selected.connect(

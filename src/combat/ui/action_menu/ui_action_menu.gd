@@ -54,7 +54,7 @@ func setup(selected_battler: Battler, battler_list: BattlerList) -> void:
 	_battler = selected_battler
 	_battler_list = battler_list
 	_build_action_menu()
-		
+	
 	show()
 	fade_in()
 

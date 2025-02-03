@@ -1,57 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bu56ii26ps128"]
+[gd_scene load_steps=2 format=3 uid="uid://bu56ii26ps128"]
 
 [ext_resource type="Script" path="res://src/combat/ui/cursors/ui_battler_target_cursor.gd" id="1_7w7pq"]
-[ext_resource type="Texture2D" uid="uid://b1tcvapw3hqti" path="res://src/combat/ui/action_menu/menu_selection_arrow.png" id="2_bn0ds"]
 
-[sub_resource type="Animation" id="Animation_wnwjy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_7vg28"]
-resource_name = "bounce"
-length = 0.6
-loop_mode = 1
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(0.35, 2.86),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -50)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xs2hl"]
-_data = {
-"RESET": SubResource("Animation_wnwjy"),
-"bounce": SubResource("Animation_7vg28")
-}
-
-[node name="BattlerTargetingCursor" type="Marker2D"]
+[node name="BattlerTargetingCursor" type="Node2D"]
 script = ExtResource("1_7w7pq")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = 1.5708
-texture = ExtResource("2_bn0ds")
-offset = Vector2(-67, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_xs2hl")
-}
-autoplay = "bounce"
