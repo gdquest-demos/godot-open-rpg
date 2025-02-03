@@ -150,10 +150,11 @@ func act(action: BattlerAction, targets: Array[Battler] = []) -> void:
 	# action.execute() almost certainly is a coroutine.
 	@warning_ignore("redundant_await")
 	await action.execute(self, targets)
-	readiness = action.readiness_saved
+	if stats.health > 0:
+		readiness = action.readiness_saved
 
-	if is_active:
-		set_process(true)
+		if is_active:
+			set_process(true)
 
 	action_finished.emit.call_deferred()
 

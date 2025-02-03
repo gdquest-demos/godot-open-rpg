@@ -76,14 +76,13 @@ func _ready() -> void:
 	
 	hide()
 	_cursor = _create_cursor_over_battler(_current_target)
-	#
-	## If the cursor is set to target ALL battlers that are listed, create extra cursors for them.
-	#if targets_all:
-		#for battler in targets:
-			#if battler != _current_target:
-				#var new_cursor: = _create_cursor_over_battler(battler)
-				#_secondary_cursors[battler] = new_cursor
-
+	
+	# If the Battler that is currently selecting targets is downed, close the cursor immediately.
+	CombatEvents.player_battler_selected.connect(
+		func _on_player_battler_selected(battler: Battler) -> void:
+			set_process_unhandled_input(false)
+			queue_free()
+	)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("ui_accept"):
