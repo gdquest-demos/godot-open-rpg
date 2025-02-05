@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e4b6flk7roy3"
-path="res://.godot/imported/bugcat.png-878e08a6213b0506efe13f5cbd823894.ctex"
+uid="uid://pkp6t20skjpe"
+path="res://.godot/imported/bear.png-d9f6b9473ae947928a0c0213226688a4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/battlers/bugcat.png"
-dest_files=["res://.godot/imported/bugcat.png-878e08a6213b0506efe13f5cbd823894.ctex"]
+source_file="res://battlers/bear/bear.png"
+dest_files=["res://.godot/imported/bear.png-d9f6b9473ae947928a0c0213226688a4.ctex"]
 
 [params]
 

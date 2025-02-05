@@ -18,6 +18,11 @@ var battler: Battler:
 			func _on_battler_health_changed(): 
 				_life.target_value = battler.stats.health
 				disabled = battler.stats.health <= 0
+				
+				# If the Battler has been downed, it no longer has a chached action so the preview
+				# can be removed.
+				if disabled:
+					_life.set_action_icon(null)
 		)
 		
 		# Once the player has started to act, remove the action preview icon. The icon only exists
@@ -44,4 +49,3 @@ func _ready() -> void:
 				else:
 					_life.set_action_icon(null)
 	)
-	

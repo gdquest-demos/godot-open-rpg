@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr8cs6liv45hd"
-path="res://.godot/imported/wolf.png-4bc03933007ae59baa2c8acdb12946f6.ctex"
+uid="uid://colusv412eplq"
+path="res://.godot/imported/icon_first_aid.svg-4aec48f6de7b5b18b1cf3ee7f0b6c5ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/battlers/wolf.png"
-dest_files=["res://.godot/imported/wolf.png-4bc03933007ae59baa2c8acdb12946f6.ctex"]
+source_file="res://battlers/actions/icon_first_aid.svg"
+dest_files=["res://.godot/imported/icon_first_aid.svg-4aec48f6de7b5b18b1cf3ee7f0b6c5ed.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

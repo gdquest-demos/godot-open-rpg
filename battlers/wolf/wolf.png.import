@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pkp6t20skjpe"
-path="res://.godot/imported/bear.png-3a8535f7a6f6f0b96cb921d75cfc862b.ctex"
+uid="uid://dr8cs6liv45hd"
+path="res://.godot/imported/wolf.png-2e44d7d1ca536c33187b2fdb04e1615d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/battlers/bear.png"
-dest_files=["res://.godot/imported/bear.png-3a8535f7a6f6f0b96cb921d75cfc862b.ctex"]
+source_file="res://battlers/wolf/wolf.png"
+dest_files=["res://.godot/imported/wolf.png-2e44d7d1ca536c33187b2fdb04e1615d.ctex"]
 
 [params]
 

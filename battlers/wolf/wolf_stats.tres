@@ -9,6 +9,6 @@ base_max_health = 100
 base_max_energy = 6
 base_attack = 10
 base_defense = 10
-base_speed = 60
+base_speed = 30
 base_hit_chance = 100
 base_evasion = 0

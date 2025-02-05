@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AttackBattlerAction" load_steps=3 format=3 uid="uid://k5f6t5vfggs8"]
+
+[ext_resource type="Texture2D" uid="uid://cch8ku256ts3y" path="res://battlers/actions/icon_raise.svg" id="1_lpedt"]
+[ext_resource type="Script" path="res://src/combat/actions/battler_action_attack.gd" id="2_p5oa7"]
+
+[resource]
+script = ExtResource("2_p5oa7")
+hit_chance = 100.0
+base_damage = 0
+icon = ExtResource("1_lpedt")
+label = "Focus"
+description = "Increase Attack and Accuracy. Takes half a turn to use."
+target_scope = 0
+targets_friendlies = true
+targets_enemies = false
+element = 0
+energy_cost = 0
+readiness_saved = 0.0

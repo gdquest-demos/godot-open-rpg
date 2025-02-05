@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbgfjvlm8kx4k"
-path="res://.godot/imported/squirrel.png-3222d24b953eb926ac04d3c2c8b5ed2c.ctex"
+uid="uid://e4b6flk7roy3"
+path="res://.godot/imported/bugcat.png-6bcd1fa6b277bd4c4e8a39476fa5bbe8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/battlers/squirrel.png"
-dest_files=["res://.godot/imported/squirrel.png-3222d24b953eb926ac04d3c2c8b5ed2c.ctex"]
+source_file="res://battlers/bugcat/bugcat.png"
+dest_files=["res://.godot/imported/bugcat.png-6bcd1fa6b277bd4c4e8a39476fa5bbe8.ctex"]
 
 [params]
 

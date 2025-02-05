@@ -5,14 +5,14 @@
 
 [resource]
 script = ExtResource("1_oh0gs")
-hit_chance = 100.0
+hit_chance = 65.0
 base_damage = 150
 icon = ExtResource("1_f24qp")
-label = "Attack"
-description = "A combat action."
+label = "Bear Arms"
+description = "Maul your way to victory! High damage, low hit chance."
 target_scope = 1
-targets_friendlies = true
-targets_enemies = false
+targets_friendlies = false
+targets_enemies = true
 element = 0
 energy_cost = 0
 readiness_saved = 0.0

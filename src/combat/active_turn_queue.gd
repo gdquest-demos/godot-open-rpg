@@ -109,10 +109,16 @@ func _ready() -> void:
 			is_active = false
 	)
 	
-	# Battlers will act as their ready_to_act signal is emitted. The turn queue will allow them to
-	# act if another action is not currently underway.
 	for battler in battlers.get_all_battlers():
+		# Battlers will act as their ready_to_act signal is emitted. The turn queue will allow them 
+		# to act if another action is not currently underway.
 		battler.ready_to_act.connect(_on_battler_ready_to_act.bind(battler))
+		
+		# Remove any cached actions whenever the Battler is downed.
+		battler.health_depleted.connect(
+			(func _on_battler_health_depleted(downed_battler: Battler):
+				_cached_actions.erase(downed_battler)).bind(battler)
+		)
 	
 	# The ActiveTurnQueue uses _process to wait for animations to finish at combat end, so disable
 	# _process for now.

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://ugsq7u4cue4w"]
 
 [ext_resource type="PackedScene" uid="uid://badexg85lctrq" path="res://src/combat/battlers/battler_anim.tscn" id="1_ws2uh"]
-[ext_resource type="Texture2D" uid="uid://e4b6flk7roy3" path="res://assets/battlers/bugcat.png" id="2_jiam4"]
+[ext_resource type="Texture2D" uid="uid://e4b6flk7roy3" path="res://battlers/bugcat/bugcat.png" id="2_jiam4"]
 
 [sub_resource type="Animation" id="Animation_r4wpi"]
 length = 0.001

@@ -51,4 +51,7 @@ func setup(battler_data: BattlerList) -> void:
 func _on_entry_pressed(entry: BaseButton) -> void:
 	if not is_disabled:
 		var battler_entry = entry as UIBattlerEntry
-		CombatEvents.player_battler_selected.emit(battler_entry.battler)
+		
+		# Prevent the player from issuing orders to AI-controlled Battlers.
+		if not battler_entry.battler.ai_scene:
+			CombatEvents.player_battler_selected.emit(battler_entry.battler)

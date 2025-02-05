@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cch8nxgex1edr"]
 
 [ext_resource type="PackedScene" uid="uid://badexg85lctrq" path="res://src/combat/battlers/battler_anim.tscn" id="1_d3f8c"]
-[ext_resource type="Texture2D" uid="uid://cbgfjvlm8kx4k" path="res://assets/battlers/squirrel.png" id="2_0aqb7"]
+[ext_resource type="Texture2D" uid="uid://cbgfjvlm8kx4k" path="res://battlers/squirrel/squirrel.png" id="2_0aqb7"]
 
 [sub_resource type="Animation" id="Animation_r4wpi"]
 length = 0.001
