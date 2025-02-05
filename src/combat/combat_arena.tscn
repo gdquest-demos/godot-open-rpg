@@ -90,8 +90,10 @@ offset_bottom = 40.0
 script = ExtResource("3_33305")
 damage_label_scene = ExtResource("4_vmu37")
 missed_label_scene = ExtResource("5_y3d4p")
+metadata/_edit_lock_ = true
 
 [node name="TurnBar" parent="UI" instance=ExtResource("6_yrwb4")]
+metadata/_edit_lock_ = true
 
 [node name="PlayerMenus" type="Control" parent="UI"]
 layout_mode = 3
@@ -103,6 +105,8 @@ grow_vertical = 2
 script = ExtResource("12_mmb61")
 action_menu_scene = ExtResource("9_7r1pn")
 target_cursor_scene = ExtResource("10_g5v87")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="PlayerBattlerList" parent="UI/PlayerMenus" instance=ExtResource("7_klx1g")]
 layout_mode = 1

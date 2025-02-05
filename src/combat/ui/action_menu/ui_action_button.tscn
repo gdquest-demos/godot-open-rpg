@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dllh3cswof4m1" path="res://src/combat/ui/action_menu/menu_action_bg_pressed.png" id="2_4uiu2"]
 [ext_resource type="Texture2D" uid="uid://d2vajhpv3eb8i" path="res://src/combat/ui/action_menu/menu_action_bg_disabled.png" id="3_5oias"]
 [ext_resource type="Texture2D" uid="uid://kyl3dpbphoik" path="res://src/combat/ui/action_menu/menu_action_bg_focused.png" id="4_gyvxq"]
-[ext_resource type="Texture2D" uid="uid://y2fg5cf57i7t" path="res://battlers/actions/icon_punch.svg" id="6_1t1bw"]
+[ext_resource type="Texture2D" uid="uid://y2fg5cf57i7t" path="res://battlers/bear/icon_punch.svg" id="6_1t1bw"]
 [ext_resource type="FontFile" uid="uid://d12hnvq203mdg" path="res://assets/gui/font/SourceCodePro-Bold.ttf" id="7_gvn2i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_f2eql"]

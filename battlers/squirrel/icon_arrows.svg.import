@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://colusv412eplq"
-path="res://.godot/imported/icon_first_aid.svg-4aec48f6de7b5b18b1cf3ee7f0b6c5ed.ctex"
+uid="uid://dt7jcphqs175b"
+path="res://.godot/imported/icon_arrows.svg-e9d0eb8c72b6e790e8382165261553d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://battlers/actions/icon_first_aid.svg"
-dest_files=["res://.godot/imported/icon_first_aid.svg-4aec48f6de7b5b18b1cf3ee7f0b6c5ed.ctex"]
+source_file="res://battlers/squirrel/icon_arrows.svg"
+dest_files=["res://.godot/imported/icon_arrows.svg-e9d0eb8c72b6e790e8382165261553d2.ctex"]
 
 [params]
 

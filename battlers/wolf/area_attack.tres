@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="RangedBattlerAction" load_steps=2 format=3 uid="uid://bs4g81qa8u57q"]
+
+[ext_resource type="Script" path="res://src/combat/actions/battler_action_projectile.gd" id="1_bbarm"]
+
+[resource]
+script = ExtResource("1_bbarm")
+attack_distance = 350.0
+attack_time = 0.25
+return_time = 0.25
+hit_chance = 50.0
+base_damage = 65
+label = "Area Attack"
+description = "A sweeping attack, hitting all enemy Battlers"
+target_scope = 2
+targets_friendlies = false
+targets_enemies = true
+element = 0
+energy_cost = 0
+readiness_saved = 0.0

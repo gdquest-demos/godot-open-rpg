@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y2fg5cf57i7t"
-path="res://.godot/imported/icon_punch.svg-4dd466a5f8e3821850ac85c592ad386c.ctex"
+uid="uid://cch8ku256ts3y"
+path="res://.godot/imported/icon_raise.svg-8cc6d0caa7d3b4f88cdc8f1a163e16bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://battlers/actions/icon_punch.svg"
-dest_files=["res://.godot/imported/icon_punch.svg-4dd466a5f8e3821850ac85c592ad386c.ctex"]
+source_file="res://battlers/bear/icon_raise.svg"
+dest_files=["res://.godot/imported/icon_raise.svg-8cc6d0caa7d3b4f88cdc8f1a163e16bf.ctex"]
 
 [params]
 
