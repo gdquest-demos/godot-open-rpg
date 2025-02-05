@@ -4,6 +4,9 @@ class_name UIActionMenu extends UIListMenu
 ## Emitted when a player has selected an action and the menu has faded to transparent.
 signal action_selected(action: BattlerAction)
 
+## Emitted whenever a new action is focused on the menu.
+signal action_focused(action: BattlerAction)
+
 # The menu tracks the [BattlerAction]s available to a single [Battler], depending on Battler state 
 # (energy costs, for example).
 # The action menu also needs to respond to Battler state, such as a change in energy points or the
@@ -83,6 +86,12 @@ func _build_action_menu() -> void:
 		new_entry.action = action
 		new_entry.disabled = !can_use_action or is_disabled
 		new_entry.focus_neighbor_right = "." # Don't allow input to jump to the player battler list.
+		
+		new_entry.focus_entered.connect(
+			(func _on_action_entry_focused(entry_action: BattlerAction) -> void:
+				if not is_disabled:
+					action_focused.emit(entry_action)).bind(action)
+		)
 	
 	_loop_first_and_last_entries()
 

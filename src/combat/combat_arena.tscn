@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b3ciqydkjnkkx"]
+[gd_scene load_steps=17 format=3 uid="uid://b3ciqydkjnkkx"]
 
 [ext_resource type="Script" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
 [ext_resource type="Script" path="res://src/combat/active_turn_queue.gd" id="2_ll0ok"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b35omff3fdb2g" path="res://src/combat/ui/battler_entry/ui_battler_entry.tscn" id="8_yvvff"]
 [ext_resource type="PackedScene" uid="uid://bipyuaeqoxmt2" path="res://src/combat/ui/action_menu/ui_action_menu.tscn" id="9_7r1pn"]
 [ext_resource type="PackedScene" uid="uid://bu56ii26ps128" path="res://src/combat/ui/cursors/ui_battler_target_cursor.tscn" id="10_g5v87"]
+[ext_resource type="PackedScene" uid="uid://cf6hixtledkyy" path="res://src/combat/ui/action_menu/ui_action_description.tscn" id="12_e06ap"]
 [ext_resource type="Script" path="res://src/combat/ui/ui_combat_menus.gd" id="12_mmb61"]
 
 [sub_resource type="Animation" id="Animation_wen7t"]
@@ -112,8 +113,18 @@ metadata/_edit_lock_ = true
 layout_mode = 1
 entry_scene = ExtResource("8_yvvff")
 
+[node name="ActionDescription" parent="UI/PlayerMenus" instance=ExtResource("12_e06ap")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+offset_bottom = 0.0
+grow_vertical = 0
+theme_override_constants/margin_bottom = 32
+
 [node name="ActionMenuAnchor" type="Marker2D" parent="UI/PlayerMenus"]
-position = Vector2(1056, 984)
+position = Vector2(1056, 896)
 
 [node name="Timer" type="Timer" parent="UI"]
 

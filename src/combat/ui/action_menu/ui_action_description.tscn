@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf6hixtledkyy"]
+
+[ext_resource type="Script" path="res://src/combat/ui/action_menu/ui_action_description.gd" id="1_4ak8v"]
+[ext_resource type="Texture2D" uid="uid://bcbnamrll15w8" path="res://src/combat/ui/action_menu/action_description_background.png" id="1_iqe73"]
+[ext_resource type="Theme" uid="uid://dgb8v5sh8ropf" path="res://src/combat/ui/ui_combat.theme" id="2_ia76b"]
+
+[node name="UIActionDescription" type="MarginContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 62.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 32
+script = ExtResource("1_4ak8v")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Background" type="TextureRect" parent="CenterContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("1_iqe73")
+
+[node name="Description" type="Label" parent="CenterContainer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("2_ia76b")
+text = "Description"
+horizontal_alignment = 1

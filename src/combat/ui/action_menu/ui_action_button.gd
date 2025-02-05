@@ -14,8 +14,7 @@ var action: BattlerAction:
 		
 		await get_tree().process_frame
 		custom_minimum_size = $MarginContainer.size
-		size = $MarginContainer.size
-		print($MarginContainer.size)
+		#size = $MarginContainer.size
 
 @onready var _icon: = $MarginContainer/Items/Icon
 @onready var _name_label: = $MarginContainer/Items/Name

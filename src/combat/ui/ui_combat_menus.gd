@@ -42,6 +42,7 @@ var _selected_action: BattlerAction = null
 # This allows the cursor targets to be updated in real-time as Battler states change.
 var _cursor: UIBattlerTargetingCursor = null
 
+@onready var _action_description: = $ActionDescription as UIActionDescription
 @onready var _action_menu_anchor: = $ActionMenuAnchor as Node2D
 @onready var _battler_list: = $PlayerBattlerList as UIPlayerBattlerList
 
@@ -59,6 +60,9 @@ func setup(battler_data: BattlerList) -> void:
 	# action.
 	CombatEvents.player_battler_selected.connect(
 		func _on_player_battler_selected(battler: Battler) -> void:
+			# Reset the action description bar.
+			_action_description.action = null
+			
 			_selected_battler = battler
 			if _selected_battler:
 				_create_action_menu()
@@ -96,11 +100,17 @@ func _create_action_menu() -> void:
 	# On combat end, remove the action menu immediately.
 	_battlers.battlers_downed.connect(action_menu.fade_out)
 	
+	# Link the action menu to the action description bar.
+	action_menu.action_focused.connect(
+		func _on_action_focused(action: BattlerAction) -> void:
+			_action_description.action = action
+	)
+	
 	# The action builder will wait until the player selects an action or presses 'back'.
 	# Selecting an action will trigger the following signal, whereas pressing 'back'
 	# will close the menu directly and deselect the current battler.
 	action_menu.action_selected.connect(
-		func _on_action_selected(action: BattlerAction):
+		func _on_action_selected(action: BattlerAction) -> void:
 			_selected_action = action
 			_create_targeting_cursor()
 	)
