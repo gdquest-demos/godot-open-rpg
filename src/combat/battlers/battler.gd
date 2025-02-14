@@ -138,6 +138,7 @@ var readiness := 0.0:
 
 		if readiness >= 100.0:
 			readiness = 100.0
+			stats.energy += 1
 			
 			ready_to_act.emit()
 			set_process(false)

@@ -29,6 +29,8 @@ func execute(source: Battler, targets: Array[Battler] = []) -> void:
 	# Normally we would wait for an attack animation's "triggered" signal.
 	await source.get_tree().create_timer(0.1).timeout
 	for target in targets:
+		
+		
 		# Incoporate Battler attack and a random variation (10% +- potential damage) to damage.
 		var modified_damage: = base_damage + source.stats.attack
 		var damage_dealt = modified_damage + (randf()-0.5)*0.2 * modified_damage

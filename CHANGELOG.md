@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.3.2 Combat UI Demo 🖱️ - Battler Actions & User Interface
+
+### Guide the player through action selection
+The player can now choose actions! The demo makes use of real-time combat, which means that the player needs to be able to queue actions, and perhaps select a new action to react to the changing battlefield.
+	- The player first selects a battler from the list of player-controlled battlers.
+	- The player may then select one (valid) action from the battlers action list.
+	- Finally, the player must choose a target from a dynamically-created list of valid targets.
+	- Once this is done, the action is 'queued' for the selected battler, which will perform the action once it has fully charged.
+	- The player may reselect the battler to cancel the queued action, and may go 'forward' and 'backward' through the menu hierarchy as much as desired in order to choose the best possible action.
+
+### Random 'AI'
+CPU-controlled Battlers have a sample 'AI' that randomly selects actions from a list specified by the designer. Targets are chosen randomly from the list of valid targets.
+
+### Other improvements
+A number of other improvements have been implemented:
+	- a turn bar shows when battlers will act in relation to each other
+	- UI elements are generated to display 'miss', damage, and healing labels as actions are played out.
+	- the entire player input system is designed to respond to signals, making the UI flexible and less error-prone than an await-based solution.
+	- bugfixes!
+
 ## v0.3.1 Combat Demo ⚔️ - Battlers, Stats, and Animations
 
 ### New

@@ -363,9 +363,10 @@ size = Vector2(15, 15)
 
 [node name="Main" type="Node2D"]
 
-[node name="Field" type="Node2D" parent="." node_paths=PackedStringArray("focused_game_piece")]
+[node name="Field" type="Node2D" parent="." node_paths=PackedStringArray("opening_cutscene", "focused_game_piece")]
 scale = Vector2(5, 5)
 script = ExtResource("2_bkxev")
+opening_cutscene = NodePath("OpeningCutscene")
 focused_game_piece = NodePath("Terrain/Gamepieces/Player")
 gameboard = ExtResource("6_kd8tv")
 

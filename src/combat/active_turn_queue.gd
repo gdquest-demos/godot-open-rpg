@@ -173,7 +173,9 @@ func _on_battler_ready_to_act(battler: Battler):
 	# If so, check to see if the action is valid, in which case it will execute.
 	if not action_data.is_empty():
 		var action: BattlerAction = action_data.action
-		var targets: Array[Battler] = action_data.targets
+		var targets: Array[Battler] = action_data.targets.filter(
+			func(target: Battler): return action.can_target_battler(target)
+		)
 		
 		if action.can_execute(battler, targets):
 			_cached_actions.erase(battler)
