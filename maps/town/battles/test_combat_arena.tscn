@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://wivtmf75ic3f"]
+[gd_scene load_steps=18 format=3 uid="uid://wivtmf75ic3f"]
 
 [ext_resource type="PackedScene" uid="uid://b3ciqydkjnkkx" path="res://src/combat/combat_arena.tscn" id="1_etpkf"]
 [ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://assets/arenas/steppes.png" id="2_i30nm"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://src/combat/actions/battler_action.gd" id="6_b04cs"]
 [ext_resource type="PackedScene" uid="uid://ugsq7u4cue4w" path="res://battlers/bugcat/bugcat_anim.tscn" id="6_r8rpm"]
 [ext_resource type="Resource" uid="uid://752xsau3xyx0" path="res://battlers/bugcat/quick_attack.tres" id="7_hmx6r"]
+[ext_resource type="PackedScene" uid="uid://dlr2vdjcicdx4" path="res://src/combat/CombatAI.tscn" id="9_omkxl"]
 [ext_resource type="PackedScene" uid="uid://bl8bmbt7v3lrj" path="res://battlers/bear/bear_anim.tscn" id="10_ajkh0"]
 [ext_resource type="Resource" uid="uid://dp7wo0l4es3w4" path="res://battlers/bear/player_melee_action.tres" id="10_uukpg"]
 [ext_resource type="Resource" uid="uid://ctimffr7v621e" path="res://battlers/bear/focus_attack.tres" id="11_o8nj8"]
@@ -29,6 +30,7 @@ script = ExtResource("4_6ngh4")
 stats = ExtResource("5_1st0g")
 actions = Array[ExtResource("6_b04cs")]([ExtResource("7_hmx6r")])
 battler_anim_scene = ExtResource("6_r8rpm")
+ai_scene = ExtResource("9_omkxl")
 metadata/_edit_group_ = true
 
 [node name="Battler2" type="Node2D" parent="Battlers" index="1"]
@@ -37,6 +39,7 @@ script = ExtResource("4_6ngh4")
 stats = ExtResource("5_1st0g")
 actions = Array[ExtResource("6_b04cs")]([ExtResource("7_hmx6r")])
 battler_anim_scene = ExtResource("6_r8rpm")
+ai_scene = ExtResource("9_omkxl")
 metadata/_edit_group_ = true
 
 [node name="Battler3" type="Node2D" parent="Battlers" index="2"]
@@ -45,6 +48,7 @@ script = ExtResource("4_6ngh4")
 stats = ExtResource("5_1st0g")
 actions = Array[ExtResource("6_b04cs")]([ExtResource("7_hmx6r")])
 battler_anim_scene = ExtResource("6_r8rpm")
+ai_scene = ExtResource("9_omkxl")
 metadata/_edit_group_ = true
 
 [node name="Baloo" type="Node2D" parent="Battlers" index="3"]
@@ -62,5 +66,6 @@ script = ExtResource("4_6ngh4")
 stats = ExtResource("13_ewpfg")
 actions = Array[ExtResource("6_b04cs")]([ExtResource("14_xht23"), ExtResource("15_0v4ad")])
 battler_anim_scene = ExtResource("16_ve6h1")
+ai_scene = ExtResource("9_omkxl")
 is_player = true
 metadata/_edit_group_ = true

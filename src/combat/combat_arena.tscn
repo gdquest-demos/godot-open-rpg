@@ -123,8 +123,15 @@ offset_bottom = 0.0
 grow_vertical = 0
 theme_override_constants/margin_bottom = 32
 
-[node name="ActionMenuAnchor" type="Marker2D" parent="UI/PlayerMenus"]
-position = Vector2(1056, 896)
+[node name="ActionMenuAnchor" type="Control" parent="UI/PlayerMenus"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 1056.0
+offset_top = 896.0
+offset_right = 1056.0
+offset_bottom = 896.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
 
 [node name="Timer" type="Timer" parent="UI"]
 

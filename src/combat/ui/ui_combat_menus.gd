@@ -43,7 +43,7 @@ var _selected_action: BattlerAction = null
 var _cursor: UIBattlerTargetingCursor = null
 
 @onready var _action_description: = $ActionDescription as UIActionDescription
-@onready var _action_menu_anchor: = $ActionMenuAnchor as Node2D
+@onready var _action_menu_anchor: = $ActionMenuAnchor as Control
 @onready var _battler_list: = $PlayerBattlerList as UIPlayerBattlerList
 
 

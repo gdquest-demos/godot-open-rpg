@@ -66,9 +66,28 @@ signal selection_toggled(value: bool)
 			var facing: = BattlerAnim.Direction.LEFT if is_player else BattlerAnim.Direction.RIGHT
 			anim.setup(self, facing)
 
+## A CombatAI object that will determine the Battler's combat behaviour.
 ## If the battler has an `ai_scene`, we will instantiate it and let the AI make decisions.
 ## If not, the player controls this battler. The system should allow for ally AIs.
-@export var ai_scene: PackedScene
+@export var ai_scene: PackedScene:
+	set(value):
+		ai_scene = value
+		
+		if ai_scene != null:
+			# In the editor, check to make sure that the value set to ai_scene is actually a 
+			# CombatAI bject.
+			var new_instance: = ai_scene.instantiate()
+			if Engine.is_editor_hint():
+				if new_instance is not CombatAI:
+					printerr("Cannot assign '%s' to Battler '%s'" % [new_instance.name, self.name] +
+						" as ai_scene property. Assigned PackedScene is not a CombatAI type!")
+					ai_scene = null
+				new_instance.free()
+			
+			else:
+				ai = new_instance
+				add_child(ai)
+
 ## Player battlers are controlled by the player.
 @export var is_player: = false:
 	set(value):
@@ -77,6 +96,9 @@ signal selection_toggled(value: bool)
 			var facing: = BattlerAnim.Direction.LEFT if is_player else BattlerAnim.Direction.RIGHT
 			anim.direction = facing
 
+## Reference to this Battler's child [CombatAI] node, if applicable.
+var ai: CombatAI = null
+
 ## Reference to this Battler's child [BattlerAnim] node.
 var anim: BattlerAnim = null
 
@@ -84,6 +106,7 @@ var anim: BattlerAnim = null
 var is_active: bool = true:
 	set(value):
 		is_active = value
+		
 		set_process(is_active)
 
 ## The turn queue will change this property when another battler is acting.
@@ -125,6 +148,8 @@ func _ready() -> void:
 		set_process(false)
 	
 	else:
+		print("Setup ", name)
+		
 		assert(stats, "Battler %s does not have stats assigned!" % name)
 
 		# Resources are NOT unique, so treat the currently assigned BattlerStats as a prototype.

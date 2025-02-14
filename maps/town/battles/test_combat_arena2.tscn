@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bq6b26pctmol4"]
+[gd_scene load_steps=21 format=3 uid="uid://bq6b26pctmol4"]
 
 [ext_resource type="PackedScene" uid="uid://b3ciqydkjnkkx" path="res://src/combat/combat_arena.tscn" id="1_tqh6v"]
 [ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://assets/arenas/steppes.png" id="2_5pnp5"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://ugsq7u4cue4w" path="res://battlers/bugcat/bugcat_anim.tscn" id="8_rgy6v"]
 [ext_resource type="PackedScene" uid="uid://bl8bmbt7v3lrj" path="res://battlers/bear/bear_anim.tscn" id="9_jq0mb"]
 [ext_resource type="Resource" uid="uid://chd4ncpr7k7lg" path="res://battlers/wolf/wolf_stats.tres" id="9_n8llw"]
+[ext_resource type="PackedScene" uid="uid://dlr2vdjcicdx4" path="res://src/combat/CombatAI.tscn" id="9_rktw6"]
 [ext_resource type="Resource" uid="uid://dp7wo0l4es3w4" path="res://battlers/bear/player_melee_action.tres" id="13_232fw"]
 [ext_resource type="Resource" uid="uid://ctimffr7v621e" path="res://battlers/bear/focus_attack.tres" id="14_lvnc8"]
 [ext_resource type="Resource" uid="uid://c01ilo1olkfsm" path="res://battlers/squirrel/area_attack.tres" id="17_r76vx"]
@@ -32,6 +33,7 @@ script = ExtResource("6_q0bkx")
 stats = ExtResource("5_46fcu")
 actions = Array[ExtResource("7_7p3qq")]([ExtResource("8_71nny")])
 battler_anim_scene = ExtResource("8_rgy6v")
+ai_scene = ExtResource("9_rktw6")
 metadata/_edit_group_ = true
 
 [node name="Battler" type="Node2D" parent="Battlers" index="1"]
@@ -40,6 +42,7 @@ script = ExtResource("6_q0bkx")
 stats = ExtResource("9_n8llw")
 actions = Array[ExtResource("7_7p3qq")]([ExtResource("7_vldb3")])
 battler_anim_scene = ExtResource("5_2jmm4")
+ai_scene = ExtResource("9_rktw6")
 metadata/_edit_group_ = true
 
 [node name="Baloo" type="Node2D" parent="Battlers" index="2"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlr2vdjcicdx4"]
+
+[ext_resource type="Script" path="res://src/combat/combat_ai_random.gd" id="1_kisbn"]
+
+[node name="CombatAI" type="Node2D"]
+script = ExtResource("1_kisbn")

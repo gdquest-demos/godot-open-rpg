@@ -109,7 +109,12 @@ func _ready() -> void:
 			is_active = false
 	)
 	
+	print("Setup AI")
 	for battler in battlers.get_all_battlers():
+		# Setup Battler AIs to make use of the BattlerList object (needed to pick targets).
+		if battler.ai != null:
+			battler.ai.setup(battler, battlers)
+		
 		# Battlers will act as their ready_to_act signal is emitted. The turn queue will allow them 
 		# to act if another action is not currently underway.
 		battler.ready_to_act.connect(_on_battler_ready_to_act.bind(battler))
