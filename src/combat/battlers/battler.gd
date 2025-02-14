@@ -148,8 +148,6 @@ func _ready() -> void:
 		set_process(false)
 	
 	else:
-		print("Setup ", name)
-		
 		assert(stats, "Battler %s does not have stats assigned!" % name)
 
 		# Resources are NOT unique, so treat the currently assigned BattlerStats as a prototype.

@@ -66,6 +66,5 @@ script = ExtResource("4_6ngh4")
 stats = ExtResource("13_ewpfg")
 actions = Array[ExtResource("6_b04cs")]([ExtResource("14_xht23"), ExtResource("15_0v4ad")])
 battler_anim_scene = ExtResource("16_ve6h1")
-ai_scene = ExtResource("9_omkxl")
 is_player = true
 metadata/_edit_group_ = true

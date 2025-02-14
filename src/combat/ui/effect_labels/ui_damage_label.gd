@@ -1,3 +1,4 @@
+## An animated combat UI element emphasizing damage done (or healed) to a battler.
 class_name UIDamageLabel extends Marker2D
 
 ## Determines how far the label will move upwards.

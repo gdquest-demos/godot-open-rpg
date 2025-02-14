@@ -1,3 +1,7 @@
+## An element of the [UIBattlerEntry] that visually shows player [Battler] life points.
+##
+## The LifeBar also can show an action icon to demonstrate when the player has queued an action for
+## one of their Battlers.
 class_name UIBattlerLifeBar extends TextureProgressBar
 
 # Rate of the animation relative to `max_value`. A value of 1.0 means the animation fills the entire

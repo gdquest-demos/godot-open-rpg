@@ -1,3 +1,7 @@
+## A builder class responsible for adding visual feedback to [BattlerActions].
+##
+## This feedback takes the form of different UI elements (such as an animated label) that may
+## demonstrate how much damage was done or if an action missed the target completely.
 class_name UIEffectLabelBuilder extends Node2D
 
 @export var damage_label_scene: PackedScene

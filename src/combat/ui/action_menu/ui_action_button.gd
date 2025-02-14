@@ -1,4 +1,4 @@
-# A button representing a single [BattlerAction].
+## A button representing a single [BattlerAction], shown in the player's [UIActionMenu].
 class_name UIActionButton extends TextureButton
 
 ## Setup the button's icon and label to match a given [BattlerAction].

@@ -61,7 +61,7 @@ func setup(battler_data: BattlerList) -> void:
 	CombatEvents.player_battler_selected.connect(
 		func _on_player_battler_selected(battler: Battler) -> void:
 			# Reset the action description bar.
-			_action_description.action = null
+			_action_description.description = ""
 			
 			_selected_battler = battler
 			if _selected_battler:
@@ -103,7 +103,7 @@ func _create_action_menu() -> void:
 	# Link the action menu to the action description bar.
 	action_menu.action_focused.connect(
 		func _on_action_focused(action: BattlerAction) -> void:
-			_action_description.action = action
+			_action_description.description = action.description
 	)
 	
 	# The action builder will wait until the player selects an action or presses 'back'.

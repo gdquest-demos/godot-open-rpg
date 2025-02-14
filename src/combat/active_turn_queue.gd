@@ -109,7 +109,6 @@ func _ready() -> void:
 			is_active = false
 	)
 	
-	print("Setup AI")
 	for battler in battlers.get_all_battlers():
 		# Setup Battler AIs to make use of the BattlerList object (needed to pick targets).
 		if battler.ai != null:

@@ -1,3 +1,4 @@
+## Allows the player to choose the targets of a [BattlerAction].
 class_name UIBattlerTargetingCursor extends Node2D
 
 ## An empty array of [Battler]s passed to targets_selected] when no target is selected.
@@ -11,6 +12,8 @@ const CURSOR_SCENE: = preload("res://src/combat/ui/cursors/ui_menu_cursor.tscn")
 ## In either case, the cursor will call queue_free() after emitting this signal.
 signal targets_selected(selection: Array[Battler])
 
+## Whether the selected action should target all [targets], or only one from the array.
+## Currently, this must be set to true or false before filling the [targets] array.
 @export var targets_all: = false
 
 ## All possible targets for a given action. Generates cursor instances if [targets_all] is true.
@@ -120,6 +123,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				_current_target = new_target
 
 
+# Creates the actual cursor object over a given battler, or all battlers if targets_all is true.
 func _create_cursor_over_battler(target: Battler) -> UIMenuCursor:
 	var new_cursor: = CURSOR_SCENE.instantiate() as UIMenuCursor
 	add_child(new_cursor)

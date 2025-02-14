@@ -1,3 +1,4 @@
+## An entry in the [UIPlayerBattlerList] for one of the player's [Battler]s.
 class_name UIBattlerEntry extends TextureButton
 
 ## Setup the entry UI values and connect to different changes in [BattlerStats] that the UI will
