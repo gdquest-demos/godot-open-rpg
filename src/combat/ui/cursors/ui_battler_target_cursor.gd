@@ -120,9 +120,21 @@ func _unhandled_input(event: InputEvent) -> void:
 				_current_target = new_target
 
 
+func _create_cursor_over_battler(target: Battler) -> UIMenuCursor:
+	var new_cursor: = CURSOR_SCENE.instantiate() as UIMenuCursor
+	add_child(new_cursor)
+	
+	new_cursor.rotation = PI/2
+	new_cursor.global_position = target.anim.top.global_position
+	return new_cursor
+
+
 # Finds the closest battler (that is also in _targets) in a given direction.
 # Returns null if no battlers may be found in that direction.
 func _find_closest_target(direction: Vector2) -> Battler:
+	assert(_current_target, "Target cursor cannot find closest target to a null battler! Current" +
+		"target must be non-null.")
+	
 	var new_target: Battler = null
 	var distance_to_new_target: = INF
 	
@@ -136,8 +148,8 @@ func _find_closest_target(direction: Vector2) -> Battler:
 		# We're going to search within a 90-degree triangle (matching the direction vector +/- 45 
 		# degrees) for battlers. Anything outside is excluded, as it is found in a different
 		# direction.
-		var vector_to_battler: = battler.global_position - global_position
-		if abs(direction.angle_to(vector_to_battler)) <= PI/4.0:
+		var vector_to_battler: = battler.global_position - _current_target.global_position
+		if abs(direction.angle_to(vector_to_battler)) <= PI/2.0:
 			candidates.append(battler)
 	
 	# Secondly, loop over all candidates and find the one closest to the current battler. 
@@ -149,12 +161,3 @@ func _find_closest_target(direction: Vector2) -> Battler:
 			new_target = battler
 	
 	return new_target
-
-
-func _create_cursor_over_battler(target: Battler) -> UIMenuCursor:
-	var new_cursor: = CURSOR_SCENE.instantiate() as UIMenuCursor
-	add_child(new_cursor)
-	
-	new_cursor.rotation = PI/2
-	new_cursor.global_position = target.anim.top.global_position
-	return new_cursor
