@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://8f7e4yxs3poj"]
+
+[ext_resource type="PackedScene" uid="uid://badexg85lctrq" path="res://src/combat/battlers/battler_anim.tscn" id="1_ffl4t"]
+[ext_resource type="Texture2D" uid="uid://dr8cs6liv45hd" path="res://battlers/wolf/wolf.png" id="2_nnyj7"]
+[ext_resource type="AnimationLibrary" uid="uid://o2ktahx2nkki" path="res://battlers/default_battler_animations.res" id="2_q1kws"]
+
+[node name="WolfAnim" instance=ExtResource("1_ffl4t")]
+battler_icon = ExtResource("2_nnyj7")
+
+[node name="AnimationPlayer" parent="Pivot" index="0"]
+libraries = {
+"": ExtResource("2_q1kws")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot" index="1"]
+texture = ExtResource("2_nnyj7")
+offset = Vector2(0, -235)
+
+[node name="FrontAnchor" parent="." index="1"]
+position = Vector2(259, -196)
+
+[node name="TopAnchor" parent="." index="2"]
+position = Vector2(-60, -407)

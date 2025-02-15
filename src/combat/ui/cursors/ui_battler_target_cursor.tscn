@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu56ii26ps128"]
+
+[ext_resource type="Script" path="res://src/combat/ui/cursors/ui_battler_target_cursor.gd" id="1_7w7pq"]
+
+[node name="BattlerTargetingCursor" type="Node2D"]
+script = ExtResource("1_7w7pq")

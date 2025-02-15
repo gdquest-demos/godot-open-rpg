@@ -12,13 +12,13 @@ class_name RangedBattlerAction extends BattlerAction
 
 func execute(source: Battler, targets: Array[Battler] = []) -> void:
 	assert(not targets.is_empty(), "A ranged attack action requires a target.")
-	var target: = targets[0]
+	var first_target: = targets[0]
 
 	await source.get_tree().create_timer(0.1).timeout
 
 	# Calculate where the acting Battler will move from and to.
 	var origin: = source.position
-	var attack_direction: float = sign(target.position.x - source.position.x)
+	var attack_direction: float = sign(first_target.position.x - source.position.x)
 	var destination: = origin + Vector2(attack_distance*attack_direction, 0)
 
 	# Quickly animate the attacker to the attack position, pretending to lob a fireball or smth.
@@ -30,8 +30,11 @@ func execute(source: Battler, targets: Array[Battler] = []) -> void:
 	# Normally we would wait for an attack animation's "triggered" signal and then spawn a
 	# projectile, waiting for impact.
 	await source.get_tree().create_timer(0.1).timeout
-	var hit: = BattlerHit.new(base_damage, hit_chance)
-	target.take_hit(hit)
+	for target in targets:
+		var hit: = BattlerHit.new(base_damage, hit_chance)
+		target.take_hit(hit)
+		await source.get_tree().create_timer(0.1).timeout
+	
 	await source.get_tree().create_timer(0.4).timeout
 
 	# Animate movement back to the attacker's original position.

@@ -49,7 +49,10 @@ var _rest_position: = Vector2.ZERO
 
 
 func _ready() -> void:
-	_anim.animation_finished.connect(_on_animation_player_finished)
+	_anim.animation_finished.connect(
+		func _on_animation_player_finished(anim_name: String) -> void:
+			animation_finished.emit(anim_name)
+	)
 	
 	_rest_position = position
 
@@ -67,9 +70,19 @@ func setup(battler: Battler, facing: Direction) -> void:
 	
 	direction = facing
 	
-	battler.health_depleted.connect(_on_battler_health_depleted)
-	battler.hit_received.connect(_on_battler_hit_received)
-	battler.selection_toggled.connect(_on_battler_selection_toggled)
+	battler.health_depleted.connect(
+		func _on_battler_health_depleted() -> void:
+			_anim.play("die")
+	)
+	battler.hit_received.connect(
+		func _on_battler_hit_received(value: int) -> void:
+			if value > 0: _anim.play("hurt")
+	)
+	battler.selection_toggled.connect(
+		func _on_battler_selection_toggled(value) -> void:
+			if value: move_forward(select_move_time)
+			else: move_to_rest(select_move_time)
+	)
 
 
 ## A function that wraps around the animation players' `play()` function, delegating the work to the
@@ -122,24 +135,3 @@ func move_to_rest(duration: float) -> void:
 		_rest_position,
 		duration
 	)
-
-
-func _on_animation_player_finished(anim_name: String) -> void:
-	animation_finished.emit(anim_name)
-
-
-func _on_battler_selection_toggled(value: bool) -> void:
-	if value:
-		move_forward(select_move_time)
-	
-	else:
-		move_to_rest(select_move_time)
-
-
-func _on_battler_hit_received(value: int) -> void:
-	if value > 0:
-		_anim.play("hurt")
-
-
-func _on_battler_health_depleted() -> void:
-	_anim.play("die")

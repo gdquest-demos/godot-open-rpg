@@ -1,3 +1,7 @@
+## An element of the [UIBattlerEntry] that visually shows player [Battler] life points.
+##
+## The LifeBar also can show an action icon to demonstrate when the player has queued an action for
+## one of their Battlers.
 class_name UIBattlerLifeBar extends TextureProgressBar
 
 # Rate of the animation relative to `max_value`. A value of 1.0 means the animation fills the entire
@@ -31,8 +35,9 @@ var target_value := 0.0:
 var _tween: Tween = null
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
-@onready var _name_label: = $MarginContainer/Name as Label
-@onready var _value_label: = $MarginContainer/Value as Label
+@onready var _name_label: = $MarginContainer/HBoxContainer/Name as Label
+@onready var _queued_action_icon: = $MarginContainer/HBoxContainer/QueuedActionIcon as TextureRect
+@onready var _value_label: = $MarginContainer/HBoxContainer/Value as Label
 
 
 func _ready() -> void:
@@ -47,3 +52,7 @@ func setup(battler_name: String, max_hp: int, start_hp: int) -> void:
 	
 	max_value = max_hp
 	value = start_hp
+
+
+func set_action_icon(texture: Texture) -> void:
+	_queued_action_icon.texture = texture

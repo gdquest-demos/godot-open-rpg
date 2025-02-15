@@ -20,8 +20,8 @@ func fade_out() -> void:
 
 
 ## Initialize the turn bar, passing in all the battlers that we want to display.
-func setup(battlers: Array[Battler]) -> void:
-	for battler in battlers:
+func setup(battler_data: BattlerList) -> void:
+	for battler in battler_data.get_all_battlers():
 		# Connect a handful of signals to the icon so that it may respond to changes in the
 		# Battler's readiness and fade out if the Battler falls in combat.
 		var icon: UIBattlerIcon = ICON_SCENE.instantiate()
@@ -34,7 +34,14 @@ func setup(battlers: Array[Battler]) -> void:
 			_background.size.x -icon.size.x / 2.0
 		)
 
-		battler.readiness_changed.connect(func(readiness: float): icon.progress = readiness / 100.0)
 		battler.health_depleted.connect(icon.fade_out)
+		battler.readiness_changed.connect(
+			# There is an edge case where a player Battler has managed to deplete their own hp.
+			# In this case, the UIBattlerIcon is probably already freed when the Battler's readiness
+			# changes after the action has finished.
+			# Thus, we need to make sure that the icon is valid before updating it.
+			func(readiness: float):
+				if is_instance_valid(icon):
+					icon.progress = readiness / 100.0)
 		
 		_icons.add_child(icon)

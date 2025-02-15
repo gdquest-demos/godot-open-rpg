@@ -1,7 +1,7 @@
-## Responds to [Battler] and input signals to determine when and how Battlers may act.
+## Responsible for [Battler]s, managing their turns, action order, and lifespans.
 ##
 ## The ActiveTurnQueue sorts Battlers neatly into a queue as they are ready to act. Time is paused
-## as Battlers act and is resumed once actors are finished acting. The queue ceases once the player
+## as Battlers act and is resumed once actors have finished acting. The queue ceases once the player
 ## or enemy Battlers have been felled, signaling that the combat has finished.
 ##
 ## Note: the turn queue defers action/target selection to either AI or player input. While
@@ -9,75 +9,125 @@
 ## acting while the player is taking their turn.
 class_name ActiveTurnQueue extends Node2D
 
-## Emitted immediately once the player has won or lost the battle. Note that all animations (such
-## as the player or AI battlers disappearing) are not yet completed.
-## This is the point at which most UI elements will disappear.
-signal battlers_downed
+## The slow-motion value of [time_scale] used when the player is navigating action/target menus.
+const SLOW_TIME_SCALE: = 0.05
+
 ## Emitted once a player has won or lost a battle, indicating whether or not it may be considered a 
 ## victory for the player. All combat animations have finished playing.
 signal combat_finished(is_player_victory: bool)
-## Emitted when a player-controlled battler finished playing a turn. That is, when the _play_turn()
-## method returns.
-signal player_turn_finished
 
 ## Allows pausing the Active Time Battle during combat intro, a cutscene, or combat end.
 var is_active: = true:
 	set(value):
 		if value != is_active:
 			is_active = value
-			for battler: Battler in _battlers:
+			for battler in battlers.get_all_battlers():
 				battler.is_active = is_active
-## Multiplier for the global pace of battle, to slow down time while the player is making decisions.
-## This is meant for accessibility and to control difficulty.
-var time_scale: = 1.0:
+
+## A list of the combat participants, in [BattlerList] form. This object is created by the turn
+## queue from children [Battler]s and then made available to other combat systems.
+var battlers: BattlerList
+
+## Battlers may select their action at any point, where they will be cached in this dictionary.
+## The battlers will not act, however, until the queue receives their [signal Battler.ready_to_act]
+## signal and validates the action.[br][br]
+## Key = Battler, Value = named dictionary with two entries: 'action' and 'targets'.
+var _cached_actions: = {}
+
+# Multiplier for the global pace of battle, to slow down time while the player is making decisions.
+# This is meant for accessibility and to control difficulty. It is set according to combat state,
+# as follows:
+#     - _time_scale is 1 during normal gameplay.
+#     - _time_scale is [const SLOW_TIME_SCALE] when the player has a menu open.
+#     - _time_scale is 0 whenver an action is being executed.
+var _time_scale: = 1.0:
 	set(value):
-		time_scale = value
-		for battler: Battler in _battlers:
-			battler.time_scale = time_scale
+		_time_scale = value
+		for battler in battlers.get_all_battlers():
+			battler.time_scale = _time_scale
 
-## If true, the player is currently playing a turn (navigating menus, choosing targets, etc.).
-var _is_player_playing: = false
+# Tracks which [BattlerAction] is currently running. _active_action is null if no action is running.
+var _active_action: BattlerAction = null:
+	set(value):
+		_active_action = value
+		_update_time_scale()
 
-## Only ever set true if the player has won the combat. I.e. enemy battlers are felled.
-var _has_player_won: = false
-
-## A stack of player-controlled battlers that have to take turns.
-var _queued_player_battlers: Array[Battler] = []
-
-var _battlers: Array[Battler] = []
-var _party_members: Array[Battler] = []
-var _enemies: Array[Battler] = []
+# Tracks whether or not the player has a menu open at any given moment.
+var _is_player_menu_open: = false:
+	set(value):
+		_is_player_menu_open = value
+		_update_time_scale()
 
 
 func _ready() -> void:
-	# This is required in Godot 4.3 to strongly type the array.
-	_battlers.assign(get_children())
-	set_process(false)
-
-	player_turn_finished.connect(func _on_player_turn_finished() -> void:
-		if _queued_player_battlers.is_empty():
-			_is_player_playing = false
-		else:
-			_play_turn(_queued_player_battlers.pop_front())
-		)
-
-	for battler: Battler in _battlers:
-		battler.ready_to_act.connect(func on_battler_ready_to_act() -> void:
-			if battler.is_player and _is_player_playing:
-				_queued_player_battlers.append(battler)
+	# The time scale slows down whenever the user is picking an action. Connect to UI signals here
+	# to adjust accordingly to whether or not the play is navigating the target/action menus.
+	CombatEvents.player_battler_selected.connect(
+		func _on_player_battler_selected(battler: Battler):
+			_is_player_menu_open = battler != null
+	)
+	CombatEvents.action_selected.connect(
+		# The player has fashioned an action for their Battler. Cache it now.
+		func _on_action_selected(action: BattlerAction, source: Battler, targets: Array[Battler]):
+			# If the action passed is null, unqueue the source Battler from any cached actions.
+			if action == null:
+				_cached_actions.erase(source)
+			
 			else:
-				_play_turn(battler)
+				# Otherwise, cache the action for execution whenever the Battler is ready to act.
+				_cached_actions[source] = {"action" = action, "targets" = targets}
+				
+				# Note that the battler only emits its ready_to_act signal once upon reaching 100
+				# readiness. If the battler is currently ready to act, re-emit the signal now.
+				if source.is_ready_to_act():
+					source.ready_to_act.emit.call_deferred()
+	)
+	
+	# Combat participants are children of the ActiveTurnQueue. Create the data structure that will
+	# track battlers and be passed across states.
+	# Note that we first need to assign typed arrays from the untyped return of get_children() in
+	# order to create the combat participant structure.
+	var players: Array[Battler]
+	players.assign(get_children().filter(func(i): return i.is_player))
+	var enemies: Array[Battler]
+	enemies.assign(get_children().filter(func(i): return !i.is_player))
+	
+	battlers = BattlerList.new(players, enemies)
+	battlers.battlers_downed.connect(
+		# Begin the shutdown sequence for the combat, flagging end of the combat logic.
+		# This is called immediately when the player has either won or lost the combat.
+		func _on_combat_side_downed() -> void:
+			# On combat end, a number of systems will animate out (the UI fades, for example).
+			# However, the battlers also end with animations: celebration or death animations. The 
+			# combat cannot truly end until these animations have finished, so wait for children 
+			# Battlers to 'wrap up' from this point onwards.
+			# This is done with the ActiveTurnQueue's process function, which will check each frame
+			# to see if the losing team's final animations have finished.
+			set_process(true)
+			
+			# Don't allow anyone else to act.
+			is_active = false
+	)
+	
+	for battler in battlers.get_all_battlers():
+		# Setup Battler AIs to make use of the BattlerList object (needed to pick targets).
+		if battler.ai != null:
+			battler.ai.setup(battler, battlers)
+		
+		# Battlers will act as their ready_to_act signal is emitted. The turn queue will allow them 
+		# to act if another action is not currently underway.
+		battler.ready_to_act.connect(_on_battler_ready_to_act.bind(battler))
+		
+		# Remove any cached actions whenever the Battler is downed.
+		battler.health_depleted.connect(
+			(func _on_battler_health_depleted(downed_battler: Battler):
+				_cached_actions.erase(downed_battler)).bind(battler)
 		)
-		battler.health_depleted.connect(func on_battler_health_depleted() -> void:
-			if not _deactivate_if_side_downed(_party_members, false):
-				_deactivate_if_side_downed(_enemies, true)
-		)
-
-		if battler.is_player:
-			_party_members.append(battler)
-		else:
-			_enemies.append(battler)
-
+	
+	# The ActiveTurnQueue uses _process to wait for animations to finish at combat end, so disable
+	# _process for now.
+	set_process(false)
+	
 	# Don't begin combat until the state has been setup. I.e. intro animations, UI is ready, etc.
 	is_active = false
 
@@ -85,102 +135,50 @@ func _ready() -> void:
 # The active turn queue waits until all battlers have finished their animations before emitting the
 # finished signal.
 func _process(_delta: float) -> void:
-	for child: BattlerAnim in find_children("*", "BattlerAnim"):
+	# Only track the animations of the losing team, as the winning team will animate their idle
+	# poses indefinitely.
+	var tracked_battlers: Array[Battler] = battlers.enemies if battlers.has_player_won \
+		else battlers.players
+	
+	for child: Battler in tracked_battlers:
 		# If there are still playing BattlerAnims, don't finish the battle yet.
-		if child.is_playing():
+		if child.anim.is_playing():
 			return
 
-	# There are no animations being played. Combat can now finish.
+	# There are no defeat animations being played. Combat can now finish.
 	set_process(false)
-	combat_finished.emit(_has_player_won)
+	combat_finished.emit(battlers.has_player_won)
 
 
-func get_battlers() -> Array[Battler]:
-	return _battlers
-
-
-func _play_turn(battler: Battler) -> void:
-	var action: BattlerAction
-	var targets: Array[Battler] = []
-
-	# The battler is getting a new turn, so increment its energy count.
-	battler.stats.energy += 1
-
-	# The code below makes a list of selectable targets using Battler.is_selectable
-	var potential_targets: Array[Battler] = []
-	var opponents: = _enemies if battler.is_player else _party_members
-	for opponent: Battler in opponents:
-		if opponent.is_selectable:
-			potential_targets.append(opponent)
-
-	if battler.is_player:
-		_is_player_playing = true
-		battler.is_selected = true
-
-		time_scale = 0.05
-
-		# Loop until the player selects a valid set of actions and targets of said action.
-		var is_selection_complete: = false
-		while not is_selection_complete:
-			# First of all, the player must select an action.
-			action = await _player_select_action_async(battler)
-
-			# Secondly, the player must select targets for the action.
-			# If the target may be selected automatically, do so.
-			if action.targets_self:
-				targets = [battler]
-			else:
-				targets = await _player_select_targets_async(action, potential_targets)
-
-			# If the player selected a correct action and target, break out of the loop. Otherwise,
-			# the player may reselect an action/targets.
-			is_selection_complete = action != null and targets != []
-
-		battler.is_selected = false
-
+# The time scale is affected by the player navigating menus and actions being played. Update the
+# time scale to 
+func _update_time_scale() -> void:
+	if _active_action != null:
+		_time_scale = 0
+	elif _is_player_menu_open:
+		_time_scale = SLOW_TIME_SCALE
 	else:
-		# Allow the AI to take a turn.
-		if battler.actions.size():
-			action = battler.actions[0]
-			targets = [potential_targets[0]]
-
-	time_scale = 0
-	await battler.act(action, targets)
-	time_scale = 1.0
-
-	if battler.is_player:
-		player_turn_finished.emit()
+		_time_scale = 1
 
 
-func _player_select_action_async(battler: Battler) -> BattlerAction:
-	await get_tree().process_frame
-	return battler.actions[0]
-
-
-func _player_select_targets_async(_action: BattlerAction, opponents: Array[Battler]) -> Array[Battler]:
-	await get_tree().process_frame
-	return [opponents[0]]
-
-
-# Run through a provided array of battlers. If all of them are downed (that is, their health points
-# are 0), finish the combat and indicate whether or not the player was victorious.
-# Return true if the combat has finished, otherwise return false.
-func _deactivate_if_side_downed(checked_battlers: Array[Battler],
-		is_player_victory: bool) -> bool:
-	for battler: Battler in checked_battlers:
-		if battler.stats.health > 0:
-			return false
-
-	# If the player battlers are dead, wait for all animations to finish playing before signaling
-	# a resolution to the combat.
-	# This is done with this classes' process function, which will check each frame to see if any
-	# 'clean up' animations have finished.
-	set_process(true)
-	_has_player_won = is_player_victory
-
-	# Don't allow anyone else to act.
-	is_active = false
+# When a Battler emits its ready_to_act signal, check to see if it can act. The action must be valid
+# and there must not be another ongoing action.
+func _on_battler_ready_to_act(battler: Battler):
+	if _active_action != null:
+		return
 	
-	# Let the normal combat UI systems know that they can fade out now.
-	battlers_downed.emit()
-	return true
+	# Check, first of all, to see if there is a cached action registered to this Battler.
+	var action_data: Dictionary = _cached_actions.get(battler, {})
+	
+	# If so, check to see if the action is valid, in which case it will execute.
+	if not action_data.is_empty():
+		var action: BattlerAction = action_data.action
+		var targets: Array[Battler] = action_data.targets.filter(
+			func(target: Battler): return action.can_target_battler(target)
+		)
+		
+		if action.can_execute(battler, targets):
+			_cached_actions.erase(battler)
+			_active_action = action
+			await battler.act(action, targets)
+			_active_action = null

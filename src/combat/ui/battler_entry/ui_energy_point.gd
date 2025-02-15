@@ -1,3 +1,4 @@
+## A single energy point UI element, animating smoothly as a player Battler gains and spends energy.
 extends MarginContainer
 
 ## When highlighted, the point indicator will be offset by the following amount.

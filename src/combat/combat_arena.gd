@@ -2,35 +2,35 @@
 ## It also contains the music that plays during the battle.
 class_name CombatArena extends Control
 
+## The music that will be automatically played during this combat instance.
 @export var music: AudioStream
 
-@onready var battler_list: = $UI/PlayerBattlerList as UIPlayerBattlerList
+# Keep a reference to the turn queue, which handles combat logic including combat start and end.
 @onready var turn_queue: = $Battlers as ActiveTurnQueue
-@onready var turn_bar: = $UI/TurnBar as UITurnBar
-@onready var effect_label_builder: = $UI/EffectLabelBuilder as UIEffectLabelBuilder
-@onready var ui_timer: = $UI/Timer as Timer
+
+# UI elements
+@onready var _ui_animation: = $UI/AnimationPlayer as AnimationPlayer
+@onready var _ui_turn_bar: = $UI/TurnBar as UITurnBar
+@onready var _ui_effect_label_builder: = $UI/EffectLabelBuilder as UIEffectLabelBuilder
+@onready var _ui_player_menus: = $UI/PlayerMenus as UICombatMenus
 
 
 func _ready() -> void:
-	battler_list.setup(turn_queue.get_battlers().filter(func(i): return i.is_player))
-	effect_label_builder.setup(turn_queue.get_battlers())
-	turn_bar.setup(turn_queue.get_battlers())
+	# Setup the different combat UI elements, beginning with the player battler list.
+	var combat_participant_data: = turn_queue.battlers
+	_ui_effect_label_builder.setup(combat_participant_data)
+	_ui_player_menus.setup(combat_participant_data)
+	_ui_turn_bar.setup(combat_participant_data)
 	
-	turn_queue.battlers_downed.connect(turn_bar.fade_out)
-	turn_queue.battlers_downed.connect(battler_list.fade_out)
+	# The UI elements will automatically fade out once one of the battler teams has lost.
+	combat_participant_data.battlers_downed.connect(_ui_turn_bar.fade_out)
 
 
 ## Begin combat, setting up the UI before running combat logic.
 func start() -> void:
-	turn_bar.fade_in()
+	# Smoothly fade in the UI elements.
+	_ui_animation.play("fade_in")
+	await _ui_animation.animation_finished
 	
-	# Stagger UI element fade-in slightly for visual effect.
-	ui_timer.start(0.2)
-	await ui_timer.timeout
-
-	await battler_list.fade_in()
-	
-	# Once the UI elements have been setup, pause slightly before beginning combat logic.
-	ui_timer.start(0.5)
-	await ui_timer.timeout
+	# Begin the combat logic.
 	turn_queue.is_active = true

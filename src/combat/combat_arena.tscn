@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3ciqydkjnkkx"]
+[gd_scene load_steps=17 format=3 uid="uid://b3ciqydkjnkkx"]
 
 [ext_resource type="Script" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
 [ext_resource type="Script" path="res://src/combat/active_turn_queue.gd" id="2_ll0ok"]
@@ -7,6 +7,59 @@
 [ext_resource type="PackedScene" uid="uid://dxyw5j7wr56hl" path="res://src/combat/ui/effect_labels/ui_missed_label.tscn" id="5_y3d4p"]
 [ext_resource type="PackedScene" uid="uid://derqg1tjy74tw" path="res://src/combat/ui/turn_bar/ui_turn_bar.tscn" id="6_yrwb4"]
 [ext_resource type="PackedScene" uid="uid://cy0jvvqhcopp3" path="res://src/combat/ui/battler_entry/ui_player_battler_list.tscn" id="7_klx1g"]
+[ext_resource type="PackedScene" uid="uid://b35omff3fdb2g" path="res://src/combat/ui/battler_entry/ui_battler_entry.tscn" id="8_yvvff"]
+[ext_resource type="PackedScene" uid="uid://bipyuaeqoxmt2" path="res://src/combat/ui/action_menu/ui_action_menu.tscn" id="9_7r1pn"]
+[ext_resource type="PackedScene" uid="uid://bu56ii26ps128" path="res://src/combat/ui/cursors/ui_battler_target_cursor.tscn" id="10_g5v87"]
+[ext_resource type="PackedScene" uid="uid://cf6hixtledkyy" path="res://src/combat/ui/action_menu/ui_action_description.tscn" id="12_e06ap"]
+[ext_resource type="Script" path="res://src/combat/ui/ui_combat_menus.gd" id="12_mmb61"]
+
+[sub_resource type="Animation" id="Animation_wen7t"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_1kh4k"]
+resource_name = "fade_in"
+length = 1.2
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurnBar")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fade_in"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerMenus/PlayerBattlerList")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fade_in"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_16p0q"]
+resource_name = "fade_out"
+length = 0.3
+step = 0.1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v7uy0"]
+_data = {
+"RESET": SubResource("Animation_wen7t"),
+"fade_in": SubResource("Animation_1kh4k"),
+"fade_out": SubResource("Animation_16p0q")
+}
 
 [node name="CombatArena" type="Control"]
 custom_minimum_size = Vector2(1920, 1080)
@@ -38,11 +91,51 @@ offset_bottom = 40.0
 script = ExtResource("3_33305")
 damage_label_scene = ExtResource("4_vmu37")
 missed_label_scene = ExtResource("5_y3d4p")
+metadata/_edit_lock_ = true
 
 [node name="TurnBar" parent="UI" instance=ExtResource("6_yrwb4")]
-modulate = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
 
-[node name="PlayerBattlerList" parent="UI" instance=ExtResource("7_klx1g")]
-modulate = Color(1, 1, 1, 0)
+[node name="PlayerMenus" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_mmb61")
+action_menu_scene = ExtResource("9_7r1pn")
+target_cursor_scene = ExtResource("10_g5v87")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="PlayerBattlerList" parent="UI/PlayerMenus" instance=ExtResource("7_klx1g")]
+layout_mode = 1
+entry_scene = ExtResource("8_yvvff")
+
+[node name="ActionDescription" parent="UI/PlayerMenus" instance=ExtResource("12_e06ap")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+offset_bottom = 0.0
+grow_vertical = 0
+theme_override_constants/margin_bottom = 32
+
+[node name="ActionMenuAnchor" type="Control" parent="UI/PlayerMenus"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 1056.0
+offset_top = 896.0
+offset_right = 1056.0
+offset_bottom = 896.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
 
 [node name="Timer" type="Timer" parent="UI"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
+libraries = {
+"": SubResource("AnimationLibrary_v7uy0")
+}

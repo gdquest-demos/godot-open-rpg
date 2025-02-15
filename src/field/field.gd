@@ -18,7 +18,7 @@ func _ready() -> void:
 	# Note that pausing/unpausing input is already wrapped up in triggers, which are what will
 	# initiate combat.
 	CombatEvents.combat_initiated.connect(func(): hide())
-	CombatEvents.combat_finished.connect(func(): show())
+	CombatEvents.combat_finished.connect(func(_is_victory): show())
 	
 	Camera.scale = scale
 	Camera.gameboard = gameboard

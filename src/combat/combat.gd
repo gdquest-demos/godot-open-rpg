@@ -41,11 +41,9 @@ func start(arena: PackedScene) -> void:
 
 	_active_arena.turn_queue.combat_finished.connect(
 		func on_combat_finished(is_player_victory: bool):
-			CombatEvents.did_player_win_last_combat = is_player_victory
-
+			# Wait a short period of time and then fade the screen to black.
 			_transition_delay_timer.start()
 			await _transition_delay_timer.timeout
-			# Cover the screen again, transitioning away from the combat game state.
 			await Transition.cover(0.2)
 
 			assert(_active_arena != null, "Combat finished but no active arena to clean up!")
@@ -56,9 +54,9 @@ func start(arena: PackedScene) -> void:
 			_previous_music_track = null
 
 			# Whatever object started the combat will now be responsible for flow of the game. In
-			# particular, the screen is still covered, so the combat-starting object will want to decide
-			# what to do now that the outcome of the combat is known.
-			CombatEvents.combat_finished.emit()
+			# particular, the screen is still covered, so the combat-starting object will want to 
+			# decide what to do now that the outcome of the combat is known.
+			CombatEvents.combat_finished.emit(is_player_victory)
 	)
 
 	_previous_music_track = Music.get_playing_track()

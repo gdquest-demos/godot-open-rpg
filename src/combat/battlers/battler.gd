@@ -8,6 +8,7 @@
 @tool
 class_name Battler extends Node2D
 
+
 ## Emitted when the battler finished their action and arrived back at their rest position.
 signal action_finished
 ## Forwarded from the receiving of [signal BettlerStats.health_depleted].
@@ -65,9 +66,28 @@ signal selection_toggled(value: bool)
 			var facing: = BattlerAnim.Direction.LEFT if is_player else BattlerAnim.Direction.RIGHT
 			anim.setup(self, facing)
 
+## A CombatAI object that will determine the Battler's combat behaviour.
 ## If the battler has an `ai_scene`, we will instantiate it and let the AI make decisions.
 ## If not, the player controls this battler. The system should allow for ally AIs.
-@export var ai_scene: PackedScene
+@export var ai_scene: PackedScene:
+	set(value):
+		ai_scene = value
+		
+		if ai_scene != null:
+			# In the editor, check to make sure that the value set to ai_scene is actually a 
+			# CombatAI bject.
+			var new_instance: = ai_scene.instantiate()
+			if Engine.is_editor_hint():
+				if new_instance is not CombatAI:
+					printerr("Cannot assign '%s' to Battler '%s'" % [new_instance.name, self.name] +
+						" as ai_scene property. Assigned PackedScene is not a CombatAI type!")
+					ai_scene = null
+				new_instance.free()
+			
+			else:
+				ai = new_instance
+				add_child(ai)
+
 ## Player battlers are controlled by the player.
 @export var is_player: = false:
 	set(value):
@@ -76,6 +96,9 @@ signal selection_toggled(value: bool)
 			var facing: = BattlerAnim.Direction.LEFT if is_player else BattlerAnim.Direction.RIGHT
 			anim.direction = facing
 
+## Reference to this Battler's child [CombatAI] node, if applicable.
+var ai: CombatAI = null
+
 ## Reference to this Battler's child [BattlerAnim] node.
 var anim: BattlerAnim = null
 
@@ -83,6 +106,7 @@ var anim: BattlerAnim = null
 var is_active: bool = true:
 	set(value):
 		is_active = value
+		
 		set_process(is_active)
 
 ## The turn queue will change this property when another battler is acting.
@@ -113,6 +137,9 @@ var readiness := 0.0:
 		readiness_changed.emit(readiness)
 
 		if readiness >= 100.0:
+			readiness = 100.0
+			stats.energy += 1
+			
 			ready_to_act.emit()
 			set_process(false)
 
@@ -140,17 +167,20 @@ func _process(delta: float) -> void:
 
 
 func act(action: BattlerAction, targets: Array[Battler] = []) -> void:
+	set_process(false)
+	
 	stats.energy -= action.energy_cost
 
 	# action.execute() almost certainly is a coroutine.
 	@warning_ignore("redundant_await")
 	await action.execute(self, targets)
-	readiness = action.readiness_saved
+	if stats.health > 0:
+		readiness = action.readiness_saved
 
-	if is_active:
-		set_process(true)
+		if is_active:
+			set_process(true)
 
-	action_finished.emit()
+	action_finished.emit.call_deferred()
 
 
 func take_hit(hit: BattlerHit) -> void:
@@ -159,3 +189,7 @@ func take_hit(hit: BattlerHit) -> void:
 		stats.health -= hit.damage
 	else:
 		hit_missed.emit()
+
+
+func is_ready_to_act() -> bool:
+	return readiness >= 100.0
