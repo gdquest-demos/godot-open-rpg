@@ -33,6 +33,10 @@ Together, we're creating a codebase and tools to show you some good Godot practi
 
 And more! Do you want to contribute and improve your programming skills with Godot? Check out the open issues, suggest improvements and report bugs by opening new ones, and be sure to check the contributing guidelines below.
 
+## Credits
+
+The project uses the asset pack [Tiny Town by Kenney](https://kenney.nl/assets/tiny-town).
+
 ## Contributing Guidelines
 
 All contributors are welcome 🙂. To ensure a smooth and a productive experience for everyone working together, we came up with some guidelines we all follow here.
