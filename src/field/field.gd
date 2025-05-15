@@ -2,12 +2,24 @@ extends Node2D
 
 const PLAYER_CONTROLLER: = preload("res://src/field/gamepieces/controllers/player_controller.tscn")
 
+## The cutscene that will play on starting a new game.
 @export var opening_cutscene: Cutscene
 
+## The gamepiece that the player is currently controlling.
 @export var focused_game_piece: Gamepiece = null:
 	set = set_focused_game_piece
 
-@export var gameboard: Gameboard
+## The field of play for the current map. Defines map boundaries and tile sizes.
+@export var gameboard: Gameboard:
+	set(value):
+		gameboard = value
+		
+		if not is_inside_tree():
+			await ready
+		
+		debug_map_boundaries.gameboard = gameboard
+
+@onready var debug_map_boundaries: DebugGameboardBoundaries = $MapBoundaries
 
 
 func _ready() -> void:
