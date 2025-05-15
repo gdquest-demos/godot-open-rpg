@@ -2,7 +2,7 @@
 ## Draws the boundaries set by a [Gameboard] object.
 ##
 ## Used within the editor to illustrate which cells will be included in the pathfinder calculations.
-extends Node2D
+class_name DebugGameboardBoundaries extends Node2D
 
 @export var gameboard: Gameboard:
 	set(value):

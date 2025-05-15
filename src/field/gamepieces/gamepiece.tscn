@@ -5,7 +5,6 @@
 [node name="Gamepiece" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_xhsbn")
-max_speed = 64.0
 
 [node name="Decoupler" type="Node" parent="."]
 
