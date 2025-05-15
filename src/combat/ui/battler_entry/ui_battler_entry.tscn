@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://b35omff3fdb2g"]
 
 [ext_resource type="Texture2D" uid="uid://c1j6dohohfgo8" path="res://src/combat/ui/battler_entry/battler_hud_background.png" id="1_um1qm"]
-[ext_resource type="Script" path="res://src/combat/ui/battler_entry/ui_battler_entry.gd" id="2_82qpa"]
+[ext_resource type="Script" uid="uid://f87ixnrwdhni" path="res://src/combat/ui/battler_entry/ui_battler_entry.gd" id="2_82qpa"]
 [ext_resource type="PackedScene" uid="uid://u8ldf4atgqo" path="res://src/combat/ui/battler_entry/ui_life_bar.tscn" id="2_ld6s8"]
-[ext_resource type="Script" path="res://src/combat/ui/battler_entry/ui_energy_bar.gd" id="3_tx6pk"]
+[ext_resource type="Script" uid="uid://4y5uctrn63ww" path="res://src/combat/ui/battler_entry/ui_energy_bar.gd" id="3_tx6pk"]
 
 [node name="BattlerEntry" type="TextureButton"]
 custom_minimum_size = Vector2(350, 152)

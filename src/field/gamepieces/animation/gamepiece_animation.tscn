@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://caxhff6by5nqu"]
 
-[ext_resource type="Script" path="res://src/field/gamepieces/animation/gamepiece_animation.gd" id="1_l0scw"]
+[ext_resource type="Script" uid="uid://wd1g3om38mkf" path="res://src/field/gamepieces/animation/gamepiece_animation.gd" id="1_l0scw"]
 
 [node name="CharacterAnimation" type="Marker2D"]
 script = ExtResource("1_l0scw")

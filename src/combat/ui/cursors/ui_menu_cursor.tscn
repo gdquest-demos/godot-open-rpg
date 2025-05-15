@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cxrn4uvha8g2w"]
 
 [ext_resource type="Texture2D" uid="uid://b1tcvapw3hqti" path="res://src/combat/ui/action_menu/menu_selection_arrow.png" id="1_em8xv"]
-[ext_resource type="Script" path="res://src/combat/ui/cursors/ui_menu_cursor.gd" id="1_ghsy1"]
+[ext_resource type="Script" uid="uid://db2pggdkj8bk1" path="res://src/combat/ui/cursors/ui_menu_cursor.gd" id="1_ghsy1"]
 
 [sub_resource type="Animation" id="Animation_wnwjy"]
 length = 0.001
@@ -38,8 +38,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xs2hl"]
 _data = {
-"RESET": SubResource("Animation_wnwjy"),
-"bounce": SubResource("Animation_7vg28")
+&"RESET": SubResource("Animation_wnwjy"),
+&"bounce": SubResource("Animation_7vg28")
 }
 
 [node name="ActionMenuCursor" type="Marker2D"]

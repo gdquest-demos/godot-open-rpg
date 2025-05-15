@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bipyuaeqoxmt2"]
 
-[ext_resource type="Script" path="res://src/combat/ui/action_menu/ui_action_menu.gd" id="1_5ab78"]
+[ext_resource type="Script" uid="uid://c6nqpsjt4comn" path="res://src/combat/ui/action_menu/ui_action_menu.gd" id="1_5ab78"]
 [ext_resource type="PackedScene" uid="uid://ux2r727n3476" path="res://src/combat/ui/list_menu/ui_list_menu.tscn" id="1_aaqxu"]
 [ext_resource type="PackedScene" uid="uid://b6quqbipabdox" path="res://src/combat/ui/action_menu/ui_action_button.tscn" id="2_c634v"]
 
@@ -55,9 +55,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_22wec"]
 _data = {
-"RESET": SubResource("Animation_48vps"),
-"fade_in": SubResource("Animation_yow7d"),
-"fade_out": SubResource("Animation_kjtjq")
+&"RESET": SubResource("Animation_48vps"),
+&"fade_in": SubResource("Animation_yow7d"),
+&"fade_out": SubResource("Animation_kjtjq")
 }
 
 [node name="UIActionMenu" instance=ExtResource("1_aaqxu")]

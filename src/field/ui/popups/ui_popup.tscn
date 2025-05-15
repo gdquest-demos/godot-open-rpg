@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dnd03as5e37he"]
 
-[ext_resource type="Script" path="res://src/field/ui/popups/ui_popup.gd" id="1_wg748"]
+[ext_resource type="Script" uid="uid://ynkfss4o3als" path="res://src/field/ui/popups/ui_popup.gd" id="1_wg748"]
 [ext_resource type="Texture2D" uid="uid://f2uyafsf3srw" path="res://assets/gui/emotes/emote__.png" id="2_j48km"]
 
 [sub_resource type="Animation" id="Animation_qeih3"]
@@ -98,11 +98,11 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fggt1"]
 _data = {
-"RESET": SubResource("Animation_qeih3"),
-"appear": SubResource("Animation_mduwk"),
-"bounce": SubResource("Animation_t06fl"),
-"bounce_wait": SubResource("Animation_15wpt"),
-"disappear": SubResource("Animation_veesw")
+&"RESET": SubResource("Animation_qeih3"),
+&"appear": SubResource("Animation_mduwk"),
+&"bounce": SubResource("Animation_t06fl"),
+&"bounce_wait": SubResource("Animation_15wpt"),
+&"disappear": SubResource("Animation_veesw")
 }
 
 [node name="Popup" type="Node2D"]
