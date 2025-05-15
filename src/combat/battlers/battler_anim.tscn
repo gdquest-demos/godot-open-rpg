@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://badexg85lctrq"]
 
-[ext_resource type="Script" path="res://src/combat/battlers/battler_anim.gd" id="1_j0v3v"]
+[ext_resource type="Script" uid="uid://dwpddwhqy1vhu" path="res://src/combat/battlers/battler_anim.gd" id="1_j0v3v"]
 
 [node name="BattlerAnim" type="Marker2D"]
 script = ExtResource("1_j0v3v")

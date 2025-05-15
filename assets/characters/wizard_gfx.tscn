@@ -3,6 +3,21 @@
 [ext_resource type="PackedScene" uid="uid://caxhff6by5nqu" path="res://src/field/gamepieces/animation/gamepiece_animation.tscn" id="1_7u2js"]
 [ext_resource type="Texture2D" uid="uid://8ry5inpldbfg" path="res://assets/characters/wizard.atlastex" id="2_othtp"]
 
+[sub_resource type="Animation" id="Animation_8lv7x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GFX/Sprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_f7y2d"]
 resource_name = "idle"
 loop_mode = 1
@@ -20,25 +35,10 @@ tracks/0/keys = {
 "values": [false, true]
 }
 
-[sub_resource type="Animation" id="Animation_8lv7x"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("GFX/Sprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hgdni"]
 _data = {
-"RESET": SubResource("Animation_8lv7x"),
-"idle": SubResource("Animation_f7y2d")
+&"RESET": SubResource("Animation_8lv7x"),
+&"idle": SubResource("Animation_f7y2d")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b20ad"]

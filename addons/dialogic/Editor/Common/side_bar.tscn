@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cwe3r2tbh2og1"]
 
-[ext_resource type="Script" path="res://addons/dialogic/Editor/Common/sidebar.gd" id="1_jnq65"]
+[ext_resource type="Script" uid="uid://c4cbejxqauw6d" path="res://addons/dialogic/Editor/Common/sidebar.gd" id="1_jnq65"]
 
 [sub_resource type="Theme" id="Theme_pn0f4"]
 VBoxContainer/constants/separation = 4

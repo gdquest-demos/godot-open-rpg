@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://dyp7m2nvab1aj"]
 
 [ext_resource type="StyleBox" uid="uid://cu8otiwksn8ma" path="res://addons/dialogic/Editor/Events/styles/TextBackground.tres" id="1_xq18n"]
-[ext_resource type="Script" path="res://addons/dialogic/Editor/TimelineEditor/TextEditor/syntax_highlighter.gd" id="2_ww6ga"]
-[ext_resource type="Script" path="res://addons/dialogic/Editor/Events/Fields/field_text_multiline.gd" id="3_q7600"]
+[ext_resource type="Script" uid="uid://pwv1b5kfbq7" path="res://addons/dialogic/Editor/TimelineEditor/TextEditor/syntax_highlighter.gd" id="2_ww6ga"]
+[ext_resource type="Script" uid="uid://cx0v1atvedolk" path="res://addons/dialogic/Editor/Events/Fields/field_text_multiline.gd" id="3_q7600"]
 
 [sub_resource type="SyntaxHighlighter" id="SyntaxHighlighter_2q5dk"]
 script = ExtResource("2_ww6ga")

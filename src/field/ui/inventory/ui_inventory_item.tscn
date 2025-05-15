@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ifunxevg2v40"]
 
 [ext_resource type="Texture2D" uid="uid://d3x4kmshfvtta" path="res://assets/items/coin.atlastex" id="1_wtayx"]
-[ext_resource type="Script" path="res://src/field/ui/inventory/ui_inventory_item.gd" id="2_xqtx2"]
+[ext_resource type="Script" uid="uid://cr7xwk48aatln" path="res://src/field/ui/inventory/ui_inventory_item.gd" id="2_xqtx2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2w568"]
 font_size = 48

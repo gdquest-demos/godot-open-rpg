@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ddlxjde1cx035"]
 
-[ext_resource type="Script" path="res://addons/dialogic/Modules/StyleEditor/Components/StyleItem.gd" id="1_is0qu"]
+[ext_resource type="Script" uid="uid://c8bl1dx883f0t" path="res://addons/dialogic/Modules/StyleEditor/Components/StyleItem.gd" id="1_is0qu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pfw08"]
 bg_color = Color(1, 1, 1, 0.32549)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bd624fi8r2avm"]
 
-[ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/trigger.tscn" id="1_hjt58"]
-[ext_resource type="Script" path="res://src/field/cutscenes/templates/area_transitions/area_transition.gd" id="2_l3ptr"]
+[ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/Trigger.tscn" id="1_hjt58"]
+[ext_resource type="Script" uid="uid://b8rb0plcyu5gp" path="res://src/field/cutscenes/templates/area_transitions/area_transition.gd" id="2_l3ptr"]
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="3_retee"]
 
 [node name="AreaTransition" instance=ExtResource("1_hjt58")]

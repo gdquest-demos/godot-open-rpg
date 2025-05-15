@@ -1,8 +1,8 @@
 [gd_scene load_steps=17 format=3 uid="uid://b3ciqydkjnkkx"]
 
-[ext_resource type="Script" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
-[ext_resource type="Script" path="res://src/combat/active_turn_queue.gd" id="2_ll0ok"]
-[ext_resource type="Script" path="res://src/combat/ui/effect_labels/ui_effect_label_builder.gd" id="3_33305"]
+[ext_resource type="Script" uid="uid://qqe2l2km3uki" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
+[ext_resource type="Script" uid="uid://jfn0daa3i05h" path="res://src/combat/active_turn_queue.gd" id="2_ll0ok"]
+[ext_resource type="Script" uid="uid://ch0df68krwxr1" path="res://src/combat/ui/effect_labels/ui_effect_label_builder.gd" id="3_33305"]
 [ext_resource type="PackedScene" uid="uid://bo6hj2mg02uef" path="res://src/combat/ui/effect_labels/ui_damage_label.tscn" id="4_vmu37"]
 [ext_resource type="PackedScene" uid="uid://dxyw5j7wr56hl" path="res://src/combat/ui/effect_labels/ui_missed_label.tscn" id="5_y3d4p"]
 [ext_resource type="PackedScene" uid="uid://derqg1tjy74tw" path="res://src/combat/ui/turn_bar/ui_turn_bar.tscn" id="6_yrwb4"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bipyuaeqoxmt2" path="res://src/combat/ui/action_menu/ui_action_menu.tscn" id="9_7r1pn"]
 [ext_resource type="PackedScene" uid="uid://bu56ii26ps128" path="res://src/combat/ui/cursors/ui_battler_target_cursor.tscn" id="10_g5v87"]
 [ext_resource type="PackedScene" uid="uid://cf6hixtledkyy" path="res://src/combat/ui/action_menu/ui_action_description.tscn" id="12_e06ap"]
-[ext_resource type="Script" path="res://src/combat/ui/ui_combat_menus.gd" id="12_mmb61"]
+[ext_resource type="Script" uid="uid://smjuikb83bkc" path="res://src/combat/ui/ui_combat_menus.gd" id="12_mmb61"]
 
 [sub_resource type="Animation" id="Animation_wen7t"]
 length = 0.001
@@ -56,9 +56,9 @@ step = 0.1
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v7uy0"]
 _data = {
-"RESET": SubResource("Animation_wen7t"),
-"fade_in": SubResource("Animation_1kh4k"),
-"fade_out": SubResource("Animation_16p0q")
+&"RESET": SubResource("Animation_wen7t"),
+&"fade_in": SubResource("Animation_1kh4k"),
+&"fade_out": SubResource("Animation_16p0q")
 }
 
 [node name="CombatArena" type="Control"]

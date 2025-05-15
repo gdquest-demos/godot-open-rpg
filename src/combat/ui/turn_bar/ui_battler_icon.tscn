@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://c8ikc817ccjtv"]
 
 [ext_resource type="Texture2D" uid="uid://bt4jp5jwumaxr" path="res://src/combat/ui/turn_bar/portrait_bg_player.png" id="1_ba558"]
-[ext_resource type="Script" path="res://src/combat/ui/turn_bar/ui_battler_icon.gd" id="2_471d1"]
+[ext_resource type="Script" uid="uid://dckveflvxdyse" path="res://src/combat/ui/turn_bar/ui_battler_icon.gd" id="2_471d1"]
 [ext_resource type="Texture2D" uid="uid://pkp6t20skjpe" path="res://battlers/bear/bear.png" id="2_qfsow"]
 
 [sub_resource type="Animation" id="Animation_ih8oe"]
@@ -52,8 +52,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vp71b"]
 _data = {
-"RESET": SubResource("Animation_ih8oe"),
-"fade_out": SubResource("Animation_p1hyi")
+&"RESET": SubResource("Animation_ih8oe"),
+&"fade_out": SubResource("Animation_p1hyi")
 }
 
 [node name="UIBattlerIcon" type="TextureRect"]

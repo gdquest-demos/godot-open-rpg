@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="RangedBattlerAction" load_steps=2 format=3 uid="uid://bs4g81qa8u57q"]
 
-[ext_resource type="Script" path="res://src/combat/actions/battler_action_projectile.gd" id="1_bbarm"]
+[ext_resource type="Script" uid="uid://do6i1t56x1km0" path="res://src/combat/actions/battler_action_projectile.gd" id="1_bbarm"]
 
 [resource]
 script = ExtResource("1_bbarm")

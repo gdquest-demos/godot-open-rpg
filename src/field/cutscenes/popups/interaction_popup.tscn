@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cubp81mykng3h"]
 
 [ext_resource type="PackedScene" uid="uid://dnd03as5e37he" path="res://src/field/ui/popups/ui_popup.tscn" id="1_582ge"]
-[ext_resource type="Script" path="res://src/field/cutscenes/popups/interaction_popup.gd" id="2_2fot7"]
+[ext_resource type="Script" uid="uid://5qqjcduwxpw6" path="res://src/field/cutscenes/popups/interaction_popup.gd" id="2_2fot7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cbdy6"]
 radius = 32.0

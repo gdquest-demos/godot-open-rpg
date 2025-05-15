@@ -89,9 +89,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xl0qy"]
 _data = {
-"RESET": SubResource("Animation_r4wpi"),
-"die": SubResource("Animation_2u36l"),
-"hurt": SubResource("Animation_yc1ca")
+&"RESET": SubResource("Animation_r4wpi"),
+&"die": SubResource("Animation_2u36l"),
+&"hurt": SubResource("Animation_yc1ca")
 }
 
 [node name="SquirrelAnim" instance=ExtResource("1_d3f8c")]

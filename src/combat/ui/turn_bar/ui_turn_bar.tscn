@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://derqg1tjy74tw"]
 
-[ext_resource type="Script" path="res://src/combat/ui/turn_bar/ui_turn_bar.gd" id="1_pm8tv"]
+[ext_resource type="Script" uid="uid://bavqbneuu0ke1" path="res://src/combat/ui/turn_bar/ui_turn_bar.gd" id="1_pm8tv"]
 [ext_resource type="Texture2D" uid="uid://lro5tk1vopp4" path="res://assets/gui/combat/turn_bar_bg.png" id="2_u17t0"]
 
 [sub_resource type="Animation" id="Animation_of53a"]
@@ -54,9 +54,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8p3cw"]
 _data = {
-"RESET": SubResource("Animation_of53a"),
-"fade_in": SubResource("Animation_3m1jh"),
-"fade_out": SubResource("Animation_ckfws")
+&"RESET": SubResource("Animation_of53a"),
+&"fade_in": SubResource("Animation_3m1jh"),
+&"fade_out": SubResource("Animation_ckfws")
 }
 
 [node name="TurnBar" type="Control"]

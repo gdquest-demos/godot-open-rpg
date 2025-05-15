@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cvgehp0c71fkg"]
 
-[ext_resource type="Script" path="res://src/common/music/music_player.gd" id="1_m166w"]
+[ext_resource type="Script" uid="uid://coew8sn21vf23" path="res://src/common/music/music_player.gd" id="1_m166w"]
 
 [sub_resource type="Animation" id="Animation_meedk"]
 length = 0.001
@@ -49,9 +49,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_isbl1"]
 _data = {
-"RESET": SubResource("Animation_meedk"),
-"fade_in": SubResource("Animation_ln66x"),
-"fade_out": SubResource("Animation_e1vdt")
+&"RESET": SubResource("Animation_meedk"),
+&"fade_in": SubResource("Animation_ln66x"),
+&"fade_out": SubResource("Animation_e1vdt")
 }
 
 [node name="MusicPlayer" type="Node"]

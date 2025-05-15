@@ -74,8 +74,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oslbo"]
 _data = {
-"RESET": SubResource("Animation_q0l6f"),
-"default": SubResource("Animation_x72cj")
+&"RESET": SubResource("Animation_q0l6f"),
+&"default": SubResource("Animation_x72cj")
 }
 
 [node name="UIMissedLabel" type="Marker2D"]

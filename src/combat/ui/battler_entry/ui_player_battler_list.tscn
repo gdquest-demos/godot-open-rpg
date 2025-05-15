@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cy0jvvqhcopp3"]
 
-[ext_resource type="Script" path="res://src/combat/ui/battler_entry/ui_player_battler_list.gd" id="1_gvsvq"]
+[ext_resource type="Script" uid="uid://2bkem6rl5jl6" path="res://src/combat/ui/battler_entry/ui_player_battler_list.gd" id="1_gvsvq"]
 [ext_resource type="PackedScene" uid="uid://cxrn4uvha8g2w" path="res://src/combat/ui/cursors/ui_menu_cursor.tscn" id="2_okk2n"]
 
 [sub_resource type="Animation" id="Animation_eofhr"]
@@ -90,9 +90,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_25pwl"]
 _data = {
-"RESET": SubResource("Animation_eofhr"),
-"fade_in": SubResource("Animation_rpy6m"),
-"fade_out": SubResource("Animation_n07s7")
+&"RESET": SubResource("Animation_eofhr"),
+&"fade_in": SubResource("Animation_rpy6m"),
+&"fade_out": SubResource("Animation_n07s7")
 }
 
 [node name="PlayerBattlerList" type="VBoxContainer"]
