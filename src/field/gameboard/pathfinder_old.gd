@@ -1,21 +1,17 @@
 ## A wrapper for [AStar2D] that allows working with [Vector2i] coordinates.
 ##
 ## Additionally provides utility methods for easily dealing with cell availability and passability.
-class_name Pathfinder
+class_name PathfinderOld
 extends AStar2D
 
-# The gameboard determines pathable boundaries and performs cell <-> index conversion.
+# Requires the gameboard for board boundaries and cell <-> index conversion.
 var _gameboard: Gameboard = null
-
-# The gamepiece registry lets the pathfinder know which cells are blocked by gamepieces.
-var _gamepieces: GamepieceRegistry = null
 
 
 # Only cells within the gameboard's boundary will be considered.
-func _init(pathable_cells: Array[Vector2i], gameboard: Gameboard, 
-		gamepiece_registry: GamepieceRegistry) -> void:
+func _init(pathable_cells: Array[Vector2i], gameboard: Gameboard) -> void:
 	_gameboard = gameboard
-	_gamepieces = gamepiece_registry
+	assert(_gameboard, "Pathfinder::init error: invalid gameboard reference!")
 	
 	_build_cell_list(pathable_cells)
 	_connect_cells()

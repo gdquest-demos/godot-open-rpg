@@ -1,4 +1,5 @@
 # Opens up a secret path once the 'Strange Tree' has been interacted with twice.
+@tool
 extends InteractionTemplateConversation
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
