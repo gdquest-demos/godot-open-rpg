@@ -1,3 +1,4 @@
+@tool
 extends InteractionTemplateConversation
 
 @export var controller: GamepieceController
@@ -8,8 +9,10 @@ extends InteractionTemplateConversation
 
 func _ready() -> void:
 	super._ready()
-	assert(_adoring_fan, "Gamepiece was not found, check the node path!")
-	assert(controller, "Controller was not found, check the node path!")
+	
+	if not Engine.is_editor_hint():
+		assert(_adoring_fan, "Gamepiece was not found, check the node path!")
+		assert(controller, "Controller was not found, check the node path!")
 
 
 func _execute() -> void:

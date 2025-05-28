@@ -1,3 +1,4 @@
+@tool
 extends Trigger
 
 @export var timeline: DialogicTimeline
@@ -31,4 +32,6 @@ func _execute() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	super._on_area_entered(area)
-	gamepiece = area.owner as Gamepiece
+	
+	if not Engine.is_editor_hint():
+		gamepiece = area.owner as Gamepiece

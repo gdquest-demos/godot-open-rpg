@@ -1,3 +1,4 @@
+@tool
 extends Interaction
 
 @export var item_type: Inventory.ItemTypes

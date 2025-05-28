@@ -1,3 +1,4 @@
+@tool
 extends Interaction
 
 @onready var door: = get_parent() as Door
