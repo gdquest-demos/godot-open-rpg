@@ -12,9 +12,6 @@
 @icon("res://assets/editor/icons/Gamepiece.svg")
 class_name Gamepiece extends Path2D
 
-## Emitted when the gamepiece begins to travel towards a destination cell.
-signal travel_begun
-
 ## Emitted when a gamepiece is about to finish travlling to its destination cell. The remaining
 ## distance that the gamepiece could travel is based on how far the gamepiece has travelled this
 ## frame. [br][br]
@@ -94,9 +91,6 @@ var rest_position: = Vector2.ZERO
 ## follower, at which the GamepieceAnimation is rendered.
 var destination: Vector2
 
-# Describes the current movement path. Is empty when the Gamepiece is not moving.
-var _waypoints: Array[Vector2] = []
-
 ## A camera may smoothly follow a travelling gamepiece by receiving the camera_anchor's transform.
 @onready var camera_anchor: = $PathFollow2D/CameraAnchor as RemoteTransform2D
 
@@ -141,11 +135,6 @@ func _process(delta: float) -> void:
 		stop()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_released("select"):
-		move_to(get_global_mouse_position())
-
-
 ## Move the gamepiece towards a point, given in pixel coordinates.
 ## If the Gamepiece is currently moving, this point will be added to the current path (see
 ## [member Path2D.curve]. Otherwise, a new curve is created with the point as the target.[br][br]
@@ -165,8 +154,8 @@ func move_to(target_point: Vector2) -> void:
 	# The positions on the path, however, are all relative to the gamepiece's current position. The
 	# position doesn't update until the Gamepiece reaches its final destination, otherwise the path
 	# would move along with the gamepiece.
-	#curve.add_point(destination-position)
-	curve.add_point((destination-position)/global_scale)
+	curve.add_point(destination-position)
+	#curve.add_point((destination-position)/global_scale)
 
 
 ## Stop the gamepiece from travelling and update its position.

@@ -4,8 +4,11 @@
 ## placed on one of these cells, so the gameboard determines where each cell is located. In this 
 ## case, we are using a simple orthographic (square) projection.
 ## [br][br]The grid is contained within the playable [member boundaries] and its constituent cells.
-class_name Gameboard
-extends Resource
+extends Node
+
+## Emitted whenever a [BoardTileMapLayer]'s pathable cells change.
+@warning_ignore("unused_signal")
+signal cells_changed(added_cells: Array[Vector2i], removed_cells: Array[Vector2i])
 
 ## An invalid cell is not part of the gameboard. Note that this requires positive 
 ## [member boundaries].
@@ -14,14 +17,6 @@ const INVALID_CELL: = Vector2i(-1, -1)
 ## An invalid index is not found on the gameboard. Note that this requires positive 
 ## [member boundaries].
 const INVALID_INDEX: = -1
-
-## Map cardinal [Directions] to a shift in coordinates.
-const _DIRECTION_MAPPINGS: = {
-	Directions.Points.N: Vector2i.UP,
-	Directions.Points.E: Vector2i.RIGHT,
-	Directions.Points.S: Vector2i.DOWN,
-	Directions.Points.W: Vector2i.LEFT,
-}
 
 ## The extents of the playable area.
 ## [br][br][b]Note:[/b] The boundaries must only include positive coordinates. Negative coordinates
@@ -46,8 +41,42 @@ const _DIRECTION_MAPPINGS: = {
 var _half_cell_size: = cell_size / 2
 
 
+## Look through each [BoardTileMapLayer] in the game, unifying their lists of which cells may be
+## moved to.
+func get_all_clear_cells() -> Array[Vector2i]:
+	var clear_cells: Dictionary[Vector2i, bool] = {}
+	
+	for tilemap: BoardTileMapLayer in get_tree().get_nodes_in_group(BoardTileMapLayer.GROUP):
+		if tilemap:
+			clear_cells.merge(tilemap.clear_cells)
+	
+	return clear_cells.keys()
+
+
+## Checks all [TileMapLayers] in the [constant BoardTileMapLayer.GROUP] to see if the cell is clear
+## (returns true) or blocked (returns false).
+## [/br][/br]A clear cell must fulfill two criteria:
+## [/br]- Exists in at least one of the [BoardTileMapLayer]s.
+## [/br]- None of the layers block movement at this cell, as defined by the
+## [constant BoardTileMapLayer.BLOCKED_CELL_DATA_LAYER] custom data layer
+## (see [method TileData.get_custom_data])
+func is_cell_clear(cell: Vector2i) -> bool:
+	# Check to make sure that cell exists.
+	var cell_exists: = false
+	
+	for tilemap: BoardTileMapLayer in get_tree().get_nodes_in_group(BoardTileMapLayer.GROUP):
+		if tilemap and cell in tilemap.clear_cells:
+			cell_exists = true
+			if not tilemap.is_cell_clear(cell):
+				return false
+	
+	# There is no terrain blocking cell movement. However we only want to allow movement if the cell
+	# actually exists in one of the tilemap layers.
+	return cell_exists
+
+
 ## Convert cell coordinates to pixel coordinates.
-func cell_to_pixel(cell_coordinates: Vector2i) -> Vector2i:
+func cell_to_pixel(cell_coordinates: Vector2i) -> Vector2:
 	return cell_coordinates * cell_size + _half_cell_size
 
 
@@ -86,7 +115,7 @@ func index_to_cell(index: int) -> Vector2i:
 
 ## Find a neighbouring cell, if it exists. Otherwise, returns [constant INVALID_CELL].
 func get_adjacent_cell(cell: Vector2i, direction: int) -> Vector2i:
-	var neighbour: Vector2i = cell + _DIRECTION_MAPPINGS.get(direction, Vector2i.ZERO)
+	var neighbour: Vector2i = cell + Directions.MAPPINGS.get(direction, Vector2i.ZERO)
 	if boundaries.has_point(neighbour):
 		return neighbour
 	return INVALID_CELL
