@@ -3,7 +3,11 @@
 ## Since player movement is locked to gameboard cells (rather than physics-based movement), this
 ## allows UI elements, cutscenes, and other systems to quickly lookup gamepieces by name or
 ## location. Additionally, it allows pathfinders to see which cells are occupied or unoccupied.
-class_name GamepieceRegistry extends RefCounted
+## [/br][/br]Note that only ONE gamepiece may occupy a cell and will block the movement of other
+## gamepieces. 
+extends Node
+
+signal gamepiece_moved(gp: Gamepiece, new_cell: Vector2i, old_cell: Vector2i)
 
 # Store all registered gamepeices by the cell they occupy.
 var _gamepieces: Dictionary[Vector2i, Gamepiece] = {}
@@ -12,10 +16,14 @@ var _gamepieces: Dictionary[Vector2i, Gamepiece] = {}
 func register(gamepiece: Gamepiece, cell: Vector2i) -> bool:
 	# Don't register a gamepiece if it's cell is already occupied...
 	if _gamepieces.has(cell):
+		printerr("Failed to register Gamepiece '%s' at cell '%s'. " % [gamepiece.name, str(cell)],
+			"A gamepiece already exists at that cell!")
 		return false
 	
 	#...or if it has already been registered, for some reason.
 	if gamepiece in _gamepieces.values():
+		printerr("Failed to register Gamepiece '%s' at cell '%s'. " % [gamepiece.name, str(cell)],
+			"The gamepiece has already been registered!")
 		return false
 	
 	# We want to know when the gamepiece leaves the scene tree, as it is no longer on the gameboard.
@@ -23,6 +31,8 @@ func register(gamepiece: Gamepiece, cell: Vector2i) -> bool:
 	gamepiece.tree_exiting.connect(_on_gamepiece_tree_exiting.bind(gamepiece))
 	
 	_gamepieces[cell] = gamepiece
+	gamepiece_moved.emit(gamepiece, cell, Gameboard.INVALID_CELL)
+	
 	return true
 
 

@@ -35,32 +35,6 @@ var direction: = Directions.Points.S:
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
 
 
-#func _ready() -> void:
-	#if not Engine.is_editor_hint():
-		#var gamepiece = get_parent() as Gamepiece
-		#assert(gamepiece, "GamepieceAnimation expects gamepiece information exposed via signals."
-			#+ " Please only use GamepieceAnimation as a child of a Gamepiece for correct animation."
-			#+ " Current parent is named %s." % get_parent().name)
-		#
-		## Collisions will find the Area2D node as the collider. We'll point its owner reference to
-		## the gamepiece itself to allow easily identify colliding gamepieces.
-		#$Area2D.owner = gamepiece
-		
-		#gamepiece.blocks_movement_changed.connect( \
-			#_on_gamepiece_blocks_movement_changed.bind(gamepiece))
-		#_on_gamepiece_blocks_movement_changed(gamepiece)
-		#
-		#gamepiece.arrived.connect(_on_gamepiece_arrived)
-		#gamepiece.direction_changed.connect(_on_gamepiece_direction_changed)
-		#gamepiece.travel_begun.connect(_on_gamepiece_travel_begun)
-		#
-		## Need to wait one frame in the event that the parent gamepiece is not yet ready. We cannot
-		## just wait for the ready signal since there is no guarantee that it will be emitted (for
-		## example we may be swapping animation objects on an existing gamepiece).
-		#await get_tree().process_frame
-		#gamepiece.gfx_anchor.remote_path = gamepiece.gfx_anchor.get_path_to(_gfx)
-
-
 ## Change the currently playing animation to a new value, if it exists.
 ## [br][br]Animations may be added with or without a directional suffix (i.e. _n for north/up).
 ## Directional animations will be preferred with direction-less animations as a fallback.
@@ -125,19 +99,3 @@ func _swap_animation(next_sequence: String, keep_position: bool) -> void:
 		
 		_anim.play(next_sequence)
 		_anim.advance(current_position_ratio * next_anim.length)
-
-
-#func _on_gamepiece_arrived() -> void:
-	#_gfx.position = Vector2(0, 0)
-	#
-	#play("idle")
-#
-#
-#func _on_gamepiece_direction_changed(new_direction: Vector2) -> void:
-	#if not new_direction.is_equal_approx(Vector2.ZERO):
-		#var direction_value: = Directions.angle_to_direction(new_direction.angle())
-		#set_direction(direction_value)
-#
-#
-#func _on_gamepiece_travel_begun():
-	#play("run")
