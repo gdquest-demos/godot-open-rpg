@@ -1,5 +1,11 @@
+@tool
 ## Defines the properties of the playable game map.
 class_name GameboardProperties extends Resource
+
+## Emitted whenever [member cell_size] changes.
+signal cell_size_changed
+## Emitted whenever [member extents] changes.
+signal extents_changed
 
 ## An invalid index is not found on the gameboard. Note that this requires positive 
 ## [member extents].
@@ -13,6 +19,7 @@ const INVALID_INDEX: = -1
 		# Ensure that the boundary size is greater than 0.
 		extents.size.x = maxi(extents.size.x, 1)
 		extents.size.y = maxi(extents.size.y, 1)
+		extents_changed.emit()
 
 ## The size of each grid cell. Usually analogous to a [member TileSet.tile_size] of a
 ## [GameboardLayer].
@@ -20,6 +27,7 @@ const INVALID_INDEX: = -1
 	set(value):
 		cell_size = value
 		half_cell_size = cell_size/2
+		cell_size_changed.emit()
 
 var half_cell_size: = cell_size / 2.0
 
