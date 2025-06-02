@@ -47,7 +47,7 @@ tile_set = SubResource("TileSet_08ad2")
 script = ExtResource("2_08ad2")
 
 [node name="TileMapLayer2" type="TileMapLayer" parent="Map"]
-tile_map_data = PackedByteArray("AAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAEAAQAAAAAAAAAAAADAAQAAAAAAAAAAAACAAQAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_08ad2")
 script = ExtResource("2_08ad2")
 

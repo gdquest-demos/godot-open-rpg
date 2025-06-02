@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_8pamt")
-extents = Rect2i(-2, -2, 4, 4)
+extents = Rect2i(2, 1, 4, 4)
 cell_size = Vector2i(16, 16)
 metadata/_custom_type_script = "uid://cyl76x7u73s67"
