@@ -4,14 +4,14 @@
 ## Used within the editor to illustrate which cells will be included in the pathfinder calculations.
 class_name DebugGameboardBoundaries extends Node2D
 
-@export var gameboard: Gameboard:
+@export var gameboard_properties: GameboardProperties:
 	set(value):
-		gameboard = value
+		gameboard_properties = value
 		
-		if gameboard:
+		if gameboard_properties:
 			_boundaries = Rect2i(
-				gameboard.boundaries.position * gameboard.cell_size,
-				gameboard.boundaries.size * gameboard.cell_size
+				gameboard_properties.extents.position * gameboard_properties.cell_size,
+				gameboard_properties.extents.size * gameboard_properties.cell_size
 			)
 		
 		queue_redraw()
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	if not gameboard:
+	if not gameboard_properties:
 		return
 	
 	draw_rect(_boundaries, boundary_color, false, line_width)
