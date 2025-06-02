@@ -4,6 +4,10 @@ extends Node2D
 
 
 func _ready() -> void:
+	Gameboard.properties = $Map/DebugMoveGrid/DebugBoundaries.gameboard_properties
+	assert(Gameboard.properties != null, "The Gameboard autoload must have a GameboardProperties" +
+		"resource set before its _ready function is called!")
+	
 	for gp: Gamepiece in $Gamepieces.get_children():
 		var cell: = Gameboard.pixel_to_cell(gp.position)
 		gp.position = Gameboard.cell_to_pixel(cell)

@@ -39,6 +39,7 @@ func _process(_delta: float) -> void:
 			target_cell = Gameboard.pixel_to_cell(_gamepiece.position) + Vector2i(input_direction)
 			
 			# Try to get a path to destination (will fail if cell is occupied)
+			print(Gameboard.is_cell_clear(target_cell))
 			# If path is valid, move.
 
 
