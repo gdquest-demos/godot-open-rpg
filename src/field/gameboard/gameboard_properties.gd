@@ -11,7 +11,8 @@ signal extents_changed
 ## [member extents].
 const INVALID_INDEX: = -1
 
-## The extents of the playable area.
+## The extents of the playable area. This property is intended for editor use and should not change
+## during gameplay, as that would change how [Pathfinder] indices are calculated.
 @export var extents: = Rect2i(0, 0, 10, 10):
 	set(value):
 		extents = value
