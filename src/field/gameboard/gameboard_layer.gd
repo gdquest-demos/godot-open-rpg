@@ -53,7 +53,6 @@ func _update_cells(coords: Array[Vector2i], forced_cleanup: bool) -> void:
 	# First of all, check to make sure the the tilemap has a tileset and the specific custom data
 	# layer that we need to specify whether or not a tile blocks movement.
 	if not tile_set or not tile_set.has_custom_data_layer_by_name(BLOCKED_CELL_DATA_LAYER):
-		print("Called rebuild cell list. No tileset/data layer.")
 		return
 	
 	# Go through the specified coords, checking to see if any moveable cells (those that are NOT
@@ -73,6 +72,4 @@ func _update_cells(coords: Array[Vector2i], forced_cleanup: bool) -> void:
 				blocked_cells.append(coord)
 	
 	if not (cleared_cells.is_empty() and blocked_cells.is_empty()):
-		print("\n%s Updating cells. Cleared: %s, Blocked: %s" % [name, cleared_cells, blocked_cells],
-			" Forced cleanup: ", forced_cleanup)
 		cells_changed.emit(cleared_cells, blocked_cells)

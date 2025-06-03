@@ -28,41 +28,6 @@ var properties: GameboardProperties = null
 
 func _ready() -> void:
 	pathfinder = Pathfinder.new()
-	#print("GB ready")
-	#assert(properties != null, "The Gameboard autoload must have a GameboardProperties resource" +
-		#" set before its _ready function is called!")
-	# Maybe have Pathfinder.build. Wait to build until after everything has been put together?
-	# That is, if pathfinder is null, do nothing in the following callback.
-	
-	# There are two cases where we don't want the following signal to fire: when the TileMaps are
-	# being created (since they're created one by one. Would be better to just poll each one
-	# separately?) and when the tilemaps are freed, either at state change or before a new scene/map
-	# comes in.
-	
-	# Maybe can remove clear_cells from GameboardLayers? Since it will all be cached in the
-	# pathfinder by ID anyways? Still need to check each layer, however.
-	
-	# Could still have GameboardLayers register themselves with the Gameboard (in _ready).
-	# Then could connect to their internal signal, rather than GB's own.
-	# And the global signal would be, instead, when the pathfinder cells update.
-	
-	# The board state is composed from multiple GameboardLayers, which 
-	#cells_changed.connect.call_deferred(
-		#func _on_cells_changed(changed_cells: Array[Vector2i]):
-			#print("Changed, responding from GB")
-	#)
-
-
-## Look through each [GameboardLayer] in the game, unifying their lists of which cells may be
-## moved to.
-#func get_all_clear_cells() -> Array[Vector2i]:
-	#var clear_cells: Dictionary[Vector2i, bool] = {}
-	#
-	#for tilemap: GameboardLayer in get_tree().get_nodes_in_group(GameboardLayer.GROUP):
-		#if tilemap:
-			#clear_cells.merge(tilemap.clear_cells)
-	#
-	#return clear_cells.keys()
 
 
 ## Checks all [TileMapLayers] in the [constant GameboardLayer.GROUP] to see if the cell is clear
@@ -70,8 +35,8 @@ func _ready() -> void:
 ## [/br][/br]A clear cell must fulfill two criteria:
 ## [/br]- Exists in at least one of the [GameboardLayer]s.
 ## [/br]- None of the layers block movement at this cell, as defined by the
-## [constant GameboardLayer.BLOCKED_CELL_DATA_LAYER] custom data layer
-## (see [method TileData.get_custom_data])
+## [constant GameboardLayer.BLOCKED_CELL_DATA_LAYER] custom data layer (see
+## [method TileData.get_custom_data])
 func is_cell_clear(coord: Vector2i) -> bool:
 	# Check to make sure that cell exists.
 	var cell_exists: = false
@@ -158,42 +123,12 @@ func register_gameboard_layer(board_map: GameboardLayer) -> void:
 	board_map.cells_changed.connect(
 		func _on_gameboard_layer_cells_changed(cleared_cells: Array[Vector2i], 
 				blocked_cells: Array[Vector2i]):
-		print("Board map %s changed. Cleared cells %s, blocked cells %s" % [board_map.name, str(cleared_cells), str(blocked_cells)])
 		var added_cells: = _add_cells_to_pathfinder(cleared_cells)
 		var removed_cells: = _remove_cells_from_pathfinder(blocked_cells)
 		
 		_connect_new_pathfinder_cells(added_cells)
 		pathfinder_changed.emit(added_cells.values(), removed_cells)
 	)
-	#board_map.cells_changed.connect(
-		#func _on_gameboard_layer_cells_changed(cleared_cells: Array[Vector2i], 
-				#blocked_cells: Array[Vector2i]):
-			## Keep track of which cells have actually been added to the pathfinder. Key = uid (int),
-			## value = coordinate (Vector2i).
-			#var added_cells: Dictionary[int, Vector2i] = {}
-			#
-			## Verify whether or not cleared/blocked cells will change the state of the pathfinder.
-			## If there is no change in state, we will not pass along the cell to other systems and
-			## the pathfinder won't actually be changed.
-			#for cell in cleared_cells:
-				## Note that cleared cells need to have all layers checked for a blocking tile.
-				#if not pathfinder.has_cell(cell) and is_cell_clear(cell):
-					#var uid: = cell_to_index(cell)
-					#pathfinder.add_point(uid, cell)
-					#added_cells[uid]
-			#
-			#for cell in blocked_cells:
-				#if pathfinder.has_cell(cell):
-					#pathfinder.remove_point(cell_to_index(cell))
-			#
-			## Finally, the pathfinder needs to connect all added cells to those that exist in the
-			## pathfinder.
-			#pathfinder.connect_cells(added_cells)
-			#
-			#print("%s added %s & removed %s" % [board_map.name, cleared_cells, blocked_cells])
-			## Forward the list of changed cells to other systems.
-			##cells_changed.emit(cleared_cells + blocked_cells)
-	#)
 
 
 # Add cells to the pathfinder, checking that there are no blocking tiles on any GameboardLayers.
@@ -211,8 +146,6 @@ func _add_cells_to_pathfinder(cleared_cells: Array[Vector2i]) -> Dictionary[int,
 			var uid: = cell_to_index(cell)
 			pathfinder.add_point(uid, cell)
 			added_cells[uid] = cell
-	
-	print("Added cells: ", added_cells)
 	return added_cells
 
 
@@ -228,8 +161,6 @@ func _remove_cells_from_pathfinder(blocked_cells: Array[Vector2i]) -> Array[Vect
 		if pathfinder.has_cell(cell) and not is_cell_clear(cell):
 			pathfinder.remove_point(cell_to_index(cell))
 			removed_cells.append(cell)
-	
-	print("Removed cells: ", removed_cells)
 	return removed_cells
 
 
