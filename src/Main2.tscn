@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=4 uid="uid://dve3nxx0ohm1g"]
 
 [ext_resource type="Script" uid="uid://ccm6jxmjt0frp" path="res://src/main_2.gd" id="1_d0xvx"]
-[ext_resource type="Script" uid="uid://bt8owd5e0ns68" path="res://src/field/gameboard/board_tile_map_layer.gd" id="2_08ad2"]
+[ext_resource type="Script" uid="uid://bt8owd5e0ns68" path="res://src/field/gameboard/gameboard_layer.gd" id="2_08ad2"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="2_dsdwj"]
 [ext_resource type="PackedScene" uid="uid://b626e0bngfvjj" path="res://src/field/gamepieces/gamepiece.tscn" id="2_nevdf"]
 [ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://assets/characters/gobot_gfx.tscn" id="3_08ad2"]
@@ -47,7 +47,7 @@ tile_set = SubResource("TileSet_08ad2")
 script = ExtResource("2_08ad2")
 
 [node name="TileMapLayer2" type="TileMapLayer" parent="Map"]
-tile_map_data = PackedByteArray("AAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAEAAQAAAAAAAAAAAADAAQAAAAAAAAAAAACAAQAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAEAAQAAAAAAAAAAAADAAQAAAAAAAAAAAACAAQAAAAAAAAAAAACAAEAAAAKAAcAAAA=")
 tile_set = SubResource("TileSet_08ad2")
 script = ExtResource("2_08ad2")
 

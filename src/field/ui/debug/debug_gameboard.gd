@@ -5,15 +5,15 @@ extends TileMapLayer
 
 func _ready() -> void:
 	_occupancy.tile_set = tile_set
-	
-	Gameboard.cells_changed.connect(
-		func _on_gameboard_cells_changed(changed_cells: Array[Vector2i]) -> void:
-			for cell in changed_cells:
-				if Gameboard.is_cell_clear(cell):
-					set_cell(cell, 0, Vector2i(0, 0), 0)
-				else:
-					set_cell(cell) # Flag the cell as blocked.
-				
+
+	Gameboard.pathfinder_changed.connect(
+		func _on_pathfinder_changed(added_cells: Array[Vector2i], 
+				removed_cells: Array[Vector2i]) -> void:
+			for cell in added_cells:
+				set_cell(cell, 0, Vector2i(0, 0), 0)
+			
+			for cell in removed_cells:
+				set_cell(cell) # Flag the cell as blocked.
 	)
 	
 	GamepieceRegistry.gamepiece_moved.connect(
