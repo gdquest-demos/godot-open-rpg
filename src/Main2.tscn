@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://dve3nxx0ohm1g"]
+[gd_scene load_steps=17 format=4 uid="uid://dve3nxx0ohm1g"]
 
 [ext_resource type="Script" uid="uid://ccm6jxmjt0frp" path="res://src/main_2.gd" id="1_d0xvx"]
 [ext_resource type="Script" uid="uid://bt8owd5e0ns68" path="res://src/field/gameboard/gameboard_layer.gd" id="2_08ad2"]
@@ -9,7 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://dbpvlf2f8ajxy" path="res://assets/terrain/debug_cell_occupancy.png" id="4_u7xvm"]
 [ext_resource type="Script" uid="uid://27j187rqxg64" path="res://src/field/gameboard/debug_map_boundaries.gd" id="6_ndalr"]
 [ext_resource type="Resource" uid="uid://k63mv5dbd1uk" path="res://maps/village/gbprops_village.tres" id="7_7v0vs"]
-[ext_resource type="Script" uid="uid://ht3xm51xvouh" path="res://src/field/gamepieces/controller.gd" id="8_a4m4d"]
+[ext_resource type="TileSet" uid="uid://cnlvvllr0ici" path="res://src/field/gamepieces/controllers/cursor/tileset_cursor.tres" id="8_vw0ml"]
+[ext_resource type="Script" uid="uid://dwq2jtul5j1rc" path="res://src/field/gamepieces/controllers/cursor/field_cursor.gd" id="9_xqwga"]
+[ext_resource type="Script" uid="uid://vnofet0hi8mx" path="res://src/field/gamepieces/player_controller.gd" id="10_7v0vs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u7xvm"]
 texture = ExtResource("2_dsdwj")
@@ -62,18 +64,24 @@ script = ExtResource("3_ppad8")
 script = ExtResource("6_ndalr")
 gameboard_properties = ExtResource("7_7v0vs")
 
+[node name="Cursor" type="TileMapLayer" parent="Map"]
+tile_set = ExtResource("8_vw0ml")
+script = ExtResource("9_xqwga")
+
 [node name="Gamepieces" type="Node2D" parent="."]
 
 [node name="Gamepiece" parent="Gamepieces" instance=ExtResource("2_nevdf")]
-position = Vector2(88.2, 21.4)
+position = Vector2(72.4, 38.6)
 animation_scene = ExtResource("3_08ad2")
+move_speed = 128.0
 
 [node name="Camera2D" type="Camera2D" parent="Gamepieces/Gamepiece"]
 metadata/_edit_lock_ = true
 
 [node name="Controller" type="Node2D" parent="Gamepieces/Gamepiece"]
-position = Vector2(-1.52588e-05, -7.62939e-06)
-script = ExtResource("8_a4m4d")
+position = Vector2(-7.62939e-06, -7.62939e-06)
+scale = Vector2(1, 1)
+script = ExtResource("10_7v0vs")
 metadata/_edit_lock_ = true
 
 [node name="Gamepiece2" parent="Gamepieces" instance=ExtResource("2_nevdf")]

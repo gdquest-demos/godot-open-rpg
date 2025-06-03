@@ -22,9 +22,6 @@ signal arriving(remaining_distance: float)
 ## Emitted when the gamepiece has finished travelling to its destination cell.
 signal arrived
 
-## Emitted when [member blocks_movement] changes.
-signal blocks_movement_changed
-
 ## Emitted when the gamepiece's [member direction] changes, usually as it travels about the board.
 signal direction_changed(new_direction: Vector2)
 
@@ -53,14 +50,6 @@ signal direction_changed(new_direction: Vector2)
 				return
 			
 			_follower.add_child(animation)
-
-## A gamepiece may block movement into the cell it currently occupies. To do so, the gamepiece also
-## requires a descendant [CollisionObject2D] with a valid collision shape. 
-@export var blocks_movement: = false:
-	set(value):
-		if value != blocks_movement:
-			blocks_movement = value
-			blocks_movement_changed.emit()
 
 ## The gamepiece will traverse a movement path at [code]move_speed[/code] pixels per second.
 @export var move_speed: = 64.0

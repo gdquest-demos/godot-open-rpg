@@ -30,28 +30,6 @@ func _ready() -> void:
 	pathfinder = Pathfinder.new()
 
 
-## Checks all [TileMapLayers] in the [constant GameboardLayer.GROUP] to see if the cell is clear
-## (returns true) or blocked (returns false).
-## [/br][/br]A clear cell must fulfill two criteria:
-## [/br]- Exists in at least one of the [GameboardLayer]s.
-## [/br]- None of the layers block movement at this cell, as defined by the
-## [constant GameboardLayer.BLOCKED_CELL_DATA_LAYER] custom data layer (see
-## [method TileData.get_custom_data])
-func is_cell_clear(coord: Vector2i) -> bool:
-	# Check to make sure that cell exists.
-	var cell_exists: = false
-	
-	for tilemap: GameboardLayer in get_tree().get_nodes_in_group(GameboardLayer.GROUP):
-		if tilemap and coord in tilemap.get_used_cells():
-			cell_exists = true
-			if not tilemap.is_cell_clear(coord):
-				return false
-	
-	# There is no terrain blocking cell movement. However we only want to allow movement if the cell
-	# actually exists in one of the tilemap layers.
-	return cell_exists
-
-
 ## Convert cell coordinates to pixel coordinates.
 func cell_to_pixel(cell_coordinates: Vector2i) -> Vector2:
 	return Vector2(cell_coordinates * properties.cell_size) + properties.half_cell_size
@@ -142,7 +120,7 @@ func _add_cells_to_pathfinder(cleared_cells: Array[Vector2i]) -> Dictionary[int,
 	# the pathfinder won't actually be changed.
 	for cell in cleared_cells:
 		# Note that cleared cells need to have all layers checked for a blocking tile.
-		if not pathfinder.has_cell(cell) and is_cell_clear(cell):
+		if not pathfinder.has_cell(cell) and _is_cell_clear(cell):
 			var uid: = cell_to_index(cell)
 			pathfinder.add_point(uid, cell)
 			added_cells[uid] = cell
@@ -158,7 +136,7 @@ func _add_cells_to_pathfinder(cleared_cells: Array[Vector2i]) -> Dictionary[int,
 func _remove_cells_from_pathfinder(blocked_cells: Array[Vector2i]) -> Array[Vector2i]:
 	var removed_cells: Array[Vector2i] = []
 	for cell in blocked_cells:
-		if pathfinder.has_cell(cell) and not is_cell_clear(cell):
+		if pathfinder.has_cell(cell) and not _is_cell_clear(cell):
 			pathfinder.remove_point(cell_to_index(cell))
 			removed_cells.append(cell)
 	return removed_cells
@@ -173,3 +151,25 @@ func _connect_new_pathfinder_cells(added_cells: Dictionary[int, Vector2i]) -> vo
 				var neighbor_id: = Gameboard.cell_to_index(neighbor)
 				if pathfinder.has_point(neighbor_id):
 					pathfinder.connect_points(uid, neighbor_id)
+
+
+# Checks all [TileMapLayers] in the [constant GameboardLayer.GROUP] to see if the cell is clear
+# (returns true) or blocked (returns false).
+# [/br][/br]A clear cell must fulfill two criteria:
+# [/br]- Exists in at least one of the [GameboardLayer]s.
+# [/br]- None of the layers block movement at this cell, as defined by the
+# [constant GameboardLayer.BLOCKED_CELL_DATA_LAYER] custom data layer (see
+# [method TileData.get_custom_data])
+func _is_cell_clear(coord: Vector2i) -> bool:
+	# Check to make sure that cell exists.
+	var cell_exists: = false
+	
+	for tilemap: GameboardLayer in get_tree().get_nodes_in_group(GameboardLayer.GROUP):
+		if tilemap and coord in tilemap.get_used_cells():
+			cell_exists = true
+			if not tilemap.is_cell_clear(coord):
+				return false
+	
+	# There is no terrain blocking cell movement. However we only want to allow movement if the cell
+	# actually exists in one of the tilemap layers.
+	return cell_exists
