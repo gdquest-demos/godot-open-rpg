@@ -5,8 +5,15 @@ class_name Pathfinder
 extends AStar2D
 
 
+## Returns true if the coordinate is found in the Pathfinder.
 func has_cell(coord: Vector2i) -> bool:
 	return has_point(Gameboard.cell_to_index(coord))
+
+
+## Returns true if the coordinate is found in the Pathfinder and the cell is unoccupied.
+func can_move_to(coord: Vector2i) -> bool:
+	var uid: = Gameboard.cell_to_index(coord)
+	return has_point(uid) and not is_point_disabled(uid)
 
 
 ## Find a path between two cells. Returns an empty array if no path is available.
@@ -16,8 +23,9 @@ func get_path_to_cell(source_coord: Vector2i, target_coord: Vector2i) -> Array[V
 	var source_id: = Gameboard.cell_to_index(source_coord)
 	var target_id: = Gameboard.cell_to_index(target_coord)
 	if has_point(source_id) and has_point(target_id):
-		for path_coord in get_point_path(source_id, target_id):
-			move_path.append(Vector2i(path_coord))
+		for path_coord: Vector2i in get_point_path(source_id, target_id):
+			if path_coord != source_coord: # Don't include the source as the first path element.
+				move_path.append(path_coord)
 	
 	return move_path
 

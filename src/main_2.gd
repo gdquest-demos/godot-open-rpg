@@ -39,18 +39,3 @@ func _unhandled_input(event: InputEvent) -> void:
 		await get_tree().process_frame
 		await get_tree().process_frame
 		print(Gameboard.pathfinder)
-	
-	elif event.is_action_released("select"):
-		var clicked_cell: = Gameboard.pixel_to_cell(get_global_mouse_position()/global_scale)
-		
-		var move_path: = Gameboard.pathfinder.get_path_to_cell(Vector2i(2,4), clicked_cell)
-		if move_path:
-			print("Found path. ", move_path)
-		
-		else:
-			var adjacent_path: = Gameboard.pathfinder.get_path_cells_to_adjacent_cell(Vector2i(2,4), clicked_cell)
-			if adjacent_path:
-				print("No path, use adjacent instead", adjacent_path)
-			
-			else:
-				print("No path found.")

@@ -54,7 +54,7 @@ func move_gamepiece(gp: Gamepiece, new_cell: Vector2i) -> bool:
 	_gamepieces.erase(old_cell)
 	_gamepieces[new_cell] = gp
 	
-	#Events.gamepiece_moved.emit(gp, old_cell, new_cell)
+	gamepiece_moved.emit(gp, new_cell, old_cell)
 	return true
 
 
