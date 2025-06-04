@@ -19,15 +19,11 @@ const INVALID_CELL: = Vector2i(-1, -1)
 
 const INVALID_INDEX: = -1
 
-## A reference to the Pathfinder for the current playable area.
-var pathfinder: Pathfinder = null
-
 ## Determines the [member GameboardProperties.extents] of the Gameboard, among other details.
 var properties: GameboardProperties = null
 
-
-func _ready() -> void:
-	pathfinder = Pathfinder.new()
+## A reference to the Pathfinder for the current playable area.
+@onready var pathfinder: Pathfinder = Pathfinder.new()
 
 
 ## Convert cell coordinates to pixel coordinates.
@@ -124,6 +120,10 @@ func _add_cells_to_pathfinder(cleared_cells: Array[Vector2i]) -> Dictionary[int,
 			var uid: = cell_to_index(cell)
 			pathfinder.add_point(uid, cell)
 			added_cells[uid] = cell
+			
+			# Flag the cell as disabled if it is occupied.
+			if GamepieceRegistry.get_gamepiece(cell):
+				pathfinder.set_point_disabled(uid)
 	return added_cells
 
 

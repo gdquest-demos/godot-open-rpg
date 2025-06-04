@@ -6,7 +6,7 @@ var pathfinder: Pathfinder
 
 
 func _ready() -> void:
-	Gameboard.properties = $Map/DebugMoveGrid/DebugBoundaries.gameboard_properties
+	#Gameboard.properties = $Map/DebugMoveGrid/DebugBoundaries.gameboard_properties
 	assert(Gameboard.properties != null, "The Gameboard autoload must have a GameboardProperties" +
 		"resource set before its _ready function is called!")
 	
@@ -19,7 +19,7 @@ func _ready() -> void:
 		if GamepieceRegistry.register(gp, cell) == false:
 			gp.queue_free()
 	
-	print("Create tilemap here")
+	#print("Create tilemap here")
 	
 	for tilemap in collision_tilemaps:
 		tilemap.add_to_group(Gameboard.COLLISION_TILEMAPLAYER_GROUP)
@@ -28,7 +28,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	
-	print(Gameboard.pathfinder)
+	#print(Gameboard.pathfinder)
 
 
 func _unhandled_input(event: InputEvent) -> void:

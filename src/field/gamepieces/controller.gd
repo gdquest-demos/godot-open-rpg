@@ -11,16 +11,10 @@ var move_path: Array[Vector2i] = []:
 	set = move_along_path
 var _current_waypoint: Vector2i
 
-## An active controller will receive input events and process at idle and physics frames. An
-## inactive controller will not.
+## An active controller will receive inputs (player or otherwise). An inactive controller does
+## nothing. This is useful, for example, when toggling of gamepiece movement during cutscenes.
 var is_active: = false:
-	set(value):
-		is_active = value
-		
-		set_process(is_active)
-		set_physics_process(is_active)
-		set_process_input(is_active)
-		set_process_unhandled_input(is_active)
+	set = set_is_active
 
 
 func _ready() -> void:
@@ -34,39 +28,6 @@ func _ready() -> void:
 		_gamepiece.arrived.connect(_on_gamepiece_arrived)
 		
 		#FieldEvents.input_paused.connect(_on_input_paused)
-
-
-func _process(_delta: float) -> void:
-	if _gamepiece.is_moving():
-		return
-	
-	var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	if input_direction:
-		if not _gamepiece.is_moving():
-			var source_cell: = GamepieceRegistry.get_cell(_gamepiece)
-			var target_cell: = Vector2i.ZERO
-			
-			# Unless using 8-direction movement, one movement axis must be preferred. 
-			#	Default to the x-axis.
-			if not is_zero_approx(input_direction.x):
-				input_direction = Vector2(input_direction.x, 0)
-			else:
-				input_direction = Vector2(0, input_direction.y)
-			target_cell = Gameboard.pixel_to_cell(_gamepiece.position) + Vector2i(input_direction)
-			
-			# Try to get a path to destination (will fail if cell is occupied)
-			var new_move_path: = Gameboard.pathfinder.get_path_to_cell(source_cell, target_cell)
-			
-			# Path is invalid. Bump animation?
-			if new_move_path.size() <= 1:
-				pass
-			
-			else:
-				GamepieceRegistry.move_gamepiece(_gamepiece, target_cell)
-				_gamepiece.move_to(Gameboard.cell_to_pixel(target_cell))
-			print(new_move_path)
-			#print(Gameboard.pathfinder.get_path_to_cell())
-			# If path is valid, move.
 
 
 #func _unhandled_input(event: InputEvent) -> void:
@@ -105,14 +66,35 @@ func _notification(what: int) -> void:
 
 func move_along_path(value: Array[Vector2i]) -> void:
 	move_path = value
-	if move_path.size() >= 1 and Gameboard.pathfinder.can_move_to(move_path[0]):
-		_current_waypoint = move_path.pop_front()
-		_gamepiece.move_to(Gameboard.cell_to_pixel(_current_waypoint))
-		
-		GamepieceRegistry.move_gamepiece(_gamepiece, _current_waypoint)
+	_move_to_next_waypoint()
+
+
+## Set whether or not the controller may exert control over the gamepiece.
+## There are a number of occasions (such as cutscenes or combat) where gamepieces are inactive.
+func set_is_active(value: bool) -> void:
+	is_active = value
+	_move_to_next_waypoint() # Will only affect the gamepiece if is_active == true.
+
+
+# Finds the [member move_path]'s waypoint using [method Array.pop_front] and begins moveing the
+# gamepiece towards it.
+# The method will do nothing if the controller is currently inactive.
+# Returns the distance (in pixels) to the next waypoint.
+func _move_to_next_waypoint() -> float:
+	var distance_to_point: = 0.0
 	
-	else:
-		move_path.clear()
+	if is_active:
+		if move_path.size() >= 1 and Gameboard.pathfinder.can_move_to(move_path[0]):
+			_current_waypoint = move_path.pop_front()
+			var destination = Gameboard.cell_to_pixel(_current_waypoint)
+			
+			# Report how far away the waypoint is.
+			distance_to_point = _gamepiece.position.distance_to(destination)
+			_gamepiece.move_to(Gameboard.cell_to_pixel(_current_waypoint))
+			
+			GamepieceRegistry.move_gamepiece(_gamepiece, _current_waypoint)
+	
+	return distance_to_point
 
 
 # The controller's gamepiece will finish travelling this frame unless it is extended. When following
@@ -123,19 +105,11 @@ func _on_gamepiece_arriving(excess_distance: float) -> void:
 	if not move_path.is_empty() and is_active:
 		# Fast gamepieces could jump several waypoints at once, so check to see which waypoint is
 		# next in line. 
-		while not move_path.is_empty() and excess_distance > 0:
+		while not move_path.is_empty() and excess_distance > 0.0:
 			if not Gameboard.pathfinder.can_move_to(move_path[0]):
-				print("Can't move to ", move_path[0])
 				return
 			
-			_current_waypoint = move_path.pop_front()
-			var destination = Gameboard.cell_to_pixel(_current_waypoint)
-			var distance_to_waypoint: = \
-				_gamepiece.position.distance_to(destination)
-			
-			_gamepiece.move_to(destination)
-			GamepieceRegistry.move_gamepiece(_gamepiece, _current_waypoint)
-			
+			var distance_to_waypoint: = _move_to_next_waypoint()
 			excess_distance -= distance_to_waypoint
 
 

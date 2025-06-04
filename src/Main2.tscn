@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=4 uid="uid://dve3nxx0ohm1g"]
+[gd_scene load_steps=19 format=4 uid="uid://dve3nxx0ohm1g"]
 
 [ext_resource type="Script" uid="uid://ccm6jxmjt0frp" path="res://src/main_2.gd" id="1_d0xvx"]
 [ext_resource type="Script" uid="uid://bt8owd5e0ns68" path="res://src/field/gameboard/gameboard_layer.gd" id="2_08ad2"]
+[ext_resource type="Script" uid="uid://drugj534rnwxw" path="res://src/map.gd" id="2_dn3vx"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://assets/terrain/town_tilemap.png" id="2_dsdwj"]
 [ext_resource type="PackedScene" uid="uid://b626e0bngfvjj" path="res://src/field/gamepieces/gamepiece.tscn" id="2_nevdf"]
 [ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://assets/characters/gobot_gfx.tscn" id="3_08ad2"]
@@ -12,6 +13,7 @@
 [ext_resource type="TileSet" uid="uid://cnlvvllr0ici" path="res://src/field/gamepieces/controllers/cursor/tileset_cursor.tres" id="8_vw0ml"]
 [ext_resource type="Script" uid="uid://dwq2jtul5j1rc" path="res://src/field/gamepieces/controllers/cursor/field_cursor.gd" id="9_xqwga"]
 [ext_resource type="Script" uid="uid://vnofet0hi8mx" path="res://src/field/gamepieces/player_controller.gd" id="10_7v0vs"]
+[ext_resource type="Script" uid="uid://bm5b3nr6vn3da" path="res://src/field/gamepieces/controllers/path_loop_ai_controller.gd" id="13_xqwga"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u7xvm"]
 texture = ExtResource("2_dsdwj")
@@ -41,6 +43,8 @@ script = ExtResource("1_d0xvx")
 metadata/_edit_lock_ = true
 
 [node name="Map" type="Node2D" parent="."]
+script = ExtResource("2_dn3vx")
+gameboard_properties = ExtResource("7_7v0vs")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Map"]
@@ -60,30 +64,40 @@ script = ExtResource("3_ppad8")
 
 [node name="OccupancyGrid" type="TileMapLayer" parent="Map/DebugMoveGrid"]
 
-[node name="DebugBoundaries" type="Node2D" parent="Map/DebugMoveGrid"]
-script = ExtResource("6_ndalr")
-gameboard_properties = ExtResource("7_7v0vs")
-
 [node name="Cursor" type="TileMapLayer" parent="Map"]
 tile_set = ExtResource("8_vw0ml")
 script = ExtResource("9_xqwga")
 
+[node name="DebugBoundaries" type="Node2D" parent="Map"]
+script = ExtResource("6_ndalr")
+gameboard_properties = ExtResource("7_7v0vs")
+
 [node name="Gamepieces" type="Node2D" parent="."]
 
 [node name="Gamepiece" parent="Gamepieces" instance=ExtResource("2_nevdf")]
-position = Vector2(72.4, 38.6)
+position = Vector2(87.6, 55.8)
 animation_scene = ExtResource("3_08ad2")
-move_speed = 128.0
+move_speed = 640.0
 
 [node name="Camera2D" type="Camera2D" parent="Gamepieces/Gamepiece"]
 metadata/_edit_lock_ = true
 
 [node name="Controller" type="Node2D" parent="Gamepieces/Gamepiece"]
 position = Vector2(-7.62939e-06, -7.62939e-06)
-scale = Vector2(1, 1)
 script = ExtResource("10_7v0vs")
 metadata/_edit_lock_ = true
 
 [node name="Gamepiece2" parent="Gamepieces" instance=ExtResource("2_nevdf")]
-position = Vector2(270.8, 118.8)
+position = Vector2(56, 69.8)
 animation_scene = ExtResource("3_08ad2")
+
+[node name="PathLoopController" type="Node2D" parent="Gamepieces/Gamepiece2" node_paths=PackedStringArray("path_to_follow")]
+script = ExtResource("13_xqwga")
+path_to_follow = NodePath("Line2D")
+
+[node name="Line2D" type="Line2D" parent="Gamepieces/Gamepiece2/PathLoopController"]
+points = PackedVector2Array(-0.400002, 2.2, 15, 2, 14.4, -46, -1.4, -45.8)
+width = 2.0
+
+[node name="WaitTimer" type="Timer" parent="Gamepieces/Gamepiece2/PathLoopController"]
+wait_time = 2.0
