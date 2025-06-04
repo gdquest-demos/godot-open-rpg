@@ -18,7 +18,6 @@ func _ready() -> void:
 	
 	GamepieceRegistry.gamepiece_moved.connect(
 		func _on_gp_moved(_gp: Gamepiece, new_cell: Vector2i, old_cell: Vector2i) -> void:
-			print("Moved ", _gp.name, " from %s to %s." % [old_cell, new_cell])
 			_occupancy.set_cell(old_cell)
 			_occupancy.set_cell(new_cell, 0, Vector2i(1, 0), 0)
 	)

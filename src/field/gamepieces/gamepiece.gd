@@ -52,6 +52,8 @@ signal direction_changed(new_direction: Vector2)
 			_follower.add_child(animation)
 
 ## The gamepiece will traverse a movement path at [code]move_speed[/code] pixels per second.
+##[/br][/br]Note that extremely high speeds (finish a long path in a single frame) will produce
+## unexpected results.
 @export var move_speed: = 64.0
 
 ## The visual representation of the gamepiece, set automatically based on [member animation_scene].
@@ -108,7 +110,7 @@ func _process(delta: float) -> void:
 	# The excess travel distance allows us to know how much to extend the path by. A VERY fast
 	# gamepiece may jump a few cells at a time.
 	var excess_travel_distance: =  _follower.progress + move_distance - curve.get_baked_length()
-	if excess_travel_distance >= 0:
+	if excess_travel_distance >= 0.0:
 		arriving.emit(excess_travel_distance)
 	
 	# The path may have been extended, so the gamepiece can move along the path now.
@@ -144,7 +146,6 @@ func move_to(target_point: Vector2) -> void:
 	# position doesn't update until the Gamepiece reaches its final destination, otherwise the path
 	# would move along with the gamepiece.
 	curve.add_point(destination-position)
-	#curve.add_point((destination-position)/global_scale)
 
 
 ## Stop the gamepiece from travelling and update its position.

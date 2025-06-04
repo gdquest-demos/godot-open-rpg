@@ -47,10 +47,8 @@ func move_gamepiece(gp: Gamepiece, new_cell: Vector2i) -> bool:
 	
 	var old_cell: = get_cell(gp)
 	if old_cell == new_cell:
-		print("Cells are the same, cnnot move gp")
 		return false
 	
-	print("Moved %s to %s" % [gp.name, str(new_cell)])
 	_gamepieces.erase(old_cell)
 	_gamepieces[new_cell] = gp
 	

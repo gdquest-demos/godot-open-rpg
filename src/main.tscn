@@ -424,10 +424,8 @@ emote = 1
 script = ExtResource("14_b3y71")
 timeline = ExtResource("16_ybo02")
 
-[node name="LoopAI" type="Node2D" parent="Field/Terrain/Gamepieces/Town/Runner" node_paths=PackedStringArray("move_path")]
+[node name="LoopAI" type="Node2D" parent="Field/Terrain/Gamepieces/Town/Runner"]
 script = ExtResource("12_glwd5")
-gamepiece_mask = 2
-move_path = NodePath("MovePath")
 
 [node name="WaitTimer" type="Timer" parent="Field/Terrain/Gamepieces/Town/Runner/LoopAI"]
 wait_time = 1.5

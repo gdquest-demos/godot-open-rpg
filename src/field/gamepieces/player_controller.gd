@@ -20,6 +20,45 @@ func _ready() -> void:
 		FieldEvents.cell_selected.connect(_on_cell_selected)
 
 
+func _process(_delta: float) -> void:
+	if _gamepiece.is_moving():
+		return
+	
+	var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if input_direction:
+		if not _gamepiece.is_moving():
+			var source_cell: = GamepieceRegistry.get_cell(_gamepiece)
+			var target_cell: = Vector2i.ZERO
+			
+			# Unless using 8-direction movement, one movement axis must be preferred. 
+			#	Default to the x-axis.
+			if not is_zero_approx(input_direction.x):
+				input_direction = Vector2(input_direction.x, 0)
+			else:
+				input_direction = Vector2(0, input_direction.y)
+			target_cell = Gameboard.pixel_to_cell(_gamepiece.position) + Vector2i(input_direction)
+			
+			# Try to get a path to destination (will fail if cell is occupied)
+			var new_move_path: = Gameboard.pathfinder.get_path_to_cell(source_cell, target_cell)
+			
+			# Path is invalid. Bump animation?
+			if new_move_path.size() <= 1:
+				pass
+			
+			else:
+				GamepieceRegistry.move_gamepiece(_gamepiece, target_cell)
+				_gamepiece.move_to(Gameboard.cell_to_pixel(target_cell))
+			print(new_move_path)
+			#print(Gameboard.pathfinder.get_path_to_cell())
+			# If path is valid, move.
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("select"):
+		if move_path:
+			move_path.clear()
+
+
 func _on_cell_selected(cell: Vector2i) -> void:
 	if is_active and not _gamepiece.is_moving():
 		var source_cell: = Gameboard.pixel_to_cell(_gamepiece.position)
