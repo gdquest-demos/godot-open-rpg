@@ -5,6 +5,11 @@ class_name Pathfinder
 extends AStar2D
 
 
+const FLAG_ALLOW_SOURCE_OCCUPANT = 1 << 0
+const FLAG_ALLOW_TARGET_OCCUPANT = 1 << 1
+const FLAG_ALLOW_ALL_OCCUPANTS = 1 << 2
+
+
 func _init() -> void:
 	# Disable/re-enable occupied cells whenever a gamepiece moves.
 	GamepieceRegistry.gamepiece_moved.connect(
@@ -33,8 +38,8 @@ func can_move_to(coord: Vector2i) -> bool:
 ## Find a path between two cells. Returns an empty array if no path is available.
 ## If allow_blocked_source or allow_blocked_target are false, the pathinder wlil fail if a gamepiece
 ## occupies the source or target cells, respectively.
-func get_path_to_cell(source_coord: Vector2i, target_coord: Vector2i,
-		allow_disabled_source: = true, allow_disabled_target: = false) -> Array[Vector2i]:
+func get_path_to_cell(source_coord: Vector2i, target_coord: Vector2i, 
+		occupancy_flags: int = 1) -> Array[Vector2i]:
 	# Store the return value in a variable.
 	var move_path: Array[Vector2i] = []
 	
@@ -42,27 +47,35 @@ func get_path_to_cell(source_coord: Vector2i, target_coord: Vector2i,
 	var source_id: = Gameboard.cell_to_index(source_coord)
 	var target_id: = Gameboard.cell_to_index(target_coord)
 	
+	# The pathfinder has several flags to ignore cell occupancy. We'll need to track which occupants
+	# are temporarily ignored and then re-disable their pathfinder points once a path is found.
+	# Key is point id, value is whether or not the point is disabled.
+	var ignored_points: Dictionary[int, bool] = {}
+	if (occupancy_flags & FLAG_ALLOW_ALL_OCCUPANTS) != 0:
+		print("Allow all occupants!")
+		for id in get_point_ids():
+			if is_point_disabled(id):
+				ignored_points[id] = true
+				set_point_disabled(id, false)
+	
 	if has_point(source_id) and has_point(target_id):
 		# Check to see if we want to un-disable the source/target cells.
-		var is_source_disabled: = is_point_disabled(source_id)
-		var is_target_disabled: = is_point_disabled(target_id)
-		if allow_disabled_source:
+		if (occupancy_flags & FLAG_ALLOW_SOURCE_OCCUPANT) != 0:
+			print("Allow source occupant!")
+			ignored_points[source_id] = is_point_disabled(source_id)
 			set_point_disabled(source_id, false)
-		if allow_disabled_target:
+		if (occupancy_flags & FLAG_ALLOW_TARGET_OCCUPANT) != 0:
+			print("Allow target occupant!")
+			ignored_points[target_id] = is_point_disabled(target_id)
 			set_point_disabled(target_id, false)
 		
 		for path_coord: Vector2i in get_point_path(source_id, target_id):
 			if path_coord != source_coord: # Don't include the source as the first path element.
 				move_path.append(path_coord)
 		
-		# If the source/target cells had originally been disabled, re-disable them here.
-		if allow_disabled_source:
-			set_point_disabled(source_id, is_source_disabled)
-		if allow_disabled_target:
-			set_point_disabled(target_id, is_target_disabled)
-		
-		
-		#set_point_disabled(source_id, is_source_disabled)
+		# Change any enabled cells back to their previous state.
+		for id in ignored_points:
+			set_point_disabled(id, ignored_points[id])
 	
 	return move_path
 

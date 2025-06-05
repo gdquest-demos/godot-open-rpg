@@ -48,7 +48,7 @@ func _process(_delta: float) -> void:
 			else:
 				GamepieceRegistry.move_gamepiece(_gamepiece, target_cell)
 				_gamepiece.move_to(Gameboard.cell_to_pixel(target_cell))
-			print(new_move_path)
+
 			#print(Gameboard.pathfinder.get_path_to_cell())
 			# If path is valid, move.
 
