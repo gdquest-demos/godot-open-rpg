@@ -10,6 +10,11 @@ const GROUP: = "_PLAYER_CONTROLLER_GROUP"
 # It is reset on cancelling the move path or continuing movement via arrows/gamepad directions.
 var _target: Interaction = null
 
+# Also keep track of the most recently pressed move key (e.g. WASD keys). This makes keyboard input
+# feel more intuitive, since the gamepiece will move towards the most recently pressed key rather
+# than prefering an arbitrary axis.
+var _last_input_direction: = Vector2.ZERO
+
 
 func _ready() -> void:
 	super._ready()
@@ -57,6 +62,51 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		stop_moving()
+	
+	elif event is InputEventKey:
+		if event.is_action_pressed("ui_up"):
+			_last_input_direction = Vector2.UP
+			if _gamepiece.is_moving():	stop_moving()
+			else:	move_to_pressed_key(Vector2.UP)
+			
+		elif event.is_action_pressed("ui_down"):
+			_last_input_direction = Vector2.DOWN
+			if _gamepiece.is_moving():	stop_moving()
+			else:	move_to_pressed_key(Vector2.DOWN)
+			
+		elif event.is_action_pressed("ui_left"):
+			_last_input_direction = Vector2.LEFT
+			if _gamepiece.is_moving():	stop_moving()
+			else:	move_to_pressed_key(Vector2.LEFT)
+			
+		elif event.is_action_pressed("ui_right"):
+			_last_input_direction = Vector2.RIGHT
+			if _gamepiece.is_moving():	stop_moving()
+			else:	move_to_pressed_key(Vector2.RIGHT)
+
+			#print(Gameboard.pathfinder.get_path_to_cell())
+			# If path is valid, move.
+
+
+func move_to_pressed_key(input_direction: Vector2) -> void:
+	if is_active:
+		var source_cell: = GamepieceRegistry.get_cell(_gamepiece)
+		var target_cell: = Vector2i.ZERO
+		
+		# Unless using 8-direction movement, one movement axis must be preferred. 
+		#	Default to the x-axis.
+		target_cell = source_cell + Vector2i(input_direction)
+		
+		# Try to get a path to destination (will fail if cell is occupied)
+		var new_move_path: = Gameboard.pathfinder.get_path_to_cell(source_cell, target_cell)
+		
+		# Path is invalid. Bump animation?
+		if new_move_path.size() < 1:
+			_gamepiece.direction = Directions.angle_to_direction(input_direction.angle())
+		
+		else:
+			move_path = new_move_path.duplicate()
+			FieldEvents.player_path_set.emit(_gamepiece, new_move_path.back())
 
 
 func stop_moving() -> void:
@@ -136,6 +186,16 @@ func _on_interaction_selected(interaction: Interaction) -> void:
 		stop_moving()
 
 
+func _on_gamepiece_arriving(excess_distance: float) -> void:
+	super._on_gamepiece_arriving(excess_distance)
+	
+	# It may be that the player is holding the keys down. In that case, continue moving the
+	# gamepiece towards the pressed direction.
+	var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if not input_direction.is_equal_approx(Vector2.ZERO):
+		move_to_pressed_key(_last_input_direction)
+
+
 func _on_gamepiece_arrived() -> void:
 	super._on_gamepiece_arrived()
 	if _target:
@@ -144,3 +204,10 @@ func _on_gamepiece_arrived() -> void:
 			= Directions.vector_to_direction(_target.position - _gamepiece.position)
 		_target.run()
 		_target = null
+	
+	# No target, but check to see if the player is holding a key down and face in the direction of
+	# the last pressed key.
+	else:
+		var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		if not input_direction.is_equal_approx(Vector2.ZERO):
+			_gamepiece.direction = Directions.vector_to_direction(_last_input_direction)

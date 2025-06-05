@@ -77,7 +77,6 @@ gameboard_properties = ExtResource("7_7v0vs")
 [node name="Gamepiece" parent="Gamepieces" instance=ExtResource("2_nevdf")]
 position = Vector2(87.6, 55.8)
 animation_scene = ExtResource("3_08ad2")
-move_speed = 640.0
 
 [node name="Camera2D" type="Camera2D" parent="Gamepieces/Gamepiece"]
 metadata/_edit_lock_ = true
