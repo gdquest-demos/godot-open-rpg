@@ -12,7 +12,7 @@
 [ext_resource type="Resource" uid="uid://k63mv5dbd1uk" path="res://maps/village/gbprops_village.tres" id="7_7v0vs"]
 [ext_resource type="TileSet" uid="uid://cnlvvllr0ici" path="res://src/field/gamepieces/controllers/cursor/tileset_cursor.tres" id="8_vw0ml"]
 [ext_resource type="Script" uid="uid://dwq2jtul5j1rc" path="res://src/field/gamepieces/controllers/cursor/field_cursor.gd" id="9_xqwga"]
-[ext_resource type="Script" uid="uid://vnofet0hi8mx" path="res://src/field/gamepieces/player_controller.gd" id="10_7v0vs"]
+[ext_resource type="PackedScene" uid="uid://d2lj4blu56fte" path="res://src/field/gamepieces/controllers/player_controller.tscn" id="13_dn3vx"]
 [ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="15_l5lio"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u7xvm"]
@@ -81,19 +81,14 @@ animation_scene = ExtResource("3_08ad2")
 [node name="Camera2D" type="Camera2D" parent="Gamepieces/Gamepiece"]
 metadata/_edit_lock_ = true
 
-[node name="Controller" type="Node2D" parent="Gamepieces/Gamepiece"]
-position = Vector2(-7.62939e-06, -7.62939e-06)
-script = ExtResource("10_7v0vs")
-metadata/_edit_lock_ = true
+[node name="PlayerController" parent="Gamepieces/Gamepiece" instance=ExtResource("13_dn3vx")]
 
 [node name="Gamepiece2" parent="Gamepieces" instance=ExtResource("2_nevdf")]
 position = Vector2(56, 69.8)
 animation_scene = ExtResource("3_08ad2")
 
 [node name="Interaction" parent="." instance=ExtResource("15_l5lio")]
-position = Vector2(88, 40)
-scale = Vector2(1, 1)
+position = Vector2(88, 24)
 
 [node name="Interaction2" parent="." instance=ExtResource("15_l5lio")]
 position = Vector2(40, 40)
-scale = Vector2(1, 1)
