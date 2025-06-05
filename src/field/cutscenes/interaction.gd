@@ -5,6 +5,8 @@
 ## An active Interaction may be run by the player walking up to it and 'interacting' with it,
 ## usually via something as ubiquitous as the spacebar key. Common examples found in most RPGs are
 ## NPC conversations, opening treasure chests, activating a save point, etc.
+## An edge case occurs when the player clicks on an interaction, though the player is far away. We
+## only want to report the top-most interaction as being clicked.
 ##
 ##[br][br]
 ## Interactions handle player input directly and are activated according to the presence of the
@@ -44,12 +46,25 @@ class_name Interaction extends Cutscene
 # running events are relevant.
 var _overlapping_areas: = []
 
+# A hidden Button control tells us when the player has clicked on the interaction. Note that only
+# the topmost button may be clicked.
+@onready var _button: Button = $Button
+
 
 func _ready():
 	set_process_unhandled_input(false)
 	
 	if not Engine.is_editor_hint():
 		FieldEvents.input_paused.connect(_on_input_paused)
+		
+		# The button does not stop all mouse/touch input, otherwise the user could not highlight
+		# selectable cells. Instead, the GUI must prevent only clicks from propogating and should
+		# forward the general interaction_selected event.
+		_button.pressed.connect(
+			func _on_button_pressed() -> void: 
+				_button.accept_event() # Stop the click event from being passed to _unhandled_input.
+				FieldEvents.interaction_selected.emit(self)
+		)
 
 
 # Ensure that something is connected to _on_area_entered and _on_area_exited, which the Interaction

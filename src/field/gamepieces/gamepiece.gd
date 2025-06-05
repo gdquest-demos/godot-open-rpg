@@ -23,7 +23,7 @@ signal arriving(remaining_distance: float)
 signal arrived
 
 ## Emitted when the gamepiece's [member direction] changes, usually as it travels about the board.
-signal direction_changed(new_direction: Vector2)
+signal direction_changed(new_direction: Directions.Points)
 
 ## A [GamepieceAnimation] packed scene that will be automatically added to the gamepiece. Other
 ## scene types will not be accepted.
@@ -64,11 +64,15 @@ var animation: GamepieceAnimation = null
 ## The [code]direction[/code] is a unit vector that points where the gamepiece is 'looking'.
 ## In the event that the gamepiece is moving along a path, direction is updated automatically as
 ## long as the gamepiece continues to move.
-var direction: = Vector2.DOWN:
+var direction: = Directions.Points.S:
 	set(value):
-		value = value.normalized()
-		if not direction.is_equal_approx(value):
+		if value != direction:
 			direction = value
+			
+			if not is_inside_tree():
+				await ready
+			
+			animation.direction = direction
 			direction_changed.emit(direction)
 
 ## The position at the centre of the cell currently occupied by the gamepiece. Note that this
@@ -119,7 +123,7 @@ func _process(delta: float) -> void:
 	# Figure out which direction the gamepiece is facing, making sure that the GamepieceAnimation
 	# scene doesn't rotate.
 	animation.global_rotation = 0
-	animation.set_direction(Directions.angle_to_direction(_follower.rotation))
+	direction = Directions.angle_to_direction(_follower.rotation)
 	
 	# If the gamepiece has arrived, update it's position and movement details.
 	if _follower.progress >= curve.get_baked_length():

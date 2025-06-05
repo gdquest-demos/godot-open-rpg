@@ -4,9 +4,15 @@
 class_name Pathfinder
 extends AStar2D
 
-
+# When finding a path, we may want to ignore certain cells that are occupied by Gamepeices.
+# These flags specify which disabled cells will still allow the path through.
+## Ignore the pccupant of the source cell when searching for a path via [method path_to_cell].
+## This is especially useful when wanting to find a path for a gamepiece from their current cell.
 const FLAG_ALLOW_SOURCE_OCCUPANT = 1 << 0
+## Ignore the occupant of the target cell when searching for a path via [method path_to_cell].
 const FLAG_ALLOW_TARGET_OCCUPANT = 1 << 1
+## Ignore all gamepieces on the pathfinder cells when searching for a path via
+## [method path_to_cell].
 const FLAG_ALLOW_ALL_OCCUPANTS = 1 << 2
 
 
@@ -52,7 +58,6 @@ func get_path_to_cell(source_coord: Vector2i, target_coord: Vector2i,
 	# Key is point id, value is whether or not the point is disabled.
 	var ignored_points: Dictionary[int, bool] = {}
 	if (occupancy_flags & FLAG_ALLOW_ALL_OCCUPANTS) != 0:
-		print("Allow all occupants!")
 		for id in get_point_ids():
 			if is_point_disabled(id):
 				ignored_points[id] = true
@@ -61,11 +66,9 @@ func get_path_to_cell(source_coord: Vector2i, target_coord: Vector2i,
 	if has_point(source_id) and has_point(target_id):
 		# Check to see if we want to un-disable the source/target cells.
 		if (occupancy_flags & FLAG_ALLOW_SOURCE_OCCUPANT) != 0:
-			print("Allow source occupant!")
 			ignored_points[source_id] = is_point_disabled(source_id)
 			set_point_disabled(source_id, false)
 		if (occupancy_flags & FLAG_ALLOW_TARGET_OCCUPANT) != 0:
-			print("Allow target occupant!")
 			ignored_points[target_id] = is_point_disabled(target_id)
 			set_point_disabled(target_id, false)
 		
@@ -83,13 +86,12 @@ func get_path_to_cell(source_coord: Vector2i, target_coord: Vector2i,
 ## Find a path to a cell adjacent to the target coordinate.
 ## Returns an empty path if there are no pathable adjacent cells.
 func get_path_cells_to_adjacent_cell(source_coord: Vector2i,
-		target_coord: Vector2i) -> Array[Vector2i]:
+		target_coord: Vector2i, occupancy_flags: int = 1) -> Array[Vector2i]:
 	var shortest_path: Array[Vector2i] = []
 	var shortest_path_length: = INF
 	
 	for cell in Gameboard.get_adjacent_cells(target_coord):
-		var cell_path: = get_path_to_cell(source_coord, cell)
-		
+		var cell_path: = get_path_to_cell(source_coord, cell, occupancy_flags)
 		if not cell_path.is_empty() and cell_path.size() < shortest_path_length:
 			shortest_path_length = cell_path.size()
 			shortest_path = cell_path
