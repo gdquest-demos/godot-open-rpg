@@ -28,3 +28,7 @@ static func angle_to_direction(angle: float) -> Points:
 		return Points.S
 	
 	return Points.W
+
+
+static func vector_to_direction(vector: Vector2) -> Points:
+	return angle_to_direction(vector.angle())

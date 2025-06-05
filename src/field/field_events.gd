@@ -13,6 +13,10 @@ signal cell_highlighted(cell: Vector2i)
 @warning_ignore("unused_signal")
 signal cell_selected(cell: Vector2i)
 
+## Emitted when the player selects a cell that is covered by an [Interaction].
+@warning_ignore("unused_signal")
+signal interaction_selected(interaction: Interaction)
+
 ## Emitted whenever a combat is triggered. This will lead to a transition from the field 'state' to
 ## a combat 'state'.
 @warning_ignore("unused_signal")

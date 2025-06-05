@@ -53,7 +53,7 @@ func set_focused_game_piece(value: Gamepiece) -> void:
 	Camera.gamepiece = focused_game_piece
 	
 	# Free up any lingering controller(s).
-	for controller in get_tree().get_nodes_in_group(PlayerController.GROUP_NAME):
+	for controller in get_tree().get_nodes_in_group(PlayerController.GROUP):
 		controller.queue_free()
 	
 	if focused_game_piece:

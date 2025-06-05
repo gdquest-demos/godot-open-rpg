@@ -1,14 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgwailb13nkcd"]
+[gd_scene load_steps=5 format=3 uid="uid://cgwailb13nkcd"]
 
 [ext_resource type="PackedScene" uid="uid://caxhff6by5nqu" path="res://src/field/gamepieces/animation/gamepiece_animation.tscn" id="1_iqw7y"]
-[ext_resource type="Texture2D" uid="uid://dopua6orsf0bs" path="res://assets/characters/ ghost.atlastex" id="2_xwhv8"]
 
 [sub_resource type="Animation" id="Animation_sr8xj"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("GFX/Sprite:flip_h")
+tracks/0/path = NodePath("Anchor/Sprite:flip_h")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -24,7 +23,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("GFX/Sprite:flip_h")
+tracks/0/path = NodePath("Anchor/Sprite:flip_h")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -40,20 +39,10 @@ _data = {
 &"idle": SubResource("Animation_maeh2")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b20ad"]
-size = Vector2(16, 16)
-
 [node name="GhostGFX" instance=ExtResource("1_iqw7y")]
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
-"": SubResource("AnimationLibrary_6yooh")
+&"": SubResource("AnimationLibrary_6yooh")
 }
 autoplay = "idle"
-
-[node name="CollisionShape2D" parent="Area2D" index="0"]
-shape = SubResource("RectangleShape2D_b20ad")
-
-[node name="Sprite" parent="GFX" index="0"]
-texture = ExtResource("2_xwhv8")
-offset = Vector2(0, -6)

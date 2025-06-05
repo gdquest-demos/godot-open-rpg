@@ -13,7 +13,7 @@
 [ext_resource type="TileSet" uid="uid://cnlvvllr0ici" path="res://src/field/gamepieces/controllers/cursor/tileset_cursor.tres" id="8_vw0ml"]
 [ext_resource type="Script" uid="uid://dwq2jtul5j1rc" path="res://src/field/gamepieces/controllers/cursor/field_cursor.gd" id="9_xqwga"]
 [ext_resource type="Script" uid="uid://vnofet0hi8mx" path="res://src/field/gamepieces/player_controller.gd" id="10_7v0vs"]
-[ext_resource type="Script" uid="uid://bm5b3nr6vn3da" path="res://src/field/gamepieces/controllers/path_loop_ai_controller.gd" id="13_xqwga"]
+[ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="15_l5lio"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u7xvm"]
 texture = ExtResource("2_dsdwj")
@@ -91,13 +91,10 @@ metadata/_edit_lock_ = true
 position = Vector2(56, 69.8)
 animation_scene = ExtResource("3_08ad2")
 
-[node name="PathLoopController" type="Node2D" parent="Gamepieces/Gamepiece2" node_paths=PackedStringArray("path_to_follow")]
-script = ExtResource("13_xqwga")
-path_to_follow = NodePath("Line2D")
+[node name="Interaction" parent="." instance=ExtResource("15_l5lio")]
+position = Vector2(88, 40)
+scale = Vector2(1, 1)
 
-[node name="Line2D" type="Line2D" parent="Gamepieces/Gamepiece2/PathLoopController"]
-points = PackedVector2Array(-0.400002, 2.2, 15, 2, 14.4, -46, -1.4, -45.8)
-width = 2.0
-
-[node name="WaitTimer" type="Timer" parent="Gamepieces/Gamepiece2/PathLoopController"]
-wait_time = 2.0
+[node name="Interaction2" parent="." instance=ExtResource("15_l5lio")]
+position = Vector2(40, 40)
+scale = Vector2(1, 1)

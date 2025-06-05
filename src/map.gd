@@ -14,4 +14,5 @@ extends Node2D
 @onready var _debug_boundaries: DebugGameboardBoundaries = $DebugBoundaries
 
 func _ready() -> void:
-	Gameboard.properties = gameboard_properties
+	if not Engine.is_editor_hint():
+		Gameboard.properties = gameboard_properties
