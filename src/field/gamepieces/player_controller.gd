@@ -15,13 +15,33 @@ var _target: Interaction = null
 # than prefering an arbitrary axis.
 var _last_input_direction: = Vector2.ZERO
 
+# The "interaction searcher" area basically activates any Interactions, which means that they'll
+# respond to key/button input.
+@onready var _interaction_searcher: = $InteractionSearcher as Area2D
+
+# The player collision area activates Triggers whenever the player moves onto their collision
+# shape.
+@onready var _player_collision: = $PlayerCollision as Area2D
+
 
 func _ready() -> void:
 	super._ready()
 	
 	if not Engine.is_editor_hint():
 		add_to_group(GROUP)
-	
+		
+		## Refer the various player collision shapes to their gamepiece (parent of the controller).
+		## This will allow other objects/systems to quickly find which gamepiece they are working on
+		## via the collision "owners".
+		_interaction_searcher.owner = _gamepiece
+		_player_collision.owner = _gamepiece
+		
+		_gamepiece.direction_changed.connect(
+			func _on_gamepiece_direction_changed(new_direction: Directions.Points):
+				var offset: Vector2 = Directions.MAPPINGS[new_direction] * 16
+				_interaction_searcher.position = offset
+		)
+		
 		FieldEvents.cell_selected.connect(_on_cell_selected)
 		FieldEvents.interaction_selected.connect(_on_interaction_selected)
 
