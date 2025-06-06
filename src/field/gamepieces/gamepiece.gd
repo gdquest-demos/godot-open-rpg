@@ -86,8 +86,12 @@ var rest_position: = Vector2.ZERO
 ## follower, at which the GamepieceAnimation is rendered.
 var destination: Vector2
 
-## A camera may smoothly follow a travelling gamepiece by receiving the camera_anchor's transform.
-@onready var camera_anchor: = $PathFollow2D/CameraAnchor as RemoteTransform2D
+## Node2Ds may want to follow the gamepiece's animation, rather than position (which updates only at
+## the end of a path). Nodes may follow a travelling gamepiece by receiving the path follower's 
+## transform.[/br][/br]
+## The [member RemoteTransform2D.remote_path] is reserved for the player camera, but other nodes
+## may access the anchor's position directly.
+@onready var animation_transform: = $PathFollow2D/CameraAnchor as RemoteTransform2D
 
 # The following objects allow the gamepiece to appear to move smoothly around the gameboard.
 # Please note that the path is decoupled from the gamepiece's position (scale is set to match

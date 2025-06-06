@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvtk5qllej4b8"]
+[gd_scene load_steps=6 format=3 uid="uid://bvtk5qllej4b8"]
 
 [ext_resource type="PackedScene" uid="uid://caxhff6by5nqu" path="res://src/field/gamepieces/animation/gamepiece_animation.tscn" id="1_jgl7k"]
+[ext_resource type="Texture2D" uid="uid://b4py6kf410yhh" path="res://assets/characters/smith.atlastex" id="2_fia7k"]
 
 [sub_resource type="Animation" id="Animation_h6akm"]
 length = 0.001
@@ -47,3 +48,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_y0jyp")
 }
 autoplay = "idle"
+
+[node name="Sprite" parent="Anchor" index="0"]
+texture = ExtResource("2_fia7k")

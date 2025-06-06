@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://se1wnxu5svgj"]
+[gd_scene load_steps=6 format=3 uid="uid://se1wnxu5svgj"]
 
 [ext_resource type="PackedScene" uid="uid://caxhff6by5nqu" path="res://src/field/gamepieces/animation/gamepiece_animation.tscn" id="1_c58iv"]
+[ext_resource type="Texture2D" uid="uid://ti2vhkpokeib" path="res://assets/characters/knight.atlastex" id="2_f3pos"]
 
 [sub_resource type="Animation" id="Animation_sr8xj"]
 length = 0.001
@@ -46,3 +47,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_6yooh")
 }
 autoplay = "idle"
+
+[node name="Sprite" parent="Anchor" index="0"]
+texture = ExtResource("2_f3pos")

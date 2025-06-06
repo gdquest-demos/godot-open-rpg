@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqdk6eehxsrmn"]
+[gd_scene load_steps=6 format=3 uid="uid://dqdk6eehxsrmn"]
 
 [ext_resource type="PackedScene" uid="uid://caxhff6by5nqu" path="res://src/field/gamepieces/animation/gamepiece_animation.tscn" id="1_3s0fl"]
+[ext_resource type="Texture2D" uid="uid://2kiqbt7c1s65" path="res://assets/characters/monk.atlastex" id="2_ay6b6"]
 
 [sub_resource type="Animation" id="Animation_r565k"]
 length = 0.001
@@ -47,3 +48,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_fx0ff")
 }
 autoplay = "idle"
+
+[node name="Sprite" parent="Anchor" index="0"]
+texture = ExtResource("2_ay6b6")
