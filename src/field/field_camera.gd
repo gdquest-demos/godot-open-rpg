@@ -15,11 +15,12 @@ extends Camera2D
 @export var gamepiece: Gamepiece:
 	set(value):
 		if gamepiece:
-			gamepiece.camera_anchor.remote_path = ""
+			gamepiece.animation_transform.remote_path = ""
 		
 		gamepiece = value
 		if gamepiece:
-			gamepiece.camera_anchor.remote_path = gamepiece.camera_anchor.get_path_to(self)
+			gamepiece.animation_transform.remote_path \
+				= gamepiece.animation_transform.get_path_to(self)
 
 
 func _ready() -> void:

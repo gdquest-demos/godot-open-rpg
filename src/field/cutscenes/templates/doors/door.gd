@@ -11,10 +11,6 @@ class_name Door extends AreaTransition
 				await ready
 			
 			_blocking_area.get_node("CollisionShape2D").disabled = !is_locked
-			
-			# Wait one frame for the physics server to update before rebuilding the pathfinders.
-			await get_tree().physics_frame
-			FieldEvents.terrain_changed.emit()
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
 @onready var _blocking_area: = $Area2D/ClosedDoor/BlockingArea as Area2D

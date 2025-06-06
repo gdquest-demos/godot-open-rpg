@@ -24,9 +24,5 @@ func _on_dialogic_signal_event(_argument: String) -> void:
 	_popup.hide_and_free()
 	
 	# Clearing the secret path is controlled exclusively by the animation player.
-	# Once the animation has finished, pathfinders will need to be updated via the
-	# terrain_chagned signal below.
 	_anim.play("disappear")
 	await _anim.animation_finished
-	
-	FieldEvents.terrain_changed.emit()

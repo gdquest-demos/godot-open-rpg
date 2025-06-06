@@ -1,174 +1,170 @@
-#@tool
-### Applied to any gamepiece to allow player control.
-###
-### The controller responds to player input to handle movement and interaction.
-#class_name PlayerController extends GamepieceController
-#
-#const GROUP_NAME: = "_PLAYER_CONTROLLER_GROUP"
-#
-#var is_active: = false:
-	#set(value):
-		#is_active = value
-		#
-		#set_process(is_active)
-		#set_physics_process(is_active)
-		#set_process_input(is_active)
-		#set_process_unhandled_input(is_active)
-#
-## Keep track of a targeted interaction. Used to face & interact with the object at a path's end.
-## It is reset on cancelling the move path or continuing movement via arrows/gamepad directions.
-#var _target: Interaction = null
-#
-#@onready var _interaction_searcher: = $InteractionSearcher as Area2D
-#@onready var _player_collision: = $PlayerCollision as Area2D
-#
-#
-#func _ready() -> void:
-	#super._ready()
-	#
-	#set_process(false)
-	#set_physics_process(false)
-	#
-	#if not Engine.is_editor_hint():
-		#add_to_group(GROUP_NAME)
-		#
+@tool
+## Applied to any gamepiece to allow player control.
+##
+## The controller responds to player input to handle movement and interaction.
+class_name PlayerController extends GamepieceController
+
+const GROUP: = "_PLAYER_CONTROLLER_GROUP"
+
+# Keep track of a targeted interaction. Used to face & interact with the object at a path's end.
+# It is reset on cancelling the move path or continuing movement via arrows/gamepad directions.
+var _target: Interaction = null
+
+# Also keep track of the most recently pressed move key (e.g. WASD keys). This makes keyboard input
+# feel more intuitive, since the gamepiece will move towards the most recently pressed key rather
+# than prefering an arbitrary axis.
+var _last_input_direction: = Vector2.ZERO
+
+# The "interaction searcher" area basically activates any Interactions, which means that they'll
+# respond to key/button input.
+@onready var _interaction_searcher: = $InteractionSearcher as Area2D
+
+# The player collision area activates Triggers whenever the player moves onto their collision
+# shape.
+@onready var _player_collision: = $PlayerCollision as Area2D
+
+
+func _ready() -> void:
+	super._ready()
+	
+	if not Engine.is_editor_hint():
+		add_to_group(GROUP)
+		
 		## Refer the various player collision shapes to their gamepiece (parent of the controller).
 		## This will allow other objects/systems to quickly find which gamepiece they are working on
 		## via the collision "owners".
-		#_interaction_searcher.owner = _gamepiece
-		#_player_collision.owner = _gamepiece
-		#
-		#FieldEvents.cell_selected.connect(_on_cell_selected)
-		#
-		## Connect to a few lambdas that change the cell at which the player searches for
-		## interactions. These come into play whenever the player's gamepiece moves to a new cell or
-		## changes direction.
-		#_gamepiece.cell_changed.connect(
-			#func(old_cell):
-				#super._on_gamepiece_cell_changed(_gamepiece, old_cell)
-				#_align_interaction_searcher_to_faced_cell()
-		#)
-		#_gamepiece.direction_changed.connect(
-			#func(_direction): _align_interaction_searcher_to_faced_cell()
-		#)
-		#
-		#is_active = true
-		#
-		#_align_interaction_searcher_to_faced_cell()
-#
-#
-#func set_is_paused(paused: bool) -> void:
-	#super.set_is_paused(paused)
-	#set_process(!paused)
-	#set_physics_process(!paused)
+		_interaction_searcher.owner = _gamepiece
+		_player_collision.owner = _gamepiece
+		
+		_gamepiece.direction_changed.connect(
+			func _on_gamepiece_direction_changed(new_direction: Directions.Points):
+				var offset: Vector2 = Directions.MAPPINGS[new_direction] * 16
+				_interaction_searcher.position = offset
+		)
+		
+		FieldEvents.cell_selected.connect(_on_cell_selected)
+		FieldEvents.interaction_selected.connect(_on_interaction_selected)
+
+
+#func _process(_delta: float) -> void:
+	#if _gamepiece.is_moving():
+		#return
 	#
-#
-#
-#func _physics_process(_delta: float) -> void:
-	#var move_dir: = _get_move_direction()
-	#if move_dir:
-		#_target = null
-		#
+	#var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	#if input_direction:
 		#if not _gamepiece.is_moving():
+			#var source_cell: = GamepieceRegistry.get_cell(_gamepiece)
 			#var target_cell: = Vector2i.ZERO
 			#
 			## Unless using 8-direction movement, one movement axis must be preferred. 
 			##	Default to the x-axis.
-			#if not is_zero_approx(move_dir.x):
-				#move_dir = Vector2(move_dir.x, 0)
+			#if not is_zero_approx(input_direction.x):
+				#input_direction = Vector2(input_direction.x, 0)
 			#else:
-				#move_dir = Vector2(0, move_dir.y)
+				#input_direction = Vector2(0, input_direction.y)
+			#target_cell = Gameboard.pixel_to_cell(_gamepiece.position) + Vector2i(input_direction)
 			#
-			#_gamepiece.direction = move_dir
-			#target_cell = _gamepiece.cell + Vector2i(move_dir)
+			## Try to get a path to destination (will fail if cell is occupied)
+			#var new_move_path: = Gameboard.pathfinder.get_path_to_cell(source_cell, target_cell)
 			#
-			## If there is a gamepiece at the target cell, do not move on top of it.
-			#_update_changed_cells()
-			#if not is_cell_blocked(target_cell) and \
-					#not FieldEvents.did_gp_move_to_cell_this_frame(target_cell):
-				#var move_path: = pathfinder.get_path_cells(_gamepiece.cell, target_cell)
-				#
-				## Path is invalid. Bump animation?
-				#if move_path.size() <= 1:
-					#pass
-				#
-				#else:
-					#_gamepiece.travel_to_cell(target_cell)
-		#
-		#else:
-			#_target = null
-			#_waypoints.clear()
-#
-#
-#func _get_move_direction() -> Vector2:
-	#return Vector2(
-		#Input.get_axis("ui_left", "ui_right"),
-		#Input.get_axis("ui_up", "ui_down")
-	#)
-#
-#
-#func _align_interaction_searcher_to_faced_cell() -> void:
-	#var cell_coordinates: = Vector2(_gameboard.cell_to_pixel(_gamepiece.get_faced_cell()))
-	#_interaction_searcher.global_position = cell_coordinates*_gamepiece.global_scale
-#
-#
-## The controller's focus will finish travelling this frame unless it is extended.
-## There are a few cases where the controller will want to extend the path:
-##	a) The gamepiece is following a series of waypoints, and needs to know which cell is next. Note
-##		that the controller is responsible for the waypoints (instead of the gamepiece, for
-##		instance) so that the path can be checked for any changes *as the gamepiece travels*.
-##	b) A movement key/button is held down and the gamepiece should smoothly flow into the next cell.
-#func _on_gamepiece_arriving(excess_distance: float) -> void:
-	## Handle moving to the next waypoint in the path.
-	#super._on_gamepiece_arriving(excess_distance)
-	#
-	## Allow movement keys/buttons to override path following.
-	#var move_direction: = _get_move_direction()
-	#if move_direction and not is_paused:
-		#_target = null
-		#_waypoints.clear()
-		#
-		#var next_cell: Vector2i
-		#if not is_zero_approx(move_direction.x):
-			#next_cell = _gamepiece.cell + Vector2i(int(move_direction.x), 0)
-		#else:
-			#next_cell = _gamepiece.cell + Vector2i(0, int(move_direction.y))
-		#
-		#if pathfinder.has_cell(next_cell) and not is_cell_blocked(next_cell) and \
-				#not FieldEvents.did_gp_move_to_cell_this_frame(next_cell):
-			#_gamepiece.travel_to_cell(next_cell)
-#
-#
-#func _on_gamepiece_arrived() -> void:
-	#super._on_gamepiece_arrived()
-	#
-	#if _target:
-		#var distance_to_target: = _target.global_position/_target.global_scale - _gamepiece.position
-		#_gamepiece.direction = distance_to_target
-		#
-		#_target.run()
-		#_target = null
-#
-#
-#func _on_cell_selected(cell: Vector2i) -> void:
-	#if is_active and not _gamepiece.is_moving():
-		## Don't move to the cell the focus is standing on. May want to open inventory.
-		#if cell == _gamepiece.cell:
-			#return
+			## Path is invalid. Bump animation?
+			#if new_move_path.size() <= 1:
+				#pass
 			#
-		## We'll want different behaviour depending on what's underneath the cursor.
-		#var collisions: = get_collisions(cell)
-		#
-		## If there is an interaction underneath the cursor the player's gamepiece should flag the
-		## target and move to an adjacent cell.
+			#else:
+				#GamepieceRegistry.move_gamepiece(_gamepiece, target_cell)
+				#_gamepiece.move_to(Gameboard.cell_to_pixel(target_cell))
+#
+			##print(Gameboard.pathfinder.get_path_to_cell())
+			## If path is valid, move.
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("select"):
+		stop_moving()
+	
+	elif event is InputEventKey:
+		if event.is_action_pressed("ui_up"):
+			_last_input_direction = Vector2.UP
+			if _gamepiece.is_moving():	stop_moving()
+			else:	move_to_pressed_key(Vector2.UP)
+			
+		elif event.is_action_pressed("ui_down"):
+			_last_input_direction = Vector2.DOWN
+			if _gamepiece.is_moving():	stop_moving()
+			else:	move_to_pressed_key(Vector2.DOWN)
+			
+		elif event.is_action_pressed("ui_left"):
+			_last_input_direction = Vector2.LEFT
+			if _gamepiece.is_moving():	stop_moving()
+			else:	move_to_pressed_key(Vector2.LEFT)
+			
+		elif event.is_action_pressed("ui_right"):
+			_last_input_direction = Vector2.RIGHT
+			if _gamepiece.is_moving():	stop_moving()
+			else:	move_to_pressed_key(Vector2.RIGHT)
+
+			#print(Gameboard.pathfinder.get_path_to_cell())
+			# If path is valid, move.
+
+
+func move_to_pressed_key(input_direction: Vector2) -> void:
+	if is_active:
+		var source_cell: = GamepieceRegistry.get_cell(_gamepiece)
+		var target_cell: = Vector2i.ZERO
+		
+		# Unless using 8-direction movement, one movement axis must be preferred. 
+		#	Default to the x-axis.
+		target_cell = source_cell + Vector2i(input_direction)
+		
+		# Try to get a path to destination (will fail if cell is occupied)
+		var new_move_path: = Gameboard.pathfinder.get_path_to_cell(source_cell, target_cell)
+		
+		# Path is invalid. Bump animation?
+		if new_move_path.size() < 1:
+			_gamepiece.direction = Directions.angle_to_direction(input_direction.angle())
+		
+		else:
+			move_path = new_move_path.duplicate()
+			Player.player_path_set.emit(_gamepiece, new_move_path.back())
+
+
+func stop_moving() -> void:
+	move_path.clear()
+	_target = null
+
+
+# The player has clicked on an empty gameboard cell. We'll try to move _gamepiece to the cell.
+func _on_cell_selected(cell: Vector2i) -> void:
+	if is_active and not _gamepiece.is_moving():
+		var source_cell: = Gameboard.pixel_to_cell(_gamepiece.position)
+		
+		# Don't move to the cell the focus is standing on.
+		if cell == source_cell:
+			return
+		
+		# Take a look at what's underneath the cursor. If there's an interaction, move towards it
+		# and try to interact with it.
+		
+		# Otherwise it's just the empty gameboard, so we'll try to move the player towards the
+		# selected cell.
+		var new_path = Gameboard.pathfinder.get_path_to_cell(source_cell, cell)
+		if not new_path.is_empty():
+			move_path = new_path.duplicate()
+			Player.player_path_set.emit(_gamepiece, new_path.back())
+		
+		# If there is an interaction underneath the cursor the player's gamepiece should flag the
+		# target and move to an adjacent cell.
 		#if not collisions.is_empty():
 			#for collision: Dictionary in collisions:
 				#if collision.collider.owner is Interaction:
 					#_target = collision.collider.owner
 					#break
-		#
-		## The following method will move to an empty cell OR adjacent to a blocked cell that has
-		## an interaction located on it.
+		
+		# The following method will move to an empty cell OR adjacent to a blocked cell that has
+		# an interaction located on it.
+		
+		
 		#travel_to_cell(cell, _target != null)
 		#if not _waypoints.is_empty():
 			#FieldEvents.player_path_set.emit(_gamepiece, _waypoints.back())
@@ -177,3 +173,61 @@
 		## to the target interaction.
 		#elif _target:
 			#_on_gamepiece_arrived()
+
+
+# The player has clicked on something interactable. We'll try to move next to the interaction and
+# then run the interaction.
+func _on_interaction_selected(interaction: Interaction) -> void:
+	if is_active and not _gamepiece.is_moving():
+		var source_cell: = Gameboard.pixel_to_cell(_gamepiece.position)
+		var target_cell: = Gameboard.pixel_to_cell(interaction.position)
+		
+		if target_cell == source_cell:
+			return
+		
+		# First of all, check to see if the target is adjacent to the source.
+		if target_cell in Gameboard.get_adjacent_cells(source_cell):
+			_gamepiece.direction \
+				= Directions.vector_to_direction(interaction.position - _gamepiece.position)
+			interaction.run()
+		
+		else:
+			# Only cache the interaction and move towards it if there is a valid move path.
+			var new_path = Gameboard.pathfinder.get_path_cells_to_adjacent_cell(source_cell, 
+				target_cell)
+			if not new_path.is_empty():
+				_target = interaction
+				
+				move_path = new_path.duplicate()
+				Player.player_path_set.emit(_gamepiece, new_path.back())
+	
+	# If the player is already moving, cancel that movement.
+	else:
+		stop_moving()
+
+
+func _on_gamepiece_arriving(excess_distance: float) -> void:
+	super._on_gamepiece_arriving(excess_distance)
+	
+	# It may be that the player is holding the keys down. In that case, continue moving the
+	# gamepiece towards the pressed direction.
+	var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if not input_direction.is_equal_approx(Vector2.ZERO):
+		move_to_pressed_key(_last_input_direction)
+
+
+func _on_gamepiece_arrived() -> void:
+	super._on_gamepiece_arrived()
+	if _target:
+		# Will be normalized by the setter.
+		_gamepiece.direction \
+			= Directions.vector_to_direction(_target.position - _gamepiece.position)
+		_target.run()
+		_target = null
+	
+	# No target, but check to see if the player is holding a key down and face in the direction of
+	# the last pressed key.
+	else:
+		var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		if not input_direction.is_equal_approx(Vector2.ZERO):
+			_gamepiece.direction = Directions.vector_to_direction(_last_input_direction)

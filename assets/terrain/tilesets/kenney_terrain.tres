@@ -127,6 +127,6 @@ terrain_set_0/terrain_0/name = "Grass"
 terrain_set_0/terrain_0/color = Color(0, 0.215686, 0.0117647, 1)
 terrain_set_0/terrain_1/name = "Dirt"
 terrain_set_0/terrain_1/color = Color(0.262745, 0.223529, 0.113725, 1)
-custom_data_layer_0/name = "BlocksMovement"
+custom_data_layer_0/name = "IsCellBlocked"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_4cs30")

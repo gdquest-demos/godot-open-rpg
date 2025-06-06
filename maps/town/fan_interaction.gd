@@ -26,7 +26,8 @@ func _execute() -> void:
 
 
 func _on_initial_conversation_finished() -> void:
-	controller.travel_to_cell(Vector2(23, 13))
+	var source_cell: = Gameboard.pixel_to_cell(_adoring_fan.position)
+	controller.move_path = Gameboard.pathfinder.get_path_to_cell(source_cell, Vector2(23, 13))
 	await _adoring_fan.arrived
 
 

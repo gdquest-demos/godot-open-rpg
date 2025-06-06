@@ -8,6 +8,7 @@ radius = 32.0
 
 [node name="InteractionPopup" instance=ExtResource("1_582ge")]
 script = ExtResource("2_2fot7")
+emote = 1
 radius = 32
 is_active = true
 

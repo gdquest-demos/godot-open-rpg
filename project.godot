@@ -23,6 +23,7 @@ FieldEvents="*res://src/field/field_events.gd"
 Gameboard="*res://src/field/gameboard/gameboard.gd"
 GamepieceRegistry="*res://src/field/gamepieces/gamepiece_registry.gd"
 Music="*res://src/common/music/music_player.tscn"
+Player="*res://src/common/player.gd"
 Transition="*res://src/common/screen_transitions/ScreenTransition.tscn"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
@@ -74,7 +75,7 @@ settings/text_speed=1.0
 directories/dch_directory={
 "enemy_ghost": "res://maps/town/enemy_ghost.dch",
 "fan_of_four": "res://maps/town/fan_of_four.dch",
-"ghost": "res://maps/grove/ghost.dch",
+"ghost": "res://maps/forest/ghost.dch",
 "monk": "res://maps/town/monk.dch",
 "runner": "res://maps/town/runner.dch",
 "smith": "res://maps/town/smith.dch",
@@ -87,7 +88,7 @@ directories/dtl_directory={
 "encounter_on_loss": "res://maps/town/encounter_on_loss.dtl",
 "encounter_on_victory": "res://maps/town/encounter_on_victory.dtl",
 "fan_of_four": "res://maps/town/fan_of_four.dtl",
-"ghost": "res://maps/grove/ghost.dtl",
+"ghost": "res://maps/forest/ghost.dtl",
 "monk": "res://maps/town/monk.dtl",
 "opening_cutscene": "res://maps/opening_cutscene.dtl",
 "runner": "res://maps/town/runner.dtl",
