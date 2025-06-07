@@ -12,7 +12,7 @@ extends Node2D
 		
 		_debug_boundaries.gameboard_properties = gameboard_properties 
 
-@onready var _debug_boundaries: DebugGameboardBoundaries = $DebugBoundaries
+@onready var _debug_boundaries: DebugGameboardBoundaries = $Overlay/DebugBoundaries
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -28,9 +28,3 @@ func _ready() -> void:
 			
 			if GamepieceRegistry.register(gp, cell) == false:
 				gp.queue_free()
-		
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		print(Gameboard.pathfinder)

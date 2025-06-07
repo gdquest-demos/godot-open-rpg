@@ -24,16 +24,23 @@ const GROUP: = "GameboardTileMapLayers"
 ## by default, block movement.
 const BLOCKED_CELL_DATA_LAYER: = "IsCellBlocked"
 
+# A false value will cause is_cell_clear to always return true. This is used to flag when the
+# TileMapLayers is being cleaned up an should no longer affect the pathfinder.
+var _affects_collision: = true
+
 
 func _ready() -> void:
 	add_to_group(GROUP)
 	Gameboard.register_gameboard_layer(self)
 
 
-## Returns true if the tile at coord existst and does not have a custom blocking data layer with a
+## Returns true if the tile at coord exists and does not have a custom blocking data layer with a
 ## value set to true.
 ## Otherwise, returns false.
 func is_cell_clear(coord: Vector2i) -> bool:
+	if not _affects_collision:
+		return true
+	
 	var tile_data: = get_cell_tile_data(coord)
 	if tile_data:
 		var is_cell_blocked: = tile_data.get_custom_data(BLOCKED_CELL_DATA_LAYER) as bool
@@ -62,7 +69,8 @@ func _update_cells(coords: Array[Vector2i], forced_cleanup: bool) -> void:
 	if forced_cleanup:
 		# This tilemap isn't being used anymore. Flag all of its cells as being removed.
 		# Currently, toggline visibility back on won't re-add existing cells.
-		blocked_cells = get_used_cells()
+		cleared_cells = get_used_cells()
+		_affects_collision = false
 	
 	else:
 		for coord in coords:

@@ -26,6 +26,11 @@ func _ready() -> void:
 		
 		_gamepiece.arriving.connect(_on_gamepiece_arriving)
 		_gamepiece.arrived.connect(_on_gamepiece_arrived)
+		
+		FieldEvents.input_paused.connect(
+			func _on_input_paused(value: bool) -> void:
+				is_active = !value
+		)
 
 
 func _get_configuration_warnings() -> PackedStringArray:

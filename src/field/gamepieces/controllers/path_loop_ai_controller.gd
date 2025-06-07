@@ -100,7 +100,8 @@ func _find_move_path() -> bool:
 		var source: = Gameboard.pixel_to_cell(path_to_follow.get_point_position(i-1) + _path_origin)
 		var target: = Gameboard.pixel_to_cell(path_to_follow.get_point_position(i) + _path_origin)
 		
-		var path_segment: = Gameboard.pathfinder.get_path_to_cell(source, target)
+		var path_segment: = Gameboard.pathfinder.get_path_to_cell(source, target,
+			Pathfinder.FLAG_ALLOW_SOURCE_OCCUPANT | Pathfinder.FLAG_ALLOW_TARGET_OCCUPANT)
 		if path_segment.is_empty():
 			#push_error("'%s' PathLoopAiController::_find_waypoints_from_line2D() error - " % name +
 				#"Failed to find a path between cells %s and %s." % [source, target])
@@ -109,13 +110,15 @@ func _find_move_path() -> bool:
 		move_path.append_array(path_segment)
 	
 	# Finally, connect the ending and starting cells to complete the loop.
-	var last_pos: = path_to_follow.get_point_position(path_to_follow.get_point_count()-1) + _path_origin
+	var last_pos: = path_to_follow.get_point_position(path_to_follow.get_point_count()-1) \
+		+ _path_origin
 	var last_cell: = Gameboard.pixel_to_cell(last_pos)
 	var first_cell: = Gameboard.pixel_to_cell(path_to_follow.get_point_position(0) + _path_origin)
 	
 	# If we've made it this far there must be a path between the first and last cell.
-	move_path.append_array(Gameboard.pathfinder.get_path_to_cell(last_cell, first_cell, 
-		Pathfinder.FLAG_ALLOW_SOURCE_OCCUPANT | Pathfinder.FLAG_ALLOW_TARGET_OCCUPANT))
+	if last_cell != first_cell:
+		move_path.append_array(Gameboard.pathfinder.get_path_to_cell(last_cell, first_cell, 
+			Pathfinder.FLAG_ALLOW_SOURCE_OCCUPANT | Pathfinder.FLAG_ALLOW_TARGET_OCCUPANT))
 	return true
 
 

@@ -49,7 +49,7 @@ signal direction_changed(new_direction: Directions.Points)
 				animation_scene = null
 				return
 			
-			_follower.add_child(animation)
+			follower.add_child(animation)
 
 ## The gamepiece will traverse a movement path at [code]move_speed[/code] pixels per second.
 ##[/br][/br]Note that extremely high speeds (finish a long path in a single frame) will produce
@@ -98,7 +98,7 @@ var destination: Vector2
 # the gamepiece in _ready(), however) in order to simplify path management. All path coordinates may 
 # be provided in game-world coordinates and will remain relative to the origin even as the 
 # gamepiece's position changes.
-@onready var _follower: = $PathFollow2D as PathFollow2D
+@onready var follower: = $PathFollow2D as PathFollow2D
 
 
 func _ready() -> void:
@@ -117,20 +117,20 @@ func _process(delta: float) -> void:
 	# movement.
 	# The excess travel distance allows us to know how much to extend the path by. A VERY fast
 	# gamepiece may jump a few cells at a time.
-	var excess_travel_distance: =  _follower.progress + move_distance - curve.get_baked_length()
+	var excess_travel_distance: =  follower.progress + move_distance - curve.get_baked_length()
 	if excess_travel_distance >= 0.0:
 		arriving.emit(excess_travel_distance)
 	
 	# The path may have been extended, so the gamepiece can move along the path now.
-	_follower.progress += move_distance
+	follower.progress += move_distance
 	
 	# Figure out which direction the gamepiece is facing, making sure that the GamepieceAnimation
 	# scene doesn't rotate.
 	animation.global_rotation = 0
-	direction = Directions.angle_to_direction(_follower.rotation)
+	direction = Directions.angle_to_direction(follower.rotation)
 	
 	# If the gamepiece has arrived, update it's position and movement details.
-	if _follower.progress >= curve.get_baked_length():
+	if follower.progress >= curve.get_baked_length():
 		stop()
 
 
@@ -160,7 +160,7 @@ func move_to(target_point: Vector2) -> void:
 func stop() -> void:
 	# Sort out gamepiece position, resetting the follower and placing everything at the destination.
 	position = destination
-	_follower.progress = 0
+	follower.progress = 0
 	curve = null
 	destination = Vector2.ZERO
 	
