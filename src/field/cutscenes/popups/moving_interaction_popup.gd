@@ -34,4 +34,4 @@ func _notification(what: int) -> void:
 # gamepiece, appearing to follow the gamepiece around the field while still playing nicely with the
 # physics/interaction system.
 func _process(_delta: float) -> void:
-	position = _gp.animation_transform.position
+	position = _gp.follower.position

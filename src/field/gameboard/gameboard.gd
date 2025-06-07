@@ -116,7 +116,8 @@ func _add_cells_to_pathfinder(cleared_cells: Array[Vector2i]) -> Dictionary[int,
 	# the pathfinder won't actually be changed.
 	for cell in cleared_cells:
 		# Note that cleared cells need to have all layers checked for a blocking tile.
-		if not pathfinder.has_cell(cell) and _is_cell_clear(cell):
+		if properties.extents.has_point(cell) and not pathfinder.has_cell(cell) \
+				and _is_cell_clear(cell):
 			var uid: = cell_to_index(cell)
 			pathfinder.add_point(uid, cell)
 			added_cells[uid] = cell

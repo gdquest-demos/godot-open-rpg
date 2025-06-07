@@ -27,8 +27,14 @@ func _execute() -> void:
 
 func _on_initial_conversation_finished() -> void:
 	var source_cell: = Gameboard.pixel_to_cell(_adoring_fan.position)
+	
+	# Everything is paused at the moment, so activate the fan's controller so that he can move on a
+	# path during the cutscene.
+	controller.is_active = true
 	controller.move_path = Gameboard.pathfinder.get_path_to_cell(source_cell, Vector2(23, 13))
+	
 	await _adoring_fan.arrived
+	controller.is_active = false
 
 
 # This conversation only emits a signal once: when the player should receive the quest reward.
