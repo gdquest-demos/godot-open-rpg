@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="StatsBattlerAction" load_steps=3 format=3 uid="uid://ctimffr7v621e"]
+
+[ext_resource type="Texture2D" uid="uid://cch8ku256ts3y" path="res://combat/battlers/bear/icon_raise.svg" id="1_2rya6"]
+[ext_resource type="Script" uid="uid://lq2mfixji1w5" path="res://src/combat/actions/battler_action_modify_stats.gd" id="1_4j0yh"]
+
+[resource]
+script = ExtResource("1_4j0yh")
+added_value = 10
+icon = ExtResource("1_2rya6")
+label = "Focus"
+description = "Increase Attack and Accuracy. Takes half a turn to use."
+target_scope = 0
+targets_friendlies = true
+targets_enemies = false
+element = 0
+energy_cost = 0
+readiness_saved = 50.0

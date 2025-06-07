@@ -1,0 +1,113 @@
+[gd_scene load_steps=7 format=3 uid="uid://cch8nxgex1edr"]
+
+[ext_resource type="PackedScene" uid="uid://badexg85lctrq" path="res://src/combat/battlers/battler_anim.tscn" id="1_d3f8c"]
+[ext_resource type="Texture2D" uid="uid://cbgfjvlm8kx4k" path="res://combat/battlers/squirrel/squirrel.png" id="2_0aqb7"]
+
+[sub_resource type="Animation" id="Animation_r4wpi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2u36l"]
+resource_name = "die"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 0.87451), Color(1, 1, 1, 0.74902), Color(1, 0, 0, 0.623529), Color(1, 1, 1, 0.498039), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yc1ca"]
+resource_name = "hurt"
+length = 0.6
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(8, 0), Vector2(-8, 0), Vector2(8, 0), Vector2(-8, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(16, 0), Vector2(-16, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xl0qy"]
+_data = {
+&"RESET": SubResource("Animation_r4wpi"),
+&"die": SubResource("Animation_2u36l"),
+&"hurt": SubResource("Animation_yc1ca")
+}
+
+[node name="SquirrelAnim" instance=ExtResource("1_d3f8c")]
+battler_icon = ExtResource("2_0aqb7")
+
+[node name="AnimationPlayer" parent="Pivot" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_xl0qy")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot" index="1"]
+texture = ExtResource("2_0aqb7")
+offset = Vector2(0, -145)
+
+[node name="FrontAnchor" parent="." index="1"]
+position = Vector2(213, -146)
+
+[node name="TopAnchor" parent="." index="2"]
+position = Vector2(30, -318)

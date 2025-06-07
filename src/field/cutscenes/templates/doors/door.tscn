@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://p0e4b0txynkd"]
 
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="1_0tk0k"]
-[ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://maps/tilesets/town_tilemap.png" id="2_4mdkx"]
+[ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://overworld/maps/tilesets/town_tilemap.png" id="2_4mdkx"]
 [ext_resource type="Script" uid="uid://st17bkmvrohu" path="res://src/field/cutscenes/templates/doors/door.gd" id="2_13rnv"]
 [ext_resource type="AudioStream" uid="uid://c6o0qv4eig4q" path="res://assets/sfx/doorClose_1.ogg" id="4_d3ljg"]
 [ext_resource type="AudioStream" uid="uid://bww5xt1qrtltu" path="res://assets/sfx/impactWood_light_003.ogg" id="5_b854r"]

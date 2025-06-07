@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="HealBattlerAction" load_steps=3 format=3 uid="uid://cfj3osdc334ks"]
+
+[ext_resource type="Script" uid="uid://d2chwgobkstjb" path="res://src/combat/actions/battler_action_heal.gd" id="1_knane"]
+[ext_resource type="Texture2D" uid="uid://colusv412eplq" path="res://combat/battlers/squirrel/icon_first_aid.svg" id="1_rw7rc"]
+
+[resource]
+script = ExtResource("1_knane")
+heal_amount = 50
+icon = ExtResource("1_rw7rc")
+label = "First Aid"
+description = "A bandage can fix this..."
+target_scope = 1
+targets_friendlies = true
+targets_enemies = false
+element = 0
+energy_cost = 0
+readiness_saved = 0.0

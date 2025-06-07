@@ -1,0 +1,70 @@
+[gd_scene load_steps=18 format=3 uid="uid://wivtmf75ic3f"]
+
+[ext_resource type="PackedScene" uid="uid://b3ciqydkjnkkx" path="res://src/combat/combat_arena.tscn" id="1_etpkf"]
+[ext_resource type="Texture2D" uid="uid://w55nt3s833tb" path="res://combat/arenas/steppes.png" id="2_i30nm"]
+[ext_resource type="AudioStream" uid="uid://dagiejnj8dwqb" path="res://assets/music/squashin_bugs_fixed.mp3" id="2_vo8mp"]
+[ext_resource type="Script" uid="uid://dwj347l1r1os2" path="res://src/combat/battlers/battler.gd" id="4_6ngh4"]
+[ext_resource type="Resource" uid="uid://chuarvle06xxf" path="res://combat/battlers/bugcat/bugcat_stats.tres" id="5_1st0g"]
+[ext_resource type="Resource" uid="uid://bn4nqbuhq4ih8" path="res://combat/battlers/bear/bear_stats.tres" id="5_id2tu"]
+[ext_resource type="Script" uid="uid://cg2qyry5c4eef" path="res://src/combat/actions/battler_action.gd" id="6_b04cs"]
+[ext_resource type="PackedScene" uid="uid://ugsq7u4cue4w" path="res://combat/battlers/bugcat/bugcat_anim.tscn" id="6_r8rpm"]
+[ext_resource type="Resource" uid="uid://752xsau3xyx0" path="res://combat/battlers/bugcat/quick_attack.tres" id="7_hmx6r"]
+[ext_resource type="PackedScene" uid="uid://dlr2vdjcicdx4" path="res://src/combat/CombatAI.tscn" id="9_omkxl"]
+[ext_resource type="PackedScene" uid="uid://bl8bmbt7v3lrj" path="res://combat/battlers/bear/bear_anim.tscn" id="10_ajkh0"]
+[ext_resource type="Resource" uid="uid://dp7wo0l4es3w4" path="res://combat/battlers/bear/player_melee_action.tres" id="10_uukpg"]
+[ext_resource type="Resource" uid="uid://ctimffr7v621e" path="res://combat/battlers/bear/focus_attack.tres" id="11_o8nj8"]
+[ext_resource type="Resource" uid="uid://bka1pe2l3gbv" path="res://combat/battlers/squirrel/squirrel_stats.tres" id="13_ewpfg"]
+[ext_resource type="Resource" uid="uid://c01ilo1olkfsm" path="res://combat/battlers/squirrel/area_attack.tres" id="14_xht23"]
+[ext_resource type="Resource" uid="uid://cfj3osdc334ks" path="res://combat/battlers/squirrel/heal_friendly.tres" id="15_0v4ad"]
+[ext_resource type="PackedScene" uid="uid://cch8nxgex1edr" path="res://combat/battlers/squirrel/squirrel_anim.tscn" id="16_ve6h1"]
+
+[node name="TestCombatArena" instance=ExtResource("1_etpkf")]
+music = ExtResource("2_vo8mp")
+
+[node name="Background" parent="." index="0"]
+texture = ExtResource("2_i30nm")
+
+[node name="Battler" type="Node2D" parent="Battlers" index="0"]
+position = Vector2(465, 722)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_1st0g")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("7_hmx6r")])
+battler_anim_scene = ExtResource("6_r8rpm")
+ai_scene = ExtResource("9_omkxl")
+metadata/_edit_group_ = true
+
+[node name="Battler2" type="Node2D" parent="Battlers" index="1"]
+position = Vector2(284, 896)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_1st0g")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("7_hmx6r")])
+battler_anim_scene = ExtResource("6_r8rpm")
+ai_scene = ExtResource("9_omkxl")
+metadata/_edit_group_ = true
+
+[node name="Battler3" type="Node2D" parent="Battlers" index="2"]
+position = Vector2(606, 992)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_1st0g")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("7_hmx6r")])
+battler_anim_scene = ExtResource("6_r8rpm")
+ai_scene = ExtResource("9_omkxl")
+metadata/_edit_group_ = true
+
+[node name="Baloo" type="Node2D" parent="Battlers" index="3"]
+position = Vector2(1370, 738)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("5_id2tu")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("10_uukpg"), ExtResource("11_o8nj8")])
+battler_anim_scene = ExtResource("10_ajkh0")
+is_player = true
+metadata/_edit_group_ = true
+
+[node name="Nutsy" type="Node2D" parent="Battlers" index="4"]
+position = Vector2(1243, 906)
+script = ExtResource("4_6ngh4")
+stats = ExtResource("13_ewpfg")
+actions = Array[ExtResource("6_b04cs")]([ExtResource("14_xht23"), ExtResource("15_0v4ad")])
+battler_anim_scene = ExtResource("16_ve6h1")
+is_player = true
+metadata/_edit_group_ = true
