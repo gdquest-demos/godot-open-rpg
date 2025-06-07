@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cgwq0j8de7mxv" path="res://src/field/cutscenes/templates/treasure_chests/treasure_chest.gd" id="2_hxwix"]
 [ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="2_s6euu"]
 [ext_resource type="Script" uid="uid://dqccuka0umesn" path="res://src/field/cutscenes/templates/treasure_chests/treasure_chest_interaction.gd" id="4_3t0c6"]
-[ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://maps/tilesets/dungeon_tilemap.png" id="4_5fem6"]
+[ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://overworld/maps/tilesets/dungeon_tilemap.png" id="4_5fem6"]
 [ext_resource type="AudioStream" uid="uid://d0fqunqsgssgd" path="res://assets/sfx/doorClose_4.ogg" id="5_3t0c6"]
 [ext_resource type="AudioStream" uid="uid://cwpbiytveaon0" path="res://assets/sfx/doorOpen_2.ogg" id="6_rtaj3"]
 [ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/interaction_popup.tscn" id="7_3s1uf"]

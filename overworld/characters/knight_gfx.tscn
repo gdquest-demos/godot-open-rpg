@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://se1wnxu5svgj"]
+
+[ext_resource type="PackedScene" uid="uid://caxhff6by5nqu" path="res://src/field/gamepieces/animation/gamepiece_animation.tscn" id="1_c58iv"]
+[ext_resource type="Texture2D" uid="uid://ti2vhkpokeib" path="res://overworld/characters/knight.atlastex" id="2_f3pos"]
+
+[sub_resource type="Animation" id="Animation_sr8xj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/Sprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_maeh2"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/Sprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6yooh"]
+_data = {
+&"RESET": SubResource("Animation_sr8xj"),
+&"idle": SubResource("Animation_maeh2")
+}
+
+[node name="KnightGFX" instance=ExtResource("1_c58iv")]
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+&"": SubResource("AnimationLibrary_6yooh")
+}
+autoplay = "idle"
+
+[node name="Sprite" parent="Anchor" index="0"]
+texture = ExtResource("2_f3pos")
