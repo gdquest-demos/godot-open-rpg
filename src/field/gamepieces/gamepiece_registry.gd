@@ -31,6 +31,7 @@ func register(gamepiece: Gamepiece, cell: Vector2i) -> bool:
 	gamepiece.tree_exiting.connect(_on_gamepiece_tree_exiting.bind(gamepiece))
 	
 	_gamepieces[cell] = gamepiece
+	print("REgistered %s to %s" % [gamepiece.name, str(cell)])
 	gamepiece_moved.emit(gamepiece, cell, Gameboard.INVALID_CELL)
 	
 	return true

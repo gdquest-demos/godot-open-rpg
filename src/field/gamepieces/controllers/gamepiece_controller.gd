@@ -17,7 +17,6 @@ var _current_waypoint: Vector2i
 var _gamepiece: Gamepiece
 
 
-
 func _ready() -> void:
 	set_process(false)
 	set_physics_process(false)
@@ -27,28 +26,6 @@ func _ready() -> void:
 		
 		_gamepiece.arriving.connect(_on_gamepiece_arriving)
 		_gamepiece.arrived.connect(_on_gamepiece_arrived)
-		
-		#FieldEvents.input_paused.connect(_on_input_paused)
-
-
-#func _unhandled_input(event: InputEvent) -> void:
-	#if event.is_action_released("select"):
-		#var source_cell: = GamepieceRegistry.get_cell(_gamepiece)
-		#var clicked_cell: = Gameboard.pixel_to_cell(get_global_mouse_position()/global_scale)
-		#
-		#var new_move_path: = Gameboard.pathfinder.get_path_to_cell(source_cell, clicked_cell)
-		#if not new_move_path.is_empty():
-			##print("Found path. ", move_path)
-			#move_path = new_move_path
-		#
-		#else:
-			#var adjacent_path: = Gameboard.pathfinder.get_path_cells_to_adjacent_cell(source_cell, clicked_cell)
-			#if adjacent_path:
-				##print("No path, use adjacent instead", adjacent_path)
-				#move_path = adjacent_path
-			#
-			#else:
-				#print("No path found.")
 
 
 func _get_configuration_warnings() -> PackedStringArray:

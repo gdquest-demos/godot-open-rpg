@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2qfi5sncf72b"
-path="res://.godot/imported/town_tilemap.png-2998e8eb9fc51ed5db3b69c6ee26a142.ctex"
+uid="uid://dbpvlf2f8ajxy"
+path="res://.godot/imported/debug_cell_occupancy.png-2d693575bd82620e7b01350a983456d9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/terrain/town_tilemap.png"
-dest_files=["res://.godot/imported/town_tilemap.png-2998e8eb9fc51ed5db3b69c6ee26a142.ctex"]
+source_file="res://src/field/gameboard/debug/debug_cell_occupancy.png"
+dest_files=["res://.godot/imported/debug_cell_occupancy.png-2d693575bd82620e7b01350a983456d9.ctex"]
 
 [params]
 

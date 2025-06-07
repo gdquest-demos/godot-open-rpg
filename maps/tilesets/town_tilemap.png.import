@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm4h0uo6gjp22"
-path="res://.godot/imported/dungeon_tilemap.png-68df297cfdb861c9d71310f03207f420.ctex"
+uid="uid://d2qfi5sncf72b"
+path="res://.godot/imported/town_tilemap.png-2c92fb2e8ba709c55813738d4141c580.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/terrain/dungeon_tilemap.png"
-dest_files=["res://.godot/imported/dungeon_tilemap.png-68df297cfdb861c9d71310f03207f420.ctex"]
+source_file="res://maps/tilesets/town_tilemap.png"
+dest_files=["res://.godot/imported/town_tilemap.png-2c92fb2e8ba709c55813738d4141c580.ctex"]
 
 [params]
 

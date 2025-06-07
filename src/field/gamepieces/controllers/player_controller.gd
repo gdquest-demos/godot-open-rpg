@@ -18,6 +18,7 @@ var _last_input_direction: = Vector2.ZERO
 # The "interaction searcher" area basically activates any Interactions, which means that they'll
 # respond to key/button input.
 @onready var _interaction_searcher: = $InteractionSearcher as Area2D
+@onready var _interaction_shape: = $InteractionSearcher/CollisionShape2D as CollisionShape2D
 
 # The player collision area activates Triggers whenever the player moves onto their collision
 # shape.
@@ -46,39 +47,6 @@ func _ready() -> void:
 		FieldEvents.interaction_selected.connect(_on_interaction_selected)
 
 
-#func _process(_delta: float) -> void:
-	#if _gamepiece.is_moving():
-		#return
-	#
-	#var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	#if input_direction:
-		#if not _gamepiece.is_moving():
-			#var source_cell: = GamepieceRegistry.get_cell(_gamepiece)
-			#var target_cell: = Vector2i.ZERO
-			#
-			## Unless using 8-direction movement, one movement axis must be preferred. 
-			##	Default to the x-axis.
-			#if not is_zero_approx(input_direction.x):
-				#input_direction = Vector2(input_direction.x, 0)
-			#else:
-				#input_direction = Vector2(0, input_direction.y)
-			#target_cell = Gameboard.pixel_to_cell(_gamepiece.position) + Vector2i(input_direction)
-			#
-			## Try to get a path to destination (will fail if cell is occupied)
-			#var new_move_path: = Gameboard.pathfinder.get_path_to_cell(source_cell, target_cell)
-			#
-			## Path is invalid. Bump animation?
-			#if new_move_path.size() <= 1:
-				#pass
-			#
-			#else:
-				#GamepieceRegistry.move_gamepiece(_gamepiece, target_cell)
-				#_gamepiece.move_to(Gameboard.cell_to_pixel(target_cell))
-#
-			##print(Gameboard.pathfinder.get_path_to_cell())
-			## If path is valid, move.
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		stop_moving()
@@ -104,8 +72,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			if _gamepiece.is_moving():	stop_moving()
 			else:	move_to_pressed_key(Vector2.RIGHT)
 
-			#print(Gameboard.pathfinder.get_path_to_cell())
-			# If path is valid, move.
+
+func move_along_path(value: Array[Vector2i]) -> void:
+	super.move_along_path(value.duplicate())
+	
+	_interaction_shape.disabled = true
+	Player.player_path_set.emit(_gamepiece, value.back())
 
 
 func move_to_pressed_key(input_direction: Vector2) -> void:
@@ -126,7 +98,6 @@ func move_to_pressed_key(input_direction: Vector2) -> void:
 		
 		else:
 			move_path = new_move_path.duplicate()
-			Player.player_path_set.emit(_gamepiece, new_move_path.back())
 
 
 func stop_moving() -> void:
@@ -151,28 +122,6 @@ func _on_cell_selected(cell: Vector2i) -> void:
 		var new_path = Gameboard.pathfinder.get_path_to_cell(source_cell, cell)
 		if not new_path.is_empty():
 			move_path = new_path.duplicate()
-			Player.player_path_set.emit(_gamepiece, new_path.back())
-		
-		# If there is an interaction underneath the cursor the player's gamepiece should flag the
-		# target and move to an adjacent cell.
-		#if not collisions.is_empty():
-			#for collision: Dictionary in collisions:
-				#if collision.collider.owner is Interaction:
-					#_target = collision.collider.owner
-					#break
-		
-		# The following method will move to an empty cell OR adjacent to a blocked cell that has
-		# an interaction located on it.
-		
-		
-		#travel_to_cell(cell, _target != null)
-		#if not _waypoints.is_empty():
-			#FieldEvents.player_path_set.emit(_gamepiece, _waypoints.back())
-		#
-		## There is no path but there is a target, which means that the player is standing right next
-		## to the target interaction.
-		#elif _target:
-			#_on_gamepiece_arrived()
 
 
 # The player has clicked on something interactable. We'll try to move next to the interaction and
@@ -199,7 +148,6 @@ func _on_interaction_selected(interaction: Interaction) -> void:
 				_target = interaction
 				
 				move_path = new_path.duplicate()
-				Player.player_path_set.emit(_gamepiece, new_path.back())
 	
 	# If the player is already moving, cancel that movement.
 	else:
@@ -218,10 +166,15 @@ func _on_gamepiece_arriving(excess_distance: float) -> void:
 
 func _on_gamepiece_arrived() -> void:
 	super._on_gamepiece_arrived()
+	
+	_interaction_shape.disabled = false
+	
 	if _target:
-		# Will be normalized by the setter.
-		_gamepiece.direction \
-			= Directions.vector_to_direction(_target.position - _gamepiece.position)
+		# Face the selected interaction...
+		var direction_to_target: = _target.position - _gamepiece.position
+		_gamepiece.direction = Directions.vector_to_direction(direction_to_target)
+		
+		# ...and then execute the interaction.
 		_target.run()
 		_target = null
 	
