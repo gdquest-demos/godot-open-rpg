@@ -40,7 +40,7 @@ func _ready() -> void:
 func is_cell_clear(coord: Vector2i) -> bool:
 	if not _affects_collision:
 		return true
-	
+
 	var tile_data: = get_cell_tile_data(coord)
 	if tile_data:
 		var is_cell_blocked: = tile_data.get_custom_data(BLOCKED_CELL_DATA_LAYER) as bool

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://p0e4b0txynkd"]
+[gd_scene load_steps=13 format=3 uid="uid://p0e4b0txynkd"]
 
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="1_0tk0k"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://overworld/maps/tilesets/town_tilemap.png" id="2_4mdkx"]
@@ -7,9 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://bww5xt1qrtltu" path="res://assets/sfx/impactWood_light_003.ogg" id="5_b854r"]
 [ext_resource type="AudioStream" uid="uid://bt1obi05x1xda" path="res://assets/sfx/impactWood_light_002.ogg" id="6_ui4yk"]
 [ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="7_er0br"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xgpwx"]
-size = Vector2(15, 15)
 
 [sub_resource type="Animation" id="Animation_8loys"]
 length = 0.001
@@ -22,7 +19,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [true]
 }
 tracks/1/type = "value"
@@ -134,7 +131,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [false]
 }
 tracks/1/type = "audio"
@@ -172,6 +169,7 @@ is_locked = false
 
 [node name="Area2D" parent="." index="0"]
 position = Vector2(0, -8)
+monitoring = true
 
 [node name="OpenDoor" type="Sprite2D" parent="Area2D" index="1"]
 texture = ExtResource("2_4mdkx")
@@ -183,16 +181,9 @@ texture = ExtResource("2_4mdkx")
 region_enabled = true
 region_rect = Rect2(17, 119, 16, 16)
 
-[node name="BlockingArea" type="Area2D" parent="Area2D/ClosedDoor" index="0"]
-collision_mask = 0
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D/ClosedDoor/BlockingArea" index="0"]
-shape = SubResource("RectangleShape2D_xgpwx")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {
-"": SubResource("AnimationLibrary_k2tlp")
+&"": SubResource("AnimationLibrary_k2tlp")
 }
 autoplay = "RESET"
 

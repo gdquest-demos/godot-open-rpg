@@ -40,6 +40,10 @@ func pixel_to_cell(pixel_coordinates: Vector2) -> Vector2i:
 	)
 
 
+func get_cell_under_node(node: Node2D) -> Vector2i:
+	return pixel_to_cell(node.global_position/node.global_scale)
+
+
 ## Convert cell coordinates to an index unique to those coordinates.
 ## [br][br][b]Note:[/b] cell coordinates outside the [member extents] will return
 ## [constant INVALID_INDEX].
@@ -97,11 +101,14 @@ func register_gameboard_layer(board_map: GameboardLayer) -> void:
 	board_map.cells_changed.connect(
 		func _on_gameboard_layer_cells_changed(cleared_cells: Array[Vector2i], 
 				blocked_cells: Array[Vector2i]):
+		if board_map.name == "DoorGameboardLayer":
+			print("Door layer ", cleared_cells, " ", blocked_cells)
 		var added_cells: = _add_cells_to_pathfinder(cleared_cells)
 		var removed_cells: = _remove_cells_from_pathfinder(blocked_cells)
 		
 		_connect_new_pathfinder_cells(added_cells)
-		pathfinder_changed.emit(added_cells.values(), removed_cells)
+		if not added_cells.is_empty() or not removed_cells.is_empty():
+			pathfinder_changed.emit(added_cells.values(), removed_cells)
 	)
 
 
@@ -129,14 +136,15 @@ func _add_cells_to_pathfinder(cleared_cells: Array[Vector2i]) -> Dictionary[int,
 
 
 # Remove cells from the pathfinder so that Gamepieces can no longer move through them. 
-# Only one Gameboard layer needs to block a cell for it to be considered blocked. However,a
-# GameboardLayer that removed a cell from its TileMap will also trigger this method, so we still
-# need to check all layers to see if this cell should be cleared or not.
+# Only one Gameboard layer needs to block a cell for it to be considered blocked. 
 # Returns an array of cell coordinates that have been blocked. Cells that were already not in the
 # pathfinder will be excluded from this array.
 func _remove_cells_from_pathfinder(blocked_cells: Array[Vector2i]) -> Array[Vector2i]:
 	var removed_cells: Array[Vector2i] = []
 	for cell in blocked_cells:
+		# Only remove a cell that is already in the pathfinder. Also, we need to check that the cell
+		# is not clear, since this method is also called when cells are removed from GameboardLayers
+		# and other layers may still have this cell on their map.
 		if pathfinder.has_cell(cell) and not _is_cell_clear(cell):
 			pathfinder.remove_point(cell_to_index(cell))
 			removed_cells.append(cell)

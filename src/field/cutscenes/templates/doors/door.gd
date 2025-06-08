@@ -1,19 +1,14 @@
 @tool
-
 class_name Door extends AreaTransition
 
 @export var is_locked: = false:
 	set(value):
-		is_locked = value
-		
-		if not Engine.is_editor_hint():
-			if not is_inside_tree():
-				await ready
-			
-			_blocking_area.get_node("CollisionShape2D").disabled = !is_locked
+		if value != is_locked:
+			is_locked = value
+			if not is_locked:
+				open()
 
 @onready var _anim: = $AnimationPlayer as AnimationPlayer
-@onready var _blocking_area: = $Area2D/ClosedDoor/BlockingArea as Area2D
 @onready var _closed_door: = $Area2D/ClosedDoor as Sprite2D
 
 
