@@ -13,8 +13,7 @@ script = ExtResource("1_5pjdg")
 
 [node name="PlayerCollision" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 0
-monitoring = false
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollision"]
 shape = SubResource("CircleShape2D_3ejyl")

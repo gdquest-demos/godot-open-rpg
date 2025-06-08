@@ -8,7 +8,10 @@ const GROUP: = "_PLAYER_CONTROLLER_GROUP"
 
 # Keep track of a targeted interaction. Used to face & interact with the object at a path's end.
 # It is reset on cancelling the move path or continuing movement via arrows/gamepad directions.
-var _target: Interaction = null
+var _target_interaction: Interaction = null
+
+# Keep track of any Triggers that the player has stepped on.
+var _active_trigger: Trigger = null
 
 # Also keep track of the most recently pressed move key (e.g. WASD keys). This makes keyboard input
 # feel more intuitive, since the gamepiece will move towards the most recently pressed key rather
@@ -31,11 +34,30 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		add_to_group(GROUP)
 		
-		## Refer the various player collision shapes to their gamepiece (parent of the controller).
-		## This will allow other objects/systems to quickly find which gamepiece they are working on
-		## via the collision "owners".
+		# Refer the various player collision shapes to their gamepiece (parent of the controller).
+		# This will allow other objects/systems to quickly find which gamepiece they are working on
+		# via the collision "owners".
 		_interaction_searcher.owner = _gamepiece
 		_player_collision.owner = _gamepiece
+		
+		# Update the position of the player's collision shape to match the cell that it is currently
+		# moving towards.
+		waypoint_changed.connect(
+			func _on_waypoint_changed(new_waypoint: Vector2i):
+				if new_waypoint == Gameboard.INVALID_CELL:
+					_player_collision.position = Vector2.ZERO
+				else:
+					_player_collision.position = Gameboard.cell_to_pixel(new_waypoint) \
+						- _gamepiece.position
+		)
+		
+		# The player collision picks up any triggers that it moves over. Keep track of them until
+		# player movement to the current cells has completed.
+		_player_collision.area_entered.connect(
+			func _on_collision_triggered(area: Area2D):
+				if area.owner is Trigger:
+					_active_trigger = area.owner
+		)
 		
 		_gamepiece.direction_changed.connect(
 			func _on_gamepiece_direction_changed(new_direction: Directions.Points):
@@ -102,7 +124,7 @@ func move_to_pressed_key(input_direction: Vector2) -> void:
 
 func stop_moving() -> void:
 	move_path.clear()
-	_target = null
+	_target_interaction = null
 
 
 # The player has clicked on an empty gameboard cell. We'll try to move _gamepiece to the cell.
@@ -145,7 +167,7 @@ func _on_interaction_selected(interaction: Interaction) -> void:
 			var new_path = Gameboard.pathfinder.get_path_cells_to_adjacent_cell(source_cell, 
 				target_cell)
 			if not new_path.is_empty():
-				_target = interaction
+				_target_interaction = interaction
 				
 				move_path = new_path.duplicate()
 	
@@ -155,28 +177,40 @@ func _on_interaction_selected(interaction: Interaction) -> void:
 
 
 func _on_gamepiece_arriving(excess_distance: float) -> void:
-	super._on_gamepiece_arriving(excess_distance)
+	# If the gamepiece moved onto a trigger, stop the gamepiece in its tracks.
+	if _active_trigger:
+		stop_moving()
 	
-	# It may be that the player is holding the keys down. In that case, continue moving the
-	# gamepiece towards the pressed direction.
-	var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	if not input_direction.is_equal_approx(Vector2.ZERO):
-		move_to_pressed_key(_last_input_direction)
+	# Otherwise, carry on with movement.
+	else:
+		super._on_gamepiece_arriving(excess_distance)
+		
+		# It may be that the player is holding the keys down. In that case, continue moving the
+		# gamepiece towards the pressed direction.
+		var input_direction: = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		if not input_direction.is_equal_approx(Vector2.ZERO):
+			move_to_pressed_key(_last_input_direction)
 
 
 func _on_gamepiece_arrived() -> void:
 	super._on_gamepiece_arrived()
 	
+	_player_collision.position = Vector2.ZERO
 	_interaction_shape.disabled = false
 	
-	if _target:
+	if _active_trigger:
+		#_active_trigger.run()
+		print("Run trigger ", _active_trigger.name)
+		_active_trigger = null
+	
+	elif _target_interaction:
 		# Face the selected interaction...
-		var direction_to_target: = _target.position - _gamepiece.position
+		var direction_to_target: = _target_interaction.position - _gamepiece.position
 		_gamepiece.direction = Directions.vector_to_direction(direction_to_target)
 		
 		# ...and then execute the interaction.
-		_target.run()
-		_target = null
+		_target_interaction.run()
+		_target_interaction = null
 	
 	# No target, but check to see if the player is holding a key down and face in the direction of
 	# the last pressed key.

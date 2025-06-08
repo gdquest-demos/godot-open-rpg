@@ -2,6 +2,9 @@
 @icon("res://assets/editor/icons/IconGamepieceController.svg")
 class_name GamepieceController extends Node2D
 
+## Emitted whenever the gamepiece begins moving towards a new cell in its [member move_path].
+signal waypoint_changed(waypoint: Vector2i)
+
 ## An active controller will receive inputs (player or otherwise). An inactive controller does
 ## nothing. This is useful, for example, when toggling of gamepiece movement during cutscenes.
 var is_active: = false:
@@ -11,7 +14,11 @@ var is_active: = false:
 ## gamepiece needs to continue on to the next cell.
 var move_path: Array[Vector2i] = []:
 	set = move_along_path
-var _current_waypoint: Vector2i
+var _current_waypoint: Vector2i:
+	set(value):
+		if value != _current_waypoint:
+			_current_waypoint = value
+			waypoint_changed.emit(_current_waypoint)
 
 # The controller operates on its direct parent, which must be a gamepiece object.
 var _gamepiece: Gamepiece

@@ -19,6 +19,7 @@ position = Vector2(0, -12)
 show_behind_parent = true
 collision_layer = 0
 collision_mask = 4
+input_pickable = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]

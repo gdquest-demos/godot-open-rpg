@@ -11,6 +11,7 @@ script = ExtResource("1_htew5")
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 32
 collision_mask = 4
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_dru4t")

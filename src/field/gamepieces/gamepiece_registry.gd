@@ -72,9 +72,11 @@ func get_gamepiece_by_name(gp_name: String) -> Gamepiece:
 
 ## Return the cell occupied by a given gamepiece.
 func get_cell(gp: Gamepiece) -> Vector2i:
-	var cell: = _gamepieces.find_key(gp) as Vector2i
-	if _gamepieces.has(cell):
-		return cell
+	# Don't look up null gamepieces (i.e. blocked cells).
+	if gp:
+		var cell: = _gamepieces.find_key(gp) as Vector2i
+		if _gamepieces.has(cell):
+			return cell
 	return Gameboard.INVALID_CELL
 
 
