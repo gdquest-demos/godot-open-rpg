@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.3.3 Overworld Gameboard & Gamepiece Rework 🔧
+
+### Under-the-hood changes
+This update has aimed to greatly simplify the code responsible for moving Gamepieces around the Gameboard, while keeping the structure of the code roughly the same. Most scripts dealing with the overworld/field gamestate have been changed, but the main features are as follows:
+	- Collision on the Gameboard is no longer based on physics-based collisions. The physics implementation was great, but introduced a host of edge cases (e.g. two gamepieces moving onto the same cell on the same physics tick) that had to be accounted for.
+	- Rather, objects used to build the pathfinder use a registry pattern; GameboardLayers register themselves with the Gameboard, and Gamepieces register themselves with the GamepieceRegistry. The board and registry update automatically based on signals from their registered objects, and the user no longer needs to worry about emitting global signals such as "FieldEvents.terrain_changed". It all happens under the hood.
+	- The removal of circular dependency issues that were present in early Godot 4.X has made life much easier. The Gameboard singleton allows anything to figure out where coordinates occur on the gameboard and if those coordinates are moveable (thanks to the single Pathfinder), and the GamepieceRegistry allows objects (cutscenes!) to easily find where everything and everyone is placed on the board. Gameboard and GamepieceRegistry are autoloads that allow designers to easily observe the global overworld state without having to worry (too much) about messing things up.
+	- Many objects have had their responsibilities reduced, such as Gamepiece which now only deals with moving to a point (rather than also tracking cells, coordinates, movement paths, etc.), and GamepieceControllers which now are much more focused on helping a gamepiece follow a path in response to player and AI input (as opposed to previously, where they also dabbled in pathfinding, physics shenanigans, etc.)
+Overall, the code should now be simpler to understand at first glance, and much easier for newcomers to work through. Happy designing!
+
 ## v0.3.2 Combat UI Demo 🖱️ - Battler Actions & User Interface
 
 ### Guide the player through action selection
