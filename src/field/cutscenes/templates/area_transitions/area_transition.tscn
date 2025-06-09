@@ -8,6 +8,7 @@
 script = ExtResource("2_l3ptr")
 arrival_coordinates = Vector2(0, 0)
 new_music = null
+is_active = true
 
 [node name="Destination" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_retee")

@@ -8,6 +8,7 @@
 extends Node
 
 signal gamepiece_moved(gp: Gamepiece, new_cell: Vector2i, old_cell: Vector2i)
+signal gamepiece_freed(gp: Gamepiece, cell: Vector2i)
 
 # Store all registered gamepeices by the cell they occupy.
 var _gamepieces: Dictionary[Vector2i, Gamepiece] = {}
@@ -22,16 +23,15 @@ func register(gamepiece: Gamepiece, cell: Vector2i) -> bool:
 	
 	#...or if it has already been registered, for some reason.
 	if gamepiece in _gamepieces.values():
-		printerr("Failed to register Gamepiece '%s' at cell '%s'. " % [gamepiece.name, str(cell)],
+		printerr("Refused to register Gamepiece '%s' at cell '%s'. " % [gamepiece.name, str(cell)],
 			"The gamepiece has already been registered!")
-		return false
+		return true
 	
 	# We want to know when the gamepiece leaves the scene tree, as it is no longer on the gameboard.
 	# This probably means that the gamepiece has been freed.
 	gamepiece.tree_exiting.connect(_on_gamepiece_tree_exiting.bind(gamepiece))
 	
 	_gamepieces[cell] = gamepiece
-	print("REgistered %s to %s" % [gamepiece.name, str(cell)])
 	gamepiece_moved.emit(gamepiece, cell, Gameboard.INVALID_CELL)
 	
 	return true
@@ -93,6 +93,7 @@ func _on_gamepiece_tree_exiting(gp: Gamepiece) -> void:
 	var cell = _gamepieces.find_key(gp)
 	if _gamepieces.has(cell):
 		_gamepieces.erase(cell)
+		gamepiece_freed.emit(gp, cell)
 	
 	#if cell != null:
 		#Events.gamepiece_exiting_tree.emit(gp, cell)

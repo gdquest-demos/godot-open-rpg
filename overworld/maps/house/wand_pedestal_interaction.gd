@@ -17,7 +17,7 @@ const VALID_ITEMS: = [
 static var _correct_pedestals: = {}
 
 ## Link the obstacle's animation player to this object for when the puzzle is solved.
-@export var spikes_animation: AnimationPlayer
+@export var solved_animation: AnimationPlayer
 
 ## Specify a timeline that should be run if an item is already placed on the pedestal.
 @export var wand_placed_timeline: DialogicTimeline
@@ -38,7 +38,7 @@ func _ready() -> void:
 	super._ready()
 	
 	if not Engine.is_editor_hint():
-		assert(spikes_animation, "This interaction requires the obstacle's animation player!")
+		assert(solved_animation, "This interaction requires the obstacle's animation player!")
 		
 		# Setup the static variable to account for this pedestal.
 		_correct_pedestals[self] = false
@@ -71,9 +71,9 @@ func _execute() -> void:
 		for pedestal in _correct_pedestals.keys():
 			pedestal.is_active = false
 		
-		# The referenced animation player will visually resolve the puzzle.
-		spikes_animation.play("clear")
-		await spikes_animation.animation_finished
+		# The referenced animation player will resolve the puzzle.
+		solved_animation.play("solve")
+		await solved_animation.animation_finished
 
 
 # Check to see if ALL pedestals have the correct wand placed on them.

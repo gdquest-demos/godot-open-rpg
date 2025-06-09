@@ -6,6 +6,10 @@
 ## [br][br]The grid is contained within the playable [member boundaries] and its constituent cells.
 extends Node
 
+## Emitted whenever [member properties] is set. This is used in case a [Gamepiece] is added to the
+## board before the board properties are ready.
+signal properties_set
+
 ## Emitted whenever the [member pathfinder] state changes.
 ## This signal is emitted automatically in response to changed [GameboardLayer]s.
 ##[/br][/br]Note: This signal is only emitted when the actual movement state of the Gameboard
@@ -20,7 +24,11 @@ const INVALID_CELL: = Vector2i(-1, -1)
 const INVALID_INDEX: = -1
 
 ## Determines the [member GameboardProperties.extents] of the Gameboard, among other details.
-var properties: GameboardProperties = null
+var properties: GameboardProperties = null:
+	set(value):
+		if value != properties:
+			properties = value
+			properties_set.emit()
 
 ## A reference to the Pathfinder for the current playable area.
 @onready var pathfinder: Pathfinder = Pathfinder.new()

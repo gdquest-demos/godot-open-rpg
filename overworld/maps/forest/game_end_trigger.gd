@@ -10,7 +10,7 @@ var gamepiece: Gamepiece
 
 
 func _execute() -> void:
-	gamepiece.travel_to_cell(Vector2i(53, 30))
+	gamepiece.move_to(Gameboard.cell_to_pixel(Vector2i(53, 30)))
 	await gamepiece.arrived
 	
 	_timer.start()
@@ -31,7 +31,6 @@ func _execute() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	super._on_area_entered(area)
-	
 	if not Engine.is_editor_hint():
 		gamepiece = area.owner as Gamepiece
+	super._on_area_entered(area)
