@@ -32,6 +32,14 @@ var _affects_collision: = true
 func _ready() -> void:
 	add_to_group(GROUP)
 	Gameboard.register_gameboard_layer(self)
+	
+	tree_exiting.connect(
+		func _on_tree_exiting() -> void:
+			_affects_collision = false
+			
+			var blocked_cells: Array[Vector2i] = []
+			cells_changed.emit(get_used_cells(), blocked_cells)
+	)
 
 
 ## Returns true if the tile at coord exists and does not have a custom blocking data layer with a
@@ -55,7 +63,8 @@ func is_cell_clear(coord: Vector2i) -> bool:
 # parameter lets us know which cells have changed. Also, the method is called as the TileMapLayer
 # is added to the scene.
 # Note that if forced_cleanup is true, the TileMapLayer is in a state where its tiles should not
-# affect collision.
+# affect collision. The conditions causing forced_cleanup are handled seperately through signals
+# found in _ready().
 func _update_cells(coords: Array[Vector2i], forced_cleanup: bool) -> void:
 	# First of all, check to make sure the the tilemap has a tileset and the specific custom data
 	# layer that we need to specify whether or not a tile blocks movement.
@@ -66,13 +75,8 @@ func _update_cells(coords: Array[Vector2i], forced_cleanup: bool) -> void:
 	# blocked) have been added or removed.
 	var cleared_cells: Array[Vector2i] = []
 	var blocked_cells: Array[Vector2i] = []
-	if forced_cleanup:
-		# This tilemap isn't being used anymore. Flag all of its cells as being removed.
-		# Currently, toggline visibility back on won't re-add existing cells.
-		cleared_cells = get_used_cells()
-		_affects_collision = false
 	
-	else:
+	if not forced_cleanup:
 		for coord in coords:
 			if is_cell_clear(coord):
 				cleared_cells.append(coord)

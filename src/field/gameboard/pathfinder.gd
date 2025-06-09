@@ -28,6 +28,13 @@ func _init() -> void:
 			if has_point(old_cell_id):
 				set_point_disabled(old_cell_id, false)
 	)
+	
+	GamepieceRegistry.gamepiece_freed.connect(
+		func _on_gamepiece_free(_gp: Gamepiece, coord: Vector2i) -> void:
+			var cell_id: = Gameboard.cell_to_index(coord)
+			if has_point(cell_id):
+				set_point_disabled(cell_id, false)
+	)
 
 
 ## Returns true if the coordinate is found in the Pathfinder.

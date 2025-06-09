@@ -169,7 +169,6 @@ is_locked = false
 
 [node name="Area2D" parent="." index="0"]
 position = Vector2(0, -8)
-monitoring = true
 
 [node name="OpenDoor" type="Sprite2D" parent="Area2D" index="1"]
 texture = ExtResource("2_4mdkx")

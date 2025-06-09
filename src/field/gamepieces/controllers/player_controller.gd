@@ -198,11 +198,11 @@ func _on_gamepiece_arrived() -> void:
 	_player_collision.position = Vector2.ZERO
 	_interaction_shape.disabled = false
 	
+	# If there's a trigger at this cell, do nothing but reset the trigger reference.
 	if _active_trigger:
-		#_active_trigger.run()
-		print("Run trigger ", _active_trigger.name)
 		_active_trigger = null
 	
+	# Otherwise, if there's an interaction queued, run the interaction.
 	elif _target_interaction:
 		# Face the selected interaction...
 		var direction_to_target: = _target_interaction.position - _gamepiece.position

@@ -103,6 +103,21 @@ var destination: Vector2
 
 func _ready() -> void:
 	set_process(false)
+	
+	if not Engine.is_editor_hint() and is_inside_tree():
+		# Some gamepieces may be added to the scene before the Gameboard properties are set. In that
+		# case, wait for Gameboard dimensions to be set before registering the gamepiece.
+		if Gameboard.properties == null:
+			await Gameboard.properties_set
+		
+		# Snap the gamepiece to the cell on which it is standing.
+		var cell: = Gameboard.get_cell_under_node(self)
+		position = Gameboard.cell_to_pixel(cell)
+		
+		# Then register the gamepiece with the registry. Note that if a gamepiece already exists at
+		# the cell, this one will simply be freed.
+		if GamepieceRegistry.register(self, cell) == false:
+			queue_free()
 
 
 func _process(delta: float) -> void:
@@ -176,106 +191,3 @@ func stop() -> void:
 ## Returns [code]true[/code] if the gamepiece is currently moving along its [member Path2D.curve].
 func is_moving() -> bool:
 	return is_processing()
-
-
-#func move_along_path(waypoints: Array[Vector2]) -> void:
-	#curve = null
-	#
-	#curve = Curve2D.new()
-	#for point in waypoints:
-		#curve.add_point(point)
-
-
-#func _physics_process(delta: float) -> void:
-	#var move_distance: = move_speed * delta
-	#
-	## We need to let others know that the gamepiece will arrive at the end of its path THIS frame.
-	## A controller may want to extend the path (for example, if a move key is held down or if
-	## another waypoint should be added to the move path).
-	## If we do NOT do so and the path is extended post arrival, there will be a single frame where
-	## the gamepiece's velocity is discontinuous (drops, then increases again), causing jittery 
-	## movement.
-	## The excess travel distance allows us to know how much to extend the path by. A VERY fast
-	## gamepiece may jump a few cells at a time.
-	#var excess_travel_distance: =  _follower.progress + move_distance \
-		#- _path.curve.get_baked_length()
-	#if excess_travel_distance >= 0:
-		#arriving.emit(excess_travel_distance)
-	#
-	## Movement may have been extended, so check if we need to cap movement to the waypoint.
-	#var has_arrived: = _follower.progress + move_distance >= _path.curve.get_baked_length()
-	#if has_arrived:
-		#move_distance = _path.curve.get_baked_length() - _follower.progress
-	#
-	#_follower.progress += move_distance
-	#
-	## If we've reached the end of the path, either travel to the next waypoint or wrap up movement.
-	#if has_arrived:
-		#reset_travel()
-#
-#
-### Begin travelling towards the specified cell.
-### [br][br]The gamepiece's position will update instantly to the target cell, whereas the path
-### follower will begin moving smoothly towards the destination at [member move_speed]. The 
-### [signal arriving] and [signal arrived] signals will be emitted accordingly as the path follower
-### reaches the destination cell.
-### [br][br]To move the gamepiece instantly to a new cell, call [method set_cell] instead.
-### [br][br][b]Note:[/b] Calling travel_to_cell on a moving gamepiece will update it's position to 
-### that indicated by the cell coordinates and add the cell to the movement path.
-#func travel_to_cell(destination_cell: Vector2i) -> void:
-	#set_physics_process(true)
-	#
-	## Note that updating the gamepiece's cell will snap it to its new grid position. This will
-	## be accounted for below when calculating the waypoint's pixel coordinates.
-	#var old_position: = position
-	#cell = destination_cell
-	#direction = (position - old_position).normalized()
-	#
-	## Setting the cell (the above line) snaps the gamepiece to its new cell, but we want to animate
-	## its movement. Therefore, the follower must lag behind, 'travelling' to the next cell.
-	## Reset the follower's position here so that there is no jitter when moving.
-	#_follower.position = old_position
-	#
-	## If the gamepiece is not yet moving, we'll setup a new path.
-	#if not _path.curve:
-		#_path.curve = Curve2D.new()
-#
-		## The path needs at least two points for the follower to work correctly, so a new path
-		## will travel from the gamepiece's old position.
-		#_path.curve.add_point(old_position)
-		#_follower.progress = 0
-	#
-	## The gamepiece serves as the waypoint's frame of reference.
-	#_path.curve.add_point(gameboard.cell_to_pixel(destination_cell))
-	#
-	#travel_begun.emit()
-#
-#
-### Stop the gamepiece from travelling and set it at its cell.
-#func reset_travel() -> void:
-	#_path.curve = null
-	#_follower.progress = 0
-		#
-	#set_physics_process(false)
-	#arrived.emit()
-#
-#
-#
-#
-#
-#func set_cell(value: Vector2i) -> void:
-	#if Engine.is_editor_hint():
-		#return
-	#
-	#var old_cell: = cell
-	#cell = value
-	#
-	#if not is_inside_tree():
-		#await ready
-	#
-	#position = gameboard.cell_to_pixel(cell)
-	#cell_changed.emit(old_cell)
-#
-#
-#func get_faced_cell() -> Vector2i:
-	#return (Vector2(cell) + direction).round()
