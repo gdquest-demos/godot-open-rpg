@@ -8,6 +8,7 @@ radius = 32.0
 
 [node name="InteractionPopup" instance=ExtResource("1_582ge")]
 script = ExtResource("2_2fot7")
+emote = 1
 radius = 32
 is_active = true
 
@@ -18,6 +19,7 @@ position = Vector2(0, -12)
 show_behind_parent = true
 collision_layer = 0
 collision_mask = 4
+input_pickable = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]

@@ -4,134 +4,118 @@
 class_name Pathfinder
 extends AStar2D
 
-# Requires the gameboard for board boundaries and cell <-> index conversion.
-var _gameboard: Gameboard = null
+## When finding a path, we may want to ignore certain cells that are occupied by Gamepeices.
+## These flags specify which disabled cells will still allow the path through.
+##
+## Ignore the occupant of the source cell when searching for a path via [method path_to_cell].
+## This is especially useful when wanting to find a path for a gamepiece from their current cell.
+const FLAG_ALLOW_SOURCE_OCCUPANT = 1 << 0
+## Ignore the occupant of the target cell when searching for a path via [method path_to_cell].
+const FLAG_ALLOW_TARGET_OCCUPANT = 1 << 1
+## Ignore all gamepieces on the pathfinder cells when searching for a path via
+## [method path_to_cell].
+const FLAG_ALLOW_ALL_OCCUPANTS = 1 << 2
 
 
-# Only cells within the gameboard's boundary will be considered.
-func _init(pathable_cells: Array[Vector2i], gameboard: Gameboard) -> void:
-	_gameboard = gameboard
-	assert(_gameboard, "Pathfinder::init error: invalid gameboard reference!")
-	
-	_build_cell_list(pathable_cells)
-	_connect_cells()
+func _init() -> void:
+	# Disable/re-enable occupied cells whenever a gamepiece moves.
+	GamepieceRegistry.gamepiece_moved.connect(
+		func _on_gamepiece_moved(_gp: Gamepiece, new_cell: Vector2i, old_cell: Vector2i) -> void:
+			var new_cell_id: = Gameboard.cell_to_index(new_cell)
+			if has_point(new_cell_id):
+				set_point_disabled(new_cell_id, true)
+
+			var old_cell_id: = Gameboard.cell_to_index(old_cell)
+			if has_point(old_cell_id):
+				set_point_disabled(old_cell_id, false)
+	)
+
+	GamepieceRegistry.gamepiece_freed.connect(
+		func _on_gamepiece_free(_gp: Gamepiece, coord: Vector2i) -> void:
+			var cell_id: = Gameboard.cell_to_index(coord)
+			if has_point(cell_id):
+				set_point_disabled(cell_id, false)
+	)
+
+
+## Returns true if the coordinate is found in the Pathfinder.
+func has_cell(coord: Vector2i) -> bool:
+	return has_point(Gameboard.cell_to_index(coord))
+
+
+## Returns true if the coordinate is found in the Pathfinder and the cell is unoccupied.
+func can_move_to(coord: Vector2i) -> bool:
+	var uid: = Gameboard.cell_to_index(coord)
+	return has_point(uid) and not is_point_disabled(uid)
 
 
 ## Find a path between two cells. Returns an empty array if no path is available.
-func get_path_cells(source_cell: Vector2i, target_cell: Vector2i) -> Array[Vector2i]:
-	# Check to make sure that the source and target cells fall within the gameboard boundaries...
-	if not _gameboard.boundaries.has_point(source_cell) \
-			or not _gameboard.boundaries.has_point(target_cell):
-		return []
-	
-	# ...and that the source and target cells are registered with the pathfinder.
-	var source_id: = _gameboard.cell_to_index(source_cell)
-	var target_id: = _gameboard.cell_to_index(target_cell)
-	if not has_point(source_id) or not has_point(target_id):
-		return []
-	
-	# Disabled cells are usually occupied. Allow movement out of a disabled cell.
-	var disable_source: = is_point_disabled(source_id)
-	set_point_disabled(source_id, false)
-	
-	var path_cells: Array[Vector2i] = []
-	for cell in get_point_path(source_id, target_id):
-		path_cells.append(Vector2i(cell))
-	
-	# Re-disable the start cell if it was blocked.
-	set_point_disabled(source_id, disable_source)
-	
-	return path_cells
+## If allow_blocked_source or allow_blocked_target are false, the pathinder wlil fail if a gamepiece
+## occupies the source or target cells, respectively.
+func get_path_to_cell(source_coord: Vector2i, target_coord: Vector2i,
+		occupancy_flags: int = 1) -> Array[Vector2i]:
+	# Store the return value in a variable.
+	var move_path: Array[Vector2i] = []
+
+	# Find the source/target IDs and keep track of whether or not the cells are occupied.
+	var source_id: = Gameboard.cell_to_index(source_coord)
+	var target_id: = Gameboard.cell_to_index(target_coord)
+
+	# The pathfinder has several flags to ignore cell occupancy. We'll need to track which occupants
+	# are temporarily ignored and then re-disable their pathfinder points once a path is found.
+	# Key is point id, value is whether or not the point is disabled.
+	var ignored_points: Dictionary[int, bool] = {}
+	if (occupancy_flags & FLAG_ALLOW_ALL_OCCUPANTS) != 0:
+		for id in get_point_ids():
+			if is_point_disabled(id):
+				ignored_points[id] = true
+				set_point_disabled(id, false)
+
+	if has_point(source_id) and has_point(target_id):
+		# Check to see if we want to un-disable the source/target cells.
+		if (occupancy_flags & FLAG_ALLOW_SOURCE_OCCUPANT) != 0:
+			ignored_points[source_id] = is_point_disabled(source_id)
+			set_point_disabled(source_id, false)
+		if (occupancy_flags & FLAG_ALLOW_TARGET_OCCUPANT) != 0:
+			ignored_points[target_id] = is_point_disabled(target_id)
+			set_point_disabled(target_id, false)
+
+		for path_coord: Vector2i in get_point_path(source_id, target_id):
+			if path_coord != source_coord: # Don't include the source as the first path element.
+				move_path.append(path_coord)
+
+		# Change any enabled cells back to their previous state.
+		for id in ignored_points:
+			set_point_disabled(id, ignored_points[id])
+
+	return move_path
 
 
-## Get the shortest path to any cell adjacent to the specified target. Essentially allows moving
-## [i]next[/i] to a target cell.
-##
-## Returns an empty array if there are no paths available.
-func get_path_cells_to_adjacent_cell(source_cell: Vector2i, 
-		target_cell: Vector2i) -> Array[Vector2i]:
+## Find a path to a cell adjacent to the target coordinate.
+## Returns an empty path if there are no pathable adjacent cells.
+func get_path_cells_to_adjacent_cell(source_coord: Vector2i,
+		target_coord: Vector2i, occupancy_flags: int = 1) -> Array[Vector2i]:
 	var shortest_path: Array[Vector2i] = []
 	var shortest_path_length: = INF
-	
-	for cell in _gameboard.get_adjacent_cells(target_cell):
-		var cell_path: = get_path_cells(source_cell, cell)
-		
+
+	for cell in Gameboard.get_adjacent_cells(target_coord):
+		var cell_path: = get_path_to_cell(source_coord, cell, occupancy_flags)
 		if not cell_path.is_empty() and cell_path.size() < shortest_path_length:
 			shortest_path_length = cell_path.size()
 			shortest_path = cell_path
-	
+
 	return shortest_path
 
 
-## Manually update whether or not a single cell is blocked.
-## [br][br][b]Note:[/b] Blocked cells are usually occupied by a blocking [Gamepiece]. Cells that are 
-## no longer pathable due to changes in terrain should be removed from the pathfinder entirely.
-func block_cell(cell: Vector2i, value: = true) -> void:
-	var cell_id: = _gameboard.cell_to_index(cell)
-	if has_point(cell_id) and cell_id != Gameboard.INVALID_INDEX:
-		set_point_disabled(cell_id, value)
-
-
-## Update all blocked cells in the pathfinder in a single batch.
-##
-## [br][br][b]Note:[/b] Cells that were previously blocked but that are not included in the
-## 'blocked' parameter will be unblocked.
-func set_blocked_cells(blocked: Array[Vector2i]) -> void:
-	for id in get_point_ids():
-		var cell: = _gameboard.index_to_cell(id)
-		block_cell(cell, cell in blocked)
-
-
-## Returns a list of all cells that are currently blocked.
-func get_blocked_cells() -> Array[Vector2i]:
-	var blocked_cells: Array[Vector2i] = []
-	for id in get_point_ids():
-		if is_point_disabled(id):
-			blocked_cells.append(_gameboard.index_to_cell(id))
-	
-	return blocked_cells
-
-
-## Verify that a cell exists within the pathfinder. It may or may not be blocked.
-func has_cell(value: Vector2i) -> bool:
-	var index: = _gameboard.cell_to_index(value)
-	return has_point(index)
-
-
-## Get all cells that are registered with the pathfinder. Cells may or may not be blocked.
-func get_cells() -> Array[Vector2i]:
-	var cells: Array[Vector2i] = []
-	
-	for index in get_point_ids():
-		var cell: = _gameboard.index_to_cell(index)
-		cells.append(cell)
-	
-	return cells
-
-
-func _build_cell_list(pathable_cells: Array[Vector2i]) -> void:
-	for cell in pathable_cells:
-		if not has_cell(cell) and _gameboard.boundaries.has_point(cell):
-			var cell_id: = _gameboard.cell_to_index(cell)
-			if cell_id != Gameboard.INVALID_INDEX:
-				add_point(cell_id, cell)
-
-
-func _connect_cells() -> void:
-	for source_id in get_point_ids():
-		var source_cell: = _gameboard.index_to_cell(source_id)
-		
-		var adjacent_cells: Array[Vector2i] = _gameboard.get_adjacent_cells(source_cell)
-		for neighbour in adjacent_cells:
-				var target_id: = _gameboard.cell_to_index(neighbour)
-				
-				if target_id != Gameboard.INVALID_INDEX and has_point(target_id):
-					connect_points(source_id, target_id)
-
-
+# Format the pathfinder so that it may be easily debugged with print.
 func _to_string() -> String:
 	var value: = "\nPathfinder:"
 	for index in get_point_ids():
-		value += "\n%s - Id: %d; Linked to: %s" % [str(_gameboard.index_to_cell(index)), index, 
-			get_point_connections(index)]
+		var cell_header: = "\n%s - Id: %d;" % [str(Gameboard.index_to_cell(index)), index]
+
+		var is_disabled: = "\t\t\t"
+		if is_point_disabled(index):
+			is_disabled = " (disabled)\t"
+
+		value += (cell_header + is_disabled + "Linked to: %s" % get_point_connections(index))
 	return value + "\n"

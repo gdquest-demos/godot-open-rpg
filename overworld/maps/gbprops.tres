@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GameboardProperties" load_steps=2 format=3 uid="uid://k63mv5dbd1uk"]
+
+[ext_resource type="Script" uid="uid://cyl76x7u73s67" path="res://src/field/gameboard/gameboard_properties.gd" id="1_0hcip"]
+
+[resource]
+script = ExtResource("1_0hcip")
+extents = Rect2i(0, 0, 70, 35)
+cell_size = Vector2i(16, 16)
+metadata/_custom_type_script = "uid://cyl76x7u73s67"

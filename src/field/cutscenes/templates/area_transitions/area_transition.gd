@@ -49,8 +49,10 @@ func _on_area_entered(area: Area2D) -> void:
 	# Move the gamepiece to it's new position and update the camera immediately.
 	var gamepiece: = area.owner as Gamepiece
 	if gamepiece:
-		gamepiece.cell = gamepiece.gameboard.pixel_to_cell(arrival_coordinates)
-		gamepiece.reset_travel()
+		gamepiece.stop()
+		gamepiece.position = arrival_coordinates
+		GamepieceRegistry.move_gamepiece(gamepiece, Gameboard.pixel_to_cell(arrival_coordinates))
+		
 		
 		Camera.reset_position()
 	

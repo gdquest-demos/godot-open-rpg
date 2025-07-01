@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AttackBattlerAction" load_steps=3 format=3 uid="uid://c01ilo1olkfsm"]
+
+[ext_resource type="Texture2D" uid="uid://dt7jcphqs175b" path="res://combat/battlers/squirrel/icon_arrows.svg" id="1_eedy7"]
+[ext_resource type="Script" uid="uid://cpbigevghfrjn" path="res://src/combat/actions/battler_action_attack.gd" id="2_x25ju"]
+
+[resource]
+script = ExtResource("2_x25ju")
+hit_chance = 85.0
+base_damage = 60
+icon = ExtResource("1_eedy7")
+label = "Arrow Storm"
+description = "If only a squirrel could draw a bow."
+target_scope = 2
+targets_friendlies = false
+targets_enemies = true
+element = 0
+energy_cost = 0
+readiness_saved = 0.0

@@ -1,0 +1,120 @@
+[gd_scene load_steps=13 format=3 uid="uid://c3trg4x6hiuul"]
+
+[ext_resource type="PackedScene" uid="uid://b626e0bngfvjj" path="res://src/field/gamepieces/gamepiece.tscn" id="1_3w6ce"]
+[ext_resource type="Script" uid="uid://cgwq0j8de7mxv" path="res://src/field/cutscenes/templates/treasure_chests/treasure_chest.gd" id="2_hxwix"]
+[ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="2_s6euu"]
+[ext_resource type="Script" uid="uid://dqccuka0umesn" path="res://src/field/cutscenes/templates/treasure_chests/treasure_chest_interaction.gd" id="4_3t0c6"]
+[ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://overworld/maps/tilesets/dungeon_tilemap.png" id="4_5fem6"]
+[ext_resource type="AudioStream" uid="uid://d0fqunqsgssgd" path="res://assets/sfx/doorClose_4.ogg" id="5_3t0c6"]
+[ext_resource type="AudioStream" uid="uid://cwpbiytveaon0" path="res://assets/sfx/doorOpen_2.ogg" id="6_rtaj3"]
+[ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/interaction_popup.tscn" id="7_3s1uf"]
+
+[sub_resource type="Animation" id="Animation_upvuf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(85, 119, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_7v12p"]
+resource_name = "close"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(119, 119, 16, 16), Rect2(102, 119, 16, 16), Rect2(85, 119, 16, 16)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OpenAudio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_3t0c6")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_a1cbh"]
+resource_name = "open"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(85, 119, 16, 16), Rect2(102, 119, 16, 16), Rect2(119, 119, 16, 16)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OpenAudio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_rtaj3")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_novt7"]
+_data = {
+&"RESET": SubResource("Animation_upvuf"),
+&"close": SubResource("Animation_7v12p"),
+&"open": SubResource("Animation_a1cbh")
+}
+
+[node name="TreasureChest" instance=ExtResource("1_3w6ce")]
+script = ExtResource("2_hxwix")
+item_type = null
+amount = null
+
+[node name="Interaction" parent="." index="1" node_paths=PackedStringArray("anim", "popup") instance=ExtResource("2_s6euu")]
+script = ExtResource("4_3t0c6")
+anim = NodePath("../AnimationPlayer")
+popup = NodePath("../InteractionPopup")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+texture = ExtResource("4_5fem6")
+region_enabled = true
+region_rect = Rect2(85, 119, 16, 16)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+&"": SubResource("AnimationLibrary_novt7")
+}
+
+[node name="OpenAudio" type="AudioStreamPlayer" parent="." index="4"]
+bus = &"SFX"
+
+[node name="InteractionPopup" parent="." index="5" instance=ExtResource("7_3s1uf")]
+emote = 2

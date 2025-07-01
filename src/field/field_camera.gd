@@ -7,7 +7,7 @@
 class_name FieldCamera
 extends Camera2D
 
-@export var gameboard: Gameboard:
+@export var gameboard_properties: GameboardProperties:
 	set(value):
 		_on_viewport_resized()
 
@@ -15,11 +15,12 @@ extends Camera2D
 @export var gamepiece: Gamepiece:
 	set(value):
 		if gamepiece:
-			gamepiece.camera_anchor.remote_path = ""
+			gamepiece.animation_transform.remote_path = ""
 		
 		gamepiece = value
 		if gamepiece:
-			gamepiece.camera_anchor.remote_path = gamepiece.camera_anchor.get_path_to(self)
+			gamepiece.animation_transform.remote_path \
+				= gamepiece.animation_transform.get_path_to(self)
 
 
 func _ready() -> void:
@@ -35,14 +36,14 @@ func reset_position() -> void:
 
 
 func _on_viewport_resized() -> void:
-	if not gameboard:
+	if not gameboard_properties:
 		return
 	
 	# Calculate tentative camera boundaries based on the gameboard.
-	var boundary_left: = gameboard.boundaries.position.x * gameboard.cell_size.x
-	var boundary_top: = gameboard.boundaries.position.y * gameboard.cell_size.y
-	var boundary_right: = gameboard.boundaries.end.x * gameboard.cell_size.x
-	var boundary_bottom: = gameboard.boundaries.end.y * gameboard.cell_size.y
+	var boundary_left: = gameboard_properties.extents.position.x * gameboard_properties.cell_size.x
+	var boundary_top: = gameboard_properties.extents.position.y * gameboard_properties.cell_size.y
+	var boundary_right: = gameboard_properties.extents.end.x * gameboard_properties.cell_size.x
+	var boundary_bottom: = gameboard_properties.extents.end.y * gameboard_properties.cell_size.y
 
 	# We'll also want the current viewport boundary sizes.
 	var vp_size: = get_viewport_rect().size / global_scale
@@ -58,8 +59,8 @@ func _on_viewport_resized() -> void:
 	# using the global scale.
 	if boundary_width < vp_size.x:
 		# Set the camera position to the centre of the gameboard.
-		position.x = (gameboard.boundaries.position.x + gameboard.boundaries.size.x/2.0) \
-			* gameboard.cell_size.x
+		position.x = (gameboard_properties.extents.position.x \
+			+ gameboard_properties.extents.size.x/2.0) * gameboard_properties.cell_size.x
 
 		# And add/subtract half the viewport dimension to come up with the limits. This will fix the
 		# camera with the gameboard centred.
@@ -74,8 +75,8 @@ func _on_viewport_resized() -> void:
 
 	# Perform the same checks as above for the y-axis.
 	if boundary_height < vp_size.y:
-		position.y = (gameboard.boundaries.position.y + gameboard.boundaries.size.y/2.0) \
-			* gameboard.cell_size.y
+		position.y = (gameboard_properties.extents.position.y +\
+			gameboard_properties.extents.size.y/2.0) * gameboard_properties.cell_size.y
 		limit_top = (position.y - vp_size.y/2.0)*global_scale.y as int
 		limit_bottom = (position.y + vp_size.y/2.0)*global_scale.y as int
 	else:

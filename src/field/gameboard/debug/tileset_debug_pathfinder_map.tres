@@ -1,0 +1,13 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dhda7bse8tu6l"]
+
+[ext_resource type="Texture2D" uid="uid://dbpvlf2f8ajxy" path="res://src/field/gameboard/debug/debug_cell_occupancy.png" id="1_wxru5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a4m4d"]
+texture = ExtResource("1_wxru5")
+separation = Vector2i(1, 0)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_a4m4d")

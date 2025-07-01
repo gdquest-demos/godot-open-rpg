@@ -16,5 +16,14 @@ collision_mask = 8
 shape = SubResource("CircleShape2D_jn5tq")
 debug_color = Color(1, 0.929412, 0.631373, 0.419608)
 
+[node name="Button" type="Button" parent="."]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+focus_mode = 0
+mouse_filter = 1
+flat = true
+
 [connection signal="area_entered" from="InteractionArea2D" to="." method="_on_area_entered"]
 [connection signal="area_exited" from="InteractionArea2D" to="." method="_on_area_exited"]

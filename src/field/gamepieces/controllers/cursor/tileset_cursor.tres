@@ -1,0 +1,13 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cnlvvllr0ici"]
+
+[ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://overworld/maps/tilesets/dungeon_tilemap.png" id="1_gvcwb"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_orie5"]
+resource_name = "Overlay"
+texture = ExtResource("1_gvcwb")
+separation = Vector2i(1, 1)
+1:5/0 = 0
+0:5/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_orie5")

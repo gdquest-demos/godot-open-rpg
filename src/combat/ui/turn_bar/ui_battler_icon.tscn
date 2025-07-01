@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bt4jp5jwumaxr" path="res://src/combat/ui/turn_bar/portrait_bg_player.png" id="1_ba558"]
 [ext_resource type="Script" uid="uid://dckveflvxdyse" path="res://src/combat/ui/turn_bar/ui_battler_icon.gd" id="2_471d1"]
-[ext_resource type="Texture2D" uid="uid://pkp6t20skjpe" path="res://battlers/bear/bear.png" id="2_qfsow"]
+[ext_resource type="Texture2D" uid="uid://pkp6t20skjpe" path="res://combat/battlers/bear/bear.png" id="2_qfsow"]
 
 [sub_resource type="Animation" id="Animation_ih8oe"]
 length = 0.001

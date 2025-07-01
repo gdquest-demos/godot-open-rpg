@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctuol1ff8u5e2"]
+
+[ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="1_j1qab"]
+[ext_resource type="Script" uid="uid://c2ux7md6xqvp0" path="res://overworld/maps/house/wand_pedestal_interaction.gd" id="2_vpehh"]
+[ext_resource type="Resource" uid="uid://dqv2webtqx23s" path="res://overworld/maps/house/wand_pedestal_occupied.dtl" id="3_dfiym"]
+[ext_resource type="Resource" uid="uid://ddvjgirk1peou" path="res://overworld/maps/house/wand_pedestal.dtl" id="4_s2fj7"]
+
+[node name="WandPedestalInteraction" instance=ExtResource("1_j1qab")]
+script = ExtResource("2_vpehh")
+wand_placed_timeline = ExtResource("3_dfiym")
+timeline = ExtResource("4_s2fj7")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+offset = Vector2(0, -6)

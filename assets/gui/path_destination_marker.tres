@@ -1,6 +1,6 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://b71dt8n01lhd0"]
 
-[ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://assets/terrain/dungeon_tilemap.png" id="1_km3tr"]
+[ext_resource type="Texture2D" uid="uid://dm4h0uo6gjp22" path="res://overworld/maps/tilesets/dungeon_tilemap.png" id="1_km3tr"]
 
 [resource]
 atlas = ExtResource("1_km3tr")
