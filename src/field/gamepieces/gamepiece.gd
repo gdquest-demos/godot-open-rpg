@@ -30,14 +30,14 @@ signal direction_changed(new_direction: Directions.Points)
 @export var animation_scene: PackedScene:
 	set(value):
 		animation_scene = value
-		
+
 		if not is_inside_tree():
 			await ready
-		
+
 		if animation:
 			animation.queue_free()
 			animation = null
-		
+
 		if animation_scene:
 			# Check to make sure that the supplied scene instantiates as a GamepieceAnimation.
 			var new_scene: = animation_scene.instantiate()
@@ -48,7 +48,7 @@ signal direction_changed(new_direction: Directions.Points)
 				new_scene.free()
 				animation_scene = null
 				return
-			
+
 			follower.add_child(animation)
 
 ## The gamepiece will traverse a movement path at [code]move_speed[/code] pixels per second.
@@ -64,14 +64,14 @@ var animation: GamepieceAnimation = null
 ## The [code]direction[/code] is a unit vector that points where the gamepiece is 'looking'.
 ## In the event that the gamepiece is moving along a path, direction is updated automatically as
 ## long as the gamepiece continues to move.
-var direction: = Directions.Points.S:
+var direction: = Directions.Points.SOUTH:
 	set(value):
 		if value != direction:
 			direction = value
-			
+
 			if not is_inside_tree():
 				await ready
-			
+
 			animation.direction = direction
 			direction_changed.emit(direction)
 
@@ -87,7 +87,7 @@ var rest_position: = Vector2.ZERO
 var destination: Vector2
 
 ## Node2Ds may want to follow the gamepiece's animation, rather than position (which updates only at
-## the end of a path). Nodes may follow a travelling gamepiece by receiving the path follower's 
+## the end of a path). Nodes may follow a travelling gamepiece by receiving the path follower's
 ## transform.[/br][/br]
 ## The [member RemoteTransform2D.remote_path] is reserved for the player camera, but other nodes
 ## may access the anchor's position directly.
@@ -95,25 +95,25 @@ var destination: Vector2
 
 # The following objects allow the gamepiece to appear to move smoothly around the gameboard.
 # Please note that the path is decoupled from the gamepiece's position (scale is set to match
-# the gamepiece in _ready(), however) in order to simplify path management. All path coordinates may 
-# be provided in game-world coordinates and will remain relative to the origin even as the 
+# the gamepiece in _ready(), however) in order to simplify path management. All path coordinates may
+# be provided in game-world coordinates and will remain relative to the origin even as the
 # gamepiece's position changes.
 @onready var follower: = $PathFollow2D as PathFollow2D
 
 
 func _ready() -> void:
 	set_process(false)
-	
+
 	if not Engine.is_editor_hint() and is_inside_tree():
 		# Some gamepieces may be added to the scene before the Gameboard properties are set. In that
 		# case, wait for Gameboard dimensions to be set before registering the gamepiece.
 		if Gameboard.properties == null:
 			await Gameboard.properties_set
-		
+
 		# Snap the gamepiece to the cell on which it is standing.
 		var cell: = Gameboard.get_cell_under_node(self)
 		position = Gameboard.cell_to_pixel(cell)
-		
+
 		# Then register the gamepiece with the registry. Note that if a gamepiece already exists at
 		# the cell, this one will simply be freed.
 		if GamepieceRegistry.register(self, cell) == false:
@@ -123,27 +123,27 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# How far will the gamepiece move this frame?
 	var move_distance: = move_speed * delta
-	
+
 	# We need to let others know that the gamepiece will arrive at the end of its path THIS frame.
 	# A controller may want to extend the path (for example, if a move key is held down or if
 	# another waypoint should be added to the move path).
 	# If we do NOT do so and the path is extended post arrival, there will be a single frame where
-	# the gamepiece's velocity is discontinuous (drops, then increases again), causing jittery 
+	# the gamepiece's velocity is discontinuous (drops, then increases again), causing jittery
 	# movement.
 	# The excess travel distance allows us to know how much to extend the path by. A VERY fast
 	# gamepiece may jump a few cells at a time.
 	var excess_travel_distance: =  follower.progress + move_distance - curve.get_baked_length()
 	if excess_travel_distance >= 0.0:
 		arriving.emit(excess_travel_distance)
-	
+
 	# The path may have been extended, so the gamepiece can move along the path now.
 	follower.progress += move_distance
-	
+
 	# Figure out which direction the gamepiece is facing, making sure that the GamepieceAnimation
 	# scene doesn't rotate.
 	animation.global_rotation = 0
 	direction = Directions.angle_to_direction(follower.rotation)
-	
+
 	# If the gamepiece has arrived, update it's position and movement details.
 	if follower.progress >= curve.get_baked_length():
 		stop()
@@ -155,16 +155,16 @@ func _process(delta: float) -> void:
 ## Note that the Gamepiece's position will remain fixed until it has fully traveresed its movement
 ## path. At this point, its position is then updated to its destination.
 func move_to(target_point: Vector2) -> void:
-	# Note that the destination is where the gamepiece will end up in game world coordinates. 
+	# Note that the destination is where the gamepiece will end up in game world coordinates.
 	destination = target_point
 	set_process(true)
-	
+
 	if curve == null:
 		curve = Curve2D.new()
 		curve.add_point(Vector2.ZERO)
-		
+
 		animation.play("run")
-	
+
 	# The positions on the path, however, are all relative to the gamepiece's current position. The
 	# position doesn't update until the Gamepiece reaches its final destination, otherwise the path
 	# would move along with the gamepiece.
@@ -178,11 +178,11 @@ func stop() -> void:
 	follower.progress = 0
 	curve = null
 	destination = Vector2.ZERO
-	
+
 	# Handle the change to animation.
 	animation.global_rotation = 0
 	animation.play("idle")
-	
+
 	# Stop movement and update logic.
 	set_process(false)
 	arrived.emit()
