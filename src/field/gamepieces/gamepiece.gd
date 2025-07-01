@@ -52,7 +52,8 @@ signal direction_changed(new_direction: Directions.Points)
 			follower.add_child(animation)
 
 ## The gamepiece will traverse a movement path at [code]move_speed[/code] pixels per second.
-##[/br][/br]Note that extremely high speeds (finish a long path in a single frame) will produce
+##
+## Note that extremely high speeds (finish a long path in a single frame) will produce
 ## unexpected results.
 @export var move_speed: = 64.0
 
@@ -88,7 +89,8 @@ var destination: Vector2
 
 ## Node2Ds may want to follow the gamepiece's animation, rather than position (which updates only at
 ## the end of a path). Nodes may follow a travelling gamepiece by receiving the path follower's
-## transform.[/br][/br]
+## transform.
+##
 ## The [member RemoteTransform2D.remote_path] is reserved for the player camera, but other nodes
 ## may access the anchor's position directly.
 @onready var animation_transform: = $PathFollow2D/CameraAnchor as RemoteTransform2D

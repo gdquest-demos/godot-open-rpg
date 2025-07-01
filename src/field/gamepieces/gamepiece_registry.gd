@@ -3,8 +3,9 @@
 ## Since player movement is locked to gameboard cells (rather than physics-based movement), this
 ## allows UI elements, cutscenes, and other systems to quickly lookup gamepieces by name or
 ## location. Additionally, it allows pathfinders to see which cells are occupied or unoccupied.
-## [/br][/br]Note that only ONE gamepiece may occupy a cell and will block the movement of other
-## gamepieces. 
+##
+## Note that only ONE gamepiece may occupy a cell and will block the movement of other
+## gamepieces.
 extends Node
 
 signal gamepiece_moved(gp: Gamepiece, new_cell: Vector2i, old_cell: Vector2i)
@@ -20,20 +21,20 @@ func register(gamepiece: Gamepiece, cell: Vector2i) -> bool:
 		printerr("Failed to register Gamepiece '%s' at cell '%s'. " % [gamepiece.name, str(cell)],
 			"A gamepiece already exists at that cell!")
 		return false
-	
+
 	#...or if it has already been registered, for some reason.
 	if gamepiece in _gamepieces.values():
 		printerr("Refused to register Gamepiece '%s' at cell '%s'. " % [gamepiece.name, str(cell)],
 			"The gamepiece has already been registered!")
 		return true
-	
+
 	# We want to know when the gamepiece leaves the scene tree, as it is no longer on the gameboard.
 	# This probably means that the gamepiece has been freed.
 	gamepiece.tree_exiting.connect(_on_gamepiece_tree_exiting.bind(gamepiece))
-	
+
 	_gamepieces[cell] = gamepiece
 	gamepiece_moved.emit(gamepiece, cell, Gameboard.INVALID_CELL)
-	
+
 	return true
 
 
@@ -45,14 +46,14 @@ func move_gamepiece(gp: Gamepiece, new_cell: Vector2i) -> bool:
 	if _gamepieces.has(new_cell):
 		print("Cell %s is already occupied, cannot move gamepiece '%s'!" % [str(new_cell), gp.name])
 		return false
-	
+
 	var old_cell: = get_cell(gp)
 	if old_cell == new_cell:
 		return false
-	
+
 	_gamepieces.erase(old_cell)
 	_gamepieces[new_cell] = gp
-	
+
 	gamepiece_moved.emit(gp, new_cell, old_cell)
 	return true
 
@@ -94,7 +95,7 @@ func _on_gamepiece_tree_exiting(gp: Gamepiece) -> void:
 	if _gamepieces.has(cell):
 		_gamepieces.erase(cell)
 		gamepiece_freed.emit(gp, cell)
-	
+
 	#if cell != null:
 		#Events.gamepiece_exiting_tree.emit(gp, cell)
 
