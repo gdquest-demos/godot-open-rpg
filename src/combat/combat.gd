@@ -75,27 +75,28 @@ func start(arena: PackedScene) -> void:
 	# Begin the combat. The turn queue takes over from here.
 	_active_arena.start()
 
-## Displays a dialog to display the combat results.
+
+## Displays a series of dialogue bubbles using Dialogic with information about the combat's outcome.
 func _display_combat_results_dialog(is_player_victory: bool):
-	# Get the name of the first Battler from the player's party.
-	var leader_name = _active_arena.turn_queue.battlers.players[0].name
+	var player_party_leader_name := _active_arena.turn_queue.battlers.players[0].name
 
 	var timeline_events: Array[String]
 	if is_player_victory:
-		timeline_events = _get_victory_message_events(leader_name)
+		timeline_events = _get_victory_message_events(player_party_leader_name)
 	else:
-		timeline_events = _get_loss_message_events(leader_name)
+		timeline_events = _get_loss_message_events(player_party_leader_name)
 
 	var combat_rewards_timeline: DialogicTimeline = DialogicTimeline.new()
 	combat_rewards_timeline.events = timeline_events
 	Dialogic.start_timeline(combat_rewards_timeline)
 	await Dialogic.timeline_ended
 
+
+# These two functions are placeholders for future logic for deciding combat outcomes.
 func _get_victory_message_events(leader_name: String) -> Array[String]:
 	var events: Array[String] = [
 		"%s's party won the battle!" % leader_name
 	]
-	# here should go some combat reward logic
 	events.append("You wanted to find some coins, but animals have no pockets to carry them.")
 	return events
 	
