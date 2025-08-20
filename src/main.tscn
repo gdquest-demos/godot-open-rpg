@@ -460,7 +460,6 @@ metadata/_edit_lock_ = true
 
 [node name="RoamingEncounter" parent="Field/Map/Town/Gamepieces" instance=ExtResource("39_p2lth")]
 position = Vector2(200, 264)
-scale = Vector2(1, 1)
 script = ExtResource("33_0gswb")
 combat_arena = ExtResource("34_moieg")
 metadata/_edit_group_ = true
@@ -470,7 +469,6 @@ emote = 0
 radius = 64
 
 [node name="GhostGFX" parent="Field/Map/Town/Gamepieces/RoamingEncounter" instance=ExtResource("36_7n3c5")]
-scale = Vector2(1, 1)
 
 [node name="ConversationEncounter" parent="Field/Map/Town/Gamepieces" instance=ExtResource("11_yntrj")]
 position = Vector2(83.2, 6.39999)
@@ -596,11 +594,9 @@ pedestal_requirement = "Red"
 
 [node name="Pedestal" parent="Field/Map/House/Gamepieces/PedestalPuzzle" instance=ExtResource("11_yntrj")]
 position = Vector2(936, 72)
-scale = Vector2(1, 1)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Field/Map/House/Gamepieces/PedestalPuzzle/Pedestal"]
-scale = Vector2(1, 1)
 texture = ExtResource("9_woa3f")
 region_enabled = true
 region_rect = Rect2(85, 51, 16, 16)
@@ -766,133 +762,6 @@ script = ExtResource("18_cqtg7")
 gameboard_properties = ExtResource("3_esa52")
 metadata/_edit_lock_ = true
 
-[node name="UI" type="CanvasLayer" parent="Field"]
-
-[node name="Inventory" type="HBoxContainer" parent="Field/UI"]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -104.0
-offset_right = -1536.0
-offset_bottom = -88.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(5, 5)
-alignment = 1
-script = ExtResource("34_tk01t")
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
-
-[node name="DialogueLayout" type="Control" parent="Field/UI"]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("20_lk3dv")
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
-
-[node name="BoxMargins" type="MarginContainer" parent="Field/UI/DialogueLayout"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -96.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/margin_left = 150
-theme_override_constants/margin_right = 150
-
-[node name="BoxBack" type="ColorRect" parent="Field/UI/DialogueLayout/BoxMargins"]
-layout_mode = 2
-color = Color(0.14902, 0.168627, 0.266667, 1)
-
-[node name="TextMargins" type="MarginContainer" parent="Field/UI/DialogueLayout/BoxMargins"]
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 64
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
-
-[node name="DialogueText" type="RichTextLabel" parent="Field/UI/DialogueLayout/BoxMargins/TextMargins"]
-clip_contents = false
-layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("21_r13nn")
-theme_override_font_sizes/normal_font_size = 96
-bbcode_enabled = true
-text = "The dialogue text.
-Witty, succinct and gripping.
-No more than three lines?"
-fit_content = true
-scroll_active = false
-shortcut_keys_enabled = false
-visible_characters_behavior = 1
-script = ExtResource("20_g8d34")
-
-[node name="Speaker" type="HBoxContainer" parent="Field/UI/DialogueLayout/BoxMargins/TextMargins/DialogueText"]
-layout_mode = 1
-offset_top = -128.0
-offset_right = 380.0
-offset_bottom = -8.0
-theme_override_constants/separation = 32
-
-[node name="Portrait" type="Control" parent="Field/UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker"]
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-script = ExtResource("21_f53lt")
-mode = 1
-
-[node name="NameLabel" type="Label" parent="Field/UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker"]
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
-theme_override_constants/outline_size = 24
-theme_override_fonts/font = ExtResource("21_r13nn")
-theme_override_font_sizes/font_size = 96
-text = "Character Name"
-vertical_alignment = 1
-script = ExtResource("19_lpxfg")
-
-[node name="DialogicNode_TypeSounds" type="AudioStreamPlayer" parent="Field/UI/DialogueLayout/BoxMargins/TextMargins/DialogueText"]
-script = ExtResource("53_atrmf")
-sounds = Array[AudioStream]([ExtResource("54_fh5dy"), ExtResource("55_8lvao"), ExtResource("56_prbwr"), ExtResource("57_tomnb"), ExtResource("58_br2ni")])
-
-[node name="Choices" type="VBoxContainer" parent="Field/UI/DialogueLayout/BoxMargins"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-alignment = 2
-
-[node name="Choice1" type="Button" parent="Field/UI/DialogueLayout/BoxMargins/Choices"]
-layout_mode = 2
-text = "Choice1"
-script = ExtResource("53_w1dgf")
-choice_index = 1
-
-[node name="Choice2" type="Button" parent="Field/UI/DialogueLayout/BoxMargins/Choices"]
-layout_mode = 2
-text = "Choice2"
-script = ExtResource("53_w1dgf")
-choice_index = 2
-
-[node name="Choice3" type="Button" parent="Field/UI/DialogueLayout/BoxMargins/Choices"]
-layout_mode = 2
-text = "Choice3"
-script = ExtResource("53_w1dgf")
-choice_index = 3
-
-[node name="Choice4" type="Button" parent="Field/UI/DialogueLayout/BoxMargins/Choices"]
-layout_mode = 2
-text = "Choice4"
-script = ExtResource("53_w1dgf")
-choice_index = 4
-
 [node name="OpeningCutscene" type="Node2D" parent="Field"]
 scale = Vector2(0.2, 0.2)
 script = ExtResource("55_vsmkr")
@@ -925,5 +794,132 @@ metadata/_edit_lock_ = true
 [node name="TransitionDelay" type="Timer" parent="Combat/CenterContainer"]
 wait_time = 0.5
 one_shot = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Inventory" type="HBoxContainer" parent="UI"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -104.0
+offset_right = -1536.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(5, 5)
+alignment = 1
+script = ExtResource("34_tk01t")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="DialogueLayout" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("20_lk3dv")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="BoxMargins" type="MarginContainer" parent="UI/DialogueLayout"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_right = 150
+
+[node name="BoxBack" type="ColorRect" parent="UI/DialogueLayout/BoxMargins"]
+layout_mode = 2
+color = Color(0.14902, 0.168627, 0.266667, 1)
+
+[node name="TextMargins" type="MarginContainer" parent="UI/DialogueLayout/BoxMargins"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="DialogueText" type="RichTextLabel" parent="UI/DialogueLayout/BoxMargins/TextMargins"]
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("21_r13nn")
+theme_override_font_sizes/normal_font_size = 96
+bbcode_enabled = true
+text = "The dialogue text.
+Witty, succinct and gripping.
+No more than three lines?"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+visible_characters_behavior = 1
+script = ExtResource("20_g8d34")
+
+[node name="Speaker" type="HBoxContainer" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText"]
+layout_mode = 1
+offset_top = -128.0
+offset_right = 380.0
+offset_bottom = -8.0
+theme_override_constants/separation = 32
+
+[node name="Portrait" type="Control" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("21_f53lt")
+mode = 1
+
+[node name="NameLabel" type="Label" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("21_r13nn")
+theme_override_font_sizes/font_size = 96
+text = "Character Name"
+vertical_alignment = 1
+script = ExtResource("19_lpxfg")
+
+[node name="DialogicNode_TypeSounds" type="AudioStreamPlayer" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText"]
+script = ExtResource("53_atrmf")
+sounds = Array[AudioStream]([ExtResource("54_fh5dy"), ExtResource("55_8lvao"), ExtResource("56_prbwr"), ExtResource("57_tomnb"), ExtResource("58_br2ni")])
+
+[node name="Choices" type="VBoxContainer" parent="UI/DialogueLayout/BoxMargins"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+alignment = 2
+
+[node name="Choice1" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices"]
+layout_mode = 2
+text = "Choice1"
+script = ExtResource("53_w1dgf")
+choice_index = 1
+
+[node name="Choice2" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices"]
+layout_mode = 2
+text = "Choice2"
+script = ExtResource("53_w1dgf")
+choice_index = 2
+
+[node name="Choice3" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices"]
+layout_mode = 2
+text = "Choice3"
+script = ExtResource("53_w1dgf")
+choice_index = 3
+
+[node name="Choice4" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices"]
+layout_mode = 2
+text = "Choice4"
+script = ExtResource("53_w1dgf")
+choice_index = 4
 
 [connection signal="area_entered" from="Field/Map/Forest/Gamepieces/GameEndTrigger/Area2D2" to="Field/Map/Forest/Gamepieces/GameEndTrigger" method="_on_area_entered"]

@@ -14,8 +14,8 @@ var _active_arena: CombatArena = null
 # Keep track of what music track was playing previously, and return to it once combat has finished.
 var _previous_music_track: AudioStream = null
 
-@onready var _combat_container: = $CenterContainer as CenterContainer
-@onready var _transition_delay_timer: = $CenterContainer/TransitionDelay as Timer
+@onready var _combat_container := $CenterContainer as CenterContainer
+@onready var _transition_delay_timer := $CenterContainer/TransitionDelay as Timer
 
 
 func _ready() -> void:
@@ -30,7 +30,7 @@ func start(arena: PackedScene) -> void:
 
 	await Transition.cover(0.2)
 
-	var new_arena: = arena.instantiate()
+	var new_arena := arena.instantiate()
 	assert(
 		new_arena != null,
 		"Failed to initiate combat. Provided 'arena' arugment is not a CombatArena."
@@ -41,6 +41,8 @@ func start(arena: PackedScene) -> void:
 
 	_active_arena.turn_queue.combat_finished.connect(
 		func on_combat_finished(is_player_victory: bool):
+			await _display_combat_results_dialog(is_player_victory)
+			
 			# Wait a short period of time and then fade the screen to black.
 			_transition_delay_timer.start()
 			await _transition_delay_timer.timeout
@@ -72,3 +74,34 @@ func start(arena: PackedScene) -> void:
 
 	# Begin the combat. The turn queue takes over from here.
 	_active_arena.start()
+
+## Displays a dialog to display the combat results.
+func _display_combat_results_dialog(is_player_victory: bool):
+	# Get the name of the first Battler from the player's party.
+	var leader_name = _active_arena.turn_queue.battlers.players[0].name
+
+	var timeline_events: Array[String]
+	if is_player_victory:
+		timeline_events = _get_victory_message_events(leader_name)
+	else:
+		timeline_events = _get_loss_message_events(leader_name)
+
+	var combat_rewards_timeline: DialogicTimeline = DialogicTimeline.new()
+	combat_rewards_timeline.events = timeline_events
+	Dialogic.start_timeline(combat_rewards_timeline)
+	await Dialogic.timeline_ended
+
+func _get_victory_message_events(leader_name: String) -> Array[String]:
+	var events: Array[String] = [
+		"%s's party won the battle!" % leader_name
+	]
+	# here should go some combat reward logic
+	events.append("You wanted to find some coins, but animals have no pockets to carry them.")
+	return events
+	
+
+func _get_loss_message_events(leader_name: String) -> Array[String]:
+	var events: Array[String] = [
+		"%s's party lost the battle!" % leader_name
+	]
+	return events
