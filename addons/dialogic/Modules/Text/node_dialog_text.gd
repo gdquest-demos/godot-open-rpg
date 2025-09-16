@@ -1,3 +1,4 @@
+@icon("node_dialog_text_icon.svg")
 class_name DialogicNode_DialogText
 extends RichTextLabel
 
@@ -10,7 +11,7 @@ enum Alignment {LEFT, CENTER, RIGHT}
 
 @export var enabled := true
 @export var alignment := Alignment.LEFT
-@export var textbox_root : Node = self
+@export var textbox_root: Node = self
 
 @export var hide_when_empty := false
 @export var start_hidden := true
@@ -33,8 +34,6 @@ func _set(property: StringName, what: Variant) -> bool:
 			textbox_root.visible = !what.is_empty()
 
 		return true
-	return false
-
 	return false
 
 
@@ -157,4 +156,3 @@ func _on_meta_clicked(_meta:Variant) -> void:
 ## Handle mouse input
 func on_gui_input(event:InputEvent) -> void:
 	DialogicUtil.autoload().Inputs.handle_node_gui_input(event)
-

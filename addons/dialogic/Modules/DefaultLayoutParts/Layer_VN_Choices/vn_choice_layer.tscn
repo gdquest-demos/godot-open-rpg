@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://dhk6j6eb6e3q"]
 
-[ext_resource type="Script" uid="uid://cq7fs157nxhkq" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Choices/vn_choice_layer.gd" id="1_kurgw"]
-[ext_resource type="Script" uid="uid://dlds5j5kp8u3d" path="res://addons/dialogic/Modules/Choice/node_choice_button.gd" id="1_w632k"]
-[ext_resource type="Script" uid="uid://cmj84inlb36si" path="res://addons/dialogic/Modules/Choice/node_button_sound.gd" id="2_mgko6"]
+[ext_resource type="Script" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Choices/vn_choice_layer.gd" id="1_kurgw"]
+[ext_resource type="Script" path="res://addons/dialogic/Modules/Choice/node_choice_button.gd" id="1_w632k"]
+[ext_resource type="Script" path="res://addons/dialogic/Modules/Choice/node_button_sound.gd" id="2_mgko6"]
 [ext_resource type="AudioStream" uid="uid://b6c1p14bc20p1" path="res://addons/dialogic/Example Assets/sound-effects/typing1.wav" id="3_mql8i"]
 [ext_resource type="AudioStream" uid="uid://c2viukvbub6v6" path="res://addons/dialogic/Example Assets/sound-effects/typing4.wav" id="4_420fr"]
 
@@ -25,10 +25,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -86.5
-offset_top = -103.0
-offset_right = 86.5
-offset_bottom = 103.0
+offset_left = -41.0
+offset_top = -47.0
+offset_right = 42.0
+offset_bottom = 47.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

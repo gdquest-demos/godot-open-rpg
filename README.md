@@ -4,7 +4,7 @@
 
 OpenRPG is a a demo showing how to create a classical turn-based RPG in Godot 4. It's currently a work-in-progress.
 
-**You need to use Godot 4.4.1 to open the project!** You can find Godot 4.4.1 on the [Godot website](https://godotengine.org/).
+**You need to use Godot 4.5 to open the project!** You can find Godot 4.5 on the [Godot website](https://godotengine.org/).
 
 ➡ Follow us on [Twitter](https://twitter.com/NathanGDQuest) and [YouTube](https://www.youtube.com/c/gdquest/) for Godot tips and tutorials! Get one of our [Godot game creation courses](https://www.gdquest.com/product/) to support our work on Free Software.
 

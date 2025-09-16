@@ -1,34 +1,34 @@
 @tool
 extends Button
 
-@export var visible_name:String = ""
-@export var event_id:String = ''
-@export var event_icon:Texture :
+@export var visible_name := ""
+@export var event_id := ""
+@export var event_icon: Texture:
 	get:
 		return event_icon
 	set(texture):
 		event_icon = texture
 		icon = event_icon
-@export var event_sorting_index:int = 0
-@export var resource:DialogicEvent
-@export var dialogic_color_name:String = ''
+@export var event_sorting_index: int = 0
+@export var resource: DialogicEvent
+@export var dialogic_color_name := ""
 
 
 func _ready() -> void:
 	tooltip_text = visible_name
-	
-	custom_minimum_size = Vector2(get_theme_font("font", 'Label').get_string_size(text).x+35,30) * DialogicUtil.get_editor_scale()
-	
+
+	custom_minimum_size = Vector2(get_theme_font("font", "Label").get_string_size(text).x+35,30) * DialogicUtil.get_editor_scale()
+
 	add_theme_color_override("font_color", get_theme_color("font_color", "Editor"))
 	add_theme_color_override("font_color_hover", get_theme_color("accent_color", "Editor"))
 	apply_base_button_style()
 
 
 func apply_base_button_style() -> void:
-	var nstyle :StyleBoxFlat= get_parent().get_theme_stylebox('normal', 'Button').duplicate()
+	var nstyle: StyleBoxFlat = get_parent().get_theme_stylebox('normal', 'Button').duplicate()
 	nstyle.border_width_left = 5 * DialogicUtil.get_editor_scale()
 	add_theme_stylebox_override('normal', nstyle)
-	var hstyle :StyleBoxFlat= get_parent().get_theme_stylebox('hover', 'Button').duplicate()
+	var hstyle: StyleBoxFlat = get_parent().get_theme_stylebox('hover', 'Button').duplicate()
 	hstyle.border_width_left = 5 * DialogicUtil.get_editor_scale()
 	add_theme_stylebox_override('hover', hstyle)
 	set_color(resource.event_color)
@@ -59,5 +59,5 @@ func toggle_name(on:= false) -> void:
 		apply_base_button_style()
 
 
-func _on_button_down():
+func _on_button_down() -> void:
 	find_parent('VisualEditor').get_node('%TimelineArea').start_dragging(1, resource)
