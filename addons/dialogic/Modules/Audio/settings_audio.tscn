@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2qgetjc3mfo3"]
+
+[ext_resource type="Script" path="res://addons/dialogic/Modules/Audio/settings_audio.gd" id="1_2iyyr"]
+[ext_resource type="PackedScene" uid="uid://dbpkta2tjsqim" path="res://addons/dialogic/Editor/Common/hint_tooltip_icon.tscn" id="2_o1ban"]
+
+[node name="Audio" type="VBoxContainer"]
+offset_right = 121.0
+offset_bottom = 58.0
+script = ExtResource("1_2iyyr")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_type_variation = &"DialogicSettingsSection"
+text = "Music Channels"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Max music channels"
+
+[node name="HintTooltip" parent="HBoxContainer" instance=ExtResource("2_o1ban")]
+layout_mode = 2
+texture = null
+hint_text = "Lowering this value may invalidate existing music events!"
+
+[node name="MusicChannelCount" type="SpinBox" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+
+[node name="TypingSoundsTitle" type="Label" parent="."]
+layout_mode = 2
+theme_type_variation = &"DialogicSettingsSection"
+text = "Typing Sounds"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "Audio Bus"
+
+[node name="HintTooltip" parent="HBoxContainer2" instance=ExtResource("2_o1ban")]
+layout_mode = 2
+tooltip_text = "Lowering this value may invalidate existing music events!"
+texture = null
+hint_text = "The default audio bus used by TypeSound nodes."
+
+[node name="TypeSoundBus" type="OptionButton" parent="HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2

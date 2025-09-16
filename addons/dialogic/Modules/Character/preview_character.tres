@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="DialogicCharacter" load_steps=2 format=3 uid="uid://dykf1j17ct5mo"]
 
-[ext_resource type="Script" uid="uid://0ko4bb31is84" path="res://addons/dialogic/Resources/character.gd" id="1_qsljv"]
+[ext_resource type="Script" uid="uid://cjljn1tya5fbn" path="res://addons/dialogic/Resources/character.gd" id="1_qsljv"]
 
 [resource]
 script = ExtResource("1_qsljv")

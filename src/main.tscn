@@ -25,11 +25,11 @@
 [ext_resource type="Script" uid="uid://cmtpjnqderv2u" path="res://src/field/cutscenes/popups/moving_interaction_popup.gd" id="18_8igsj"]
 [ext_resource type="Script" uid="uid://27j187rqxg64" path="res://src/field/gameboard/debug/debug_map_boundaries.gd" id="18_cqtg7"]
 [ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://overworld/characters/wizard_gfx.tscn" id="19_ius2d"]
-[ext_resource type="Script" uid="uid://ch0v602x6lumo" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="19_lpxfg"]
+[ext_resource type="Script" uid="uid://dr24xjbbe1aip" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="19_lpxfg"]
 [ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="19_sa6jd"]
-[ext_resource type="Script" uid="uid://3mvjdi4s31vl" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="20_g8d34"]
+[ext_resource type="Script" uid="uid://bbhejbxsvqcfo" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="20_g8d34"]
 [ext_resource type="Script" uid="uid://c0g1jsnegpvtq" path="res://src/field/ui/dialogue_window.gd" id="20_lk3dv"]
-[ext_resource type="Script" uid="uid://drtxbx1se41v0" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="21_f53lt"]
+[ext_resource type="Script" uid="uid://dflm0i6k8mfgj" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="21_f53lt"]
 [ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="21_r13nn"]
 [ext_resource type="Resource" uid="uid://c5gfpb2ghma5w" path="res://overworld/maps/town/smith.dtl" id="22_dko83"]
 [ext_resource type="Resource" uid="uid://b6cc3gmd8nlty" path="res://overworld/maps/town/thief.dtl" id="22_rd6oa"]
@@ -64,8 +64,8 @@
 [ext_resource type="AudioStream" uid="uid://ctnn0hqkx67k7" path="res://assets/music/Apple Cider.mp3" id="41_uxhyb"]
 [ext_resource type="AudioStream" uid="uid://c5w0ripyqfl68" path="res://assets/sfx/drop_002.ogg" id="42_bc1t5"]
 [ext_resource type="AudioStream" uid="uid://dhr63rdgg3dn2" path="res://assets/sfx/error_006.ogg" id="43_qeoai"]
-[ext_resource type="Script" uid="uid://d2m1ihese0dnf" path="res://addons/dialogic/Modules/Text/node_type_sound.gd" id="53_atrmf"]
-[ext_resource type="Script" uid="uid://dlds5j5kp8u3d" path="res://addons/dialogic/Modules/Choice/node_choice_button.gd" id="53_w1dgf"]
+[ext_resource type="Script" uid="uid://di16ng2yr5y3n" path="res://addons/dialogic/Modules/Text/node_type_sound.gd" id="53_atrmf"]
+[ext_resource type="Script" uid="uid://i7fuep0jgfow" path="res://addons/dialogic/Modules/Choice/node_choice_button.gd" id="53_w1dgf"]
 [ext_resource type="AudioStream" uid="uid://b6c1p14bc20p1" path="res://addons/dialogic/Example Assets/sound-effects/typing1.wav" id="54_fh5dy"]
 [ext_resource type="AudioStream" uid="uid://c3uw4nft0de13" path="res://addons/dialogic/Example Assets/sound-effects/typing2.wav" id="55_8lvao"]
 [ext_resource type="Script" uid="uid://bt8owd5e0ns68" path="res://src/field/gameboard/gameboard_layer.gd" id="55_a8sfs"]
@@ -877,6 +877,7 @@ custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 script = ExtResource("21_f53lt")
 mode = 1
+container_ids = PackedStringArray("1")
 
 [node name="NameLabel" type="Label" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker"]
 layout_mode = 2

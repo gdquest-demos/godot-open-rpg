@@ -109,6 +109,9 @@ save/encryption_on_exports_only=true
 text/advance_delay=0.1
 portraits/default_portrait=""
 layout/style_list=[]
+extensions_folder="res://addons/dialogic_additions"
+audio/max_channels=4.0
+animations/cross_fade_default_length=0.5
 
 [display]
 
