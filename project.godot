@@ -12,7 +12,7 @@ config_version=5
 
 config/name="OpenRPG"
 run/main_scene="res://src/main.tscn"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -68,8 +68,8 @@ layout/styles={
 }
 layout/default_style="Default"
 text/letter_speed=0.02
-animations/join_default="res://addons/dialogic/Modules/Character/DefaultAnimations/instant_in_or_out.gd"
-animations/leave_default="res://addons/dialogic/Modules/Character/DefaultAnimations/instant_in_or_out.gd"
+animations/join_default="Instant In"
+animations/leave_default="Instant Out"
 text/autocolor_names=true
 settings/text_speed=1.0
 directories/dch_directory={
