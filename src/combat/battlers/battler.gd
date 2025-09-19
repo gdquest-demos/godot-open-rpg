@@ -27,6 +27,9 @@ signal ready_to_act
 ## player-controlled battlers.
 signal selection_toggled(value: bool)
 
+## The name of the node group that will contain all combat Battlers.
+const GROUP: = "_COMBAT_BATTLER_GROUP"
+
 ## A Battler must have [BattlerStats] to act and receive actions.
 @export var stats: BattlerStats = null
 ## Each action's data stored in this array represents an action the battler can perform.
@@ -38,15 +41,15 @@ signal selection_toggled(value: bool)
 @export var battler_anim_scene: PackedScene:
 	set(value):
 		battler_anim_scene = value
-		
+
 		if not is_inside_tree():
 			await ready
-		
+
 		# Free an already existing BattlerAnim.
 		if anim:
 			anim.queue_free()
 			anim = null
-		
+
 		# Add the new BattlerAnim class as a child and link it to this Battler instance.
 		if battler_anim_scene:
 			# Normally we could wrap a check for battler_anim_scene's type (should be BattlerAnim)
@@ -61,7 +64,7 @@ signal selection_toggled(value: bool)
 				new_scene.free()
 				battler_anim_scene = null
 				return
-			
+
 			add_child(anim)
 			var facing: = BattlerAnim.Direction.LEFT if is_player else BattlerAnim.Direction.RIGHT
 			anim.setup(self, facing)
@@ -72,9 +75,9 @@ signal selection_toggled(value: bool)
 @export var ai_scene: PackedScene:
 	set(value):
 		ai_scene = value
-		
+
 		if ai_scene != null:
-			# In the editor, check to make sure that the value set to ai_scene is actually a 
+			# In the editor, check to make sure that the value set to ai_scene is actually a
 			# CombatAI bject.
 			var new_instance: = ai_scene.instantiate()
 			if Engine.is_editor_hint():
@@ -83,11 +86,28 @@ signal selection_toggled(value: bool)
 						" as ai_scene property. Assigned PackedScene is not a CombatAI type!")
 					ai_scene = null
 				new_instance.free()
-			
+
 			else:
 				ai = new_instance
 				add_child(ai)
 
+## The [CombatActor] object that will determine the Battler's combat behavior. A Battler without an CombatActor
+## is just a dummy object that will not take turns or perform actions.
+@export var actor_scene: PackedScene:
+	set(value):
+		if value == actor_scene:
+			return
+
+		actor_scene = value
+
+		if not is_inside_tree():
+			await ready
+
+		if actor:
+			actor.queue_free()
+			actor = null
+
+#TODO: Battler.is_player is redundant. Use that defined by CombatActor instead.
 ## Player battlers are controlled by the player.
 @export var is_player: = false:
 	set(value):
@@ -96,17 +116,22 @@ signal selection_toggled(value: bool)
 			var facing: = BattlerAnim.Direction.LEFT if is_player else BattlerAnim.Direction.RIGHT
 			anim.direction = facing
 
+## Reference to the Battler's child [CombatActor], which controls it's combat behaviour.
+## Note that this value is assigned automatically with reference to [member actor_scene].
+var actor: CombatActor = null
+
 ## Reference to this Battler's child [CombatAI] node, if applicable.
 var ai: CombatAI = null
 
 ## Reference to this Battler's child [BattlerAnim] node.
 var anim: BattlerAnim = null
 
+# TODO: this property belongs with the CombatActor.
 ## If `false`, the battler will not be able to act.
 var is_active: bool = true:
 	set(value):
 		is_active = value
-		
+
 		set_process(is_active)
 
 ## The turn queue will change this property when another battler is acting.
@@ -139,7 +164,7 @@ var readiness := 0.0:
 		if readiness >= 100.0:
 			readiness = 100.0
 			stats.energy += 1
-			
+
 			ready_to_act.emit()
 			set_process(false)
 
@@ -147,9 +172,11 @@ var readiness := 0.0:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		set_process(false)
-	
+
 	else:
 		assert(stats, "Battler %s does not have stats assigned!" % name)
+
+		add_to_group(GROUP)
 
 		# Resources are NOT unique, so treat the currently assigned BattlerStats as a prototype.
 		# That is, copy what it is now and use the copy, so that the original remains unaltered.
@@ -168,7 +195,7 @@ func _process(delta: float) -> void:
 
 func act(action: BattlerAction, targets: Array[Battler] = []) -> void:
 	set_process(false)
-	
+
 	stats.energy -= action.energy_cost
 
 	# action.execute() almost certainly is a coroutine.
