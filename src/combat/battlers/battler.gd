@@ -27,6 +27,9 @@ signal ready_to_act
 ## player-controlled battlers.
 signal selection_toggled(value: bool)
 
+## The name of the node group that will contain all combat Battlers.
+const GROUP: = "_COMBAT_BATTLER_GROUP"
+
 ## A Battler must have [BattlerStats] to act and receive actions.
 @export var stats: BattlerStats = null
 ## Each action's data stored in this array represents an action the battler can perform.
@@ -88,6 +91,23 @@ signal selection_toggled(value: bool)
 				ai = new_instance
 				add_child(ai)
 
+## The [Actor] object that will determine the Battler's combat behavior. A Battler without an Actor
+## is just a dummy object that will not take turns or perform actions.
+@export var actor_scene: PackedScene:
+	set(value):
+		if value == actor_scene:
+			return
+		
+		actor_scene = value
+		
+		if not is_inside_tree():
+			await ready
+		
+		if actor:
+			actor.queue_free()
+			actor = null
+
+#TODO: Battler.is_player is redundant. Use that defined by Actor instead.
 ## Player battlers are controlled by the player.
 @export var is_player: = false:
 	set(value):
@@ -96,12 +116,17 @@ signal selection_toggled(value: bool)
 			var facing: = BattlerAnim.Direction.LEFT if is_player else BattlerAnim.Direction.RIGHT
 			anim.direction = facing
 
+## Reference to the Battler's child [Actor], which controls it's combat behaviour.
+## Note that this value is assigned automatically with reference to [member actor_scene].
+var actor: Actor = null
+
 ## Reference to this Battler's child [CombatAI] node, if applicable.
 var ai: CombatAI = null
 
 ## Reference to this Battler's child [BattlerAnim] node.
 var anim: BattlerAnim = null
 
+# TODO: this property belongs with the Actor.
 ## If `false`, the battler will not be able to act.
 var is_active: bool = true:
 	set(value):
@@ -150,7 +175,9 @@ func _ready() -> void:
 	
 	else:
 		assert(stats, "Battler %s does not have stats assigned!" % name)
-
+		
+		add_to_group(GROUP)
+		
 		# Resources are NOT unique, so treat the currently assigned BattlerStats as a prototype.
 		# That is, copy what it is now and use the copy, so that the original remains unaltered.
 		stats = stats.duplicate()

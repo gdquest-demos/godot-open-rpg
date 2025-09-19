@@ -22,8 +22,8 @@ func _ready() -> void:
 	FieldEvents.combat_triggered.connect(start)
 
 
-## Begin a combat. Takes a PackedScene as its only parameter, expecting it to be a CombatState object once
-## instantiated.
+## Begin a combat. Takes a PackedScene as its only parameter, expecting it to be a CombatState 
+## object once instantiated.
 ## This is normally a response to [signal FieldEvents.combat_triggered].
 func start(arena: PackedScene) -> void:
 	assert(_active_arena == null, "Attempting to start a combat while one is ongoing!")
