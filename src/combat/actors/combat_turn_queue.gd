@@ -1,5 +1,5 @@
 @icon("icon_turn_queue.png")
-class_name ActorTurnQueue extends Node
+class_name CombatTurnQueue extends Node
 
 ## Emitted whenever the combat logic has finished, including all animation details.
 signal finished(has_player_won: bool)
@@ -22,7 +22,6 @@ func _ready() -> void:
 
 func start() -> void:
 	round_count = 1
-
 	_next_turn.call_deferred()
 
 
@@ -41,8 +40,8 @@ func _next_turn() -> void:
 		finished.emit.call_deferred(true)
 		return
 
-	# Check for an active actor. If there are none, it may be that the turn has finished and all
-	# actors can have their has_acted_this_turn flag reset.
+		# Check for an active actor. If there are none, it may be that the turn has finished and all
+		# actors can have their has_acted_this_turn flag reset.
 	var next_actor: = _get_next_actor()
 	if not next_actor:
 		_reset_has_acted_flag()

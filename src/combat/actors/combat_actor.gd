@@ -23,17 +23,18 @@ signal turn_finished
 ## The name of the node group that will contain all combat Actors.
 const GROUP: = "combat_actors"
 
-## Determines the order in which actors will take their turn. Higher initative actors act first.
-@export_range(0.0, 1.0, 0.01) var initiative: = 1.0
-
+## Influences when this actor takes their turn in combat. This is a speed rating:
+## actors with higher initiative values (closer to 1.0) will act earlier in the turn order,
+## while lower values (closer to 0.0) make them act later.
+@export_range(0.0, 1.0, 0.01) var initiative := 1.0
+## If this is [b]true[/b], this actor takes part in the battle. Inactive actors won't take turns.
+@export var is_active: = false
+## If this is [b]true[/b], this actor is controlled by the player. Use this to
+## differentiate between player-controlled actors and AI-controlled ones.
 @export var is_player: = false
 
 ## Describes whether or not the CombatActor has taken a turn during this combat round.
 var has_acted_this_round: = false
-
-## Is true if the CombatActor is currently able to contribute to the flow of combat. Inactive Actors do
-## nothing and will not be used in the turn queue.
-@export var is_active: = false
 
 
 static func sort(a: CombatActor, b: CombatActor) -> bool:
@@ -44,17 +45,6 @@ func _ready() -> void:
 	add_to_group(GROUP)
 
 
-func start_turn() -> void:
-	print(get_parent().name, " starts their turn!")
-
-	await get_tree().create_timer(1.5).timeout
-	turn_finished.emit()
-
-
-func melee_attack() -> void:
-	print("Attack!")
-
-
 func _to_string() -> String:
 	var msg: = "%s (CombatActor)" % name
 	if not is_active:
@@ -62,3 +52,14 @@ func _to_string() -> String:
 	elif has_acted_this_round:
 		msg += " - HAS ACTED"
 	return msg
+
+
+func melee_attack() -> void:
+	print("Attack!")
+
+
+func start_turn() -> void:
+	print(get_parent().name, " starts their turn!")
+
+	await get_tree().create_timer(1.5).timeout
+	turn_finished.emit()
