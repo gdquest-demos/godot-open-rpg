@@ -126,6 +126,11 @@ func stop_moving() -> void:
 
 # The player has clicked on an empty gameboard cell. We'll try to move _gamepiece to the cell.
 func _on_cell_selected(cell: Vector2i) -> void:
+	# Wait until arrived when moving.
+	if is_active and _gamepiece.is_moving():
+		stop_moving()
+		await _gamepiece.arrived
+	
 	if is_active and not _gamepiece.is_moving():
 		var source_cell: = Gameboard.pixel_to_cell(_gamepiece.position)
 		
