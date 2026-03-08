@@ -9,9 +9,9 @@ const ATTACK_DISTANCE: = 350.0
 @export var base_damage: = 50
 
 
-func execute(source: Battler, targets: Array[Battler] = []) -> void:
-	assert(not targets.is_empty(), "An attack action requires a target.")
-	var first_target: = targets[0]
+func execute() -> void:
+	assert(not cached_targets.is_empty(), "An attack action requires a target.")
+	var first_target: = cached_targets[0]
 
 	await source.get_tree().create_timer(0.1).timeout
 
@@ -28,7 +28,7 @@ func execute(source: Battler, targets: Array[Battler] = []) -> void:
 	# No attack animations yet, so wait for a short delay and then apply damage to the target.
 	# Normally we would wait for an attack animation's "triggered" signal.
 	await source.get_tree().create_timer(0.1).timeout
-	for target in targets:
+	for target in cached_targets:
 		
 		
 		# Incoporate Battler attack and a random variation (10% +- potential damage) to damage.

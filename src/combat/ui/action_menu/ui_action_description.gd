@@ -2,7 +2,6 @@
 ##
 ## This bar is shown to give the player information about actions as they select one from the
 ## [UIActionMenu].
-@tool
 class_name UIActionDescription extends MarginContainer
 
 @export var description: = "":

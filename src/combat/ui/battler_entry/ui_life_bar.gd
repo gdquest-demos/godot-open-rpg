@@ -17,7 +17,7 @@ var target_value := 0.0:
 		# If the `amount` is lower than the current `target_value`, it means the battler lost 
 		# health.
 		if target_value > new_value:
-			_anim.play("damage")
+			_bar_anim.play("damage")
 		
 		target_value = new_value
 		if _tween:
@@ -29,14 +29,22 @@ var target_value := 0.0:
 		_tween.tween_callback(
 			func():
 				if value < danger_cutoff * max_value:
-					_anim.play("danger")
+					_bar_anim.play("danger")
 		)
+
+var is_highlighted: = false:
+	set(value):
+		is_highlighted = value
+		if is_highlighted:
+			_text_anim.play("highlighted")
+		else:
+			_text_anim.play("default")
 
 var _tween: Tween = null
 
-@onready var _anim: = $AnimationPlayer as AnimationPlayer
+@onready var _bar_anim: = $BarAnimation as AnimationPlayer
 @onready var _name_label: = $MarginContainer/HBoxContainer/Name as Label
-@onready var _queued_action_icon: = $MarginContainer/HBoxContainer/QueuedActionIcon as TextureRect
+@onready var _text_anim: = $MarginContainer/HBoxContainer/TextAnimation as AnimationPlayer
 @onready var _value_label: = $MarginContainer/HBoxContainer/Value as Label
 
 
@@ -52,7 +60,3 @@ func setup(battler_name: String, max_hp: int, start_hp: int) -> void:
 	
 	max_value = max_hp
 	value = start_hp
-
-
-func set_action_icon(texture: Texture) -> void:
-	_queued_action_icon.texture = texture

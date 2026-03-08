@@ -15,8 +15,3 @@ signal combat_finished(is_player_victory: bool)
 ## Emitted whenever a player battler is selected, prompting the player to choose an action.
 @warning_ignore("unused_signal")
 signal player_battler_selected(battler: Battler)
-
-## Emitted whenever a battler has selected an action to perform once it is
-## [signal Battler.ready_to_act]
-@warning_ignore("unused_signal")
-signal action_selected(action: BattlerAction, source: Battler, targets: Array[Battler])

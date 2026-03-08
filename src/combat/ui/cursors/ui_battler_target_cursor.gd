@@ -12,11 +12,11 @@ const CURSOR_SCENE: = preload("res://src/combat/ui/cursors/ui_menu_cursor.tscn")
 ## In either case, the cursor will call queue_free() after emitting this signal.
 signal targets_selected(selection: Array[Battler])
 
-## Whether the selected action should target all [targets], or only one from the array.
-## Currently, this must be set to true or false before filling the [targets] array.
+## Whether the cursor should target all [targets], or only one from the array.
+## This must be set to true or false before setting the [targets] array.
 @export var targets_all: = false
 
-## All possible targets for a given action. Generates cursor instances if [targets_all] is true.
+## All possible targets. Generates multiple cursor instances if [targets_all] is true.
 @export var targets: Array[Battler] = []:
 	set(value):
 		targets = value
@@ -51,7 +51,7 @@ signal targets_selected(selection: Array[Battler])
 		else:
 			_current_target = null
 
-# One of the entries specified by _targets, at which the cursor is located.
+# One of the entries found in _targets, at which the cursor is located.
 var _current_target: Battler = null:
 	set(value):
 		_current_target = value
@@ -79,13 +79,7 @@ func _ready() -> void:
 	
 	hide()
 	_cursor = _create_cursor_over_battler(_current_target)
-	
-	# If the Battler that is currently selecting targets is downed, close the cursor immediately.
-	CombatEvents.player_battler_selected.connect(
-		func _on_player_battler_selected(_battler: Battler) -> void:
-			set_process_unhandled_input(false)
-			queue_free()
-	)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("ui_accept"):

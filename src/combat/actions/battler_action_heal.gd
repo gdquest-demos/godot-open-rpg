@@ -6,8 +6,8 @@ const JUMP_DISTANCE: = 250.0
 @export var heal_amount: = 50
 
 
-func execute(source: Battler, targets: Array[Battler] = []) -> void:
-	assert(not targets.is_empty(), "An attack action requires a target.")
+func execute() -> void:
+	assert(not cached_targets.is_empty(), "An attack action requires a target.")
 
 	await source.get_tree().create_timer(0.1).timeout
 
@@ -25,7 +25,7 @@ func execute(source: Battler, targets: Array[Battler] = []) -> void:
 	# Wait for a short delay and then apply healing to the targets.
 	await source.get_tree().create_timer(0.1).timeout
 	var hit: = BattlerHit.new(-heal_amount, 100.0)
-	for target in targets:
+	for target in cached_targets:
 		target.take_hit(hit)
 		
 		# Pause slightly between heals.

@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.3.4 Combat Rework 🛡️
+
+### Classic turn-based combat
+This update aims to do two things:
+	- Transition the combat system to be a sequential, turn-based system such as Final Fantasy 1, Dragon Quest 1, etc. The player issues orders to the characters, who then trade blows with the enemy battlers.
+	- Simplify the code and reduce dependencies.
+Combat occurs across a number of rounds, each of which has two phases. In the first phase, all Battlers choose their actions, with the player navigating a series of menus to select actions and targets for each of their battlers. The second phase sees each Battler executing their selected action, if possible. A new round begins if the combat results have not yet been deteremined.
+
+Notably, the ATB-based combat system has been reworked into a sequential turn-based system. This simplifies the UI and combat logic significantly.
+
 ## v0.3.3 Overworld Gameboard & Gamepiece Rework 🔧
 
 ### Under-the-hood changes

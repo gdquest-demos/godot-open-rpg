@@ -4,16 +4,8 @@
 
 [resource]
 script = ExtResource("1_bbarm")
-attack_distance = 350.0
-attack_time = 0.25
-return_time = 0.25
-hit_chance = 50.0
-base_damage = 65
+base_damage = 999
 label = "Area Attack"
 description = "A sweeping attack, hitting all enemy Battlers"
 target_scope = 2
-targets_friendlies = false
 targets_enemies = true
-element = 0
-energy_cost = 0
-readiness_saved = 0.0

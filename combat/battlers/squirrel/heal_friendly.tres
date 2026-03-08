@@ -5,13 +5,7 @@
 
 [resource]
 script = ExtResource("1_knane")
-heal_amount = 50
 icon = ExtResource("1_rw7rc")
-label = "First Aid"
+name = "Heal"
 description = "A bandage can fix this..."
-target_scope = 1
 targets_friendlies = true
-targets_enemies = false
-element = 0
-energy_cost = 0
-readiness_saved = 0.0

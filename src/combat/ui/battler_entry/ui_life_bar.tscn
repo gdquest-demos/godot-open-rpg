@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://u8ldf4atgqo"]
+[gd_scene load_steps=13 format=3 uid="uid://u8ldf4atgqo"]
 
 [ext_resource type="Texture2D" uid="uid://b7pj05tm03e1j" path="res://src/combat/ui/battler_entry/life_bar_bg.png" id="1_cgmm4"]
 [ext_resource type="Theme" uid="uid://dgb8v5sh8ropf" path="res://src/combat/ui/ui_combat.theme" id="1_kcngn"]
@@ -74,6 +74,97 @@ _data = {
 &"danger": SubResource("Animation_yd5e2")
 }
 
+[sub_resource type="Animation" id="Animation_72n8n"]
+resource_name = "default"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Name:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Value:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_w0gjo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Name:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Value:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_62p21"]
+resource_name = "highlighted"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Value:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.85490197, 0.7490196, 0.3882353, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Name:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.85490197, 0.7490196, 0.3882353, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ilfjy"]
+_data = {
+&"RESET": SubResource("Animation_w0gjo"),
+&"default": SubResource("Animation_72n8n"),
+&"highlighted": SubResource("Animation_62p21")
+}
+
 [node name="LifeBar" type="TextureProgressBar"]
 offset_right = 326.0
 offset_bottom = 21.0
@@ -83,9 +174,9 @@ texture_under = ExtResource("1_cgmm4")
 texture_progress = ExtResource("2_ax0cw")
 script = ExtResource("3_xposf")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="BarAnimation" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_poap1")
+&"": SubResource("AnimationLibrary_poap1")
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -104,10 +195,6 @@ size_flags_vertical = 4
 theme_override_constants/separation = 24
 alignment = 2
 
-[node name="QueuedActionIcon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-stretch_mode = 5
-
 [node name="Name" type="Label" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -121,3 +208,9 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_override_constants/outline_size = 16
 text = "9999"
+
+[node name="TextAnimation" type="AnimationPlayer" parent="MarginContainer/HBoxContainer"]
+libraries = {
+&"": SubResource("AnimationLibrary_ilfjy")
+}
+autoplay = "default"

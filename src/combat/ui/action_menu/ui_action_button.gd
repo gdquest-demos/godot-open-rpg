@@ -10,17 +10,14 @@ var action: BattlerAction:
 			await ready
 		
 		_icon.texture = action.icon
-		_name_label.text = action.label
+		_name_label.text = action.name
 		
 		await get_tree().process_frame
 		custom_minimum_size = $MarginContainer.size
-		#size = $MarginContainer.size
 
 @onready var _icon: = $MarginContainer/Items/Icon
 @onready var _name_label: = $MarginContainer/Items/Name
 
 
 func _ready() -> void:
-	pressed.connect(func _on_pressed() -> void:
-		release_focus()
-	)
+	pressed.connect(release_focus)

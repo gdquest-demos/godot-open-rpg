@@ -8,8 +8,8 @@ const JUMP_DISTANCE: = 250.0
 @export var added_value: = 10
 
 
-func execute(source: Battler, targets: Array[Battler] = []) -> void:
-	assert(not targets.is_empty(), "A ranged attack action requires a target.")
+func execute() -> void:
+	assert(not cached_targets.is_empty(), "A ranged attack action requires a target.")
 	
 	await source.get_tree().create_timer(0.1).timeout
 
@@ -28,7 +28,7 @@ func execute(source: Battler, targets: Array[Battler] = []) -> void:
 	# Normally we would wait for an attack animation's "triggered" signal and then spawn a
 	# projectile, waiting for impact.
 	await source.get_tree().create_timer(0.1).timeout
-	for target in targets:
+	for target in cached_targets:
 		target.stats.add_modifier("attack", added_value)
 		target.stats.add_modifier("hit_chance", added_value)
 	

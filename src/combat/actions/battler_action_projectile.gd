@@ -10,9 +10,9 @@ class_name RangedBattlerAction extends BattlerAction
 @export var base_damage: = 50
 
 
-func execute(source: Battler, targets: Array[Battler] = []) -> void:
-	assert(not targets.is_empty(), "A ranged attack action requires a target.")
-	var first_target: = targets[0]
+func execute() -> void:
+	assert(not cached_targets.is_empty(), "A ranged attack action requires a target.")
+	var first_target: = cached_targets[0]
 
 	await source.get_tree().create_timer(0.1).timeout
 
@@ -30,7 +30,7 @@ func execute(source: Battler, targets: Array[Battler] = []) -> void:
 	# Normally we would wait for an attack animation's "triggered" signal and then spawn a
 	# projectile, waiting for impact.
 	await source.get_tree().create_timer(0.1).timeout
-	for target in targets:
+	for target in cached_targets:
 		var hit: = BattlerHit.new(base_damage, hit_chance)
 		target.take_hit(hit)
 		await source.get_tree().create_timer(0.1).timeout

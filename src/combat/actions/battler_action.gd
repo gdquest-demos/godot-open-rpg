@@ -3,6 +3,7 @@
 ## The following class is an interface that specific actions should implement. [method execute] is
 ## called once an action has been chosen and is a coroutine, containing the logic of the action
 ## including any animations or effects.
+@abstract
 class_name BattlerAction extends Resource
 
 enum TargetScope { SELF, SINGLE, ALL }
@@ -11,7 +12,7 @@ enum TargetScope { SELF, SINGLE, ALL }
 ## An action-specific icon. Shown primarily in menus.
 @export var icon: Texture
 ## The 'name' of the action. Shown primarily in menus.
-@export var label: = "Base combat action"
+@export var name: = "Base combat action"
 ## Tells the player exactly what an action does. Shown primarily in menus.
 @export var description: = "A combat action."
 
@@ -39,27 +40,25 @@ enum TargetScope { SELF, SINGLE, ALL }
 ## design weak attacks that allow the Battler to take fast turns.
 @export_range(0.0, 100.0) var readiness_saved: = 0.0
 
+## The targets of a given action are cached on the action itself.
+var cached_targets: Array[Battler] = []
 
-### Returns true if the [Battler] is able to use the action.
-### [br][br]By default, this method checks for a few conditions:
-###    - The battler reference is valid.
-###    - The battler has health points.
-###    - The battler has enough action points to perform the action.
-#func can_be_used_by(battler: Battler) -> bool:
-	#return battler != null \
-		#and battler.stats.health > 0 \
-		#and battler.stats.energy >= energy_cost
+# A reference to the Battler originating this action.
+var source: Battler
+
+# A reference to the various Battlers involved in combat.
+var battler_roster: BattlerRoster
 
 
 ## Verifies that an action can be run. This can be dependent on any number of details regarding the
 ## source and target [Battler]s.
-func can_execute(source: Battler, targets: Array[Battler] = []) -> bool:
+func can_execute() -> bool:
 	if source == null \
 			or source.stats.health <= 0 \
 			or source.stats.energy < energy_cost:
 		return false
 	
-	return !targets.is_empty()
+	return !get_possible_targets().is_empty()
 
 
 ## Evaluate whether or not a given target is valid for this action, irrespective of the battler's
@@ -72,18 +71,18 @@ func is_target_valid(target: Battler) -> bool:
 		return true
 	return false
 
+
 ## The body of the action, where different animations/modifiers/damage/etc. will be played out.
 ## Battler actions are (almost?) always coroutines, so it is expected that the caller will wait for
 ## execution to finish.
-## [br][br]Note: The base action class does nothing, but must be overridden to do anything.
-func execute(source: Battler, _targets: Array[Battler] = []) -> void:
-	await source.get_tree().process_frame
+@abstract
+func execute() -> void
 
 
 ## Returns and array of [Battler]s that could be affected by the action.
 ## This includes most cases, accounting for parameters such as [member targets_self]. Specific
 ## actions may wish to override get_possible_targets (to target only mushrooms, for example).
-func get_possible_targets(source: Battler, battlers: BattlerList) -> Array[Battler]:
+func get_possible_targets() -> Array[Battler]:
 	var possible_targets: Array[Battler] = []
 	
 	# Normally, actions can pick from battlers of the opposing team. However, actions may be
@@ -93,20 +92,20 @@ func get_possible_targets(source: Battler, battlers: BattlerList) -> Array[Battl
 	
 	elif source.is_player:
 		if targets_friendlies:
-			possible_targets.append_array(battlers.players)
+			possible_targets.append_array(battler_roster.get_player_battlers())
 		
 		if targets_enemies:
-			possible_targets.append_array(battlers.enemies)
+			possible_targets.append_array(battler_roster.get_enemy_battlers())
 	
 	else:
 		if targets_friendlies:
-			possible_targets.append_array(battlers.enemies)
+			possible_targets.append_array(battler_roster.get_enemy_battlers())
 		
 		elif targets_enemies:
-			possible_targets.append_array(battlers.players)
+			possible_targets.append_array(battler_roster.get_player_battlers())
 	
 	# Filter the targets to only include live Battlers.
-	possible_targets = battlers.get_live_battlers(possible_targets)
+	possible_targets = battler_roster.find_live_battlers(possible_targets)
 	return possible_targets
 
 

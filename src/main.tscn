@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=4 uid="uid://p01fb6nvi144"]
+[gd_scene load_steps=90 format=4 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" uid="uid://m3oktjc6gmsb" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="PackedScene" uid="uid://d2lj4blu56fte" path="res://src/field/gamepieces/controllers/player_controller.tscn" id="2_esa52"]
@@ -76,6 +76,7 @@
 [ext_resource type="AudioStream" uid="uid://dwcre3fjf3cj8" path="res://addons/dialogic/Example Assets/sound-effects/typing5.wav" id="58_br2ni"]
 [ext_resource type="TileSet" uid="uid://dhda7bse8tu6l" path="res://src/field/gameboard/debug/tileset_debug_pathfinder_map.tres" id="59_nl04t"]
 [ext_resource type="Script" uid="uid://yukpiyvqb6m3" path="res://src/field/gameboard/debug/debug_pathfinder_map.gd" id="60_a8sfs"]
+[ext_resource type="PackedScene" uid="uid://ic0pyjko2i46" path="res://src/combat/ui/ui_combat.tscn" id="66_mo8tx"]
 [ext_resource type="Resource" uid="uid://bwjallq2c71rq" path="res://overworld/maps/opening_cutscene.dtl" id="68_jcriq"]
 [ext_resource type="Script" uid="uid://i6j3l72wljdc" path="res://src/combat/combat.gd" id="69_meyff"]
 
@@ -326,7 +327,7 @@ script = ExtResource("2_la2p5")
 gameboard_properties = ExtResource("3_esa52")
 
 [node name="Player" parent="Field/Map" instance=ExtResource("11_yntrj")]
-position = Vector2(24.0001, 216)
+position = Vector2(22.4, 214.4)
 animation_scene = ExtResource("12_oablq")
 move_speed = 96.0
 metadata/_edit_group_ = true
@@ -791,7 +792,9 @@ grow_vertical = 2
 size_flags_horizontal = 4
 metadata/_edit_lock_ = true
 
-[node name="TransitionDelay" type="Timer" parent="Combat/CenterContainer"]
+[node name="UI" parent="Combat" instance=ExtResource("66_mo8tx")]
+
+[node name="TransitionDelay" type="Timer" parent="Combat/UI"]
 wait_time = 0.5
 one_shot = true
 

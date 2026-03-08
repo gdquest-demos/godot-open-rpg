@@ -9,7 +9,7 @@
 class_name BattlerAnim extends Marker2D
 
 ## Dictates how far the battler moves forwards and backwards at the beginning/end of its turn.
-const MOVE_OFFSET: = 40.0
+const MOVE_OFFSET: = 140.0
 
 ## Determines which direction the battler faces on the screen.
 enum Direction { LEFT, RIGHT }
@@ -118,9 +118,10 @@ func move_forward(duration: float) -> void:
 	_move_tween.tween_property(
 		self, 
 		"position", 
-		_rest_position + Vector2.LEFT*scale.x*MOVE_OFFSET,
+		_rest_position + Vector2.LEFT*-scale.x*MOVE_OFFSET,
 		duration
 	)
+	await _move_tween.finished
 
 
 ## Tween the object back to its rest position.
@@ -135,3 +136,4 @@ func move_to_rest(duration: float) -> void:
 		_rest_position,
 		duration
 	)
+	await _move_tween.finished

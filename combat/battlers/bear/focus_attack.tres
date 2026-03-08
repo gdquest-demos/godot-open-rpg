@@ -5,13 +5,9 @@
 
 [resource]
 script = ExtResource("1_4j0yh")
-added_value = 10
 icon = ExtResource("1_2rya6")
-label = "Focus"
+name = "Focus"
 description = "Increase Attack and Accuracy. Takes half a turn to use."
 target_scope = 0
 targets_friendlies = true
-targets_enemies = false
-element = 0
-energy_cost = 0
 readiness_saved = 50.0

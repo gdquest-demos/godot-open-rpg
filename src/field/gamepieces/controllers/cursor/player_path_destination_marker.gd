@@ -7,7 +7,7 @@ func _ready() -> void:
 			if not gamepiece.arrived.is_connected(_on_gp_arrived):
 				gamepiece.arrived.connect(_on_gp_arrived, CONNECT_ONE_SHOT)
 			position = Gameboard.cell_to_pixel(destination_cell)
-			show()
+			#show()
 	)
 
 

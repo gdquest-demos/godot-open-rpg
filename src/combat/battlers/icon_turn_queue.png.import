@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pvjykd3qllnc"
-path="res://.godot/imported/icon_turn_queue.png-1d339f0c6de41a179e9f5c7eda2b8387.ctex"
+path="res://.godot/imported/icon_turn_queue.png-b1b6be5ca14a2606ff1bb298791aecf6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/combat/actors/icon_turn_queue.png"
-dest_files=["res://.godot/imported/icon_turn_queue.png-1d339f0c6de41a179e9f5c7eda2b8387.ctex"]
+source_file="res://src/combat/battlers/icon_turn_queue.png"
+dest_files=["res://.godot/imported/icon_turn_queue.png-b1b6be5ca14a2606ff1bb298791aecf6.ctex"]
 
 [params]
 
