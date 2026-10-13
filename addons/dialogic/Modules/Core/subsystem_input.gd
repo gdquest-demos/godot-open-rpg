@@ -123,7 +123,7 @@ func handle_input() -> void:
 ## Mouse based input is handled by the InputCatcher and Textbox nodes calling [method handle_node_gui_input].
 ## Calls [method handle_input].
 func _unhandled_input(event:InputEvent) -> void:
-	if is_input_pressed(event, true):
+	if is_input_released(event, true):
 		if event is InputEventMouse or event is InputEventScreenTouch:
 			return
 		input_was_mouse_input = false
@@ -133,7 +133,7 @@ func _unhandled_input(event:InputEvent) -> void:
 ## Input is used for all mouse based inputs.
 ## If any DialogicInputNode is present this won't do anything (because that node handles MouseInput then).
 func _input(event:InputEvent) -> void:
-	if is_input_pressed(event):
+	if is_input_released(event):
 		if not event is InputEventMouse:
 			return
 		if get_tree().get_nodes_in_group("dialogic_input").any(func(node):return node.is_visible_in_tree()):
@@ -143,9 +143,9 @@ func _input(event:InputEvent) -> void:
 
 
 ## Used to quickly check whether the event is the input action that is setup.
-func is_input_pressed(event: InputEvent, exact := false) -> bool:
+func is_input_released(event: InputEvent, exact := false) -> bool:
 	var action: String = ProjectSettings.get_setting(_SETTING_INPUT_ACTION, _SETTING_INPUT_ACTION_DEFAULT)
-	return (event is InputEventAction and event.action == action) or Input.is_action_just_pressed(action, exact)
+	return (event is InputEventAction and event.action == action) or Input.is_action_just_released(action, exact)
 
 
 ## This is called from the `_gui_input` of the InputCatcher and DialogText nodes.
