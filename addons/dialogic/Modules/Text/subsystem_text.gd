@@ -211,14 +211,14 @@ func get_textboxes(identifier:="") -> Array[Node]:
 func textbox_update_visibility(visible := true, instant := false, identifier:=active_textbox) -> void:
 	if visible:
 		await show_textbox(instant, identifier)
-	else:
-		await hide_textbox(instant, identifier)
 
 		if not dialog_text.is_empty():
 			animation_textbox_new_text.emit()
 
 			if dialogic.Animations.is_animating():
 				await dialogic.Animations.finished
+	else:
+		await hide_textbox(instant, identifier)
 
 
 func textbox_handle_auto_visibility(text: String, identifier:=active_textbox) -> void:
@@ -251,8 +251,6 @@ func show_textbox(instant:=false, identifier:=active_textbox) -> void:
 ## Instant skips the signal and thus possible animations
 func hide_textbox(instant:=false, identifier:=active_textbox) -> void:
 	var emitted := instant
-	for name_label in get_tree().get_nodes_in_group('dialogic_name_label'):
-		name_label.text = ""
 	if not emitted and not get_textboxes(identifier).is_empty() and get_textboxes(identifier)[0].textbox_root.visible:
 		animation_textbox_hide.emit()
 		if dialogic.Animations.is_animating():
