@@ -68,6 +68,7 @@ func jump_to_label(label:String) -> void:
 		dialogic.current_event_idx = 0
 		jumped_to_label.emit({'timeline':dialogic.current_timeline, 'label':""})
 		return
+
 	## Allows label to be a variable, making the jump event dynamic
 	label = str(dialogic.VAR.parse_variables(label))
 
@@ -76,7 +77,8 @@ func jump_to_label(label:String) -> void:
 		idx += 1
 		var event: Variant = dialogic.current_timeline.get_event(idx)
 		if not event:
-			idx = dialogic.current_event_idx
+			printerr("[Dialogic] Label '%s' not found for jump in timeline '%s'." % [label, dialogic.current_timeline.get_identifier()])
+			idx = dialogic.current_event_idx + 1
 			break
 		if event is DialogicLabelEvent and event.name == label:
 			break

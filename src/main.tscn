@@ -79,6 +79,7 @@
 [ext_resource type="PackedScene" uid="uid://ic0pyjko2i46" path="res://src/combat/ui/ui_combat.tscn" id="66_mo8tx"]
 [ext_resource type="Resource" uid="uid://bwjallq2c71rq" path="res://overworld/maps/opening_cutscene.dtl" id="68_jcriq"]
 [ext_resource type="Script" uid="uid://i6j3l72wljdc" path="res://src/combat/combat.gd" id="69_meyff"]
+[ext_resource type="Script" uid="uid://diexbgvrksk2k" path="res://addons/dialogic/Resources/flex_vector.gd" id="72_mcuvm"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -311,6 +312,21 @@ font_size = 128
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_giaot"]
 size = Vector2(14, 23)
+
+[sub_resource type="Resource" id="Resource_o808t"]
+script = ExtResource("72_mcuvm")
+x_value = 0.21052632
+y_value = 0.6666667
+
+[sub_resource type="Resource" id="Resource_4gij5"]
+script = ExtResource("72_mcuvm")
+x_value = 0.10526316
+y_value = 0.6666667
+
+[sub_resource type="Resource" id="Resource_k1bmf"]
+script = ExtResource("72_mcuvm")
+x_value = 0.5
+y_value = 1.0
 
 [node name="Main" type="Node2D" unique_id=2072081668]
 scale = Vector2(5, 5)
@@ -870,9 +886,13 @@ theme_override_constants/separation = 32
 [node name="Portrait" type="Control" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker" unique_id=274356173]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+size = Vector2(126.52631, 80)
 script = ExtResource("21_f53lt")
 mode = 1
 container_ids = PackedStringArray("1")
+container_size = SubResource("Resource_o808t")
+container_position = SubResource("Resource_4gij5")
+container_origin = SubResource("Resource_k1bmf")
 
 [node name="NameLabel" type="Label" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker" unique_id=152488429]
 layout_mode = 2
