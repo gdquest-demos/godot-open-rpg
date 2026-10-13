@@ -43,7 +43,6 @@ static func is_cutscene_in_progress() -> bool:
 ## Execute the cutscene, if possible. Everything happening on the field gamestate will be
 ## paused and unpaused as the cutscene starts and finishes, respectively.
 func run() -> void:
-	FieldEvents.cutscene_began.emit()
 	_is_cutscene_in_progress = true
 	
 	# The _execute method may or may not be asynchronous, depending on the particular cutscene.
@@ -51,7 +50,6 @@ func run() -> void:
 	await _execute()
 	
 	_is_cutscene_in_progress = false
-	FieldEvents.cutscene_ended.emit()
 
 
 ## Play out the specific events of the cutscene.
