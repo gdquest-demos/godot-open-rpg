@@ -6,6 +6,10 @@
 ## logically distinct from one another.
 class_name GameState extends Node
 
+## Emitted whenever the state wants the [Game] to swap to a new state.
+@warning_ignore("unused_signal")
+signal transition_executed(next_state: Game.States)
+
 
 ## Begins the state's logic or animation.
 ## Deferred until a frame after the GameState is added to the SceneTree.

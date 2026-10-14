@@ -34,13 +34,13 @@ var current_state: States:
 			States.OVERWORLD:	_state = overworld_scene.instantiate()
 			States.COMBAT:		_state = combat_scene.instantiate()
 		
-		assert(_state is GameState, "Main instantiated %s, but it's not a GameState!" % _state.name)
 		add_child(_state)
+		_state.transition_executed.connect(func(next_state: States): current_state = next_state)
 		
 		_state.start.call_deferred()
 
 # Track the reference to the active state node.
-var _state: Node = null
+var _state: GameState = null
 
 
 func _ready() -> void:
