@@ -1,13 +1,6 @@
-extends CanvasLayer
+extends GameState
 
 @onready var _anim: AnimationPlayer = $AnimationPlayer
-
-
-func _ready() -> void:
-	await get_tree().process_frame
-	await Transition.clear(0.5)
-	
-	_anim.play("fade_in")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -16,3 +9,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	elif Input.is_anything_pressed():
 		print("End it")
+
+
+func start() -> void:
+	await Transition.clear(0.4)
+	_anim.play("fade_in")

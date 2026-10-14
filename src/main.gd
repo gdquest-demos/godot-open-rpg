@@ -1,6 +1,6 @@
 ## The entry point for the application.
 ## Specifies and manages game "states", allows transitions to whichever is active at a given moment.
-extends Node2D
+class_name Game extends Node2D
 
 ## Discrete, relatively simple, transitions easily mapped out
 enum States { MAIN_MENU, OVERWORLD, COMBAT }
@@ -34,7 +34,10 @@ var current_state: States:
 			States.OVERWORLD:	_state = overworld_scene.instantiate()
 			States.COMBAT:		_state = combat_scene.instantiate()
 		
+		assert(_state is GameState, "Main instantiated %s, but it's not a GameState!" % _state.name)
 		add_child(_state)
+		
+		_state.start.call_deferred()
 
 # Track the reference to the active state node.
 var _state: Node = null
