@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://p01fb6nvi144"]
 
 [ext_resource type="Script" uid="uid://bdqjybdp6fq21" path="res://src/main.gd" id="1_o808t"]
+[ext_resource type="PackedScene" uid="uid://o4u6wwr0t1kr" path="res://src/main_menu/main_menu.tscn" id="2_3cfgd"]
+[ext_resource type="PackedScene" uid="uid://0m471v4y80ta" path="res://src/field/field.tscn" id="3_fyndt"]
+[ext_resource type="PackedScene" uid="uid://cymipuhyisu0v" path="res://src/combat/combat.tscn" id="4_kmhfv"]
 
 [node name="Main" type="Node2D" unique_id=2072081668]
 scale = Vector2(5, 5)
 script = ExtResource("1_o808t")
-splash_scene = "uid://o4u6wwr0t1kr"
-main_menu_scene = "uid://5d0dqd84rfa0"
-overworld_scene = "uid://0m471v4y80ta"
-combat_scene = "uid://cymipuhyisu0v"
+main_menu_scene = ExtResource("2_3cfgd")
+overworld_scene = ExtResource("3_fyndt")
+combat_scene = ExtResource("4_kmhfv")
