@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://o4u6wwr0t1kr"]
 
 [ext_resource type="Script" uid="uid://briedf1pt1eev" path="res://src/main_menu/main_menu.gd" id="1_2utq2"]
-[ext_resource type="Texture2D" uid="uid://vbu3w2hdh0wt" path="res://src/main_menu/logo_test.png" id="2_641qs"]
+[ext_resource type="Texture2D" uid="uid://e4kquues5422" path="res://src/main_menu/logo_title.png" id="2_amn4d"]
+[ext_resource type="Texture2D" uid="uid://bp3fyyskoft0n" path="res://src/main_menu/logo_gdquest.png" id="3_pwul8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p6w1j"]
 content_margin_left = 0.0
@@ -20,7 +21,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Background/CenterContainer/Logo:modulate")
+tracks/0/path = NodePath("Background/AppLogo/Logo:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -29,35 +30,246 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Prompt/CenterContainer/MarginContainer/PromptLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GDQuestLogo/MarginContainer/Logo:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Background/AppLogo:offset_transform_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1920, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Prompt:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1920, 883)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GDQuestLogo:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1920, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("GDQuestLogo:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Background/AppLogo:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Prompt:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
-[sub_resource type="Animation" id="Animation_txdyl"]
-resource_name = "default"
-length = 3.5000000000000004
+[sub_resource type="Animation" id="Animation_no1ax"]
+resource_name = "blink"
+loop_mode = 1
 step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Background/CenterContainer/Logo:modulate")
+tracks/0/path = NodePath("Prompt/CenterContainer/MarginContainer/PromptLabel:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2, 3.5),
-"transitions": PackedFloat32Array(1, 1, 2, 2),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wrmdx"]
+resource_name = "fade_in"
+length = 1.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background/AppLogo/Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.8, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Prompt/CenterContainer/MarginContainer/PromptLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.40000004, 0.90000004, 1.4000001),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GDQuestLogo/MarginContainer/Logo:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.6000001, 1.1000001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Background/AppLogo:offset_transform_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(-1920, 0), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Prompt:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(2417, 883), Vector2(497, 883)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GDQuestLogo:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(1920, 0), Vector2(1492, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_h780t"]
 resource_name = "fade_out"
+length = 2.0
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Background/CenterContainer/Logo:modulate")
+tracks/0/path = NodePath("GDQuestLogo:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(2.000001, 2.000001),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Background/AppLogo:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Prompt/CenterContainer/MarginContainer/PromptLabel:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.70000005, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Prompt:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.2, 1.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
@@ -65,7 +277,8 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vvwvn"]
 _data = {
 &"RESET": SubResource("Animation_p6w1j"),
-&"default": SubResource("Animation_txdyl"),
+&"blink": SubResource("Animation_no1ax"),
+&"fade_in": SubResource("Animation_wrmdx"),
 &"fade_out": SubResource("Animation_h780t")
 }
 
@@ -80,14 +293,74 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_p6w1j")
 
-[node name="CenterContainer" type="CenterContainer" parent="Background" unique_id=1443356502]
+[node name="AppLogo" type="CenterContainer" parent="Background" unique_id=1443356502]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-1920, 0)
+
+[node name="ColorRect" type="ColorRect" parent="Background/AppLogo" unique_id=964638651]
+custom_minimum_size = Vector2(1920, 400)
+layout_mode = 2
+color = Color(0.05490196, 0.61960787, 0.88235295, 1)
+
+[node name="Logo" type="TextureRect" parent="Background/AppLogo" unique_id=440243346]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(1148, 372)
+layout_mode = 2
+texture = ExtResource("2_amn4d")
+
+[node name="GDQuestLogo" type="MarginContainer" parent="." unique_id=716749378]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_right = 428.00073
+offset_bottom = 156.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 40
+
+[node name="ColorRect" type="ColorRect" parent="GDQuestLogo" unique_id=1065547742]
+layout_mode = 2
+color = Color(0.05490196, 0.61960787, 0.88235295, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="GDQuestLogo" unique_id=278744871]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 40
+
+[node name="Logo" type="TextureRect" parent="GDQuestLogo/MarginContainer" unique_id=330468956]
+custom_minimum_size = Vector2(368, 116)
+layout_mode = 2
+texture = ExtResource("3_pwul8")
+
+[node name="Prompt" type="MarginContainer" parent="." unique_id=1855239354]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 960.0
+offset_top = -197.0
+offset_right = 1886.0012
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 125
+
+[node name="ColorRect" type="ColorRect" parent="Prompt" unique_id=227742013]
+layout_mode = 2
+color = Color(0.05490196, 0.61960787, 0.88235295, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="Prompt" unique_id=1872876482]
 layout_mode = 2
 
-[node name="Logo" type="TextureRect" parent="Background/CenterContainer" unique_id=440243346]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(1258, 758)
+[node name="MarginContainer" type="MarginContainer" parent="Prompt/CenterContainer" unique_id=1459375066]
 layout_mode = 2
-texture = ExtResource("2_641qs")
+theme_override_constants/margin_left = 250
+theme_override_constants/margin_right = 250
+
+[node name="PromptLabel" type="Label" parent="Prompt/CenterContainer/MarginContainer" unique_id=1794647747]
+layout_mode = 2
+text = "Press any key"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=675500018]
 libraries/ = SubResource("AnimationLibrary_vvwvn")
+next/fade_in = &"blink"
