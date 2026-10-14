@@ -64,6 +64,20 @@
 [ext_resource type="Script" uid="uid://27j187rqxg64" path="res://src/field/gameboard/debug/debug_map_boundaries.gd" id="62_087lq"]
 [ext_resource type="Script" uid="uid://dstlv1xykju5l" path="res://overworld/maps/opening_cutscene.gd" id="63_co41h"]
 [ext_resource type="Resource" uid="uid://bwjallq2c71rq" path="res://overworld/maps/opening_cutscene.dtl" id="64_n8u3e"]
+[ext_resource type="Script" uid="uid://xdpci16n7w0j" path="res://src/field/ui/inventory/ui_inventory.gd" id="65_jv16x"]
+[ext_resource type="Script" uid="uid://c0g1jsnegpvtq" path="res://src/field/ui/dialogue_window.gd" id="66_yiu8y"]
+[ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="67_pvt74"]
+[ext_resource type="Script" uid="uid://drhfq6rmdeuri" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="68_1m5kj"]
+[ext_resource type="Script" uid="uid://d0ptqnbudhkyj" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="69_4844g"]
+[ext_resource type="Script" uid="uid://diexbgvrksk2k" path="res://addons/dialogic/Resources/flex_vector.gd" id="70_xocdl"]
+[ext_resource type="Script" uid="uid://bak74s0kcr0ao" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="71_1shhy"]
+[ext_resource type="Script" uid="uid://dpv2dfiv5dhmr" path="res://addons/dialogic/Modules/Text/node_type_sound.gd" id="72_dq1j1"]
+[ext_resource type="AudioStream" uid="uid://b6c1p14bc20p1" path="res://addons/dialogic/Example Assets/sound-effects/typing1.wav" id="73_qs02g"]
+[ext_resource type="AudioStream" uid="uid://c3uw4nft0de13" path="res://addons/dialogic/Example Assets/sound-effects/typing2.wav" id="74_6c6p8"]
+[ext_resource type="AudioStream" uid="uid://dnboblpkf0fqi" path="res://addons/dialogic/Example Assets/sound-effects/typing3.wav" id="75_8k5ug"]
+[ext_resource type="AudioStream" uid="uid://c2viukvbub6v6" path="res://addons/dialogic/Example Assets/sound-effects/typing4.wav" id="76_jbgxu"]
+[ext_resource type="AudioStream" uid="uid://dwcre3fjf3cj8" path="res://addons/dialogic/Example Assets/sound-effects/typing5.wav" id="77_ylvbp"]
+[ext_resource type="Script" uid="uid://bldt7xlfum7ov" path="res://addons/dialogic/Modules/Choice/node_choice_button.gd" id="78_67een"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -297,9 +311,24 @@ font_size = 128
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_giaot"]
 size = Vector2(14, 23)
 
-[node name="Field" type="Node2D" unique_id=932058504 node_paths=PackedStringArray("opening_cutscene", "player_default_gamepiece")]
+[sub_resource type="Resource" id="Resource_w3y1q"]
+script = ExtResource("70_xocdl")
+x_value = 0.13311148
+y_value = 1.0
+
+[sub_resource type="Resource" id="Resource_2picv"]
+script = ExtResource("70_xocdl")
+x_value = 0.06655574
+y_value = 1.0
+
+[sub_resource type="Resource" id="Resource_4evk3"]
+script = ExtResource("70_xocdl")
+x_value = 0.5
+y_value = 1.0
+
+[node name="Field" type="Node2D" unique_id=2132434412 node_paths=PackedStringArray("player_default_gamepiece")]
+scale = Vector2(5, 5)
 script = ExtResource("1_bwh6e")
-opening_cutscene = NodePath("OpeningCutscene")
 player_controller = ExtResource("2_sdbim")
 player_default_gamepiece = NodePath("Map/Player")
 
@@ -746,14 +775,147 @@ timeline = ExtResource("64_n8u3e")
 metadata/_edit_lock_ = true
 
 [node name="Background" type="CanvasLayer" parent="OpeningCutscene" unique_id=1859963225]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="OpeningCutscene/Background" unique_id=598692724]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="DelayTimer" type="Timer" parent="OpeningCutscene" unique_id=1371384650]
+wait_time = 0.5
+one_shot = true
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=238952800]
+
+[node name="Inventory" type="HBoxContainer" parent="UI" unique_id=953751526]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -104.0
+offset_right = -1536.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(5, 5)
+alignment = 1
+script = ExtResource("65_jv16x")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="DialogueLayout" type="Control" parent="UI" unique_id=1413617570]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("66_yiu8y")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="BoxMargins" type="MarginContainer" parent="UI/DialogueLayout" unique_id=1562239241]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_right = 150
+
+[node name="BoxBack" type="ColorRect" parent="UI/DialogueLayout/BoxMargins" unique_id=1024450633]
+layout_mode = 2
+color = Color(0.14902, 0.168627, 0.266667, 1)
+
+[node name="TextMargins" type="MarginContainer" parent="UI/DialogueLayout/BoxMargins" unique_id=1861018104]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="DialogueText" type="RichTextLabel" parent="UI/DialogueLayout/BoxMargins/TextMargins" unique_id=585819403 node_paths=PackedStringArray("textbox_root")]
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("67_pvt74")
+theme_override_font_sizes/normal_font_size = 96
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+visible_characters_behavior = 1
+script = ExtResource("68_1m5kj")
+textbox_root = NodePath(".")
+
+[node name="Speaker" type="HBoxContainer" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText" unique_id=1431443726]
+layout_mode = 1
+offset_top = -128.0
+offset_right = 380.0
+offset_bottom = -8.0
+theme_override_constants/separation = 32
+
+[node name="Portrait" type="Control" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker" unique_id=1909460729]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size = Vector2(80, 120)
+script = ExtResource("69_4844g")
+mode = 1
+container_ids = PackedStringArray("1")
+container_size = SubResource("Resource_w3y1q")
+container_position = SubResource("Resource_2picv")
+container_origin = SubResource("Resource_4evk3")
+
+[node name="NameLabel" type="Label" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker" unique_id=1715016329]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("67_pvt74")
+theme_override_font_sizes/font_size = 96
+text = "Character Name"
+vertical_alignment = 1
+script = ExtResource("71_1shhy")
+
+[node name="DialogicNode_TypeSounds" type="AudioStreamPlayer" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText" unique_id=336915665]
+script = ExtResource("72_dq1j1")
+sounds = Array[AudioStream]([ExtResource("73_qs02g"), ExtResource("74_6c6p8"), ExtResource("75_8k5ug"), ExtResource("76_jbgxu"), ExtResource("77_ylvbp")])
+
+[node name="Choices" type="VBoxContainer" parent="UI/DialogueLayout/BoxMargins" unique_id=698885020]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+alignment = 2
+
+[node name="Choice1" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=1048180311]
+layout_mode = 2
+text = "Choice1"
+script = ExtResource("78_67een")
+choice_index = 1
+
+[node name="Choice2" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=1764285992]
+layout_mode = 2
+text = "Choice2"
+script = ExtResource("78_67een")
+choice_index = 2
+
+[node name="Choice3" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=1555132943]
+layout_mode = 2
+text = "Choice3"
+script = ExtResource("78_67een")
+choice_index = 3
+
+[node name="Choice4" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=473632047]
+layout_mode = 2
+text = "Choice4"
+script = ExtResource("78_67een")
+choice_index = 4
 
 [connection signal="area_entered" from="Map/Forest/Gamepieces/GameEndTrigger/Area2D2" to="Map/Forest/Gamepieces/GameEndTrigger" method="_on_area_entered"]

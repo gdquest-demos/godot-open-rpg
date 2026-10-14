@@ -16,7 +16,7 @@ extends Node2D
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		Camera.gameboard_properties = gameboard_properties
+		#Camera.gameboard_properties = gameboard_properties
 		Gameboard.properties = gameboard_properties
 		
 		# Gamepieces need to be registered according to which cells they currently occupy.

@@ -1,4 +1,4 @@
-extends Node2D
+extends GameState
 
 ## The cutscene that will play on starting a new game.
 @export var opening_cutscene: Cutscene
@@ -18,8 +18,9 @@ func _ready() -> void:
 	# Assign proper controllers to player gamepieces whenever they change.
 	Player.gamepiece_changed.connect(
 		func _on_player_gp_changed() -> void:
+			print("Player gp changed")
 			var new_gp: = Player.gamepiece
-			Camera.gamepiece = new_gp
+			#Camera.gamepiece = new_gp
 	
 			# Free up any lingering controller(s).
 			for controller in get_tree().get_nodes_in_group(PlayerController.GROUP):
@@ -39,12 +40,17 @@ func _ready() -> void:
 	# The field state must pause/unpause with combat accordingly.
 	# Note that pausing/unpausing input is already wrapped up in triggers, which are what will
 	# initiate combat.
-	CombatEvents.combat_initiated.connect(func(): hide())
-	CombatEvents.combat_finished.connect(func(_is_victory): show())
-	
-	Camera.scale = scale
-	Camera.make_current()
-	Camera.reset_position()
+	#CombatEvents.combat_initiated.connect(func(): hide())
+	#CombatEvents.combat_finished.connect(func(_is_victory): show())
+
+
+func start() -> void:
+	#Camera.scale = scale
+	#Camera.make_current()
+	#Camera.reset_position()
 	
 	if opening_cutscene:
 		opening_cutscene.run.call_deferred()
+	
+	else:
+		await Transition.clear(0.3)

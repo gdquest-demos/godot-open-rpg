@@ -8,8 +8,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_released("ui_cancel"):
-		print("Done")
+	if event.is_action_pressed("back"):
 		get_tree().quit()
 	
 	elif Input.is_anything_pressed():
@@ -24,7 +23,6 @@ func start() -> void:
 
 
 func _transition_to_overworld() -> void:
-	print("Change")
 	set_process_unhandled_input(false)
 	_anim.play("fade_out")
 	await _anim.animation_finished

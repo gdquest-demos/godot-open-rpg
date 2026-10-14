@@ -54,7 +54,7 @@ func _on_area_entered(area: Area2D) -> void:
 		GamepieceRegistry.move_gamepiece(gamepiece, Gameboard.pixel_to_cell(arrival_coordinates))
 		
 		
-		Camera.reset_position()
+		#Camera.reset_position()
 	
 	# Let the screen rest in darkness for a little while. Revealing the screen immediately with no
 	# delay looks 'off'.

@@ -11,13 +11,13 @@ extends Camera2D
 	set(value):
 		_on_viewport_resized()
 
-
 @export var gamepiece: Gamepiece:
 	set(value):
 		if gamepiece:
 			gamepiece.animation_transform.remote_path = ""
 		
 		gamepiece = value
+		print("Set GP for camera at: ", gamepiece)
 		if gamepiece:
 			gamepiece.animation_transform.remote_path \
 				= gamepiece.animation_transform.get_path_to(self)
