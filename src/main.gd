@@ -52,4 +52,7 @@ func _ready() -> void:
 	assert(overworld_scene, "Main needs a valid path to the overworld state PackedScene.")
 	assert(combat_scene, "Main needs a valid path to the combat state PackedScene.")
 	
+	# Start the game with the screen covered.
+	await Transition.cover()
+	
 	current_state = initial_state

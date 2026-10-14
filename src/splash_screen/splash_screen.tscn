@@ -1,6 +1,93 @@
 [gd_scene format=3 uid="uid://o4u6wwr0t1kr"]
 
 [ext_resource type="Script" uid="uid://briedf1pt1eev" path="res://src/splash_screen/splash_screen.gd" id="1_cjdw1"]
+[ext_resource type="Texture2D" uid="uid://vbu3w2hdh0wt" path="res://src/splash_screen/logo_test.png" id="2_p6w1j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p6w1j"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="Animation" id="Animation_p6w1j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background/CenterContainer/Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_txdyl"]
+resource_name = "default"
+length = 3.5000000000000004
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background/CenterContainer/Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3.5),
+"transitions": PackedFloat32Array(1, 1, 2, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_h780t"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background/CenterContainer/Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2.000001, 2.000001),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vvwvn"]
+_data = {
+&"RESET": SubResource("Animation_p6w1j"),
+&"default": SubResource("Animation_txdyl"),
+&"fade_out": SubResource("Animation_h780t")
+}
 
 [node name="SplashScreen" type="CanvasLayer" unique_id=2092920657]
 script = ExtResource("1_cjdw1")
+
+[node name="Background" type="PanelContainer" parent="." unique_id=1302180333]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_p6w1j")
+
+[node name="CenterContainer" type="CenterContainer" parent="Background" unique_id=1443356502]
+layout_mode = 2
+
+[node name="Logo" type="TextureRect" parent="Background/CenterContainer" unique_id=440243346]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(1258, 758)
+layout_mode = 2
+texture = ExtResource("2_p6w1j")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=675500018]
+libraries/ = SubResource("AnimationLibrary_vvwvn")
