@@ -50,3 +50,8 @@ func create_gamepiece(parent: Node) -> void:
 	# Follow the player with the default camera.
 	_gamepiece.animation_transform.remote_path = _gamepiece.animation_transform.get_path_to(_camera)
 	_camera.make_current()
+	
+	_gamepiece.arrived.connect(
+		func _on_player_arrived() -> void:
+			cell = Gameboard.pixel_to_cell(_gamepiece.position)
+	)
