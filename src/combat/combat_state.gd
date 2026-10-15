@@ -191,27 +191,20 @@ func _on_combat_finished(is_player_victory: bool) -> void:
 	# Fade out the combat UI elements.
 	_ui.animation.play("fade_out")
 	await _ui.animation.animation_finished
-	await _display_combat_results_dialog(is_player_victory)
-	
-	_battler_roster = null
+	#await _display_combat_results_dialog(is_player_victory)
 	
 	# Wait a short period of time and then fade the screen to black.
 	_transition_delay_timer.start()
 	await _transition_delay_timer.timeout
 	await Transition.cover(0.2)
-	#hide()
-	
-	# Clean up the combat arena.
-	for child in _combat_container.get_children():
-		child.free()
 
 	Music.play(_previous_music_track)
-	_previous_music_track = null
 
 	# Whatever object started the combat will now be responsible for flow of the game. In
 	# particular, the screen is still covered, so the combat-starting object will want to 
 	# decide what to do now that the outcome of the combat is known.
 	Combat.combat_finished.emit(is_player_victory)
+	transition_executed.emit(Game.States.OVERWORLD)
 
 
 ## Displays a series of dialogue bubbles using Dialogic with information about the combat's outcome.

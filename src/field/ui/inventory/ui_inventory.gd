@@ -18,7 +18,6 @@ func _ready() -> void:
 	inventory.item_changed.connect(_on_inventory_item_changed.bind(inventory))
 	
 	FieldEvents.combat_triggered.connect(func(_data): hide())
-	Combat.combat_finished.connect(func(_data): show())
 
 
 func get_ui_item(item_id: Inventory.ItemTypes) -> UIInventoryItem:
