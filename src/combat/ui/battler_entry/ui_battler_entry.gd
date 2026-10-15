@@ -23,7 +23,7 @@ var battler: Battler:
 
 
 func _ready() -> void:
-	CombatEvents.player_battler_selected.connect(
+	Combat.player_battler_selected.connect(
 		func _on_player_battler_selected(selected: Battler) -> void:
 			_life.is_highlighted = battler == selected
 	)

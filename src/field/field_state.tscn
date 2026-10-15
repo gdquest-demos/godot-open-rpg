@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://0m471v4y80ta"]
 
-[ext_resource type="Script" uid="uid://m3oktjc6gmsb" path="res://src/field/field.gd" id="1_bwh6e"]
-[ext_resource type="PackedScene" uid="uid://d2lj4blu56fte" path="res://src/field/gamepieces/controllers/player_controller.tscn" id="2_sdbim"]
+[ext_resource type="Script" uid="uid://m3oktjc6gmsb" path="res://src/field/field_state.gd" id="1_bwh6e"]
 [ext_resource type="Script" uid="uid://drugj534rnwxw" path="res://src/field/map.gd" id="3_a2406"]
 [ext_resource type="Resource" uid="uid://k63mv5dbd1uk" path="res://overworld/maps/gbprops.tres" id="4_6jrpo"]
 [ext_resource type="PackedScene" uid="uid://b626e0bngfvjj" path="res://src/field/gamepieces/gamepiece.tscn" id="5_55j3y"]
@@ -328,7 +327,6 @@ y_value = 1.0
 [node name="Field" type="Node2D" unique_id=2132434412]
 scale = Vector2(5, 5)
 script = ExtResource("1_bwh6e")
-player_controller = ExtResource("2_sdbim")
 
 [node name="Map" type="Node2D" parent="." unique_id=1973286690]
 y_sort_enabled = true
@@ -767,9 +765,9 @@ timeline = ExtResource("64_n8u3e")
 metadata/_edit_lock_ = true
 
 [node name="Background" type="CanvasLayer" parent="OpeningCutscene" unique_id=1859963225]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="OpeningCutscene/Background" unique_id=598692724]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

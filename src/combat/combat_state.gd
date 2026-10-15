@@ -22,8 +22,14 @@
 ## [br]			- [method Battler.act]
 ## [br]		- If player and enemy Battlers are still alive, go to the next round.[br]
 ## [method shutdown] combat, cleaning up combat objects
-## [br]	- Emit the [signal CombatEvents.combat_finished] signal.
-class_name Combat extends CanvasLayer
+## [br]	- Emit the [signal Combat.combat_finished] signal.
+extends GameState
+
+## The arena that will be loaded for Combat. Otherwise, the value set in
+## [member Combat.current_arena] will be used.
+## This is useful for testing combats by running the combat game state directly. In-game, however,
+## this value will not be used.
+@export var arena: PackedScene
 
 ## Tracks which combat round is currently being played. Every round, all active [Battler]s will get
 ## a turn to act.
@@ -40,23 +46,18 @@ var _previous_music_track: AudioStream = null
 
 
 func _ready() -> void:
-	hide()
-	FieldEvents.combat_triggered.connect(setup)
+	if get_parent() == get_tree().root:
+		Combat.current_arena = arena
+		start.call_deferred()
 
 
-## Begin a combat. Takes a PackedScene as its only parameter, expecting it to be a CombatState 
-## object once instantiated.
-## This is normally a response to [signal FieldEvents.combat_triggered].
-func setup(arena: PackedScene) -> void:
-	await Transition.cover(0.2)
-	show()
-
-	var new_arena := arena.instantiate()
+func start() -> void:
+	var new_arena = Combat.current_arena.instantiate()
 	assert(
 		new_arena != null,
-		"Failed to initiate combat. Provided 'arena' arugment is not a CombatArena."
+		"Failed to initiate combat. Provided Combat.current_arena is not a CombatArena!"
 	)
-
+	
 	var combat_arena: CombatArena = new_arena
 	_combat_container.add_child(combat_arena)
 	_battler_roster = combat_arena.get_battler_roster()
@@ -69,7 +70,7 @@ func setup(arena: PackedScene) -> void:
 	_previous_music_track = Music.get_playing_track()
 	Music.play(combat_arena.music)
 
-	CombatEvents.combat_initiated.emit()
+	Combat.combat_initiated.emit()
 
 	# Before starting combat itself, reveal the screen again.
 	# The Transition.clear() call is deferred since it follows on the heels of cover(), and needs a
@@ -117,7 +118,7 @@ func _select_next_player_action() -> void:
 	# taking action!
 	if remaining_battlers.is_empty():
 		# De-select the last Battler that was receiving orders.
-		CombatEvents.player_battler_selected.emit(null)
+		Combat.player_battler_selected.emit(null)
 		_play_next_action.call_deferred()
 		return
 	
@@ -147,7 +148,7 @@ func _select_next_player_action() -> void:
 	await next_player_battler.anim.move_forward(0.15)
 	
 	# Activate the player UI elements for the currently selected battler.
-	CombatEvents.player_battler_selected.emit(next_player_battler)
+	Combat.player_battler_selected.emit(next_player_battler)
 
 
 # The second phase of combat has each Battler act in order of speed. This is done by repeatedly
@@ -198,7 +199,7 @@ func _on_combat_finished(is_player_victory: bool) -> void:
 	_transition_delay_timer.start()
 	await _transition_delay_timer.timeout
 	await Transition.cover(0.2)
-	hide()
+	#hide()
 	
 	# Clean up the combat arena.
 	for child in _combat_container.get_children():
@@ -210,7 +211,7 @@ func _on_combat_finished(is_player_victory: bool) -> void:
 	# Whatever object started the combat will now be responsible for flow of the game. In
 	# particular, the screen is still covered, so the combat-starting object will want to 
 	# decide what to do now that the outcome of the combat is known.
-	CombatEvents.combat_finished.emit(is_player_victory)
+	Combat.combat_finished.emit(is_player_victory)
 
 
 ## Displays a series of dialogue bubbles using Dialogic with information about the combat's outcome.

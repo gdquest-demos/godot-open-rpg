@@ -4,9 +4,6 @@
 ## Additionally, game-wide player based signals are emitted from here.
 extends Node
 
-## Emitted whenever the player's gamepiece changes.
-signal gamepiece_changed
-
 ## Emitted when the player sets a movement path for their focused gamepiece.
 ## The destination is the last cell in the path.
 @warning_ignore("unused_signal")
@@ -43,8 +40,6 @@ func create_gamepiece(parent: Node) -> void:
 	parent.add_child(_gamepiece, true)
 	
 	# Assign the player's avatar to the gamepiece.
-	#var player_animation: = appearance.instantiate()
-	#_gamepiece.add_child(player_animation)
 	_gamepiece.animation_scene = appearance
 	
 	# Assign the player controller to the gamepiece.
@@ -52,24 +47,6 @@ func create_gamepiece(parent: Node) -> void:
 	_gamepiece.add_child(player_controller)
 	player_controller.is_active = true
 	
+	# Follow the player with the default camera.
 	_gamepiece.animation_transform.remote_path = _gamepiece.animation_transform.get_path_to(_camera)
 	_camera.make_current()
-	# Assign a Camera2D to the player.
-	#var new_camera: = Camera2D.new()
-	#_gamepiece.add_child(new_camera)
-	#new_camera.make_current()
-	
-	#set(value):
-		#if value != gamepiece:
-			#gamepiece = value
-			#
-			#if camera != null:
-				#camera.queue_free()
-				#camera = null
-			#
-			#if gamepiece != null:
-				#camera = Camera2D.new()
-				#gamepiece.animation.add_child(camera)
-				#camera.make_current()
-			#
-			#gamepiece_changed.emit()

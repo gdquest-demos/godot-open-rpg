@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cymipuhyisu0v"]
 
-[ext_resource type="Script" uid="uid://i6j3l72wljdc" path="res://src/combat/combat.gd" id="1_djar7"]
+[ext_resource type="Script" uid="uid://i6j3l72wljdc" path="res://src/combat/combat_state.gd" id="1_djar7"]
 [ext_resource type="PackedScene" uid="uid://ic0pyjko2i46" path="res://src/combat/ui/ui_combat.tscn" id="2_rvvxs"]
 
 [node name="Combat" type="CanvasLayer" unique_id=123184671]

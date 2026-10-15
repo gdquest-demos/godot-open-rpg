@@ -22,7 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Camera="res://src/field/field_camera.gd"
-CombatEvents="*res://src/combat/combat_events.gd"
+Combat="*res://src/combat/combat_events.gd"
 FieldEvents="*res://src/field/field_events.gd"
 Gameboard="*res://src/field/gameboard/gameboard.gd"
 GamepieceRegistry="*res://src/field/gamepieces/gamepiece_registry.gd"

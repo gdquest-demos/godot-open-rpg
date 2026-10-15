@@ -28,7 +28,7 @@ var _entries: Array[UIBattlerEntry] = []
 
 
 func _ready() -> void:
-	CombatEvents.combat_finished.connect(_clear)
+	Combat.combat_finished.connect(_clear)
 
 
 # Free any old battler entries, if they exist.

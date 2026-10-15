@@ -8,7 +8,7 @@ func _execute() -> void:
 	# Let other systems know that a combat has been triggered and then wait for its outcome.
 	FieldEvents.combat_triggered.emit(combat_arena)
 	
-	var did_player_win: bool = await CombatEvents.combat_finished
+	var did_player_win: bool = await Combat.combat_finished
 	
 	# The combat ends with a covered screen, and so we fix that here.
 	Transition.clear.call_deferred(0.2)

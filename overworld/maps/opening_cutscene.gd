@@ -7,6 +7,8 @@ extends Cutscene
 
 
 func _execute() -> void:
+	_bg.show()
+	
 	# Wait briefly before starting the script logic.
 	_timer.start()
 	await _timer.timeout
