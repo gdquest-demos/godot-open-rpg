@@ -27,7 +27,7 @@ FieldEvents="*res://src/field/field_events.gd"
 Gameboard="*res://src/field/gameboard/gameboard.gd"
 GamepieceRegistry="*res://src/field/gamepieces/gamepiece_registry.gd"
 Music="*res://src/common/music/music_player.tscn"
-Player="*res://src/common/player.gd"
+Player="*uid://cyqghbrjiipk"
 Transition="*res://src/common/screen_transitions/ScreenTransition.tscn"
 Dialogic="*uid://ds2q0uclmolvu"
 
