@@ -37,6 +37,7 @@ func create_gamepiece(parent: Node) -> void:
 	_gamepiece = GAMEPIECE.instantiate()
 	_gamepiece.name = "Player"
 	_gamepiece.position = Gameboard.cell_to_pixel(cell)
+	_gamepiece.move_speed = 96
 	parent.add_child(_gamepiece, true)
 	
 	# Assign the player's avatar to the gamepiece.

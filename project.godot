@@ -60,7 +60,12 @@ variables={
 "RedWandCount": 0,
 "StrangeTreeExamined": 0,
 "TokenCount": 0,
-"TokenQuestStatus": 0
+"TokenQuestStatus": 0,
+"Town": {
+"FanCell": "",
+"GhostDefeated": false,
+"KeyPickedUp": false
+}
 }
 layout/end_behaviour=0
 layout/styles={

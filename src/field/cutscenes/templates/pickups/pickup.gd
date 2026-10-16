@@ -17,6 +17,8 @@ class_name Pickup extends Trigger
 
 
 func _execute() -> void:
+	Dialogic.VAR.set_variable("Town.KeyPickedUp", true)
+	
 	_anim.play("PickupAnimations/obtain")
 	Inventory.restore().add(item_type, amount)
 	

@@ -5,6 +5,9 @@ class_name CombatTrigger extends Trigger
 
 
 func _execute() -> void:
+	# TODO: track persistence elsewehere.
+	Dialogic.VAR.set_variable("Town.GhostDefeated", true)
+	
 	# Let other systems know that a combat has been triggered and then wait for its outcome.
 	FieldEvents.combat_triggered.emit(combat_arena)
 	

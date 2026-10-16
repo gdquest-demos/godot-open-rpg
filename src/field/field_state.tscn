@@ -798,6 +798,7 @@ metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="DialogueLayout" type="Control" parent="UI" unique_id=1413617570]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
