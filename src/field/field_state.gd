@@ -24,11 +24,6 @@ func _ready() -> void:
 	
 	FieldEvents.combat_triggered.connect(
 		func _on_combat_triggered(arena: PackedScene) -> void:
-			var cell = Player.cell
-			var vts = var_to_str(cell)
-			var stv = str_to_var(vts)
-			print("Combat occured at cell: %s. var_to_str: %s, str_to_var: %s" % [cell, vts, stv])
-			
 			await Transition.cover(combat_fade_out_time)
 			
 			Combat.current_arena = arena

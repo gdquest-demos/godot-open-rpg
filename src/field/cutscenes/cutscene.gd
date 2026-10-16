@@ -32,6 +32,7 @@ static var _is_cutscene_in_progress: = false:
 		if _is_cutscene_in_progress != value:
 			_is_cutscene_in_progress = value
 			
+			print("Cutscene in progress changed to ", value)
 			FieldEvents.input_paused.emit(value)
 
 
