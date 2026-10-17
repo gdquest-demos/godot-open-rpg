@@ -50,6 +50,10 @@ func _ready() -> void:
 	
 	randomize()
 	
+	# Initialize the inventory.
+	# TODO: This should occur whenever a "new game" is started.
+	Inventory.create_inventory()
+	
 	# Start the game with the screen covered.
 	await Transition.cover()
 	

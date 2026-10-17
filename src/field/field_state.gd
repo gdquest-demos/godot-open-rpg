@@ -24,6 +24,9 @@ func _ready() -> void:
 	
 	FieldEvents.combat_triggered.connect(
 		func _on_combat_triggered(arena: PackedScene) -> void:
+			# Save the current inventory to disk.
+			Inventory.restore().save()
+			
 			await Transition.cover(combat_fade_out_time)
 			
 			Combat.current_arena = arena
@@ -56,9 +59,14 @@ func start() -> void:
 # checks on the GPs that we know are persistent.
 func _restore_changes() -> void:
 	# Check to see if the player has retrieved the key yet.
-	if Dialogic.VAR.get_variable("Town.KeyPickedUp") == true:
+	# If they have, check to see if the door is unlocked.
+	if Dialogic.VAR.get_variable("Town.KeyPickedUp") > 0:
 		var key: = $Map/Town/Ground/Gamepieces/KeyPickup
 		key.queue_free()
+		
+		if Dialogic.VAR.get_variable("Town.KeyPickedUp") > 1:
+			var door = $Map/Town/Ground/Gamepieces/Door
+			door.is_locked = false
 		
 		var trees: = $Map/Town/Ground/Gamepieces/StrangeTreeInteraction
 		trees.queue_free()

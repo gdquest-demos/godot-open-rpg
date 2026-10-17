@@ -64,7 +64,7 @@ variables={
 "Town": {
 "FanCell": "",
 "GhostDefeated": false,
-"KeyPickedUp": false
+"KeyPickedUp": 0
 }
 }
 layout/end_behaviour=0

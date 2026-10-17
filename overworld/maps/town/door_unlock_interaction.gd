@@ -11,6 +11,9 @@ func _execute() -> void:
 		if inventory.get_item_count(Inventory.ItemTypes.KEY):
 			inventory.remove(Inventory.ItemTypes.KEY, 1)
 			door.is_locked = false
+			door.open()
+			Dialogic.VAR.set_variable("Town.KeyPickedUp", 2)
+			
 			is_active = false
 			_popup.is_active = false
 		
