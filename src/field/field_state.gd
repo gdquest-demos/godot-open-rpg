@@ -24,6 +24,11 @@ func _ready() -> void:
 	
 	FieldEvents.combat_triggered.connect(
 		func _on_combat_triggered(arena: PackedScene) -> void:
+			# Clear the autoloads tracking the Gameboard and Gamepiece states. This will be re-
+			# created whenever the Overworld game state is entered again.
+			Gameboard.pathfinder.clear()
+			GamepieceRegistry.clear()
+			
 			# Save the current inventory to disk.
 			Inventory.restore().save()
 			
@@ -71,6 +76,14 @@ func _restore_changes() -> void:
 		var trees: = $Map/Town/Ground/Gamepieces/StrangeTreeInteraction
 		trees.queue_free()
 	
+	# Check on how the player has progressed with the want pedastal, and set values accordingly.
+	$Map/House/Gamepieces/PedestalPuzzle/GreenPedestal.current_item_id \
+		= Dialogic.VAR.get_variable("Pedestal.Green", -1)
+	$Map/House/Gamepieces/PedestalPuzzle/BluePedestal.current_item_id \
+		= Dialogic.VAR.get_variable("Pedestal.Blue", -1)
+	$Map/House/Gamepieces/PedestalPuzzle/RedPedestal.current_item_id \
+		= Dialogic.VAR.get_variable("Pedestal.Red", -1)
+	
 	# Check to see if the ghost roaming encounter has been defeated.
 	if Dialogic.VAR.Town.GhostDefeated == true:
 		$Map/Town/Ground/Gamepieces/RoamingEncounter.queue_free()
@@ -80,16 +93,12 @@ func _restore_changes() -> void:
 	var fan_gp: Gamepiece = $Map/Town/Ground/Gamepieces/AdoringFan
 	var fan_location: String = Dialogic.VAR.get_variable("Town.FanCell")
 	if fan_location.is_empty():
-		print("Set fan location!")
 		var cell: = Gameboard.pixel_to_cell(fan_gp.position)
 		Dialogic.VAR.set_variable("Town.FanCell", var_to_str(cell))
-		print(Dialogic.VAR.get_variable("Town.FanCell"))
 	
 	else:
-		print("Know fan's location!")
 		var cell = str_to_var(fan_location)
 		if cell is Vector2i:
-			print("Cell is ", cell)
 			GamepieceRegistry.move_gamepiece(fan_gp, cell)
 			fan_gp.position = Gameboard.cell_to_pixel(cell)
 

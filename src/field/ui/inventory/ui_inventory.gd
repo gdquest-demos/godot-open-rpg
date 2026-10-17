@@ -12,8 +12,6 @@ var _ITEM_SCENE: = preload("res://src/field/ui/inventory/ui_inventory_item.tscn"
 
 func _ready() -> void:
 	var inventory: = Inventory.restore()
-	print("\nRestore inventory in ui, ", inventory)
-	
 	for item_name in Inventory.ItemTypes:
 		_update_item(Inventory.ItemTypes[item_name], inventory)
 	inventory.item_changed.connect(_on_inventory_item_changed.bind(inventory))
@@ -31,7 +29,6 @@ func _update_item(item_id: Inventory.ItemTypes, inventory: Inventory) -> void:
 	var amount: = inventory.get_item_count(item_id)
 	var item: = get_ui_item(item_id)
 	
-	print("%s: %d" % [item_id, amount])
 	if amount > 0:
 		if not item:
 			item = _ITEM_SCENE.instantiate() as UIInventoryItem
@@ -48,4 +45,3 @@ func _update_item(item_id: Inventory.ItemTypes, inventory: Inventory) -> void:
 
 func _on_inventory_item_changed(item_type: Inventory.ItemTypes, inventory: Inventory) -> void:
 	_update_item(item_type, inventory)
-	print("New inventory: ", inventory)

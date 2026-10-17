@@ -57,6 +57,11 @@ variables={
 "HasWarriorToken": 0,
 "HasWizardToken": 0,
 "Hint": 0,
+"Pedestal": {
+"Blue": -1,
+"Green": -1,
+"Red": -1
+},
 "RedWandCount": 0,
 "StrangeTreeExamined": 0,
 "TokenCount": 0,

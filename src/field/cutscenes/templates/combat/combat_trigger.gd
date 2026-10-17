@@ -10,7 +10,6 @@ func _execute() -> void:
 	
 	# Let other systems know that a combat has been triggered and then wait for its outcome.
 	FieldEvents.combat_triggered.emit.call_deferred(combat_arena)
-	print("Done cutscene")
 	
 	#var did_player_win: bool = await Combat.combat_finished
 	#

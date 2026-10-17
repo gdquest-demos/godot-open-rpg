@@ -53,6 +53,15 @@ func _ready() -> void:
 	# Initialize the inventory.
 	# TODO: This should occur whenever a "new game" is started.
 	Inventory.create_inventory()
+	var inventory: = Inventory.restore()
+	inventory.add(Inventory.ItemTypes.KEY)
+	Dialogic.VAR.RedWandCount = 1
+	Dialogic.VAR.GreenWandCount = 1
+	Dialogic.VAR.BlueWandCount = 1
+	inventory.add(Inventory.ItemTypes.RED_WAND)
+	inventory.add(Inventory.ItemTypes.GREEN_WAND)
+	inventory.add(Inventory.ItemTypes.BLUE_WAND)
+	inventory.save()
 	
 	# Start the game with the screen covered.
 	await Transition.cover()

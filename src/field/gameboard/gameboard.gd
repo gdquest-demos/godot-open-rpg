@@ -110,8 +110,6 @@ func register_gameboard_layer(board_map: GameboardLayer) -> void:
 	board_map.cells_changed.connect(
 		func _on_gameboard_layer_cells_changed(cleared_cells: Array[Vector2i],
 				blocked_cells: Array[Vector2i]):
-		if board_map.name == "DoorGameboardLayer":
-			print("Door layer ", cleared_cells, " ", blocked_cells)
 		var added_cells: = _add_cells_to_pathfinder(cleared_cells)
 		var removed_cells: = _remove_cells_from_pathfinder(blocked_cells)
 
