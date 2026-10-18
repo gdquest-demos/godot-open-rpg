@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.5 Game States 🔗
+
+### What's on the menu?
+Added different game states: the main menu, navigating the world, and combat. This allows to to encapsulate each state into its own structure instead of mashing everything together in Main_Monolith.tscn.
+
+Main.tscn is the entry point for the game, though both Combat and the world states can be run by setting the map/arena and pressing F6. This should make the SceneTree and code clearer while paving the way for an organized file structure. This also reduces issues arising from overlap between the Combat and Field gamestates that relied on everything pausing and working together juuuuust right.
+
 ## v0.3.4 Combat Rework 🛡️
 
 ### Classic turn-based combat

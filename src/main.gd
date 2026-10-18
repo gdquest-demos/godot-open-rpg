@@ -53,7 +53,6 @@ func _ready() -> void:
 	# Initialize the inventory.
 	# TODO: This should occur whenever a "new game" is started.
 	Inventory.create_inventory()
-	var inventory: = Inventory.restore()
 	
 	# Start the game with the screen covered.
 	await Transition.cover()

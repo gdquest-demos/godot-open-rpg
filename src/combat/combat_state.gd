@@ -73,8 +73,6 @@ func start() -> void:
 	_previous_music_track = Music.get_playing_track()
 	Music.play(_combat_arena.music)
 
-	Combat.combat_initiated.emit()
-
 	# Before starting combat itself, reveal the screen again.
 	# The Transition.clear() call is deferred since it follows on the heels of cover(), and needs a
 	# frame to allow everything else to respond to Transition.finished.

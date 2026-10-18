@@ -38,13 +38,6 @@ func _ready() -> void:
 			Combat.current_arena = arena
 			transition_executed.emit(Game.States.COMBAT)
 	)
-	
-	
-	# The field state must pause/unpause with combat accordingly.
-	# Note that pausing/unpausing input is already wrapped up in triggers, which are what will
-	# initiate combat.
-	#CombatEvents.combat_initiated.connect(func(): hide())
-	#CombatEvents.combat_finished.connect(func(_is_victory): show())
 
 
 # Initialize the overworld state, setting up the map according to current gameplay variables (see
