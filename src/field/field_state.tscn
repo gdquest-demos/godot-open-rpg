@@ -31,6 +31,7 @@
 [ext_resource type="Script" uid="uid://biiqi2vvuyjy0" path="res://src/field/cutscenes/templates/combat/roaming_combat_trigger.gd" id="29_dvj4a"]
 [ext_resource type="PackedScene" uid="uid://wivtmf75ic3f" path="res://overworld/maps/town/battles/test_combat_arena.tscn" id="30_soc32"]
 [ext_resource type="PackedScene" uid="uid://cgwailb13nkcd" path="res://overworld/characters/ghost_gfx.tscn" id="31_v4nmn"]
+[ext_resource type="Script" uid="uid://b1tc2h7kmxoel" path="res://overworld/maps/town/conversation_encounter_resolution.gd" id="32_mls2a"]
 [ext_resource type="Script" uid="uid://bb4gwwr02pllp" path="res://overworld/maps/town/conversation_encounter.gd" id="32_pesfp"]
 [ext_resource type="Resource" uid="uid://gcpgk7rnyguj" path="res://overworld/maps/town/encounter_before_combat.dtl" id="33_e2ssq"]
 [ext_resource type="Resource" uid="uid://dmmexun61mw4j" path="res://overworld/maps/town/encounter_on_victory.dtl" id="34_vbq6f"]
@@ -463,6 +464,18 @@ radius = 64
 position = Vector2(83.2, 6.39999)
 animation_scene = ExtResource("31_v4nmn")
 metadata/_edit_group_ = true
+
+[node name="VictoryCutscene" type="Node2D" parent="Map/Town/Ground/Gamepieces/ConversationEncounter" unique_id=1077922662]
+position = Vector2(-83.2, -6.39999)
+scale = Vector2(1.0000001, 1.0000001)
+script = ExtResource("32_mls2a")
+timeline = ExtResource("34_vbq6f")
+
+[node name="DefeatCutscene" type="Node2D" parent="Map/Town/Ground/Gamepieces/ConversationEncounter" unique_id=1989422941]
+position = Vector2(-83.2, -6.39999)
+scale = Vector2(1.0000001, 1.0000001)
+script = ExtResource("32_mls2a")
+timeline = ExtResource("35_wy363")
 
 [node name="Interaction" parent="Map/Town/Ground/Gamepieces/ConversationEncounter" unique_id=1475736550 instance=ExtResource("8_hg7lq")]
 script = ExtResource("32_pesfp")

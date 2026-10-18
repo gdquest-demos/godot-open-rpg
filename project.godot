@@ -21,7 +21,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Camera="res://src/field/field_camera.gd"
 Combat="*res://src/combat/combat_events.gd"
 FieldEvents="*res://src/field/field_events.gd"
 Gameboard="*res://src/field/gameboard/gameboard.gd"
@@ -62,6 +61,7 @@ variables={
 "Green": -1,
 "Red": -1
 },
+"QueuedCutscene": "OpeningCutscene",
 "RedWandCount": 0,
 "StrangeTreeExamined": 0,
 "TokenCount": 0,

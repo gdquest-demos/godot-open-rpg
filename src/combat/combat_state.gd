@@ -35,6 +35,9 @@ extends GameState
 ## a turn to act.
 var round_count: int = 0
 
+# Track the combat arena and some of the info it contains.
+var _combat_arena: CombatArena
+
 # Keep track of what music track was playing previously, and return to it once combat has finished.
 var _previous_music_track: AudioStream = null
 
@@ -58,9 +61,9 @@ func start() -> void:
 		"Failed to initiate combat. Provided Combat.current_arena is not a CombatArena!"
 	)
 	
-	var combat_arena: CombatArena = new_arena
-	_combat_container.add_child(combat_arena)
-	_battler_roster = combat_arena.get_battler_roster()
+	_combat_arena = new_arena
+	_combat_container.add_child(_combat_arena)
+	_battler_roster = _combat_arena.get_battler_roster()
 	
 	# Wait a frame for the arena and its children (VFX, Battlers, etc.) to be ready.
 	await get_tree().process_frame
@@ -68,7 +71,7 @@ func start() -> void:
 	_ui.setup(_battler_roster)
 
 	_previous_music_track = Music.get_playing_track()
-	Music.play(combat_arena.music)
+	Music.play(_combat_arena.music)
 
 	Combat.combat_initiated.emit()
 
@@ -188,6 +191,11 @@ func _get_next_actor() -> Battler:
 
 
 func _on_combat_finished(is_player_victory: bool) -> void:
+	if is_player_victory:
+		Dialogic.VAR.set_variable("QueuedCutscene", _combat_arena.victory_cutscene)
+	else:
+		Dialogic.VAR.set_variable("QueuedCutscene", _combat_arena.loss_cutscene)
+	
 	# Fade out the combat UI elements.
 	_ui.animation.play("fade_out")
 	await _ui.animation.animation_finished
@@ -199,11 +207,6 @@ func _on_combat_finished(is_player_victory: bool) -> void:
 	await Transition.cover(0.2)
 
 	Music.play(_previous_music_track)
-
-	# Whatever object started the combat will now be responsible for flow of the game. In
-	# particular, the screen is still covered, so the combat-starting object will want to 
-	# decide what to do now that the outcome of the combat is known.
-	Combat.combat_finished.emit(is_player_victory)
 	transition_executed.emit(Game.States.OVERWORLD)
 
 

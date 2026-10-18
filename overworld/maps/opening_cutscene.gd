@@ -25,4 +25,7 @@ func _execute() -> void:
 	Music.play(load("res://assets/music/Apple Cider.mp3"))
 	await Transition.clear(2.0)
 	
+	# Don't run this event again!
+	Dialogic.VAR.set_variable("QueuedCutscene", "")
+	
 	queue_free.call_deferred()

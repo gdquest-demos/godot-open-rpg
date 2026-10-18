@@ -6,12 +6,6 @@ extends Node
 @warning_ignore("unused_signal")
 signal combat_initiated(arena: PackedScene)
 
-## Emitted whenever the player has finished with the combat state regardless of whether or not the
-## combat was won by the player. At this point the screen has faded to black and any events that
-## immediately follow the combat may occur.
-@warning_ignore("unused_signal")
-signal combat_finished(is_player_victory: bool)
-
 ## Emitted whenever a player battler is selected, prompting the player to choose an action.
 @warning_ignore("unused_signal")
 signal player_battler_selected(battler: Battler)

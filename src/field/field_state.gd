@@ -1,8 +1,9 @@
 extends GameState
 
-@export_group("Transition")
+@export_group("Screen Fade")
+
 ## The cutscene that will play on starting a new game.
-@export var opening_cutscene: Cutscene
+#@export var opening_cutscene: Cutscene
 
 ## If there is no cutscene, the screen will just fade in before giving the player control.
 ## Defines how the length of the fade in animation.
@@ -46,13 +47,33 @@ func _ready() -> void:
 	#CombatEvents.combat_finished.connect(func(_is_victory): show())
 
 
+# Initialize the overworld state, setting up the map according to current gameplay variables (see
+# Dialogic's VAR system) and any cutscene that is queued to run.
 func start() -> void:
 	Player.create_gamepiece($Map/Town/Ground/Gamepieces)
 	
 	_restore_changes()
 	
-	if opening_cutscene:
-		opening_cutscene.run.call_deferred()
+	# Whenever transitioning to the field game state the developer may want a cutscene to run.
+	# Examples include an introduction to a new area that hasn't been visited before, a special
+	# event that occurs after a boss combat, or a flashback that occurs when travelling.
+	# Currently, we assume that the stored value is one of two things:
+	#	- a path to a Cutscene that exists in the newly loaded field map.
+	#	- the file path to a Cutscene file, useful for common things that happen after a combat
+	#		(e.g. game over when losing combat).
+	var path_to_cutscene: String = Dialogic.VAR.get_variable("QueuedCutscene", "")
+	if has_node(path_to_cutscene):
+		var cutscene: = get_node(path_to_cutscene) as Cutscene
+		if cutscene != null:
+			cutscene.run.call_deferred()
+	
+	elif ResourceLoader.exists(path_to_cutscene):
+		var packed_scene: = load(path_to_cutscene) as PackedScene
+		var new_cutscene = packed_scene.instantiate()
+		if new_cutscene is Cutscene:
+			add_child(new_cutscene)
+			await new_cutscene.run.call_deferred()
+			new_cutscene.queue_free()
 	
 	else:
 		await Transition.clear(fade_in_time)
