@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3ciqydkjnkkx"]
+[gd_scene format=3 uid="uid://b3ciqydkjnkkx"]
 
 [ext_resource type="Script" uid="uid://qqe2l2km3uki" path="res://src/combat/combat_arena.gd" id="1_iqdn5"]
 [ext_resource type="Script" uid="uid://d4iykhcmgf6ox" path="res://src/combat/battlers/battler_roster.gd" id="2_8roha"]
 
-[node name="CombatArena" type="Control"]
+[node name="CombatArena" type="Control" unique_id=965633699]
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3
 anchors_preset = 15
@@ -13,16 +13,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_iqdn5")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=967274055]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Battlers" type="Node2D" parent="."]
+[node name="Battlers" type="Node2D" parent="." unique_id=656904012]
 y_sort_enabled = true
 script = ExtResource("2_8roha")
 
-[node name="Foreground" type="Control" parent="."]
+[node name="Foreground" type="Control" parent="." unique_id=207364454]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0

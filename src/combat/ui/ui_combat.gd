@@ -10,7 +10,7 @@
 ##     - Finally, potential targets are navigated using a [UIBattlerTargetingCursor].[br]
 ## The player may traverse the menus, going backwards and forwards through the menus as needed.
 ## Once the player has picked an action and targets, it is assigned to the queue by means of the
-## [signal CombatEvents.action_selected] global signal.
+## [signal Combat.action_selected] global signal.
 class_name UICombat extends Control
 
 ## The action menu scene that will be created whenever the player needs to select an action.
@@ -34,7 +34,7 @@ func _ready() -> void:
 	# choose an action.
 	# If no battler is selected (i.e. it's time to execute the actions) then the menus will just be
 	# hidden.
-	CombatEvents.player_battler_selected.connect(
+	Combat.player_battler_selected.connect(
 		(func _on_player_battler_selected(battler: Battler) -> void:
 			if battler != null:
 				choose_action(battler)

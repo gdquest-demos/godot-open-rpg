@@ -32,6 +32,13 @@ func _init() -> void:
 		_items[ItemTypes[item_name]] = 0
 
 
+## Create a new, empty inventory at the location specified by [constant INVENTORY_PATH].
+static func create_inventory() -> Inventory:
+	var new_inventory: = Inventory.new()
+	new_inventory.save()
+	return new_inventory
+
+
 ## Load the [Inventory] from file or create a new resource, if it was missing. Godot caches calls, 
 ## so this can be used every time needed.
 static func restore() -> Inventory:
@@ -45,9 +52,7 @@ static func restore() -> Inventory:
 	
 	# Either there is no inventory associated with this profile or the file itself could not be
 	# loaded. Either way, a new inventory resource must be created.
-	var new_inventory: = Inventory.new()
-	new_inventory.save()
-	return new_inventory
+	return create_inventory()
 
 
 ## Increment the count of a given item by one, adding it to the inventory if it does not exist.
@@ -80,3 +85,10 @@ static func get_item_icon(item_type: ItemTypes) -> Texture:
 ## Write the inventory contents to the disk.
 func save() -> void:
 	ResourceSaver.save(self, INVENTORY_PATH)
+
+
+func _to_string() -> String:
+	var msg: = "Inventory: "
+	for item_name in ItemTypes:
+		msg += "%s:%d, " % [item_name, _items[ItemTypes[item_name]]]
+	return msg

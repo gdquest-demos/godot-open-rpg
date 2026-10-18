@@ -38,13 +38,22 @@ func register(gamepiece: Gamepiece, cell: Vector2i) -> bool:
 	return true
 
 
+## Empty the registry of all entries, undoing connections.
+func clear() -> void:
+	for gp: Gamepiece in _gamepieces.values():
+		if gp.tree_exiting.is_connected(_on_gamepiece_tree_exiting):
+			gp.tree_exiting.disconnect(_on_gamepiece_tree_exiting)
+	_gamepieces.clear()
+
+
 ## Update a gamepiece's position within the registry.
 ## Note that animation/position will need to be updated in response to the
 ## [signal Events.gamepiece_moved] signal.
 func move_gamepiece(gp: Gamepiece, new_cell: Vector2i) -> bool:
 	# Don't move a gamepiece to an occupied cell.
 	if _gamepieces.has(new_cell):
-		print("Cell %s is already occupied, cannot move gamepiece '%s'!" % [str(new_cell), gp.name])
+		push_warning("Cell %s is already occupied, cannot move gamepiece '%s'!" \
+			% [str(new_cell), gp.name])
 		return false
 
 	var old_cell: = get_cell(gp)

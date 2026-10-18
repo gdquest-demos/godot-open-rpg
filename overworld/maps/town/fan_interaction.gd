@@ -32,6 +32,7 @@ func _on_initial_conversation_finished() -> void:
 	# path during the cutscene.
 	controller.is_active = true
 	controller.move_path = Gameboard.pathfinder.get_path_to_cell(source_cell, Vector2(23, 13))
+	Dialogic.VAR.set_variable("Town.FanCell", var_to_str(Vector2i(23, 13)))
 	
 	await _adoring_fan.arrived
 	controller.is_active = false

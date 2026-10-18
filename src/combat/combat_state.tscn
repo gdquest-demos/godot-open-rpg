@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cymipuhyisu0v"]
+
+[ext_resource type="Script" uid="uid://i6j3l72wljdc" path="res://src/combat/combat_state.gd" id="1_djar7"]
+[ext_resource type="PackedScene" uid="uid://ic0pyjko2i46" path="res://src/combat/ui/ui_combat.tscn" id="2_rvvxs"]
+
+[node name="Combat" type="CanvasLayer" unique_id=123184671]
+script = ExtResource("1_djar7")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1990573362]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="UI" parent="." unique_id=337565194 instance=ExtResource("2_rvvxs")]
+
+[node name="TransitionDelay" type="Timer" parent="UI" unique_id=1541009690]
+wait_time = 0.5
+one_shot = true

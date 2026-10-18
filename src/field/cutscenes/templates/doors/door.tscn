@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://p0e4b0txynkd"]
+[gd_scene format=3 uid="uid://p0e4b0txynkd"]
 
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="1_0tk0k"]
 [ext_resource type="Texture2D" uid="uid://d2qfi5sncf72b" path="res://overworld/maps/tilesets/town_tilemap.png" id="2_4mdkx"]
@@ -163,33 +163,31 @@ font_size = 80
 outline_size = 20
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Door" instance=ExtResource("1_0tk0k")]
+[node name="Door" unique_id=685753992 instance=ExtResource("1_0tk0k")]
 script = ExtResource("2_13rnv")
 is_locked = false
 
 [node name="Area2D" parent="." index="0"]
 position = Vector2(0, -8)
 
-[node name="OpenDoor" type="Sprite2D" parent="Area2D" index="1"]
+[node name="OpenDoor" type="Sprite2D" parent="Area2D" index="1" unique_id=267277812]
 texture = ExtResource("2_4mdkx")
 region_enabled = true
 region_rect = Rect2(34, 102, 16, 16)
 
-[node name="ClosedDoor" type="Sprite2D" parent="Area2D" index="2"]
+[node name="ClosedDoor" type="Sprite2D" parent="Area2D" index="2" unique_id=834394769]
 texture = ExtResource("2_4mdkx")
 region_enabled = true
 region_rect = Rect2(17, 119, 16, 16)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
-libraries = {
-&"": SubResource("AnimationLibrary_k2tlp")
-}
-autoplay = "RESET"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3" unique_id=379718760]
+libraries/ = SubResource("AnimationLibrary_k2tlp")
+autoplay = &"RESET"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="4"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="4" unique_id=1848341241]
 bus = &"SFX"
 
-[node name="LockedLabel" type="Label" parent="." index="5"]
+[node name="LockedLabel" type="Label" parent="." index="5" unique_id=327960392]
 visible = false
 z_index = 101
 offset_left = -17.0

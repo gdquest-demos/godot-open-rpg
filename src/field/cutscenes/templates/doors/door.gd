@@ -19,7 +19,6 @@ const GP_SCENE: = preload("res://src/field/gamepieces/gamepiece.tscn")
 					_closed_door.add_child(_dummy_gp)
 			
 			else:
-				open()
 				if _dummy_gp != null:
 					_dummy_gp.queue_free()
 					_dummy_gp = null

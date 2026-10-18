@@ -13,8 +13,6 @@ class_name UIPlayerBattlerList extends VBoxContainer
 		if not is_inside_tree():
 			await ready
 		
-		_clear()
-		
 		# Create a UI entry for each battler in the party.
 		for battler in battlers:
 			var new_entry: = entry_scene.instantiate()
@@ -25,14 +23,3 @@ class_name UIPlayerBattlerList extends VBoxContainer
 
 # Track all battler list entries in the following array. 
 var _entries: Array[UIBattlerEntry] = []
-
-
-func _ready() -> void:
-	CombatEvents.combat_finished.connect(_clear)
-
-
-# Free any old battler entries, if they exist.
-func _clear(_result: bool = false) -> void:
-	for old_entry in get_children():
-		old_entry.queue_free()
-	_entries.clear()

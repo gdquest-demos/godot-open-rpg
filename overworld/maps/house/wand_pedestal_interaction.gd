@@ -2,6 +2,8 @@
 
 class_name WandPedestalInteraction extends InteractionTemplateConversation
 
+const GROUP_ID: = "Pedestals"
+
 ## The pedestal should only accept a subset of inventory items: a type of wand.
 ## We should also accept an option to pull a wand off the pedestal, which is the integer associate
 ## with an invalid item.
@@ -11,10 +13,6 @@ const VALID_ITEMS: = [
 	Inventory.ItemTypes.GREEN_WAND,
 	-1
 	]
-
-## A list of ALL pedestals in the current scene that have the correct wand placed on them.
-## The keys will be the pedestal itself, and the values whether or not a given pedestal is correct.
-static var _correct_pedestals: = {}
 
 ## Link the obstacle's animation player to this object for when the puzzle is solved.
 @export var solved_animation: AnimationPlayer
@@ -26,7 +24,17 @@ static var _correct_pedestals: = {}
 @export_enum("Red", "Blue", "Green") var pedestal_requirement: = "Red"
 
 ## Keep track of the id of the item currently placed on the pedestal, from Inventory.ItemTypes enum.
-var current_item_id: = -1
+var current_item_id: = -1:
+	set(value):
+		current_item_id = value
+		# The item_id shows what is currently on the pedestal. Set the sprite's texture to match.
+		_sprite.texture = Inventory.get_item_icon(current_item_id)
+		
+		# Flag whether or not this pedestal has the correct wand placed on it.
+		# Begin by converting the value specified by pedestal_requirement to an item id, as defined
+		# by the Inventory.ItemTypes enum.
+		Dialogic.VAR.set_variable("Pedestal.%s" % pedestal_requirement, current_item_id)
+		_check_puzzle.call_deferred()
 
 ## Rename [InteractionTemplateConversation.timeline] to specify that it runs when no item is on
 ## the pedestal.
@@ -40,8 +48,7 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		assert(solved_animation, "This interaction requires the obstacle's animation player!")
 		
-		# Setup the static variable to account for this pedestal.
-		_correct_pedestals[self] = false
+		add_to_group(GROUP_ID)
 		
 		# TODO: can Dialogic access inventory somehow?
 		# We want to use a few puzzle-specific Dialogic variables that need to change with the
@@ -50,6 +57,16 @@ func _ready() -> void:
 		# irrelevant, since it is merely setting the variable to the inventory's value.
 		var inventory: = Inventory.restore()
 		inventory.item_changed.connect(_on_inventory_item_changed.bind(inventory))
+		
+		current_item_id = Dialogic.VAR.get_variable("Pedestal.%s" % pedestal_requirement, -1)
+
+
+# Return true if this pedestal has an item matching its requirement.
+func has_correct_wand() -> bool:
+	# Convert the required wand color to an inventory item ID.
+	var expected_wand: = pedestal_requirement.to_upper() + "_WAND"
+	var expected_wand_id: = Inventory.ItemTypes.get(expected_wand, -1) as int
+	return current_item_id == expected_wand_id
 
 
 func _execute() -> void:
@@ -58,30 +75,38 @@ func _execute() -> void:
 	timeline = unoccupied_timeline
 	if _sprite.texture:
 		timeline = wand_placed_timeline
-	
-	# There's a chance that we won't receive the signal (i.e. if the user opts to do nothing),
-	# therefore we'll explicitly connect and disconnect this signal each time the interaction is
-	# run. This will prevent overlap between multiple pedestals.
+
 	await super._execute()
 	
 	# Check to see if the puzzle has been solved, waiting for its resolution (screen shake and
 	# grating noises, for example) before finishing.
-	if _is_puzzle_solved():
-		# Deactivate the pedestal interactions so that they cannot be interacted with.
-		for pedestal in _correct_pedestals.keys():
-			pedestal.is_active = false
-		
-		# The referenced animation player will resolve the puzzle.
-		solved_animation.play("solve")
-		await solved_animation.animation_finished
+	#if _is_puzzle_solved():
+		## Deactivate the pedestal interactions so that they cannot be interacted with.
+		#for pedestal: WandPedestalInteraction in get_tree().get_nodes_in_group(GROUP_ID):
+			#pedestal.is_active = false
+		#
+		## The referenced animation player will resolve the puzzle.
+		#solved_animation.play("solve")
+		#await solved_animation.animation_finished
 
 
-# Check to see if ALL pedestals have the correct wand placed on them.
-func _is_puzzle_solved() -> bool:
-	for value in _correct_pedestals.values():
-		if not value:
-			return false
-	return true
+# If the puzzle has been solved, unlock the way forward.
+func _check_puzzle() -> void:
+	
+	var pedestals: Array[WandPedestalInteraction] = []
+	pedestals.assign(get_tree().get_nodes_in_group(GROUP_ID))
+	
+	# Check to see if ALL pedestals have the correct wand placed on them.
+	for pedestal in pedestals:
+		if not pedestal.has_correct_wand():
+			return
+	
+	# All pedestals passed the check, so deactivate the pedestals...
+	for pedestal in pedestals:
+		pedestal.is_active = false
+	
+	# ...and remove the obstacle. The referenced animation player will resolve the puzzle.
+	solved_animation.play("solve")
 
 
 # This responds to a signal event within a Dialogic timeline. Note that this is only bound to the
@@ -94,11 +119,6 @@ func _on_dialogic_signal_event(argument: String) -> void:
 	var item_id: = Inventory.ItemTypes.get(argument.to_upper(), -1) as int
 	if not item_id in VALID_ITEMS:
 		return
-	
-	# Convert the value specified by pedestal_requirement to an item id, as defined by the
-	# Inventory.ItemTypes enum.
-	var expected_wand: = pedestal_requirement.to_upper() + "_WAND"
-	var expected_wand_id: = Inventory.ItemTypes.get(expected_wand, -1) as int
 	
 	# The pedestals will track which item is on them via the item ID. This is the value of the
 	# Inventory.ItemTypes enum (which corresponds to the key, which is a string such as "Coin").
@@ -113,10 +133,6 @@ func _on_dialogic_signal_event(argument: String) -> void:
 	
 	# The item_id shows what is currently on the pedestal. Set the sprite's texture to match.
 	current_item_id = item_id
-	_sprite.texture = Inventory.get_item_icon(item_id)
-	
-	# Finally, flag whether or not this pedestal has the correct wand placed on it.
-	_correct_pedestals[self] = current_item_id == expected_wand_id
 
 
 # Match puzzle-specific variables to the player's inventory.

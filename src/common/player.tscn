@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cyqghbrjiipk"]
+
+[ext_resource type="Script" uid="uid://d3r1nl6y28h5b" path="res://src/common/player.gd" id="1_mdsnt"]
+[ext_resource type="PackedScene" uid="uid://qxua6ekob7fa" path="res://overworld/characters/gobot_gfx.tscn" id="2_8lrpu"]
+
+[node name="Player" type="Node" unique_id=128696457]
+script = ExtResource("1_mdsnt")
+cell = Vector2i(6, 14)
+appearance = ExtResource("2_8lrpu")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1928238281]

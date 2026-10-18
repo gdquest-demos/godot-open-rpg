@@ -5,24 +5,11 @@ class_name CombatTrigger extends Trigger
 
 
 func _execute() -> void:
+	# TODO: track persistence elsewehere.
+	Dialogic.VAR.set_variable("Town.GhostDefeated", true)
+	
 	# Let other systems know that a combat has been triggered and then wait for its outcome.
-	FieldEvents.combat_triggered.emit(combat_arena)
-	
-	var did_player_win: bool = await CombatEvents.combat_finished
-	
-	# The combat ends with a covered screen, and so we fix that here.
-	Transition.clear.call_deferred(0.2)
-	await Transition.finished
-	
-	# We want to run post-combat events. In some cases, this may not involve much, such as playing a
-	# game-over screen or removing an AI combat-starting gamepiece from the field.
-	# In some cases, however, we'll want a dialogue to play or some creative event to occur if, for
-	# example, the player lost a difficult but non-essential battle.
-	if did_player_win:
-		await _run_victory_cutscene()
-	
-	else:
-		await _run_loss_cutscene() 
+	FieldEvents.combat_triggered.emit.call_deferred(combat_arena)
 
 
 ## The following method may be overwridden to allow for custom behaviour following a combat victory.

@@ -16,15 +16,4 @@ extends Node2D
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		Camera.gameboard_properties = gameboard_properties
 		Gameboard.properties = gameboard_properties
-		
-		# Gamepieces need to be registered according to which cells they currently occupy.
-		# Gamepieces may not overlap, and only the first gamepiece registered to a given cell will
-		# be kept.
-		#for gamepiece: Gamepiece in find_children("*", "Gamepiece"):
-			#var cell: = Gameboard.get_cell_under_node(gamepiece)
-			#gamepiece.position = Gameboard.cell_to_pixel(cell)
-			#
-			#if GamepieceRegistry.register(gamepiece, cell) == false:
-				#gamepiece.queue_free()

@@ -21,13 +21,12 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Camera="*res://src/field/field_camera.gd"
-CombatEvents="*res://src/combat/combat_events.gd"
+Combat="*res://src/combat/combat_events.gd"
 FieldEvents="*res://src/field/field_events.gd"
 Gameboard="*res://src/field/gameboard/gameboard.gd"
 GamepieceRegistry="*res://src/field/gamepieces/gamepiece_registry.gd"
 Music="*res://src/common/music/music_player.tscn"
-Player="*res://src/common/player.gd"
+Player="*uid://cyqghbrjiipk"
 Transition="*res://src/common/screen_transitions/ScreenTransition.tscn"
 Dialogic="*uid://ds2q0uclmolvu"
 
@@ -57,10 +56,21 @@ variables={
 "HasWarriorToken": 0,
 "HasWizardToken": 0,
 "Hint": 0,
+"Pedestal": {
+"Blue": -1,
+"Green": -1,
+"Red": -1
+},
+"QueuedCutscene": "OpeningCutscene",
 "RedWandCount": 0,
 "StrangeTreeExamined": 0,
 "TokenCount": 0,
-"TokenQuestStatus": 0
+"TokenQuestStatus": 0,
+"Town": {
+"FanCell": "",
+"GhostDefeated": false,
+"KeyPickedUp": 0
+}
 }
 layout/end_behaviour=0
 layout/styles={
